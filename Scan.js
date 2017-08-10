@@ -188,7 +188,7 @@ class Scan extends React.Component {
 
   render() {
     const { data: { scannedItems, patrons } } = this.props;
-
+    if (!this.props.data.userIdentifierPref) return <div />;
     return React.createElement(CheckOut, {
       onClickDone: this.onClickDone,
       submithandler: this.onSubmitInCheckOutForm,
