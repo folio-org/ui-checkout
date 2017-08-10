@@ -13,7 +13,7 @@ for checking items out with simulated scans of patron card and item barcode.
 
 Other [modules](http://dev.folio.org/source-code/#client-side).
 
-See project [UIS](https://issues.folio.org/browse/UIS)
+See project [UICHKOUT](https://issues.folio.org/browse/UICHKOUT)
 at the [FOLIO issue tracker](http://dev.folio.org/community/guide-issues).
 
 Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
