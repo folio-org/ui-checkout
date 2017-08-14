@@ -1,4 +1,4 @@
-# Change history for ui-checkout 
+# Change history for ui-checkout
 
 
 ## [0.0.1](https://github.com/folio-org/ui-checkout/tree/v0.0.1) (2017-08-10)
