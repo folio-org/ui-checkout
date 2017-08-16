@@ -17,4 +17,4 @@ const pages = [
   },
 ];
 
-export default props => <Settings {...props} pages={pages} paneTitle="Scan" />;
+export default props => <Settings {...props} pages={pages} paneTitle="Check out" />;

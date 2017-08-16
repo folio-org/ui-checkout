@@ -24,7 +24,7 @@ class ScanCheckoutSettings extends React.Component {
     userIdentifierPref: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=SCAN and configName=pref_patron_identifier)',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=pref_patron_identifier)',
       POST: {
         path: 'configurations/entries',
       },
@@ -50,7 +50,7 @@ class ScanCheckoutSettings extends React.Component {
       // no preference exists, so create a new one
       this.props.mutator.userIdentifierPref.POST(
         {
-          module: 'SCAN',
+          module: 'CHECKOUT',
           configName: 'pref_patron_identifier',
           value: e.target.value,
         },
