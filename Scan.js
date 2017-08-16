@@ -14,7 +14,7 @@ class Scan extends React.Component {
   }
 
   static propTypes = {
-    data: PropTypes.shape({
+    resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -45,7 +45,7 @@ class Scan extends React.Component {
   };
 
   static defaultProps = {
-    data: {},
+    resources: {},
     mutator: {},
   };
 
@@ -83,6 +83,7 @@ class Scan extends React.Component {
     } else if (data.SubmitMeta.button === 'add_item') {
       return this.checkout(data);
     }
+
     throw new SubmissionError({ item: { barcode: 'Internal UI error. Expected click on "Find patron" or "Add item" but could not determine, which were clicked.' },
       patron: { identifier: 'Internal UI error. Expected click on "Find patron" or "Add item" but could not determine, which were clicked.' } });
   }
@@ -114,18 +115,18 @@ class Scan extends React.Component {
   // Return either the currently set user identifier preference or a default value
   // (see constants.js for values)
   userIdentifierPref() {
-    const { data: { userIdentifierPref: pref } } = this.props;
+    const pref = (this.props.resources.userIdentifierPref || {}).records || [];
     return (pref.length > 0 && pref[0].value != null) ?
       _.find(patronIdentifierTypes, { key: pref[0].value }) :
       defaultPatronIdentifier;
   }
 
   checkout(data) {
-    if (this.props.data.patrons.length === 0) {
+    if (this.props.resources.patrons.length === 0) {
       throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
     }
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.postLoan(this.props.data.patrons[0].id, item.id))
+      .then(item => this.postLoan(this.props.resources.patrons[0].id, item.id))
       .then(() => this.clearField('CheckOut', 'item.barcode'));
   }
 
@@ -178,7 +179,7 @@ class Scan extends React.Component {
     }).then((loanresponse) => {
       const scannedItems = [];
       scannedItems.push(loanresponse);
-      return this.props.mutator.scannedItems.replace(scannedItems.concat(this.props.data.scannedItems));
+      return this.props.mutator.scannedItems.replace(scannedItems.concat(this.props.resources.scannedItems));
     });
   }
 
@@ -187,8 +188,13 @@ class Scan extends React.Component {
   }
 
   render() {
-    const { data: { scannedItems, patrons } } = this.props;
-    if (!this.props.data.userIdentifierPref) return <div />;
+    const resources = this.props.resources;
+    const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
+    const scannedItems = resources.scannedItems;
+    const patrons = resources.patrons;
+
+
+    if (!userIdentifierPref) return <div />;
     return React.createElement(CheckOut, {
       onClickDone: this.onClickDone,
       submithandler: this.onSubmitInCheckOutForm,
