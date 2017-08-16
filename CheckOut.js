@@ -82,11 +82,11 @@ class CheckOut extends React.Component {
 
     if (user[userIdentifierPref.queryKey]) {
       this.props.change('patron.identifier', user[userIdentifierPref.queryKey]);
-      if(autoSelect) {
-        let values = {
+      if (autoSelect) {
+        const values = {
           patron: {
-            identifier: user[userIdentifierPref.queryKey]
-          }
+            identifier: user[userIdentifierPref.queryKey],
+          },
         };
         this.makeSH(values, 'find_patron');
       }
@@ -145,6 +145,9 @@ class CheckOut extends React.Component {
       position: 'absolute',
     };
 
+    const validationEnabled = false;
+    const dissableUserCreation = true;
+
     if (patrons.length && scannedItems.length) {
       containerStyle.height = '98.6%';
     }
@@ -163,8 +166,8 @@ class CheckOut extends React.Component {
                     fullWidth
                     id="patron_identifier"
                     component={TextField}
-                    validationEnabled={false}
-                    startControl={<MaybeUserSearch {...this.props.parentProps} selectUser={this.autoSelectUser} visibleColumns={['Name', 'Patron Group', 'Username', 'Barcode']} dissableUserCreation={true} />}
+                    validationEnabled={validationEnabled}
+                    startControl={<MaybeUserSearch {...parentProps} selectUser={this.autoSelectUser} visibleColumns={['Name', 'Patron Group', 'Username', 'Barcode']} dissableUserCreation={dissableUserCreation} />}
                     onKeyDown={e => this.handleAdd(e, 'find_patron')}
                   />
                 </Col>
@@ -199,7 +202,7 @@ class CheckOut extends React.Component {
                     fullWidth
                     id="barcode"
                     component={TextField}
-                    validationEnabled={false}
+                    validationEnabled={validationEnabled}
                     onKeyDown={e => this.handleAdd(e, 'add_item')}
                   />
                 </Col>
