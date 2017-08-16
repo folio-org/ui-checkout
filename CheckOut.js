@@ -154,7 +154,7 @@ class CheckOut extends React.Component {
         <div style={containerStyle}>
           <Paneset static>
             <Pane defaultWidth="50%" paneTitle="Patron" >
-              <Row>
+              <Row id="patron-input">
                 <Col xs={9}>
                   <Field
                     name="patron.identifier"
@@ -170,6 +170,7 @@ class CheckOut extends React.Component {
                 </Col>
                 <Col xs={3}>
                   <Button
+                    id="clickable-findpatron"
                     buttonStyle="primary noRadius"
                     fullWidth
                     onClick={e => this.handleAdd(e, 'find_patron')}
@@ -178,6 +179,7 @@ class CheckOut extends React.Component {
                 </Col>
               </Row>
               <MultiColumnList
+                id="list-patrons"
                 contentData={patrons}
                 rowMetadata={['id', 'username']}
                 formatter={patronsListFormatter}
@@ -190,7 +192,7 @@ class CheckOut extends React.Component {
               />
             </Pane>
             <Pane defaultWidth="50%" paneTitle="Scanned Items">
-              <Row>
+              <Row id="item-input">
                 <Col xs={9}>
                   <Field
                     name="item.barcode"
@@ -205,6 +207,7 @@ class CheckOut extends React.Component {
                 </Col>
                 <Col xs={3}>
                   <Button
+                    id="clickable-additem"
                     buttonStyle="primary noRadius"
                     fullWidth
                     onClick={e => this.handleAdd(e, 'add_item')}
