@@ -11,8 +11,8 @@ module.exports.test = function(stripesnightmare) {
       })
       it('should open module "Check Out"', done => {
         nightmare
-        .wait('a[Title="Check out"]')
-        .click('a[Title="Check out"]')
+        .wait('#clickable-checkout-module')
+        .click('#clickable-checkout-module')
         .then(function(result) {
           done()
         })
@@ -20,10 +20,10 @@ module.exports.test = function(stripesnightmare) {
       })
       it('should show error when scanning item before patron card', done => {
         nightmare
-        .wait('#barcode')
-        .type('#barcode',"item-before-patron")
-        .wait('#clickable-additem')
-        .click('#clickable-additem')
+        .wait('#input-item-barcode')
+        .insert('#input-item-barcode',"item-before-patron")
+        .wait('#clickable-add-item')
+        .click('#clickable-add-item')
         .wait('div[class^="textfieldError"]')
         .evaluate(function() {
           var patronInput = document.querySelector('#patron-input');
@@ -38,9 +38,9 @@ module.exports.test = function(stripesnightmare) {
       })
       it('should show error when entering wrong patron ID', done => {
         nightmare
-        .wait('#patron_identifier')
-        .type('#patron_identifier',"wrong-patron-id")
-        .click('#clickable-findpatron')
+        .wait('#input-patron-identifier')
+        .insert('#input-patron-identifier',"wrong-patron-id")
+        .click('#clickable-find-patron')
         .wait('div[class^="textfieldError"]')
         .evaluate(function() {
           var patronInput = document.querySelector('#patron-input');
@@ -70,13 +70,13 @@ module.exports.test = function(stripesnightmare) {
       })
       it('should find existing patron', done => {
         nightmare
-        .wait('a[Title="Check out"]')
-        .click('a[Title="Check out"]')
-        .wait('#barcode')
-        .type('#barcode', null)
-        .type('#patron_identifier', null)
-        .type('#patron_identifier',"diku_admin")
-        .click('#clickable-findpatron')
+        .wait('#clickable-checkout-module')
+        .click('#clickable-checkout-module')
+        .wait('#input-item-barcode')
+        .insert('#input-item-barcode', null)
+        .insert('#input-patron-identifier', null)
+        .insert('#input-patron-identifier',"diku_admin")
+        .click('#clickable-find-patron')
         .wait('#list-patrons')
         .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
         .then(result => { done() })
@@ -84,12 +84,12 @@ module.exports.test = function(stripesnightmare) {
       })
       it('should show error when entering wrong item ID', done => {
         nightmare
-        .type('#barcode',"wrong-item-barcode")
-        .click('#clickable-additem')
+        .insert('#input-item-barcode',"wrong-item-barcode")
+        .click('#clickable-add-item')
         .wait('div[class^="textfieldError"]')
         .evaluate(function() {
-          var patronInput = document.querySelector('#item-input');
-          var errorText =  patronInput.querySelector('div[class^="textfieldError"]').innerText;
+          var itemInput = document.querySelector('#item-input');
+          var errorText =  itemInput.querySelector('div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("Item")) {
             throw new Error("Error message not found for wrong item barcode");
           }
