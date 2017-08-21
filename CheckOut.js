@@ -173,7 +173,7 @@ class CheckOut extends React.Component {
                 </Col>
                 <Col xs={3}>
                   <Button
-                    id="clickable-findpatron"
+                    id="clickable-find-patron"
                     buttonStyle="primary noRadius"
                     fullWidth
                     onClick={e => this.handleAdd(e, 'find_patron')}
@@ -210,7 +210,7 @@ class CheckOut extends React.Component {
                 </Col>
                 <Col xs={3}>
                   <Button
-                    id="clickable-additem"
+                    id="clickable-add-item"
                     buttonStyle="primary noRadius"
                     fullWidth
                     onClick={e => this.handleAdd(e, 'add_item')}
@@ -233,7 +233,7 @@ class CheckOut extends React.Component {
 
           </Paneset>
           {scannedItems.length && patrons.length &&
-            <Button buttonStyle="primary mega" onClick={() => this.handleDone()} >Done</Button>
+            <Button id="clickable-done" buttonStyle="primary mega" onClick={() => this.handleDone()} >Done</Button>
           }
         </div>
       </form>
