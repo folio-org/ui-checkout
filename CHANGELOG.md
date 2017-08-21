@@ -1,6 +1,8 @@
 # Change history for ui-checkout
 
 ## 1.0.0 (IN PROGRESS)
+## [1.0.0](https://github.com/folio-org/ui-checkout/tree/v1.0.0) (2017-08-21)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v0.0.1...v1.0.0)
 
 *  Switch from props.data to props.resources. Fixes UIS-66.
 *  Assign element ID's for automated testing. STRIPES-300.
