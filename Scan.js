@@ -25,11 +25,9 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
-      userIdentifierPref: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-        }),
-      ),
+      userIdentifierPref: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
     }),
     mutator: PropTypes.shape({
       mode: PropTypes.shape({
@@ -116,6 +114,7 @@ class Scan extends React.Component {
   // (see constants.js for values)
   userIdentifierPref() {
     const pref = (this.props.resources.userIdentifierPref || {}).records || [];
+
     return (pref.length > 0 && pref[0].value != null) ?
       _.find(patronIdentifierTypes, { key: pref[0].value }) :
       defaultPatronIdentifier;
@@ -190,9 +189,8 @@ class Scan extends React.Component {
   render() {
     const resources = this.props.resources;
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
-    const scannedItems = resources.scannedItems;
-    const patrons = resources.patrons;
-
+    const scannedItems = resources.scannedItems || [];
+    const patrons = resources.patrons || [];
 
     if (!userIdentifierPref) return <div />;
     return React.createElement(CheckOut, {
