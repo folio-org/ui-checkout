@@ -164,7 +164,7 @@ class CheckOut extends React.Component {
                     placeholder={`Enter Patron's ${userIdentifierPref.label}`}
                     aria-label="Patron Identifier"
                     fullWidth
-                    id="patron_identifier"
+                    id="input-patron-identifier"
                     component={TextField}
                     validationEnabled={validationEnabled}
                     startControl={<MaybeUserSearch {...parentProps} selectUser={this.autoSelectUser} visibleColumns={['Name', 'Patron Group', 'Username', 'Barcode']} dissableUserCreation={dissableUserCreation} />}
@@ -202,7 +202,7 @@ class CheckOut extends React.Component {
                     placeholder="Enter Barcode"
                     aria-label="Item ID"
                     fullWidth
-                    id="barcode"
+                    id="input-item-barcode"
                     component={TextField}
                     validationEnabled={validationEnabled}
                     onKeyDown={e => this.handleAdd(e, 'add_item')}
@@ -219,6 +219,7 @@ class CheckOut extends React.Component {
                 </Col>
               </Row>
               <MultiColumnList
+                id="list-items-checked-out"
                 visibleColumns={['title', 'barcode', 'Date loaned', 'Date due']}
                 rowMetadata={['id']}
                 contentData={scannedItems}
