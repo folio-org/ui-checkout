@@ -105,7 +105,7 @@ class Scan extends React.Component {
         if (json.users.length === 0) {
           throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
         }
-        document.getElementById('barcode').focus();
+        document.getElementById('input-item-barcode').focus();
         return this.props.mutator.patrons.replace(json.users);
       });
   }
