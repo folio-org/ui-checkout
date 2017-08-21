@@ -32,7 +32,7 @@ class EntrySelector extends React.Component {
 
   constructor(props) {
     super(props);
-    
+
     this.state = {
       creatingEntry: false,
     };
@@ -68,7 +68,7 @@ class EntrySelector extends React.Component {
     if (allEntries.length > 0) { id = allEntries[0].id; }
     this.props.history.push(`${this.props.match.path}/${id}`);
   }
-  
+
   onClickAdd() {
     this.setState({
       creatingEntry: true,
@@ -111,7 +111,7 @@ class EntrySelector extends React.Component {
     );
 
     return (
-      <Paneset nested defaultWidth="80%">
+      <Paneset nested defaultWidth="fill">
         <Pane defaultWidth="25%" lastMenu={LastMenu} paneTitle={paneTitle}>
           <NavList>
             <NavListSection activeLink={this.activeLink(links)}>
