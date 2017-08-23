@@ -1,8 +1,8 @@
 module.exports.test = function(stripesnightmare) {
 
   describe('Check-out, error messages', function() {
-    this.timeout(Number(config.test_timeout))
-    const { nightmare, config, utils: { names, auth } } = stripesnightmare;
+    const { nightmare, config, utils: { auth, names } } = stripesnightmare;
+    this.timeout(Number(config.test_timeout));
 
     describe('Login > Open module "Check Out" > Logout', () => {
       before( done => {
