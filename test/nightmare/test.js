@@ -1,8 +1,7 @@
 module.exports.test = function(stripesnightmare) {
 
   describe('Check-out, error messages', function() {
-    // Recommended: 5s locally, 10s to remote server, 30s from airplane
-    this.timeout('30s')
+    this.timeout(Number(config.test_timeout))
     const { nightmare, config, utils: { names, auth } } = stripesnightmare;
 
     describe('Login > Open module "Check Out" > Logout', () => {
@@ -24,10 +23,9 @@ module.exports.test = function(stripesnightmare) {
         .insert('#input-item-barcode',"item-before-patron")
         .wait('#clickable-add-item')
         .click('#clickable-add-item')
-        .wait('div[class^="textfieldError"]')
+        .wait('#patron-input div[class^="textfieldError"]')
         .evaluate(function() {
-          var patronInput = document.querySelector('#patron-input');
-          var errorText =  patronInput.querySelector('div[class^="textfieldError"]').innerText;
+          var errorText = document.querySelector('#patron-input div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("Please fill")) {
             throw new Error("Error message not found for item entered before patron found");
           }
@@ -41,10 +39,9 @@ module.exports.test = function(stripesnightmare) {
         .wait('#input-patron-identifier')
         .insert('#input-patron-identifier',"wrong-patron-id")
         .click('#clickable-find-patron')
-        .wait('div[class^="textfieldError"]')
+        .wait('#patron-input div[class^="textfieldError"]')
         .evaluate(function() {
-          var patronInput = document.querySelector('#patron-input');
-          var errorText =  patronInput.querySelector('div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#patron-input div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("User")) {
             throw new Error("Error message not found for invalid user input");
           }
@@ -86,10 +83,9 @@ module.exports.test = function(stripesnightmare) {
         nightmare
         .insert('#input-item-barcode',"wrong-item-barcode")
         .click('#clickable-add-item')
-        .wait('div[class^="textfieldError"]')
+        .wait('#item-input div[class^="textfieldError"]')
         .evaluate(function() {
-          var itemInput = document.querySelector('#item-input');
-          var errorText =  itemInput.querySelector('div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#item-input div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("Item")) {
             throw new Error("Error message not found for wrong item barcode");
           }
