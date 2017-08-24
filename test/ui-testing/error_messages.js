@@ -1,6 +1,6 @@
 module.exports.test = function(uiTestCtx) {
 
-  describe('Module test: Checkout/error_messages', function() {
+  describe('Module test: checkout:error_messages', function() {
     const { config, utils: { auth, names } } = uiTestCtx;
     const nightmare = new Nightmare(config.nightmare);
 
