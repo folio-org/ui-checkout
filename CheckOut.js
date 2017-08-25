@@ -157,7 +157,7 @@ class CheckOut extends React.Component {
         <div style={containerStyle}>
           <Paneset static>
             <Pane defaultWidth="50%" paneTitle="Patron" >
-              <Row id="patron-input">
+              <Row id="section-patron">
                 <Col xs={9}>
                   <Field
                     name="patron.identifier"
@@ -195,7 +195,7 @@ class CheckOut extends React.Component {
               />
             </Pane>
             <Pane defaultWidth="50%" paneTitle="Scanned Items">
-              <Row id="item-input">
+              <Row id="section-item">
                 <Col xs={9}>
                   <Field
                     name="item.barcode"

@@ -22,12 +22,14 @@ module.exports.test = function(uiTestCtx) {
       it('should show error when scanning item before patron card', done => {
         nightmare
         .wait('#input-item-barcode')
+        .wait(222)
         .insert('#input-item-barcode',"item-before-patron")
         .wait('#clickable-add-item')
+        .wait(222)
         .click('#clickable-add-item')
-        .wait('#patron-input div[class^="textfieldError"]')
+        .wait('#section-patron div[class^="textfieldError"]')
         .evaluate(function() {
-          var errorText = document.querySelector('#patron-input div[class^="textfieldError"]').innerText;
+          var errorText = document.querySelector('#section-patron div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("Please fill")) {
             throw new Error("Error message not found for item entered before patron found");
           }
@@ -41,9 +43,9 @@ module.exports.test = function(uiTestCtx) {
         .wait('#input-patron-identifier')
         .insert('#input-patron-identifier',"wrong-patron-id")
         .click('#clickable-find-patron')
-        .wait('#patron-input div[class^="textfieldError"]')
+        .wait('#section-patron div[class^="textfieldError"]')
         .evaluate(function() {
-          var errorText =  document.querySelector('#patron-input div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#section-patron div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("User")) {
             throw new Error("Error message not found for invalid user input");
           }
@@ -58,7 +60,7 @@ module.exports.test = function(uiTestCtx) {
         .click(config.select.settings)
         .wait('a[href="/settings/checkout"]')
         .click('a[href="/settings/checkout"]')
-        .wait(2222)
+        .wait(222)
         .wait('a[href="/settings/checkout/checkout"]')
         .click('a[href="/settings/checkout/checkout"]')
         .wait('#patronScanId')
@@ -85,9 +87,9 @@ module.exports.test = function(uiTestCtx) {
         nightmare
         .insert('#input-item-barcode',"wrong-item-barcode")
         .click('#clickable-add-item')
-        .wait('#item-input div[class^="textfieldError"]')
+        .wait('#section-item div[class^="textfieldError"]')
         .evaluate(function() {
-          var errorText =  document.querySelector('#item-input div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#section-item div[class^="textfieldError"]').innerText;
           if (!errorText.startsWith("Item")) {
             throw new Error("Error message not found for wrong item barcode");
           }
