@@ -2,6 +2,7 @@
 
 ## 1.1.0 (IN PROGRESS)
 
+* Add module test suites. FOLIO-801.
 
 ## [1.0.0](https://github.com/folio-org/ui-checkout/tree/v1.0.0) (2017-08-21)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v0.0.1...v1.0.0)
