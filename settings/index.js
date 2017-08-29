@@ -6,7 +6,7 @@ import ScanCheckoutSettings from './ScanCheckoutSettings';
 const pages = [
   {
     route: 'checkout',
-    label: 'Check-out',
+    label: 'Scan ID',
     component: ScanCheckoutSettings,
   },
 ];
