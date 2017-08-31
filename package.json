@@ -26,12 +26,12 @@
     "permissionSets": [
       {
         "permissionName": "module.checkout.enabled",
-        "displayName": "UI: check-out module is enabled"
+        "displayName": "UI: Check out module is enabled"
       },
       {
         "permissionName": "ui-checkout.all",
-        "displayName": "Checkout: All permissions",
-        "description": "Entire set of permissions needed to use Checkout",
+        "displayName": "Check out: All permissions",
+        "description": "Entire set of permissions needed to use Check out",
         "visible": true,
         "subPermissions": [
           "circulation.all",
