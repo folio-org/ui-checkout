@@ -1,5 +1,13 @@
 # Change history for ui-checkout
 
+## Release 1.2.0 in progress
+
+
+## [1.1.1](https://github.com/folio-org/ui-checkout/tree/v1.1.1) (2017-08-31)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.0...v1.1.1)
+
+* Update permissions. Completes STRIPES-435 for ui-checkout.
+
 ## [1.1.0](https://github.com/folio-org/ui-checkout/tree/v1.1.0) (2017-08-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.0.0...v1.1.0)
 
