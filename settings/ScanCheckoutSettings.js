@@ -70,12 +70,12 @@ class ScanCheckoutSettings extends React.Component {
     ));
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle="Check-out">
+      <Pane defaultWidth="fill" fluidContentWidth paneTitle="Scan ID">
         <Row>
           <Col xs={12}>
             <Select
               id="patronScanId"
-              label="Scan ID for patron check-out"
+              label="Scan ID for patron check out"
               placeholder="---"
               value={value}
               dataOptions={identifierTypeOptions}

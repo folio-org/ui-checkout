@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkout",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Item Check-out",
   "repository": "folio-org/ui-checkout",
   "publishConfig": {
@@ -26,26 +26,19 @@
     "permissionSets": [
       {
         "permissionName": "module.checkout.enabled",
-        "displayName": "UI: check-out module is enabled"
+        "displayName": "UI: Check out module is enabled"
       },
       {
-        "permissionName": "circulation.all",
-        "displayName": "Circulation: All permissions",
-        "description": "Entire set of permissions needed to use the circulation",
+        "permissionName": "ui-checkout.all",
+        "displayName": "Check out: All permissions",
+        "description": "Entire set of permissions needed to use Check out",
         "visible": true,
         "subPermissions": [
-          "circulation.loans.collection.get",
-          "circulation.loans.item.get",
-          "circulation.loans.item.post",
-          "circulation.loans.item.put",
-          "circulation.loans.item.delete",
-          "circulation.loans.collection.delete",
-          "module.scan.enabled",
+          "circulation.all",
           "circulation-storage.all",
           "configuration.all",
-          "inventory-storage.items.item.get",
-          "inventory-storage.items.item.put",
-          "users.collection.get"
+          "users.collection.get",
+          "module.checkout.enabled"
         ]
       },
       {
