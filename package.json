@@ -42,6 +42,14 @@
         ]
       },
       {
+        "permissionName": "settings.checkout.enabled",
+        "displayName": "Settings (Check out): Display list of settings for Check out",
+        "visible": true,
+        "subPermissions": [
+          "settings.enabled"
+        ]
+      },
+      {
         "permissionName": "settings.loan-policies.all",
         "displayName": "Settings (Circ): Can create, edit and remove loan policies",
         "subPermissions": [
