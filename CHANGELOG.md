@@ -2,7 +2,8 @@
 
 ## Release 1.2.0 in progress
 
-## [1.1.2] IN PROGRESS 
+## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
 
 * Add settings.checkout.enabled permissionSet to package.json. UICHKOUT-13.
 
