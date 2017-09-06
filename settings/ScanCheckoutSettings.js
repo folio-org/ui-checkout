@@ -42,6 +42,7 @@ class ScanCheckoutSettings extends React.Component {
   onChangeIdentifier(e) {
     const prefRecord = this.props.data.userIdentifierPref[0];
     if (prefRecord) {
+      if (prefRecord.metadata) delete prefRecord.metadata;
       // preference has been set previously, can proceed with update here
       this.props.mutator.userIdentifierPrefRecordId.replace(prefRecord.id);
       prefRecord.value = e.target.value;
