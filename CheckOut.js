@@ -146,7 +146,7 @@ class CheckOut extends React.Component {
     };
 
     const validationEnabled = false;
-    const dissableUserCreation = true;
+    const disableUserCreation = true;
 
     if (patrons.length && scannedItems.length) {
       containerStyle.height = '98.6%';
@@ -167,7 +167,7 @@ class CheckOut extends React.Component {
                     id="input-patron-identifier"
                     component={TextField}
                     validationEnabled={validationEnabled}
-                    startControl={<MaybeUserSearch {...parentProps} selectUser={this.autoSelectUser} visibleColumns={['Name', 'Patron Group', 'Username', 'Barcode']} dissableUserCreation={dissableUserCreation} />}
+                    startControl={<MaybeUserSearch {...parentProps} selectUser={this.autoSelectUser} visibleColumns={['Name', 'Patron Group', 'Username', 'Barcode']} disableUserCreation={disableUserCreation} />}
                     onKeyDown={e => this.handleAdd(e, 'find_patron')}
                   />
                 </Col>
