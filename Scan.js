@@ -15,7 +15,7 @@ import ItemView from './ItemView';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
-class Scan2 extends React.Component {
+class Scan extends React.Component {
   static contextTypes = {
     stripes: PropTypes.object,
   };
@@ -247,4 +247,4 @@ class Scan2 extends React.Component {
   }
 }
 
-export default Scan2;
+export default Scan;
