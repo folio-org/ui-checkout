@@ -3,15 +3,22 @@ import React, { PropTypes } from 'react';
 import fetch from 'isomorphic-fetch';
 import dateFormat from 'dateformat';
 import uuid from 'uuid';
-import { SubmissionError, change } from 'redux-form';
+import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
+import Paneset from '@folio/stripes-components/lib/Paneset';
+import Pane from '@folio/stripes-components/lib/Pane';
+import Button from '@folio/stripes-components/lib/Button';
 
-import CheckOut from './CheckOut';
+import PatronForm from './PatronForm';
+import PatronView from './PatronView';
+import ItemForm from './ItemForm';
+import ItemView from './ItemView';
+
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
-class Scan extends React.Component {
+class Scan2 extends React.Component {
   static contextTypes = {
     stripes: PropTypes.object,
-  }
+  };
 
   static propTypes = {
     resources: PropTypes.shape({
@@ -60,33 +67,20 @@ class Scan extends React.Component {
   constructor(props, context) {
     super(props);
     this.okapiUrl = context.stripes.okapi.url;
+    this.store = context.stripes.store;
     this.httpHeaders = Object.assign({}, {
       'X-Okapi-Tenant': context.stripes.okapi.tenant,
-      'X-Okapi-Token': context.stripes.store.getState().okapi.token,
+      'X-Okapi-Token': this.store.getState().okapi.token,
       'Content-Type': 'application/json',
     });
 
-    this.onSubmitInCheckOutForm = this.onSubmitInCheckOutForm.bind(this);
-    this.onClickDone = this.onClickDone.bind(this);
+    this.findPatron = this.findPatron.bind(this);
+    this.checkout = this.checkout.bind(this);
   }
 
-  onClickDone() {
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
-  }
+  findPatron(data) {
+    const patron = data.patron;
 
-  onSubmitInCheckOutForm(data) {
-    if (data.SubmitMeta.button === 'find_patron') {
-      return this.findPatron(data.patron);
-    } else if (data.SubmitMeta.button === 'add_item') {
-      return this.checkout(data);
-    }
-
-    throw new SubmissionError({ item: { barcode: 'Internal UI error. Expected click on "Find patron" or "Add item" but could not determine, which were clicked.' },
-      patron: { identifier: 'Internal UI error. Expected click on "Find patron" or "Add item" but could not determine, which were clicked.' } });
-  }
-
-  findPatron(patron) {
     if (!patron) {
       throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
     }
@@ -121,12 +115,19 @@ class Scan extends React.Component {
   }
 
   checkout(data) {
-    if (this.props.resources.patrons.length === 0) {
-      throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
+    const item = data.item;
+
+    if (!item) {
+      throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
-    return this.fetchItemByBarcode(data.item.barcode)
+
+    if (this.props.resources.patrons.length === 0) {
+      return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
+    }
+
+    return this.fetchItemByBarcode(item.barcode)
       .then(item => this.postLoan(this.props.resources.patrons[0].id, item.id))
-      .then(() => this.clearField('CheckOut', 'item.barcode'));
+      .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
   fetchItemByBarcode(barcode) {
@@ -176,14 +177,29 @@ class Scan extends React.Component {
         return response.json();
       }
     }).then((loanresponse) => {
-      const scannedItems = [];
-      scannedItems.push(loanresponse);
-      return this.props.mutator.scannedItems.replace(scannedItems.concat(this.props.resources.scannedItems));
+      const scannedItems = [loanresponse].concat(this.props.resources.scannedItems);
+      return this.props.mutator.scannedItems.replace(scannedItems);
     });
   }
 
   clearField(formName, fieldName) {
-    this.context.stripes.store.dispatch(change(formName, fieldName, ''));
+    this.store.dispatch(change(formName, fieldName, ''));
+  }
+
+  dispatchError(formName, fieldName, errors) {
+    this.store.dispatch(stopSubmit(formName, errors));
+    this.store.dispatch(setSubmitFailed(formName, [ fieldName ] ));
+  }
+
+  clearForm(formName) {
+    this.store.dispatch(reset(formName));
+  }
+
+  onClickDone() {
+    this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.replace([]);
+    this.clearForm('itemForm');
+    this.clearForm('patronForm');
   }
 
   render() {
@@ -193,16 +209,42 @@ class Scan extends React.Component {
     const patrons = resources.patrons || [];
 
     if (!userIdentifierPref) return <div />;
-    return React.createElement(CheckOut, {
-      onClickDone: this.onClickDone,
-      submithandler: this.onSubmitInCheckOutForm,
-      initialValues: {},
-      patrons,
-      scannedItems,
-      parentProps: this.props,
-      userIdentifierPref: this.userIdentifierPref(),
-    });
+
+    const containerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      height: '100%',
+      width: '100%',
+      position: 'absolute',
+    };
+
+    if (patrons.length && scannedItems.length) {
+      containerStyle.height = '98.6%';
+    }
+
+    return (
+      <div style={containerStyle}>
+        <Paneset static>
+          <Pane defaultWidth="50%" paneTitle="Patron">
+            <PatronForm
+              onSubmit={this.findPatron}
+              userIdentifierPref={this.userIdentifierPref()}
+              {...this.props}
+            />
+            <PatronView patrons={patrons} />
+          </Pane>
+          <Pane defaultWidth="50%" paneTitle="Scanned Items">
+            <ItemForm onSubmit={this.checkout} />
+            <ItemView scannedItems={scannedItems} />
+          </Pane>
+        </Paneset>
+        {scannedItems.length && patrons.length &&
+          <Button id="clickable-done" buttonStyle="primary mega" onClick={() => this.onClickDone()}>Done</Button>
+        }
+      </div>
+    );
   }
 }
 
-export default Scan;
+export default Scan2;
