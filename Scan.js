@@ -74,6 +74,7 @@ class Scan extends React.Component {
       'Content-Type': 'application/json',
     });
 
+    this.connectedPatronView = props.stripes.connect(PatronView);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
   }
@@ -232,7 +233,7 @@ class Scan extends React.Component {
               userIdentifierPref={this.userIdentifierPref()}
               {...this.props}
             />
-            <PatronView patrons={patrons} />
+            {patrons.length > 0 && <this.connectedPatronView patron={patrons[0]} {...this.props} />}
           </Pane>
           <Pane defaultWidth="50%" paneTitle="Scanned Items">
             <ItemForm onSubmit={this.checkout} />

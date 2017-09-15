@@ -5,62 +5,103 @@ import { Field, reduxForm } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import TextField from '@folio/stripes-components/lib/TextField';
+import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-bootstrap';
 
-import { getAnchoredRowFormatter } from './util';
-
-const propTypes = {
-  patrons: React.PropTypes.arrayOf(React.PropTypes.object),
-};
-
-const contextTypes = {
-  history: PropTypes.object,
-};
-
-const patronsListFormatter = {
-  Active: user => user.active,
-  Name: user => `${_.get(user, ['personal', 'lastName'], '')}, ${_.get(user, ['personal', 'firstName'], '')}`,
-  Username: user => user.username,
-  Email: user => _.get(user, ['personal', 'email']),
-};
+import { getAnchoredRowFormatter, getFullName, formatDate } from './util';
 
 class PatronView extends React.Component {
 
-  constructor(props, context) {
-    super(props, context);
-    this.context = context;
-    this.onSelectRow = this.onSelectRow.bind(this);
+  static propTypes = {
+    patron: React.PropTypes.object,
+    resources: PropTypes.shape({
+      patronGroups: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
+    mutator: React.PropTypes.shape({
+    }),
+    history: PropTypes.object,
+  };
+
+  static manifest = Object.freeze({
+    patronGroups: {
+      type: 'okapi',
+      path: 'groups',
+      records: 'usergroups',
+      GET: {
+        path: 'groups?query=(id=!{patron.patronGroup})',
+      },
+    },
+  });
+
+  goToUser(e, user) {
+    this.props.history.push(`/users/view/${user.id}`);
+    e.preventDefault();
   }
 
-  onSelectRow(e, patron) {
-    const userId = patron.id;
-    const username = patron.username;
-    this.context.history.push(`/users/view/${userId}/${username}`);
+  getPatronGroup() {
+    const resources = this.props.resources;
+    const patronGroups = (resources.patronGroups || {}).records || [];
+    return patronGroups[0] || {};
+  }
+
+  getPatronStatus() {
+    return (_.get(this.props.patron, ['active'], '') ? 'Active' : 'Inactive');
+  }
+
+  getExpirationDate() {
+    const { patron, stripes }  = this.props;
+    return (patron.expirationDate ? formatDate(patron.expirationDate, stripes.locale) : '-');
+  }
+
+  getUserView(user) {
+    const path = `/users/view/${user.id}`;
+    return (
+      <span className="">
+        <a onClick={e => this.goToUser(e, user)} href={path}>
+          <strong>{getFullName(user)}</strong>
+        </a>
+        <strong>Barcode:</strong>
+        <a onClick={e => this.goToUser(e, user)} href={path}>{user.barcode}</a>
+      </span>
+    );
   }
 
   render() {
-    const patrons = this.props.patrons;
+    const { patron, stripes } = this.props;
+    const patronGroup = this.getPatronGroup();
+    const patronStatus = this.getPatronStatus();
+    const expirationDate = this.getExpirationDate();
 
     return (
-      <MultiColumnList
-        id="list-patrons"
-        contentData={patrons}
-        rowMetadata={['id', 'username']}
-        formatter={patronsListFormatter}
-        visibleColumns={['Active', 'Name', 'Username', 'Email']}
-        autosize
-        virtualize
-        isEmptyMessage={'No patron selected'}
-        rowFormatter={getAnchoredRowFormatter}
-        onRowClick={this.onSelectRow}
-      />
-    );
+      <div>
+        <br />
+        <Row>
+          <Col xs={12}>
+            <KeyValue label="BORROWER" value={this.getUserView(patron)} />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col xs={4}>
+            <KeyValue label="PATRON GROUP" value={patronGroup.group} />
+          </Col>
+          <Col xs={4}>
+            <KeyValue label="STATUS" value={patronStatus} />
+          </Col>
+          <Col xs={4}>
+            <KeyValue label="USER EXPIRATION" value={expirationDate} />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col xs={4}>
+            <KeyValue label="OPEN LOANS" value={0} />
+          </Col>
+        </Row>
+      </div>);
   }
 }
-
-PatronView.propTypes = propTypes;
-PatronView.contextTypes = contextTypes;
 
 export default PatronView;
