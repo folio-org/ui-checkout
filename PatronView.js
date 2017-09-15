@@ -96,8 +96,6 @@ class PatronView extends React.Component {
           </Row>
         </div>
 
-        <hr />
-
         <div className={css.section}>
           <Row>
             <Col xs={4}>
