@@ -9,6 +9,7 @@ import KeyValue from '@folio/stripes-components/lib/KeyValue';
 import { Row, Col } from 'react-bootstrap';
 
 import { getAnchoredRowFormatter, getFullName, formatDate } from './util';
+import css from './PatronView.css';
 
 class PatronView extends React.Component {
 
@@ -58,11 +59,11 @@ class PatronView extends React.Component {
   getUserView(user) {
     const path = `/users/view/${user.id}`;
     return (
-      <span className="">
-        <a onClick={e => this.goToUser(e, user)} href={path}>
+      <span>
+        <a className={css.marginRight} onClick={e => this.goToUser(e, user)} href={path}>
           <strong>{getFullName(user)}</strong>
         </a>
-        <strong>Barcode:</strong>
+        <strong>Barcode: </strong>
         <a onClick={e => this.goToUser(e, user)} href={path}>{user.barcode}</a>
       </span>
     );
@@ -77,30 +78,35 @@ class PatronView extends React.Component {
     return (
       <div>
         <br />
-        <Row>
-          <Col xs={12}>
-            <KeyValue label="BORROWER" value={this.getUserView(patron)} />
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col xs={4}>
-            <KeyValue label="PATRON GROUP" value={patronGroup.group} />
-          </Col>
-          <Col xs={4}>
-            <KeyValue label="STATUS" value={patronStatus} />
-          </Col>
-          <Col xs={4}>
-            <KeyValue label="USER EXPIRATION" value={expirationDate} />
-          </Col>
-        </Row>
-        <br />
-        <Row>
-          <Col xs={4}>
-            <KeyValue label="OPEN LOANS" value={0} />
-          </Col>
-        </Row>
-      </div>);
+        <div className={`${css.section} ${css.active}`}>
+          <KeyValue label="BORROWER" value={this.getUserView(patron)} />
+        </div>
+
+        <div className={css.section}>
+          <Row>
+            <Col xs={4}>
+              <KeyValue label="PATRON GROUP" value={patronGroup.group} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label="STATUS" value={patronStatus} />
+            </Col>
+            <Col xs={4}>
+              <KeyValue label="USER EXPIRATION" value={expirationDate} />
+            </Col>
+          </Row>
+        </div>
+
+        <hr />
+
+        <div className={css.section}>
+          <Row>
+            <Col xs={4}>
+              <KeyValue label="OPEN LOANS" value={0} />
+            </Col>
+          </Row>
+        </div>
+      </div>
+    );
   }
 }
 
