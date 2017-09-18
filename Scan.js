@@ -8,10 +8,10 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
 
-import PatronForm from './PatronForm';
-import PatronView from './PatronView';
-import ItemForm from './ItemForm';
-import ItemView from './ItemView';
+import PatronForm from './lib/PatronForm';
+import PatronView from './lib/PatronView';
+import ItemForm from './lib/ItemForm';
+import ItemView from './lib/ItemView';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
@@ -88,6 +88,8 @@ class Scan extends React.Component {
 
     const patronIdentifier = this.userIdentifierPref();
     this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.replace([]);
+
     return fetch(`${this.okapiUrl}/users?query=(${patronIdentifier.queryKey}="${patron.identifier}")`, { headers: this.httpHeaders })
       .then((response) => {
         if (response.status >= 400) {
