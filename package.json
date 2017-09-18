@@ -66,7 +66,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint **/*.js --ignore-pattern node_modules/ || true"
+    "lint": "eslint *.js lib settings || true"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
