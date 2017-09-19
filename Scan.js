@@ -148,8 +148,9 @@ class Scan extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
+    const userId = this.props.resources.proxy.id || this.props.resources.patrons[0].id;
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.postLoan(this.props.resources.patrons[0].id, item.id))
+      .then(item => this.postLoan(userId, item.id))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
