@@ -33,6 +33,7 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
+      proxy: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -42,6 +43,9 @@ class Scan extends React.Component {
         replace: PropTypes.func,
       }),
       patrons: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      proxy: PropTypes.shape({
         replace: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
@@ -57,6 +61,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     patrons: { initialValue: [] },
+    proxy: { initialValue: null },
     scannedItems: { initialValue: [] },
     userIdentifierPref: {
       type: 'okapi',
@@ -78,13 +83,23 @@ class Scan extends React.Component {
     this.connectedPatronView = props.stripes.connect(PatronView);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
+    this.selectProxy = this.selectProxy.bind(this);
   }
 
   onClickDone() {
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
+    this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
+  }
+
+  clearResources() {
+    this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.replace([]);
+    this.props.mutator.proxy.replace({});
+  }
+
+  selectProxy(proxy) {
+    this.props.mutator.proxy.replace(proxy);
   }
 
   findPatron(data) {
@@ -95,8 +110,7 @@ class Scan extends React.Component {
     }
 
     const patronIdentifier = this.userIdentifierPref();
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
+    this.clearResources();
 
     return fetch(`${this.okapiUrl}/users?query=(${patronIdentifier.queryKey}="${patron.identifier}")`, { headers: this.httpHeaders })
       .then((response) => {
@@ -209,6 +223,7 @@ class Scan extends React.Component {
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const patrons = resources.patrons || [];
+    const proxy = resources.proxy;
 
     if (!userIdentifierPref) return <div />;
 
@@ -234,7 +249,14 @@ class Scan extends React.Component {
               userIdentifierPref={this.userIdentifierPref()}
               {...this.props}
             />
-            {patrons.length > 0 && <this.connectedPatronView patron={patrons[0]} {...this.props} />}
+            {patrons.length > 0 &&
+              <this.connectedPatronView
+                onSelectProxy={this.selectProxy}
+                patron={patrons[0]}
+                proxy={proxy}
+                stripes={this.props.stripes}
+              />
+            }
           </Pane>
           <Pane defaultWidth="50%" paneTitle="Scanned Items">
             <ItemForm onSubmit={this.checkout} />
