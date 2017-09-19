@@ -21,6 +21,7 @@ class Scan extends React.Component {
   };
 
   static propTypes = {
+    stripes: PropTypes.object,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -79,6 +80,13 @@ class Scan extends React.Component {
     this.checkout = this.checkout.bind(this);
   }
 
+  onClickDone() {
+    this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.replace([]);
+    this.clearForm('itemForm');
+    this.clearForm('patronForm');
+  }
+
   findPatron(data) {
     const patron = data.patron;
 
@@ -118,9 +126,7 @@ class Scan extends React.Component {
   }
 
   checkout(data) {
-    const item = data.item;
-
-    if (!item) {
+    if (!data.item) {
       throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
@@ -128,7 +134,7 @@ class Scan extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    return this.fetchItemByBarcode(item.barcode)
+    return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.postLoan(this.props.resources.patrons[0].id, item.id))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
@@ -191,18 +197,11 @@ class Scan extends React.Component {
 
   dispatchError(formName, fieldName, errors) {
     this.store.dispatch(stopSubmit(formName, errors));
-    this.store.dispatch(setSubmitFailed(formName, [ fieldName ] ));
+    this.store.dispatch(setSubmitFailed(formName, [fieldName]));
   }
 
   clearForm(formName) {
     this.store.dispatch(reset(formName));
-  }
-
-  onClickDone() {
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
-    this.clearForm('itemForm');
-    this.clearForm('patronForm');
   }
 
   render() {
