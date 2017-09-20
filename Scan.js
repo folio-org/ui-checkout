@@ -9,9 +9,9 @@ import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
 
 import PatronForm from './lib/PatronForm';
-import PatronView from './lib/PatronView';
 import ItemForm from './lib/ItemForm';
-import ItemView from './lib/ItemView';
+import ViewPatron from './lib/ViewPatron';
+import ViewItem from './lib/ViewItem';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
@@ -80,7 +80,7 @@ class Scan extends React.Component {
       'Content-Type': 'application/json',
     });
 
-    this.connectedPatronView = props.stripes.connect(PatronView);
+    this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
     this.selectProxy = this.selectProxy.bind(this);
@@ -251,7 +251,7 @@ class Scan extends React.Component {
               {...this.props}
             />
             {patrons.length > 0 &&
-              <this.connectedPatronView
+              <this.connectedViewPatron
                 onSelectProxy={this.selectProxy}
                 patron={patrons[0]}
                 proxy={proxy}
@@ -261,7 +261,7 @@ class Scan extends React.Component {
           </Pane>
           <Pane defaultWidth="50%" paneTitle="Scanned Items">
             <ItemForm onSubmit={this.checkout} />
-            <ItemView scannedItems={scannedItems} />
+            <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
         {scannedItems.length && patrons.length &&
