@@ -8,10 +8,10 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Button from '@folio/stripes-components/lib/Button';
 
-import PatronForm from './PatronForm';
-import PatronView from './PatronView';
-import ItemForm from './ItemForm';
-import ItemView from './ItemView';
+import PatronForm from './lib/PatronForm';
+import ItemForm from './lib/ItemForm';
+import ViewPatron from './lib/ViewPatron';
+import ViewItem from './lib/ViewItem';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
@@ -21,6 +21,7 @@ class Scan extends React.Component {
   };
 
   static propTypes = {
+    stripes: PropTypes.object,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -32,6 +33,7 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
+      proxy: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -41,6 +43,9 @@ class Scan extends React.Component {
         replace: PropTypes.func,
       }),
       patrons: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      proxy: PropTypes.shape({
         replace: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
@@ -56,6 +61,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     patrons: { initialValue: [] },
+    proxy: { initialValue: null },
     scannedItems: { initialValue: [] },
     userIdentifierPref: {
       type: 'okapi',
@@ -74,8 +80,26 @@ class Scan extends React.Component {
       'Content-Type': 'application/json',
     });
 
+    this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
+    this.selectProxy = this.selectProxy.bind(this);
+  }
+
+  onClickDone() {
+    this.clearResources();
+    this.clearForm('itemForm');
+    this.clearForm('patronForm');
+  }
+
+  clearResources() {
+    this.props.mutator.scannedItems.replace([]);
+    this.props.mutator.patrons.replace([]);
+    this.props.mutator.proxy.replace({});
+  }
+
+  selectProxy(proxy) {
+    this.props.mutator.proxy.replace(proxy);
   }
 
   findPatron(data) {
@@ -86,7 +110,8 @@ class Scan extends React.Component {
     }
 
     const patronIdentifier = this.userIdentifierPref();
-    this.props.mutator.scannedItems.replace([]);
+    this.clearResources();
+
     return fetch(`${this.okapiUrl}/users?query=(${patronIdentifier.queryKey}="${patron.identifier}")`, { headers: this.httpHeaders })
       .then((response) => {
         if (response.status >= 400) {
@@ -115,9 +140,7 @@ class Scan extends React.Component {
   }
 
   checkout(data) {
-    const item = data.item;
-
-    if (!item) {
+    if (!data.item) {
       throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
@@ -125,8 +148,9 @@ class Scan extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    return this.fetchItemByBarcode(item.barcode)
-      .then(item => this.postLoan(this.props.resources.patrons[0].id, item.id))
+    const userId = this.props.resources.proxy.id || this.props.resources.patrons[0].id;
+    return this.fetchItemByBarcode(data.item.barcode)
+      .then(item => this.postLoan(userId, item.id))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
@@ -188,18 +212,11 @@ class Scan extends React.Component {
 
   dispatchError(formName, fieldName, errors) {
     this.store.dispatch(stopSubmit(formName, errors));
-    this.store.dispatch(setSubmitFailed(formName, [ fieldName ] ));
+    this.store.dispatch(setSubmitFailed(formName, [fieldName]));
   }
 
   clearForm(formName) {
     this.store.dispatch(reset(formName));
-  }
-
-  onClickDone() {
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
-    this.clearForm('itemForm');
-    this.clearForm('patronForm');
   }
 
   render() {
@@ -207,6 +224,7 @@ class Scan extends React.Component {
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const patrons = resources.patrons || [];
+    const proxy = resources.proxy;
 
     if (!userIdentifierPref) return <div />;
 
@@ -232,11 +250,18 @@ class Scan extends React.Component {
               userIdentifierPref={this.userIdentifierPref()}
               {...this.props}
             />
-            <PatronView patrons={patrons} />
+            {patrons.length > 0 &&
+              <this.connectedViewPatron
+                onSelectProxy={this.selectProxy}
+                patron={patrons[0]}
+                proxy={proxy}
+                stripes={this.props.stripes}
+              />
+            }
           </Pane>
           <Pane defaultWidth="50%" paneTitle="Scanned Items">
             <ItemForm onSubmit={this.checkout} />
-            <ItemView scannedItems={scannedItems} />
+            <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
         {scannedItems.length && patrons.length &&

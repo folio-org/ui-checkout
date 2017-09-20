@@ -29,7 +29,7 @@ class ScanCheckoutSettings extends React.Component {
         path: 'configurations/entries',
       },
       PUT: {
-        path: 'configurations/entries/${userIdentifierPrefRecordId}',
+        path: 'configurations/entries/%{userIdentifierPrefRecordId}',
       },
     },
   });
