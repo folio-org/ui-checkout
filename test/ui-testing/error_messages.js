@@ -77,7 +77,7 @@ module.exports.test = function(uiTestCtx) {
         .insert('#input-patron-identifier', null)
         .insert('#input-patron-identifier',"diku_admin")
         .click('#clickable-find-patron')
-        .wait('#list-patrons')
+        .wait('#patron-form ~ div a > strong')
         .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
         .then(result => { done() })
         .catch(done)
