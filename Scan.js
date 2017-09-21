@@ -33,7 +33,7 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
-      proxy: PropTypes.object,
+      selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -42,7 +42,7 @@ class Scan extends React.Component {
       patrons: PropTypes.shape({
         replace: PropTypes.func,
       }),
-      proxy: PropTypes.shape({
+      selPatron: PropTypes.shape({
         replace: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
@@ -58,7 +58,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     patrons: { initialValue: [] },
-    proxy: { initialValue: null },
+    selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
     userIdentifierPref: {
       type: 'okapi',
@@ -80,7 +80,8 @@ class Scan extends React.Component {
     this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
-    this.selectProxy = this.selectProxy.bind(this);
+    this.selectPatron = this.selectPatron.bind(this);
+    this.clearResources = this.clearResources.bind(this);
   }
 
   onClickDone() {
@@ -92,11 +93,11 @@ class Scan extends React.Component {
   clearResources() {
     this.props.mutator.scannedItems.replace([]);
     this.props.mutator.patrons.replace([]);
-    this.props.mutator.proxy.replace({});
+    this.props.mutator.selPatron.replace({});
   }
 
-  selectProxy(proxy) {
-    this.props.mutator.proxy.replace(proxy);
+  selectPatron(patron) {
+    this.props.mutator.selPatron.replace(patron);
   }
 
   findPatron(data) {
@@ -144,9 +145,9 @@ class Scan extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    const userId = this.props.resources.proxy.id || this.props.resources.patrons[0].id;
+    const patronId = this.props.resources.selPatron.id || this.props.resources.patrons[0].id;
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.postLoan(userId, item.id))
+      .then(item => this.postLoan(patronId, item.id))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
@@ -220,7 +221,7 @@ class Scan extends React.Component {
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const patrons = resources.patrons || [];
-    const proxy = resources.proxy;
+    const selPatron = resources.selPatron;
 
     if (!userIdentifierPref) return <div />;
 
@@ -248,15 +249,16 @@ class Scan extends React.Component {
             />
             {patrons.length > 0 &&
               <this.connectedViewPatron
-                onSelectProxy={this.selectProxy}
+                onSelectPatron={this.selectPatron}
+                onClearPatron={this.clearResources}
                 patron={patrons[0]}
-                proxy={proxy}
+                proxy={selPatron}
                 {...this.props}
               />
             }
           </Pane>
           <Pane defaultWidth="50%" paneTitle="Scanned Items">
-            <ItemForm onSubmit={this.checkout} patron={patrons[0]} />
+            <ItemForm onSubmit={this.checkout} patron={selPatron} />
             <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
