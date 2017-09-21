@@ -84,8 +84,8 @@
     "eslint-plugin-react": "^6.4.1"
   },
   "dependencies": {
-    "@folio/plugin-find-user": "1.0.0",
-    "@folio/stripes-components": "^1.4.0",
+    "@folio/plugin-find-user": "1.1.0",
+    "@folio/stripes-components": "^1.7.0",
     "dateformat": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
@@ -98,7 +98,7 @@
     "uuid": "^3.0.1"
   },
   "peerDependencies": {
-    "@folio/stripes-connect": "^2.2.1",
+    "@folio/stripes-connect": "^2.7.0",
     "@folio/stripes-core": "^2.7.0"
   }
 }
