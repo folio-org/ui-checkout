@@ -255,7 +255,7 @@ class Scan extends React.Component {
                 onSelectProxy={this.selectProxy}
                 patron={patrons[0]}
                 proxy={proxy}
-                stripes={this.props.stripes}
+                {...this.props}
               />
             }
           </Pane>
