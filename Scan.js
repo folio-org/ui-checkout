@@ -39,9 +39,6 @@ class Scan extends React.Component {
       }),
     }),
     mutator: PropTypes.shape({
-      mode: PropTypes.shape({
-        replace: PropTypes.func,
-      }),
       patrons: PropTypes.shape({
         replace: PropTypes.func,
       }),
