@@ -145,9 +145,11 @@ class Scan extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    const patronId = this.props.resources.selPatron.id || this.props.resources.patrons[0].id;
+    const userId = this.props.resources.patrons[0].id;
+    const proxyUserId = this.props.resources.selPatron.id;
+
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.postLoan(patronId, item.id))
+      .then(item => this.postLoan(userId, proxyUserId, item.id))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
@@ -171,7 +173,7 @@ class Scan extends React.Component {
       });
   }
 
-  postLoan(userId, itemId) {
+  postLoan(userId, proxyUserId, itemId) {
     const loanDate = new Date();
     const dueDate = new Date();
     dueDate.setDate(loanDate.getDate() + 14);
@@ -187,6 +189,11 @@ class Scan extends React.Component {
         name: 'Open',
       },
     };
+
+    if (proxyUserId !== userId) {
+      loan.proxyUserId = proxyUserId;
+    }
+
     return fetch(`${this.okapiUrl}/circulation/loans`, {
       method: 'POST',
       headers: this.httpHeaders,
