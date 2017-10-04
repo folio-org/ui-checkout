@@ -66,7 +66,8 @@
     ]
   },
   "scripts": {
-    "lint": "eslint *.js lib settings || true"
+    "lint": "eslint *.js lib settings",
+    "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
