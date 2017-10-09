@@ -60,7 +60,7 @@ class ScanCheckoutSettings extends React.Component {
   }
 
   render() {
-    const selectedIdentifier = this.props.resources.userIdentifierPref.records || [];
+    const selectedIdentifier = (this.props.resources.userIdentifierPref || {}).records || [];
     const value = (selectedIdentifier.length === 0) ? '' : selectedIdentifier[0].value;
     const identifierTypeOptions = patronIdentifierTypes.map(i => (
       {
