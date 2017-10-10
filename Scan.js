@@ -269,7 +269,7 @@ class Scan extends React.Component {
             <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
-        {scannedItems.length && patrons.length &&
+        {scannedItems.length > 0 && patrons.length > 0 &&
           <Button id="clickable-done" buttonStyle="primary mega" onClick={() => this.onClickDone()}>Done</Button>
         }
       </div>
