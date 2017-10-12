@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import fetch from 'isomorphic-fetch';
 import dateFormat from 'dateformat';
 import uuid from 'uuid';
