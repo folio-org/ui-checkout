@@ -141,7 +141,7 @@ class Scan extends React.Component {
   // (see constants.js for values)
   userIdentifierPref() {
     const pref = (this.props.resources.userIdentifierPref || {}).records || [];
-    return (pref.length > 0 && pref[0].value != null) ?
+    return (pref.length && pref[0].value) ?
       _.find(patronIdentifierTypes, { key: pref[0].value }) :
       defaultPatronIdentifier;
   }
@@ -151,7 +151,7 @@ class Scan extends React.Component {
       throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
-    if (this.props.resources.patrons.records.length === 0) {
+    if (!this.props.resources.patrons.records.length) {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
