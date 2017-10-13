@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import fetch from 'isomorphic-fetch';
 import dateFormat from 'dateformat';
 import uuid from 'uuid';
 import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
@@ -17,10 +16,6 @@ import ViewItem from './lib/ViewItem';
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
 class Scan extends React.Component {
-  static contextTypes = {
-    stripes: PropTypes.object,
-  };
-
   static propTypes = {
     stripes: PropTypes.object,
     resources: PropTypes.shape({
@@ -29,11 +24,12 @@ class Scan extends React.Component {
           id: PropTypes.string,
         }),
       ),
-      patrons: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-        }),
-      ),
+      patrons: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -41,7 +37,15 @@ class Scan extends React.Component {
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
-        replace: PropTypes.func,
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      items: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      loans: PropTypes.shape({
+        POST: PropTypes.func,
       }),
       selPatron: PropTypes.shape({
         replace: PropTypes.func,
@@ -58,7 +62,6 @@ class Scan extends React.Component {
   };
 
   static manifest = Object.freeze({
-    patrons: { initialValue: [] },
     selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
     userIdentifierPref: {
@@ -66,18 +69,32 @@ class Scan extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module=CHECKOUT and configName=pref_patron_identifier)',
     },
+    patrons: {
+      type: 'okapi',
+      records: 'users',
+      path: 'users',
+      accumulate: 'true',
+      fetch: false,
+    },
+    items: {
+      type: 'okapi',
+      records: 'items',
+      path: 'item-storage/items',
+      accumulate: 'true',
+      fetch: false,
+    },
+    loans: {
+      type: 'okapi',
+      records: 'loans',
+      path: 'circulation/loans',
+      fetch: false,
+    },
   });
 
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-    this.okapiUrl = context.stripes.okapi.url;
-    this.store = context.stripes.store;
-    this.httpHeaders = Object.assign({}, {
-      'X-Okapi-Tenant': context.stripes.okapi.tenant,
-      'X-Okapi-Token': this.store.getState().okapi.token,
-      'Content-Type': 'application/json',
-    });
 
+    this.store = props.stripes.store;
     this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.findPatron = this.findPatron.bind(this);
     this.checkout = this.checkout.bind(this);
@@ -93,7 +110,7 @@ class Scan extends React.Component {
 
   clearResources() {
     this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.replace([]);
+    this.props.mutator.patrons.reset();
     this.props.mutator.selPatron.replace({});
   }
 
@@ -109,30 +126,22 @@ class Scan extends React.Component {
     }
 
     const patronIdentifier = this.userIdentifierPref();
+    const query = `(${patronIdentifier.queryKey}="${patron.identifier}")`;
+
     this.clearResources();
 
-    return fetch(`${this.okapiUrl}/users?query=(${patronIdentifier.queryKey}="${patron.identifier}")`, { headers: this.httpHeaders })
-      .then((response) => {
-        if (response.status >= 400) {
-          throw new SubmissionError({ patron: { identifier: `Error ${response.status} retrieving patron by ${patronIdentifier.label}`, _error: 'Scan failed' } });
-        } else {
-          return response.json();
-        }
-      })
-      .then((json) => {
-        if (json.users.length === 0) {
-          throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
-        }
-        return this.props.mutator.patrons.replace(json.users);
-      });
+    return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
+      if (!patrons.length) {
+        throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
+      }
+    });
   }
 
   // Return either the currently set user identifier preference or a default value
   // (see constants.js for values)
   userIdentifierPref() {
     const pref = (this.props.resources.userIdentifierPref || {}).records || [];
-
-    return (pref.length > 0 && pref[0].value != null) ?
+    return (pref.length && pref[0].value) ?
       _.find(patronIdentifierTypes, { key: pref[0].value }) :
       defaultPatronIdentifier;
   }
@@ -142,36 +151,33 @@ class Scan extends React.Component {
       throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
-    if (this.props.resources.patrons.length === 0) {
+    if (!this.props.resources.patrons.records.length) {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    const proxyUserId = this.props.resources.patrons[0].id;
+    const proxyUserId = this.props.resources.patrons.records[0].id;
     const userId = this.props.resources.selPatron.id;
 
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(item => this.postLoan(userId, proxyUserId, item.id))
+      .then(items => this.postLoan(userId, proxyUserId, items[0].id))
+      .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
+  addScannedItem(loan) {
+    const scannedItems = [loan].concat(this.props.resources.scannedItems);
+    return this.props.mutator.scannedItems.replace(scannedItems);
+  }
+
   fetchItemByBarcode(barcode) {
-    // fetch item by barcode to get item id
-    return fetch(`${this.okapiUrl}/item-storage/items?query=(barcode="${barcode}")`, { headers: this.httpHeaders })
-      .then((itemsResponse) => {
-        if (itemsResponse.status >= 400) {
-          throw new SubmissionError({ item: { barcode: `Error ${itemsResponse.status} retrieving item by barcode ${barcode}`, _error: 'Scan failed' } });
-        } else {
-          return itemsResponse.json();
-        }
-      })
-      .then((itemsJson) => {
-        if (itemsJson.items.length === 0) {
-          throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
-        } else {
-          const item = JSON.parse(JSON.stringify(itemsJson.items[0]));
-          return item;
-        }
-      });
+    const query = `(barcode="${barcode}")`;
+    this.props.mutator.items.reset();
+    return this.props.mutator.items.GET({ params: { query } }).then((items) => {
+      if (!items.length) {
+        throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
+      }
+      return items;
+    });
   }
 
   postLoan(userId, proxyUserId, itemId) {
@@ -195,20 +201,7 @@ class Scan extends React.Component {
       loan.proxyUserId = proxyUserId;
     }
 
-    return fetch(`${this.okapiUrl}/circulation/loans`, {
-      method: 'POST',
-      headers: this.httpHeaders,
-      body: JSON.stringify(loan),
-    }).then((response) => {
-      if (response.status >= 400) {
-        throw new SubmissionError({ item: { barcode: `Okapi Error ${response.status} storing loan ${itemId} for patron ${userId}`, _error: 'Scan failed' } });
-      } else {
-        return response.json();
-      }
-    }).then((loanresponse) => {
-      const scannedItems = [loanresponse].concat(this.props.resources.scannedItems);
-      return this.props.mutator.scannedItems.replace(scannedItems);
-    });
+    return this.props.mutator.loans.POST(loan);
   }
 
   clearField(formName, fieldName) {
@@ -227,8 +220,8 @@ class Scan extends React.Component {
   render() {
     const resources = this.props.resources;
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
+    const patrons = (resources.patrons || {}).records || [];
     const scannedItems = resources.scannedItems || [];
-    const patrons = resources.patrons || [];
     const selPatron = resources.selPatron;
 
     if (!userIdentifierPref) return <div />;
