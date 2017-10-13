@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
@@ -7,7 +8,7 @@ import { patronIdentifierTypes } from '../constants';
 
 class ScanCheckoutSettings extends React.Component {
   static propTypes = {
-    data: PropTypes.object.isRequired,
+    resources: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
       userIdentifierPrefRecordId: PropTypes.shape({
         replace: PropTypes.func,
@@ -40,7 +41,7 @@ class ScanCheckoutSettings extends React.Component {
   }
 
   onChangeIdentifier(e) {
-    const prefRecord = this.props.data.userIdentifierPref[0];
+    const prefRecord = this.props.resources.userIdentifierPref.records[0];
     if (prefRecord) {
       if (prefRecord.metadata) delete prefRecord.metadata;
       // preference has been set previously, can proceed with update here
@@ -60,7 +61,7 @@ class ScanCheckoutSettings extends React.Component {
   }
 
   render() {
-    const selectedIdentifier = this.props.data.userIdentifierPref || [];
+    const selectedIdentifier = (this.props.resources.userIdentifierPref || {}).records || [];
     const value = (selectedIdentifier.length === 0) ? '' : selectedIdentifier[0].value;
     const identifierTypeOptions = patronIdentifierTypes.map(i => (
       {

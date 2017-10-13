@@ -48,25 +48,12 @@
         "subPermissions": [
           "settings.enabled"
         ]
-      },
-      {
-        "permissionName": "settings.loan-policies.all",
-        "displayName": "Settings (Circ): Can create, edit and remove loan policies",
-        "subPermissions": [
-          "circulation-storage.loan-policies.collection.get",
-          "circulation-storage.loan-policies.item.get",
-          "circulation-storage.loan-policies.item.post",
-          "circulation-storage.loan-policies.item.put",
-          "circulation-storage.loan-policies.item.delete",
-          "circulation-storage.loan-policies.collection.delete",
-          "settings.enabled"
-        ],
-        "visible": true
       }
     ]
   },
   "scripts": {
-    "lint": "eslint *.js lib settings || true"
+    "lint": "eslint *.js lib settings",
+    "test": "echo 'placeholder. no tests implemented'"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
