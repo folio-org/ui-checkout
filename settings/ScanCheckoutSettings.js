@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
 
