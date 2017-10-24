@@ -226,6 +226,14 @@ class Scan extends React.Component {
 
     if (!userIdentifierPref) return <div />;
 
+    let patron = patrons[0];
+    let proxy = selPatron;
+
+    if (!_.isEmpty(selPatron)) {
+      patron = selPatron;
+      proxy = patrons[0];
+    }
+
     const containerStyle = {
       display: 'flex',
       flexDirection: 'column',
@@ -252,8 +260,8 @@ class Scan extends React.Component {
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
-                patron={patrons[0]}
-                proxy={selPatron}
+                patron={patron}
+                proxy={proxy}
                 {...this.props}
               />
             }
