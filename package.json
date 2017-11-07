@@ -85,5 +85,8 @@
   "peerDependencies": {
     "@folio/stripes-connect": "^2.7.0",
     "@folio/stripes-core": "^2.7.0"
+  },
+  "optionalDependencies": {
+    "@folio/plugin-find-user": "^1.1.0"
   }
 }
