@@ -251,7 +251,7 @@ class Scan extends React.Component {
     return (
       <div style={containerStyle}>
         <Paneset static>
-          <Pane defaultWidth="40%" paneTitle="Scan patron card">
+          <Pane defaultWidth="35%" paneTitle="Scan patron card">
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifierPref={this.userIdentifierPref()}
@@ -267,7 +267,7 @@ class Scan extends React.Component {
               />
             }
           </Pane>
-          <Pane defaultWidth="60%" paneTitle="Scan items">
+          <Pane defaultWidth="65%" paneTitle="Scan items">
             <ItemForm onSubmit={this.checkout} patron={selPatron} total={scannedTotal} onSessionEnd={() => this.onClickDone()} />
             <ViewItem scannedItems={scannedItems} />
           </Pane>
