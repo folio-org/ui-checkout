@@ -12,6 +12,7 @@ import PatronForm from './lib/PatronForm';
 import ItemForm from './lib/ItemForm';
 import ViewPatron from './lib/ViewPatron';
 import ViewItem from './lib/ViewItem';
+import ScanFooter from './lib/ScanFooter';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
@@ -250,7 +251,7 @@ class Scan extends React.Component {
     return (
       <div style={containerStyle}>
         <Paneset static>
-          <Pane defaultWidth="50%" paneTitle="Patron">
+          <Pane defaultWidth="40%" paneTitle="Scan patron card">
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifierPref={this.userIdentifierPref()}
@@ -266,14 +267,12 @@ class Scan extends React.Component {
               />
             }
           </Pane>
-          <Pane defaultWidth="50%" paneTitle="Scanned Items">
+          <Pane defaultWidth="60%" paneTitle="Scan items">
             <ItemForm onSubmit={this.checkout} patron={selPatron} />
             <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
-        {scannedItems.length > 0 && patrons.length > 0 &&
-          <Button id="clickable-done" buttonStyle="primary mega" onClick={() => this.onClickDone()}>Done</Button>
-        }
+        {scannedItems.length > 0 && patrons.length > 0 && <ScanFooter onClick={() => this.onClickDone()} />}
       </div>
     );
   }
