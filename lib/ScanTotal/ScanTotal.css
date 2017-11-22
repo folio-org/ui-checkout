@@ -1,5 +1,12 @@
 .root {
+  display: flex;
+  flex-direction: row;
+}
+
+.label {
   line-height: 28px;
   font-weight: bold;
   font-size: 1.1rem;
+  text-align: right;
+  margin-right: 20px;
 }

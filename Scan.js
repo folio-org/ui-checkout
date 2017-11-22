@@ -6,7 +6,6 @@ import uuid from 'uuid';
 import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import Button from '@folio/stripes-components/lib/Button';
 
 import PatronForm from './lib/PatronForm';
 import ItemForm from './lib/ItemForm';
@@ -224,6 +223,7 @@ class Scan extends React.Component {
     const patrons = (resources.patrons || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
+    const scannedTotal = scannedItems.length;
 
     if (!userIdentifierPref) return <div />;
 
@@ -244,7 +244,7 @@ class Scan extends React.Component {
       position: 'absolute',
     };
 
-    if (patrons.length && scannedItems.length) {
+    if (patrons.length && scannedTotal) {
       containerStyle.height = '98.6%';
     }
 
@@ -268,11 +268,12 @@ class Scan extends React.Component {
             }
           </Pane>
           <Pane defaultWidth="60%" paneTitle="Scan items">
-            <ItemForm onSubmit={this.checkout} patron={selPatron} />
+            <ItemForm onSubmit={this.checkout} patron={selPatron} total={scannedTotal} onSessionEnd={() => this.onClickDone()} />
             <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
-        {scannedItems.length > 0 && patrons.length > 0 && <ScanFooter onClick={() => this.onClickDone()} />}
+        {scannedItems.length > 0 && patrons.length > 0 &&
+          <ScanFooter total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
       </div>
     );
   }
