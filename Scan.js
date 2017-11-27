@@ -269,7 +269,7 @@ class Scan extends React.Component {
           </Pane>
           <Pane defaultWidth="65%" paneTitle="Scan items">
             <ItemForm onSubmit={this.checkout} patron={selPatron} total={scannedTotal} onSessionEnd={() => this.onClickDone()} />
-            <ViewItem scannedItems={scannedItems} />
+            <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
           </Pane>
         </Paneset>
         {scannedItems.length > 0 && patrons.length > 0 &&
