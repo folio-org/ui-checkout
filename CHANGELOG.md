@@ -10,6 +10,7 @@
 * Use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor `dataKey`. Fixes UICHKOUT-23.
 * Add `optionalDependencies` on find-user plugin. Fixes UICHKOUT-31.
+* Refine Checkout Page. Fixes UICHKOUT-27.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)

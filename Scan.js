@@ -6,12 +6,12 @@ import uuid from 'uuid';
 import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
-import Button from '@folio/stripes-components/lib/Button';
 
 import PatronForm from './lib/PatronForm';
 import ItemForm from './lib/ItemForm';
 import ViewPatron from './lib/ViewPatron';
 import ViewItem from './lib/ViewItem';
+import ScanFooter from './lib/ScanFooter';
 
 import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
@@ -223,6 +223,7 @@ class Scan extends React.Component {
     const patrons = (resources.patrons || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
+    const scannedTotal = scannedItems.length;
 
     if (!userIdentifierPref) return <div />;
 
@@ -243,14 +244,14 @@ class Scan extends React.Component {
       position: 'absolute',
     };
 
-    if (patrons.length && scannedItems.length) {
+    if (patrons.length && scannedTotal) {
       containerStyle.height = '98.6%';
     }
 
     return (
       <div style={containerStyle}>
         <Paneset static>
-          <Pane defaultWidth="50%" paneTitle="Patron">
+          <Pane defaultWidth="35%" paneTitle="Scan patron card">
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifierPref={this.userIdentifierPref()}
@@ -266,14 +267,13 @@ class Scan extends React.Component {
               />
             }
           </Pane>
-          <Pane defaultWidth="50%" paneTitle="Scanned Items">
-            <ItemForm onSubmit={this.checkout} patron={selPatron} />
+          <Pane defaultWidth="65%" paneTitle="Scan items">
+            <ItemForm onSubmit={this.checkout} patron={selPatron} total={scannedTotal} onSessionEnd={() => this.onClickDone()} />
             <ViewItem scannedItems={scannedItems} />
           </Pane>
         </Paneset>
         {scannedItems.length > 0 && patrons.length > 0 &&
-          <Button id="clickable-done" buttonStyle="primary mega" onClick={() => this.onClickDone()}>Done</Button>
-        }
+          <ScanFooter total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
       </div>
     );
   }
