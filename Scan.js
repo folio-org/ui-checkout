@@ -273,7 +273,7 @@ class Scan extends React.Component {
           </Pane>
         </Paneset>
         {scannedItems.length > 0 && patrons.length > 0 &&
-          <ScanFooter total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
+          <ScanFooter buttonId="clickable-done-footer" total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
       </div>
     );
   }
