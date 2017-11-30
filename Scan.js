@@ -68,8 +68,6 @@ class Scan extends React.Component {
     mutator: {},
   };
 
-  // ?query=(proxyUserId=!{patron.id})
-
   static manifest = Object.freeze({
     selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
