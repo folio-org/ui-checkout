@@ -30,6 +30,9 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      proxiesFor: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -37,6 +40,10 @@ class Scan extends React.Component {
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      proxiesFor: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -61,6 +68,8 @@ class Scan extends React.Component {
     mutator: {},
   };
 
+  // ?query=(proxyUserId=!{patron.id})
+
   static manifest = Object.freeze({
     selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
@@ -68,6 +77,13 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'configs',
       path: 'configurations/entries?query=(module=CHECKOUT and configName=pref_patron_identifier)',
+    },
+    proxiesFor: {
+      type: 'okapi',
+      records: 'proxiesFor',
+      path: 'proxiesfor',
+      accumulate: 'true',
+      fetch: false,
     },
     patrons: {
       type: 'okapi',
@@ -134,7 +150,8 @@ class Scan extends React.Component {
       if (!patrons.length) {
         throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
       }
-    });
+      return patrons;
+    }).then(patrons => this.fetchProxies(patrons[0]));
   }
 
   // Return either the currently set user identifier preference or a default value
@@ -180,6 +197,12 @@ class Scan extends React.Component {
     });
   }
 
+  fetchProxies(patron) {
+    const query = `(proxyUserId="${patron.id}")`;
+    this.props.mutator.proxiesFor.reset();
+    return this.props.mutator.proxiesFor.GET({ params: { query } });
+  }
+
   postLoan(userId, proxyUserId, itemId) {
     const loanDate = new Date();
     const dueDate = new Date();
@@ -221,6 +244,9 @@ class Scan extends React.Component {
     const resources = this.props.resources;
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
     const patrons = (resources.patrons || {}).records || [];
+
+    const proxiesFor = resources.proxiesFor || {};
+
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
@@ -257,11 +283,12 @@ class Scan extends React.Component {
               userIdentifierPref={this.userIdentifierPref()}
               {...this.props}
             />
-            {patrons.length > 0 &&
+            {patrons.length > 0 && proxiesFor.hasLoaded &&
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
+                proxiesFor={proxiesFor.records}
                 proxy={proxy}
                 {...this.props}
               />
