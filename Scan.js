@@ -30,6 +30,9 @@ class Scan extends React.Component {
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      settings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       proxiesFor: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -102,6 +105,11 @@ class Scan extends React.Component {
       records: 'loans',
       path: 'circulation/loans',
       fetch: false,
+    },
+    settings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
     },
   });
 
@@ -243,7 +251,7 @@ class Scan extends React.Component {
     const resources = this.props.resources;
     const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
     const patrons = (resources.patrons || {}).records || [];
-
+    const settings = (resources.settings || {}).records || [];
     const proxiesFor = resources.proxiesFor || {};
 
     const scannedItems = resources.scannedItems || [];
@@ -289,6 +297,7 @@ class Scan extends React.Component {
                 patron={patron}
                 proxiesFor={proxiesFor.records}
                 proxy={proxy}
+                settings={settings}
                 {...this.props}
               />
             }
