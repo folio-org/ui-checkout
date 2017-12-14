@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Select from '@folio/stripes-components/lib/Select';
+import Button from '@folio/stripes-components/lib/Button';
 
 import { patronIdentifierTypes } from '../constants';
 
@@ -38,15 +39,25 @@ class ScanCheckoutSettings extends React.Component {
   constructor(props) {
     super(props);
     this.onChangeIdentifier = this.onChangeIdentifier.bind(this);
+    this.save = this.save.bind(this);
+    this.state = { value: '' };
   }
 
   onChangeIdentifier(e) {
+    const value = e.target.value;
+
+    this.setState({ value });
+  }
+
+  save() {
     const prefRecord = this.props.resources.userIdentifierPref.records[0];
+    const value = this.state.value;
+
     if (prefRecord) {
       if (prefRecord.metadata) delete prefRecord.metadata;
       // preference has been set previously, can proceed with update here
       this.props.mutator.userIdentifierPrefRecordId.replace(prefRecord.id);
-      prefRecord.value = e.target.value;
+      prefRecord.value = value;
       this.props.mutator.userIdentifierPref.PUT(prefRecord);
     } else {
       // no preference exists, so create a new one
@@ -54,15 +65,18 @@ class ScanCheckoutSettings extends React.Component {
         {
           module: 'CHECKOUT',
           configName: 'pref_patron_identifier',
-          value: e.target.value,
+          value,
         },
       );
     }
   }
 
   render() {
-    const selectedIdentifier = (this.props.resources.userIdentifierPref || {}).records || [];
-    const value = (selectedIdentifier.length === 0) ? '' : selectedIdentifier[0].value;
+    const userIdentifierPref = this.props.resources.userIdentifierPref || {};
+    const selectedIdentifier = userIdentifierPref.records || [];
+    const prevValue = (selectedIdentifier.length === 0 ? '' : selectedIdentifier[0].value);
+    const value = this.state.value || prevValue;
+
     const identifierTypeOptions = patronIdentifierTypes.map(i => (
       {
         id: i.key,
@@ -83,6 +97,12 @@ class ScanCheckoutSettings extends React.Component {
               dataOptions={identifierTypeOptions}
               onChange={this.onChangeIdentifier}
             />
+          </Col>
+        </Row>
+
+        <Row end="xs">
+          <Col>
+            <Button onClick={this.save} disabled={!value || userIdentifierPref.isPending || value === prevValue}>Save</Button>
           </Col>
         </Row>
       </Pane>
