@@ -15,6 +15,7 @@
 * Show/Hide Profile Picture based on the tenant-level setting. Fixes UICHKOUT-42.
 * Favor react-intl date/time formatters. Refs STCOR-109.
 * Adjust columns width on checkout items view. Fixes UICHKOUT-43.
+* Add save button to scan id. Fixes UICHKOUT-40.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
