@@ -287,6 +287,7 @@ class Scan extends React.Component {
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifierPref={this.userIdentifierPref()}
+              patron={selPatron}
               {...this.props}
             />
             {patrons.length > 0 && proxiesFor.hasLoaded &&
