@@ -21,10 +21,9 @@ module.exports.test = function(uiTestCtx) {
       it('should show error when scanning item before patron card', done => {
         nightmare
         .wait('#input-item-barcode')
-        .wait(222)
+        .click('#input-item-barcode')
         .insert('#input-item-barcode',"item-before-patron")
         .wait('#clickable-add-item')
-        .wait(222)
         .click('#clickable-add-item')
         .wait('#section-patron div[class^="textfieldError"]')
         .evaluate(function() {
@@ -33,8 +32,9 @@ module.exports.test = function(uiTestCtx) {
             throw new Error("Error message not found for item entered before patron found");
           }
          })
-        .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-        .then(result => { done() })
+        .then(result => { 
+	  done()
+	})
         .catch(done)
       })
       it('should show error when entering wrong patron ID', done => {
