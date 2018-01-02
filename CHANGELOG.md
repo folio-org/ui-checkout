@@ -18,6 +18,7 @@
 * Add save button to scan id. Fixes UICHKOUT-40.
 * Reposition Cursor After End Session. Fixes UICHKOUT-44.
 * Change "Instance" to "Title". Fixes UICHKOUT-45.
+* Add validation preventing check-out attempts for items already checked out. Fixes UICHKOUT-34.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
