@@ -17,7 +17,7 @@ import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
 
 class Scan extends React.Component {
   static propTypes = {
-    stripes: PropTypes.object,
+    stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -55,6 +55,7 @@ class Scan extends React.Component {
         reset: PropTypes.func,
       }),
       loans: PropTypes.shape({
+        GET: PropTypes.func,
         POST: PropTypes.func,
       }),
       selPatron: PropTypes.shape({
@@ -104,6 +105,7 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'loans',
       path: 'circulation/loans',
+      accumulate: 'true',
       fetch: false,
     },
     settings: {
@@ -182,6 +184,7 @@ class Scan extends React.Component {
     const userId = this.props.resources.selPatron.id;
 
     return this.fetchItemByBarcode(data.item.barcode)
+      .then(items => this.checkForLoan(items))
       .then(items => this.postLoan(userId, proxyUserId, items[0].id))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('itemForm', 'item.barcode'));
@@ -207,6 +210,22 @@ class Scan extends React.Component {
     const query = `(proxyUserId="${patron.id}")`;
     this.props.mutator.proxiesFor.reset();
     return this.props.mutator.proxiesFor.GET({ params: { query } });
+  }
+
+  // Before trying to create a new loan, check to see if one exists for the
+  // requested item. If so, this function will generate an error that results
+  // in a validation error message appearing beneath the barcode input field.
+  // If no loan is found, the items array is returned as a pass-through value.
+  checkForLoan(items) {
+    const itemId = items[0].id;
+    const query = `(itemId="${itemId}" and status.name<>"Closed")`;
+
+    return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
+      if (loans.length) {
+        throw new SubmissionError({ item: { barcode: 'Item is not available for checkout', _error: 'Item is checked out' } });
+      }
+      return items;
+    });
   }
 
   postLoan(userId, proxyUserId, itemId) {
