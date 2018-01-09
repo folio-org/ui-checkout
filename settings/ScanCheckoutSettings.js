@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Select from '@folio/stripes-components/lib/Select';
-import Button from '@folio/stripes-components/lib/Button';
-
-import { patronIdentifierTypes } from '../constants';
+import Callout from '@folio/stripes-components/lib/Callout';
+import CheckoutForm from './CheckoutForm';
 
 class ScanCheckoutSettings extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
+    label: PropTypes.string,
     mutator: PropTypes.shape({
       userIdentifierPrefRecordId: PropTypes.shape({
         replace: PropTypes.func,
@@ -38,20 +35,12 @@ class ScanCheckoutSettings extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onChangeIdentifier = this.onChangeIdentifier.bind(this);
     this.save = this.save.bind(this);
-    this.state = { value: '' };
   }
 
-  onChangeIdentifier(e) {
-    const value = e.target.value;
-
-    this.setState({ value });
-  }
-
-  save() {
+  save(data) {
     const prefRecord = this.props.resources.userIdentifierPref.records[0];
-    const value = this.state.value;
+    const value = data.identifier;
 
     if (prefRecord) {
       if (prefRecord.metadata) delete prefRecord.metadata;
@@ -69,43 +58,24 @@ class ScanCheckoutSettings extends React.Component {
         },
       );
     }
+
+    this.callout.sendCallout({ message: 'Setting was successfully updated.' });
   }
 
   render() {
     const userIdentifierPref = this.props.resources.userIdentifierPref || {};
     const selectedIdentifier = userIdentifierPref.records || [];
-    const prevValue = (selectedIdentifier.length === 0 ? '' : selectedIdentifier[0].value);
-    const value = this.state.value || prevValue;
-
-    const identifierTypeOptions = patronIdentifierTypes.map(i => (
-      {
-        id: i.key,
-        label: i.label,
-        value: i.key,
-      }
-    ));
+    const identifier = (selectedIdentifier.length === 0 ? '' : selectedIdentifier[0].value);
 
     return (
-      <Pane defaultWidth="fill" fluidContentWidth paneTitle="Scan ID">
-        <Row>
-          <Col xs={12}>
-            <Select
-              id="patronScanId"
-              label="Scan ID for patron check out"
-              placeholder="---"
-              value={value}
-              dataOptions={identifierTypeOptions}
-              onChange={this.onChangeIdentifier}
-            />
-          </Col>
-        </Row>
-
-        <Row end="xs">
-          <Col>
-            <Button onClick={this.save} disabled={!value || userIdentifierPref.isPending || value === prevValue}>Save</Button>
-          </Col>
-        </Row>
-      </Pane>
+      <div style={{ width: '100%' }}>
+        <CheckoutForm
+          label={this.props.label}
+          onSubmit={this.save}
+          initialValues={{ identifier }}
+        />
+        <Callout ref={ref => (this.callout = ref)} />
+      </div>
     );
   }
 
