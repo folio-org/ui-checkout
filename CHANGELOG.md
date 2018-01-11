@@ -20,6 +20,7 @@
 * Change "Instance" to "Title". Fixes UICHKOUT-45.
 * Add validation preventing check-out attempts for items already checked out. Fixes UICHKOUT-34.
 * Fix auto-increment of open loan count in patron view. Fixes UICHKOUT-28.
+* Change Patron/Proxy labels to Borrower/Borrower's proxy for clarity. Toward UICHKOUT-47.
 * Use more-current stripes-components. Refs STRIPES-495.
 * Display loan policy associated with loan on check out. Fixes UICHKOUT-37.
 * Get rolling loan period from loan policy. Fixes UICHKOUT-25.
