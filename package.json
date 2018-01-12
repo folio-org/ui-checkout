@@ -71,7 +71,7 @@
     "eslint-plugin-react": "^6.4.1"
   },
   "dependencies": {
-    "@folio/stripes-components": "^1.7.0",
+    "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.2",
     "dateformat": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
