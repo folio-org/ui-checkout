@@ -54,6 +54,10 @@ class Scan extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loanPolicies: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       loans: PropTypes.shape({
         GET: PropTypes.func,
         POST: PropTypes.func,
@@ -105,6 +109,13 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'loans',
       path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
+    loanPolicies: {
+      type: 'okapi',
+      records: 'loanPolicies',
+      path: 'loan-policy-storage/loan-policies',
       accumulate: 'true',
       fetch: false,
     },
@@ -186,13 +197,28 @@ class Scan extends React.Component {
     return this.fetchItemByBarcode(data.item.barcode)
       .then(items => this.checkForLoan(items))
       .then(items => this.postLoan(userId, proxyUserId, items[0].id))
+      .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
+
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
   addScannedItem(loan) {
     const scannedItems = [loan].concat(this.props.resources.scannedItems);
     return this.props.mutator.scannedItems.replace(scannedItems);
+  }
+
+  fetchLoanPolicy(loan) {
+    const query = `(id="${loan.loanPolicyId}")`;
+    this.props.mutator.loanPolicies.reset();
+    return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
+      if (policies.length) {
+        // eslint-disable-next-line no-param-reassign
+        loan.loanPolicy = policies[0];
+      }
+
+      return loan;
+    });
   }
 
   fetchItemByBarcode(barcode) {

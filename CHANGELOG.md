@@ -20,7 +20,8 @@
 * Change "Instance" to "Title". Fixes UICHKOUT-45.
 * Add validation preventing check-out attempts for items already checked out. Fixes UICHKOUT-34.
 * Fix auto-increment of open loan count in patron view. Fixes UICHKOUT-28.
-* Use more-current stripes-components. Refs STRIPES-495. 
+* Use more-current stripes-components. Refs STRIPES-495.
+* Display loan policy associated with loan on check out. Fixes UICHKOUT-37.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
