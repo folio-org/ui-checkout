@@ -25,9 +25,9 @@ module.exports.test = function(uiTestCtx) {
         .insert('#input-item-barcode',"item-before-patron")
         .wait('#clickable-add-item')
         .click('#clickable-add-item')
-        .wait('#section-patron div[class^="textfieldError"]')
+        .wait('#section-patron div[class*="Error"]')
         .evaluate(function() {
-          var errorText = document.querySelector('#section-patron div[class^="textfieldError"]').innerText;
+          var errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
           if (!errorText.startsWith("Please fill")) {
             throw new Error("Error message not found for item entered before patron found");
           }
@@ -42,9 +42,9 @@ module.exports.test = function(uiTestCtx) {
         .wait('#input-patron-identifier')
         .insert('#input-patron-identifier',"wrong-patron-id")
         .click('#clickable-find-patron')
-        .wait('#section-patron div[class^="textfieldError"]')
+        .wait('#section-patron div[class*="Error"]')
         .evaluate(function() {
-          var errorText =  document.querySelector('#section-patron div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#section-patron div[class*="Error"]').innerText;
           if (!errorText.startsWith("User")) {
             throw new Error("Error message not found for invalid user input");
           }
@@ -86,9 +86,9 @@ module.exports.test = function(uiTestCtx) {
         nightmare
         .insert('#input-item-barcode',"wrong-item-barcode")
         .click('#clickable-add-item')
-        .wait('#section-item div[class^="textfieldError"]')
+        .wait('#section-item div[class*="Error"]')
         .evaluate(function() {
-          var errorText =  document.querySelector('#section-item div[class^="textfieldError"]').innerText;
+          var errorText =  document.querySelector('#section-item div[class*="Error"]').innerText;
           if (!errorText.startsWith("Item")) {
             throw new Error("Error message not found for wrong item barcode");
           }
