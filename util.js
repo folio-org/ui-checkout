@@ -24,9 +24,15 @@ export function getFullName(user) {
 export function getDueDate(loan) {
   const loanPolicy = loan.loanPolicy;
   const loanProfile = loanPolicy.loansPolicy || {};
+  const renewalProfile = loanProfile.renewalsPolicy || {};
   const period = loanProfile.period || {};
 
-  if (loanPolicy.loanable && loanProfile.profileId === loanProfileTypes.ROLLING) {
+  // rolling type
+  if (loanProfile.profileId === loanProfileTypes.ROLLING && loanPolicy.loanable) {
+    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
+      return moment().add(period.duration, intervalPeriods[period.intervalId]);
+    }
+
     return moment().add(period.duration, intervalPeriods[period.intervalId]);
   }
 
