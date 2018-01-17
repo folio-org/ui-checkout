@@ -1,11 +1,19 @@
 import _ from 'lodash';
-import React from 'react';
+import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 
-export function getRowURL(data) {
-  return ((data.username) ?
-    `/users/view/${data.id}/${data.username}` :
-    `/items/view/${data.itemId}`);
-}
+const loanProfileTypes = {
+  FIXED: '1',
+  ROLLING: '2',
+  INDEFINITE: '3',
+};
+
+const intervalPeriods = {
+  1: 'minutes',
+  2: 'hours',
+  3: 'days',
+  4: 'weeks',
+  5: 'months',
+};
 
 export function getFullName(user) {
   return `${_.get(user, ['personal', 'lastName'], '')},
@@ -13,22 +21,14 @@ export function getFullName(user) {
     ${_.get(user, ['personal', 'middleName'], '')}`;
 }
 
-export function formatDate(dateStr, locale) {
-  if (!dateStr) return dateStr;
-  return new Date(Date.parse(dateStr)).toLocaleDateString(locale);
-}
+export function getDueDate(loan) {
+  const loanPolicy = loan.loanPolicy;
+  const loanProfile = loanPolicy.loansPolicy || {};
+  const period = loanProfile.period || {};
 
-export function getAnchoredRowFormatter(row) {
-  return (
-    <a
-      href={getRowURL(row.rowData)}
-      key={`row-${row.rowIndex}`}
-      aria-label={row.labelStrings && row.labelStrings.join('...')}
-      role="listitem"
-      className={`${row.rowClass}`}
-      {...row.rowProps}
-    >
-      {row.cells}
-    </a>
-  );
+  if (loanPolicy.loanable && loanProfile.profileId === loanProfileTypes.ROLLING) {
+    return moment().add(period.duration, intervalPeriods[period.intervalId]);
+  }
+
+  return loan.dueDate;
 }

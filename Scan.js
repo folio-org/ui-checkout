@@ -199,7 +199,6 @@ class Scan extends React.Component {
       .then(items => this.postLoan(userId, proxyUserId, items[0].id))
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
-
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
 
@@ -212,11 +211,8 @@ class Scan extends React.Component {
     const query = `(id="${loan.loanPolicyId}")`;
     this.props.mutator.loanPolicies.reset();
     return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
-      if (policies.length) {
-        // eslint-disable-next-line no-param-reassign
-        loan.loanPolicy = policies[0];
-      }
-
+      // eslint-disable-next-line no-param-reassign
+      loan.loanPolicy = (policies.length) ? policies[0] : {};
       return loan;
     });
   }
