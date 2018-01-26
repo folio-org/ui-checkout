@@ -187,11 +187,13 @@ class Scan extends React.Component {
       throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
-    if (!this.props.resources.patrons.records.length) {
+    const patrons = (this.props.resources.patrons || {}).records || [];
+
+    if (!patrons.length) {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    const proxyUserId = this.props.resources.patrons.records[0].id;
+    const proxyUserId = patrons[0].id;
     const userId = this.props.resources.selPatron.id;
 
     return this.fetchItemByBarcode(data.item.barcode)
