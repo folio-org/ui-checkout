@@ -26,6 +26,7 @@
 * Get renewal loan period from Loan Policy. Fixes UICHKOUT-24.
 * Don't bind non-existant function; that's bad. Fixes UICHKOUT-50.
 * Favor Link over href. Refs STRIPES-482.
+* Fix validation errors. Fixes UICHKOUT-56.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
