@@ -42,7 +42,13 @@ module.exports.test = function(uiTestCtx) {
         .wait('#input-patron-identifier')
         .insert('#input-patron-identifier',"wrong-patron-id")
         .click('#clickable-find-patron')
-        .wait('#section-patron div[class*="Error"]')
+	.wait(function() {
+	  var eNode = document.querySelector('#section-patron div[class*="Error"]');
+	  if (eNode !== null && eNode.innerText.startsWith("User")) {
+	    return true;
+	  }
+	  return false;
+	})
         .evaluate(function() {
           var errorText =  document.querySelector('#section-patron div[class*="Error"]').innerText;
           if (!errorText.startsWith("User")) {
@@ -50,7 +56,10 @@ module.exports.test = function(uiTestCtx) {
           }
          })
         .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-        .then(result => { done() })
+        .then(result => { 
+	  console.log(result);
+	  done();
+	})
         .catch(done)
       })
       it('should set patron scan ID to "User"', done => {
