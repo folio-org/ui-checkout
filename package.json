@@ -77,7 +77,7 @@
     "dateformat": "^2.0.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
-    "react": "^15.4.2",
+    "query-string": "^5.0.0",
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.0.0",
     "redux-form": "^7.0.3",
@@ -85,7 +85,8 @@
   },
   "peerDependencies": {
     "@folio/stripes-connect": "^3.1.0",
-    "@folio/stripes-core": "^2.7.0"
+    "@folio/stripes-core": "^2.7.0",
+    "react": "*"
   },
   "optionalDependencies": {
     "@folio/plugin-find-user": "^1.1.0"
