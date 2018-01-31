@@ -74,7 +74,6 @@
     "@folio/stripes-components": "^2.0.0",
     "@folio/stripes-form": "^0.8.2",
     "dateformat": "^2.0.0",
-    "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
