@@ -53,7 +53,7 @@
   },
   "scripts": {
     "lint": "eslint *.js lib settings",
-    "test": "echo 'placeholder. no tests implemented'"
+    "test": "(cd ../ui-testing; yarn test-module -- -o --run=checkout:error_messages --host=localhost)"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
