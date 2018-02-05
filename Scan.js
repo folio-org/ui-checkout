@@ -157,7 +157,7 @@ class Scan extends React.Component {
     const patron = data.patron;
 
     if (!patron) {
-      throw new SubmissionError({ 'patron.identifier': 'Please fill this out to continue' });
+      throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
     }
 
     const patronIdentifier = this.userIdentifierPref();
@@ -167,7 +167,7 @@ class Scan extends React.Component {
 
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
-        throw new SubmissionError({ 'patron.identifier': `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' });
+        throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
       }
       return patrons;
     }).then(patrons => this.fetchProxies(patrons[0]));
@@ -184,13 +184,13 @@ class Scan extends React.Component {
 
   checkout(data) {
     if (!data.item) {
-      throw new SubmissionError({ 'item.barcode': 'Please fill this out to continue' });
+      throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
     }
 
     const patrons = (this.props.resources.patrons || {}).records || [];
 
     if (!patrons.length) {
-      return this.dispatchError('patronForm', 'patron.identifier', { 'patron.identifier': 'Please fill this out to continue' });
+      return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
     const proxyUserId = patrons[0].id;
@@ -224,7 +224,7 @@ class Scan extends React.Component {
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
-        throw new SubmissionError({ 'item.barcode': 'Item with this barcode does not exist', _error: 'Scan failed' });
+        throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
       }
       return items;
     });
@@ -246,7 +246,7 @@ class Scan extends React.Component {
 
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (loans.length) {
-        throw new SubmissionError({ 'item.barcode': 'Item is not available for checkout', _error: 'Item is checked out' });
+        throw new SubmissionError({ item: { barcode: 'Item is not available for checkout', _error: 'Item is checked out' } });
       }
       return items;
     });
@@ -350,7 +350,7 @@ class Scan extends React.Component {
             <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
           </Pane>
         </Paneset>
-        {scannedItems.length > 0 && patrons.length > 0 &&
+        {patrons.length > 0 &&
           <ScanFooter buttonId="clickable-done-footer" total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
       </div>
     );
