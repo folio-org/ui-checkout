@@ -30,6 +30,7 @@
 * Prune unused deps; update stripes-connect. Refs STRIPES-490, STRIPES-501.
 * Refactor settings to use ConfigManager. Fixes UICHKOUT-59.
 * Fix state after returning back to the checkout app. Fixes UICHKOUT-58.
+* Display end session button when a patron has been selected. Fixes UICHKOUT-57.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
