@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
@@ -13,7 +13,8 @@ import ViewPatron from './lib/ViewPatron';
 import ViewItem from './lib/ViewItem';
 import ScanFooter from './lib/ScanFooter';
 
-import { patronIdentifierTypes, defaultPatronIdentifier } from './constants';
+import { patronIdentifierMap } from './constants';
+import { getPatronIdentifiers, buildIdentifierQuery } from './util';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -143,6 +144,11 @@ class Scan extends React.Component {
     this.clearForm('patronForm');
   }
 
+  getPatronIdentifiers() {
+    const idents = (this.props.resources.userIdentifierPref || {}).records || [];
+    return getPatronIdentifiers(idents);
+  }
+
   clearResources() {
     this.props.mutator.scannedItems.replace([]);
     this.props.mutator.patrons.reset();
@@ -160,26 +166,17 @@ class Scan extends React.Component {
       throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
     }
 
-    const patronIdentifier = this.userIdentifierPref();
-    const query = `(${patronIdentifier.queryKey}="${patron.identifier}")`;
-
     this.clearResources();
+    const idents = this.getPatronIdentifiers();
+    const query = buildIdentifierQuery(patron, idents);
 
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
-        throw new SubmissionError({ patron: { identifier: `User with this ${patronIdentifier.label} does not exist`, _error: 'Scan failed' } });
+        const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
+        throw new SubmissionError({ patron: { identifier: `User with this ${identifier} does not exist`, _error: 'Scan failed' } });
       }
       return patrons;
     }).then(patrons => this.fetchProxies(patrons[0]));
-  }
-
-  // Return either the currently set user identifier preference or a default value
-  // (see constants.js for values)
-  userIdentifierPref() {
-    const pref = (this.props.resources.userIdentifierPref || {}).records || [];
-    return (pref.length && pref[0].value) ?
-      _.find(patronIdentifierTypes, { key: pref[0].value }) :
-      defaultPatronIdentifier;
   }
 
   checkout(data) {
@@ -305,7 +302,7 @@ class Scan extends React.Component {
     let patron = patrons[0];
     let proxy = selPatron;
 
-    if (!_.isEmpty(selPatron)) {
+    if (!isEmpty(selPatron)) {
       patron = selPatron;
       proxy = patrons[0];
     }
@@ -329,7 +326,7 @@ class Scan extends React.Component {
           <Pane defaultWidth="35%" paneTitle="Scan patron card">
             <PatronForm
               onSubmit={this.findPatron}
-              userIdentifierPref={this.userIdentifierPref()}
+              userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               {...this.props}
             />

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
+import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
 
 const loanProfileTypes = {
   FIXED: '1',
@@ -37,4 +38,15 @@ export function getDueDate(loan) {
   }
 
   return loan.dueDate;
+}
+
+export function getPatronIdentifiers(idents) {
+  return (idents.length && idents[0].value) ?
+    idents[0].value.split(',') :
+    [defaultPatronIdentifier];
+}
+
+export function buildIdentifierQuery(patron, idents) {
+  const query = idents.map(ident => `${patronIdentifierMap[ident]}="${patron.identifier}"`);
+  return `(${query.join(' OR ')})`;
 }
