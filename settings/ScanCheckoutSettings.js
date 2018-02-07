@@ -1,18 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConfigManager from '@folio/stripes-smart-components/lib/ConfigManager';
-import Select from '@folio/stripes-components/lib/Select';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Field } from 'redux-form';
-import { patronIdentifierTypes } from '../constants';
 
-const identifierTypeOptions = patronIdentifierTypes.map(i => (
-  {
-    id: i.key,
-    label: i.label,
-    value: i.key,
-  }
-));
+import { patronIdentifierTypes } from '../constants';
+import ScanCheckoutForm from './ScanCheckoutForm';
 
 class ScanCheckoutSettings extends React.Component {
   static propTypes = {
@@ -27,22 +18,23 @@ class ScanCheckoutSettings extends React.Component {
     this.configManager = props.stripes.connect(ConfigManager);
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getInitialValues(settings) {
+    const value = settings.length === 0 ? '' : settings[0].value;
+    const values = (value) ? value.split(',') : [];
+    const idents = patronIdentifierTypes.map(i => (values.indexOf(i.key) >= 0));
+    return { idents };
+  }
+
   render() {
     return (
-      <this.configManager label={this.props.label} moduleName="CHECKOUT" configName="pref_patron_identifier">
-        <Row>
-          <Col xs={12}>
-            <Field
-              component={Select}
-              id="patronScanId"
-              label="Scan ID for patron check out"
-              placeholder="---"
-              name="pref_patron_identifier"
-              dataOptions={identifierTypeOptions}
-            />
-          </Col>
-        </Row>
-      </this.configManager>
+      <this.configManager
+        label={this.props.label}
+        moduleName="CHECKOUT"
+        configName="pref_patron_identifier"
+        getInitialValues={this.getInitialValues}
+        configFormComponent={ScanCheckoutForm}
+      />
     );
   }
 }
