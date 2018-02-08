@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
-import Settings from './settings';
 
 class CheckOutRouting extends React.Component {
 
@@ -18,7 +17,6 @@ class CheckOutRouting extends React.Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    showSettings: PropTypes.bool,
   }
 
   constructor(props) {
@@ -40,10 +38,6 @@ class CheckOutRouting extends React.Component {
   }
 
   render() {
-    if (this.props.showSettings) {
-      return <Settings {...this.props} />;
-    }
-
     const { match: { path } } = this.props;
     return (
       <Switch>

@@ -15,7 +15,6 @@
     "type": "app",
     "displayName": "Check out",
     "route": "/checkout",
-    "hasSettings": true,
     "okapiInterfaces": {
       "circulation": "2.2",
       "configuration": "2.0",
