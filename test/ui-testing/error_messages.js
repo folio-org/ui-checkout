@@ -32,7 +32,7 @@ module.exports.test = function(uiTestCtx) {
             throw new Error("Error message not found for item entered before patron found");
           }
          })
-        .then(result => { 
+        .then(result => {
 	  done()
 	})
         .catch(done)
@@ -56,7 +56,7 @@ module.exports.test = function(uiTestCtx) {
           }
          })
         .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-        .then(result => { 
+        .then(result => {
 	  console.log(result);
 	  done();
 	})
@@ -66,14 +66,20 @@ module.exports.test = function(uiTestCtx) {
         nightmare
         .wait(config.select.settings)
         .click(config.select.settings)
-        .wait('a[href="/settings/checkout"]')
-        .click('a[href="/settings/checkout"]')
+        .wait('a[href="/settings/"]')
+        .click('a[href="/settings/circulation"]')
         .wait(222)
-        .wait('a[href="/settings/checkout/checkout"]')
-        .click('a[href="/settings/checkout/checkout"]')
-        .wait('#patronScanId')
+        .wait('a[href="/settings/circulation/checkout"]')
+        .click('a[href="/settings/circulation/checkout"]')
+        .wait('#username-checkbox')
+        .wait(1000)
+        .evaluate(() => {
+          const list = document.querySelectorAll('[data-checked="true"]');
+          list.forEach(el => (el.click()));
+        })
         .wait(222)
-        .select('#patronScanId','USER')
+        .click('#username-checkbox')
+        .wait(222)
         .then(result => { done() })
         .catch(done)
       })
