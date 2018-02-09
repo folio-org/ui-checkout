@@ -5,7 +5,6 @@ import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
 
 class CheckOutRouting extends React.Component {
-
   static childContextTypes = {
     history: PropTypes.object,
   };
