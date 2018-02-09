@@ -66,9 +66,8 @@ module.exports.test = function(uiTestCtx) {
         nightmare
         .wait(config.select.settings)
         .click(config.select.settings)
-        .wait('a[href="/settings/"]')
+        .wait('#clickable-settings')
         .click('a[href="/settings/circulation"]')
-        .wait(222)
         .wait('a[href="/settings/circulation/checkout"]')
         .click('a[href="/settings/circulation/checkout"]')
         .wait('#username-checkbox')
