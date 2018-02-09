@@ -207,11 +207,13 @@ class Scan extends React.Component {
   }
 
   fetchLoanPolicy(loan) {
-    const query = `(id="${loan.loanPolicyId}")`;
+    const query = `(id=="${loan.loanPolicyId}")`;
     this.props.mutator.loanPolicies.reset();
     return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
       // eslint-disable-next-line no-param-reassign
-      loan.loanPolicy = (policies.length) ? policies[0] : {};
+
+      if (!policies.length) return loan;
+      loan.loanPolicy = policies.find(p => p.id == loan.loanPolicyId);
       return loan;
     });
   }
