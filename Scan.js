@@ -213,7 +213,7 @@ class Scan extends React.Component {
       // eslint-disable-next-line no-param-reassign
 
       if (!policies.length) return loan;
-      loan.loanPolicy = policies.find(p => p.id == loan.loanPolicyId);
+      loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
       return loan;
     });
   }
