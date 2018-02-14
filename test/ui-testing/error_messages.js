@@ -21,6 +21,7 @@ module.exports.test = function(uiTestCtx) {
       it('should show error when scanning item before patron card', done => {
         nightmare
         .wait('#input-item-barcode')
+        .wait(222)
         .click('#input-item-barcode')
         .insert('#input-item-barcode',"item-before-patron")
         .wait('#clickable-add-item')
