@@ -1,7 +1,8 @@
-module.exports.test = function (uiTestCtx) {
+/* global it describe Nightmare before after */
+module.exports.test = function uiTest(uiTestCtx) {
   const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
 
-  describe('Module test: checkout:error_messages.', function () {
+  describe('Module test: checkout:error_messages.', function checkout() {
     const nightmare = new Nightmare(config.nightmare);
     this.timeout(Number(config.test_timeout));
 
@@ -20,20 +21,19 @@ module.exports.test = function (uiTestCtx) {
       it('should show error when scanning item before patron card', (done) => {
         nightmare
           .wait('#input-item-barcode')
-          .wait(222)
+          .wait(1111)
           .click('#input-item-barcode')
           .insert('#input-item-barcode', 'item-before-patron')
-          .wait('#clickable-add-item')
           .click('#clickable-add-item')
           .wait('#section-patron div[class*="Error"]')
-          .evaluate(function () {
+          .evaluate(function findMsg() {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
             if (!errorText.startsWith('Please fill')) {
               throw new Error('Error message not found for item entered before patron found');
             }
           })
-          .then((result) => {
-	  done();
+          .then(() => {
+            done();
           })
           .catch(done);
       });
@@ -42,22 +42,22 @@ module.exports.test = function (uiTestCtx) {
           .wait('#input-patron-identifier')
           .insert('#input-patron-identifier', 'wrong-patron-id')
           .click('#clickable-find-patron')
-          .wait(function () {
-	  const eNode = document.querySelector('#section-patron div[class*="Error"]');
-	  if (eNode !== null && eNode.innerText.startsWith('User')) {
-	    return true;
-	  }
-	  return false;
+          .wait(function waitNode() {
+            const eNode = document.querySelector('#section-patron div[class*="Error"]');
+            if (eNode !== null && eNode.innerText.startsWith('User')) {
+              return true;
+            }
+            return false;
           })
-          .evaluate(function () {
+          .evaluate(function findMsg() {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
             if (!errorText.startsWith('User')) {
               throw new Error('Error message not found for invalid user input');
             }
           })
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-          .then((result) => {
-	  done();
+          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
+          .then(() => {
+            done();
           })
           .catch(done);
       });
@@ -78,7 +78,7 @@ module.exports.test = function (uiTestCtx) {
           .wait(222)
           .click('#username-checkbox')
           .wait(222)
-          .then((result) => { done(); })
+          .then(() => { done(); })
           .catch(done);
       });
       it('should find existing patron', (done) => {
@@ -91,8 +91,8 @@ module.exports.test = function (uiTestCtx) {
           .insert('#input-patron-identifier', 'diku_admin')
           .click('#clickable-find-patron')
           .wait('#patron-form ~ div a > strong')
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-          .then((result) => { done(); })
+          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
+          .then(() => { done(); })
           .catch(done);
       });
       it('should show error when entering wrong item ID', (done) => {
@@ -100,14 +100,14 @@ module.exports.test = function (uiTestCtx) {
           .insert('#input-item-barcode', 'wrong-item-barcode')
           .click('#clickable-add-item')
           .wait('#section-item div[class*="Error"]')
-          .evaluate(function () {
+          .evaluate(function findMsg() {
             const errorText = document.querySelector('#section-item div[class*="Error"]').innerText;
             if (!errorText.startsWith('Item')) {
               throw new Error('Error message not found for wrong item barcode');
             }
           })
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
-          .then((result) => { done(); })
+          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
+          .then(() => { done(); })
           .catch(done);
       });
     });
