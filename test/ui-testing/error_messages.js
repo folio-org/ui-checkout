@@ -58,7 +58,6 @@ module.exports.test = function(uiTestCtx) {
          })
         .wait(parseInt(process.env.FOLIO_UI_DEBUG) ? parseInt(config.debug_sleep) : 555) // debugging
         .then(result => {
-	  console.log(result);
 	  done();
 	})
         .catch(done)
