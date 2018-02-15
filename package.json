@@ -51,7 +51,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint *.js lib settings",
+    "lint": "eslint *.js lib settings test/ui-testing",
     "test": "(cd ../ui-testing; yarn test-module -- -o --run=checkout:error_messages --host=localhost)"
   },
   "devDependencies": {

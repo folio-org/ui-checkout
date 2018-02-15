@@ -1,7 +1,5 @@
-const error_messages = require('./error_messages.js');
+const errorMessages = require('./error_messages.js');
 
-module.exports.test = function(uiTestCtx) {
-
-  error_messages.test(uiTestCtx);
-
-}
+module.exports.test = function uiTest(uiTestCtx) {
+  errorMessages.test(uiTestCtx);
+};
