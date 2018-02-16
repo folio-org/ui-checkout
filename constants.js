@@ -12,6 +12,13 @@ export const patronIdentifierMap = {
   USER: 'username',
 };
 
+export const patronLabelMap = {
+  BARCODE: 'barcode',
+  EXTERNAL: 'external system id',
+  FOLIO: 'folio record number',
+  USER: 'username',
+};
+
 export const defaultPatronIdentifier = 'BARCODE';
 
 // These next sets are temporary Select list options for LoanPolicyDetail.js
