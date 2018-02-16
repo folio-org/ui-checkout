@@ -26,7 +26,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('#input-item-barcode', 'item-before-patron')
           .click('#clickable-add-item')
           .wait('#section-patron div[class*="Error"]')
-          .evaluate(function findMsg() {
+          .evaluate(() => {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
             if (!errorText.startsWith('Please fill')) {
               throw new Error('Error message not found for item entered before patron found');
@@ -42,14 +42,14 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#input-patron-identifier')
           .insert('#input-patron-identifier', 'wrong-patron-id')
           .click('#clickable-find-patron')
-          .wait(function waitNode() {
+          .wait(() => {
             const eNode = document.querySelector('#section-patron div[class*="Error"]');
             if (eNode !== null && eNode.innerText.startsWith('User')) {
               return true;
             }
             return false;
           })
-          .evaluate(function findMsg() {
+          .evaluate(() => {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
             if (!errorText.startsWith('User')) {
               throw new Error('Error message not found for invalid user input');
@@ -100,7 +100,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('#input-item-barcode', 'wrong-item-barcode')
           .click('#clickable-add-item')
           .wait('#section-item div[class*="Error"]')
-          .evaluate(function findMsg() {
+          .evaluate(() => {
             const errorText = document.querySelector('#section-item div[class*="Error"]').innerText;
             if (!errorText.startsWith('Item')) {
               throw new Error('Error message not found for wrong item barcode');
