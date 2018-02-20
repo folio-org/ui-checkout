@@ -15,6 +15,13 @@
     "type": "app",
     "displayName": "Check out",
     "route": "/checkout",
+    "icons": [
+     {
+       "name": "icon",
+       "alt": "Check out items on behalf of patrons",
+       "title": "Checkout"
+     }
+    ],
     "okapiInterfaces": {
       "circulation": "2.2",
       "configuration": "2.0",
