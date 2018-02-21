@@ -17,7 +17,7 @@
     "route": "/checkout",
     "icons": [
      {
-       "name": "icon",
+       "name": "app",
        "alt": "Check out items on behalf of patrons",
        "title": "Checkout"
      }
