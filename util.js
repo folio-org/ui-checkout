@@ -50,3 +50,10 @@ export function buildIdentifierQuery(patron, idents) {
   const query = idents.map(ident => `${patronIdentifierMap[ident]}="${patron.identifier}"`);
   return `(${query.join(' OR ')})`;
 }
+
+export function isProxyDisabled(user, proxyMap) {
+  const proxy = proxyMap[user.id];
+
+  return proxy && proxy.meta.expirationDate &&
+    moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
+}

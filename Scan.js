@@ -37,6 +37,9 @@ class Scan extends React.Component {
       proxiesFor: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      sponsorOf: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -48,6 +51,10 @@ class Scan extends React.Component {
         reset: PropTypes.func,
       }),
       proxiesFor: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      sponsorOf: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -86,6 +93,13 @@ class Scan extends React.Component {
       path: 'configurations/entries?query=(module=CHECKOUT and configName=pref_patron_identifier)',
     },
     proxiesFor: {
+      type: 'okapi',
+      records: 'proxiesFor',
+      path: 'proxiesfor',
+      accumulate: 'true',
+      fetch: false,
+    },
+    sponsorOf: {
       type: 'okapi',
       records: 'proxiesFor',
       path: 'proxiesfor',
@@ -176,7 +190,10 @@ class Scan extends React.Component {
         throw new SubmissionError({ patron: { identifier: `User with this ${identifier} does not exist`, _error: 'Scan failed' } });
       }
       return patrons;
-    }).then(patrons => this.fetchProxies(patrons[0]));
+    }).then((patrons) => {
+      this.fetchProxies(patrons[0]);
+      this.fetchSponsors(patrons[0]);
+    });
   }
 
   checkout(data) {
@@ -211,7 +228,6 @@ class Scan extends React.Component {
     this.props.mutator.loanPolicies.reset();
     return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
       // eslint-disable-next-line no-param-reassign
-
       if (!policies.length) return loan;
       loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
       return loan;
@@ -233,6 +249,12 @@ class Scan extends React.Component {
     const query = `(proxyUserId="${patron.id}")`;
     this.props.mutator.proxiesFor.reset();
     return this.props.mutator.proxiesFor.GET({ params: { query } });
+  }
+
+  fetchSponsors(patron) {
+    const query = `(userId="${patron.id}")`;
+    this.props.mutator.sponsorOf.reset();
+    return this.props.mutator.sponsorOf.GET({ params: { query } });
   }
 
   // Before trying to create a new loan, check to see if one exists for the
@@ -294,6 +316,7 @@ class Scan extends React.Component {
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
     const proxiesFor = resources.proxiesFor || {};
+    const sponsorOf = resources.sponsorOf || {};
 
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
@@ -332,12 +355,13 @@ class Scan extends React.Component {
               patron={selPatron}
               {...this.props}
             />
-            {patrons.length > 0 && proxiesFor.hasLoaded &&
+            {patrons.length > 0 && proxiesFor.hasLoaded && sponsorOf.hasLoaded &&
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
                 proxiesFor={proxiesFor.records}
+                sponsorOf={sponsorOf.records}
                 proxy={proxy}
                 settings={settings}
                 {...this.props}
