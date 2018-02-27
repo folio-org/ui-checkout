@@ -40,10 +40,10 @@ class Scan extends React.Component {
       sponsorOf: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      selPatron: PropTypes.object,
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
@@ -134,6 +134,13 @@ class Scan extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    fixedDueDateSchedules: {
+      type: 'okapi',
+      records: 'fixedDueDateSchedules',
+      path: 'fixed-due-date-schedule-storage/fixed-due-date-schedules',
+      accumulate: 'true',
+      fetch: false,
+    },
     settings: {
       type: 'okapi',
       records: 'configs',
@@ -214,6 +221,7 @@ class Scan extends React.Component {
       .then(items => this.checkForLoan(items))
       .then(items => this.postLoan(userId, proxyUserId, items[0].id))
       .then(loan => this.fetchLoanPolicy(loan))
+      .then(loan => this.fetchFixedDueDateSchedules(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('itemForm', 'item.barcode'));
   }
@@ -230,6 +238,19 @@ class Scan extends React.Component {
       // eslint-disable-next-line no-param-reassign
       if (!policies.length) return loan;
       loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
+      return loan;
+    });
+  }
+
+  fetchFixedDueDateSchedules(loan) {
+    if (!loan || !loan.loanPolicy || !loan.loanPolicy.loansPolicy.fixedDueDateSchedule) {
+      return loan;
+    }
+
+    const query = `(id=="${loan.loanPolicy.loansPolicy.fixedDueDateSchedule}")`;
+    this.props.mutator.fixedDueDateSchedules.reset();
+    return this.props.mutator.fixedDueDateSchedules.GET({ params: { query } }).then((fixedDueDateSchedules) => {
+      loan.fixedDueDateSchedule = fixedDueDateSchedules[0];
       return loan;
     });
   }
