@@ -14,7 +14,7 @@ import ViewItem from './lib/ViewItem';
 import ScanFooter from './lib/ScanFooter';
 
 import { patronIdentifierMap } from './constants';
-import { getPatronIdentifiers, buildIdentifierQuery } from './util';
+import { getPatronIdentifiers, buildIdentifierQuery, toParams } from './util';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -29,6 +29,12 @@ class Scan extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      loanRules: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      fixedDueDateSchedules: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       settings: PropTypes.shape({
@@ -63,6 +69,14 @@ class Scan extends React.Component {
         reset: PropTypes.func,
       }),
       loanPolicies: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      fixedDueDateSchedules: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      loanRules: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -138,6 +152,12 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'fixedDueDateSchedules',
       path: 'fixed-due-date-schedule-storage/fixed-due-date-schedules',
+      accumulate: 'true',
+      fetch: false,
+    },
+    loanRules: {
+      type: 'okapi',
+      path: 'circulation/loan-rules/apply',
       accumulate: 'true',
       fetch: false,
     },
@@ -218,41 +238,24 @@ class Scan extends React.Component {
     const userId = this.props.resources.selPatron.id;
 
     return this.fetchItemByBarcode(data.item.barcode)
-      .then(items => this.checkForLoan(items))
-      .then(items => this.postLoan(userId, proxyUserId, items[0].id))
-      .then(loan => this.fetchLoanPolicy(loan))
-      .then(loan => this.fetchFixedDueDateSchedules(loan))
+      .then(item => this.checkForLoan(item))
+      .then(item => this.validateLoanPolicy(item))
+      .then(item => this.postLoan(item, userId, proxyUserId))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('itemForm', 'item.barcode'));
+  }
+
+  validateLoanPolicy(data) {
+    return this.fetchLoanPolicyId(data)
+      .then(item => this.fetchLoanPolicy(item))
+      .then(item => this.fetchFixedDueDateSchedules(item))
+      // TODO validate loan policy
+      .then(item => item);
   }
 
   addScannedItem(loan) {
     const scannedItems = [loan].concat(this.props.resources.scannedItems);
     return this.props.mutator.scannedItems.replace(scannedItems);
-  }
-
-  fetchLoanPolicy(loan) {
-    const query = `(id=="${loan.loanPolicyId}")`;
-    this.props.mutator.loanPolicies.reset();
-    return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
-      // eslint-disable-next-line no-param-reassign
-      if (!policies.length) return loan;
-      loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-      return loan;
-    });
-  }
-
-  fetchFixedDueDateSchedules(loan) {
-    if (!loan || !loan.loanPolicy || !loan.loanPolicy.loansPolicy.fixedDueDateSchedule) {
-      return loan;
-    }
-
-    const query = `(id=="${loan.loanPolicy.loansPolicy.fixedDueDateSchedule}")`;
-    this.props.mutator.fixedDueDateSchedules.reset();
-    return this.props.mutator.fixedDueDateSchedules.GET({ params: { query } }).then((fixedDueDateSchedules) => {
-      loan.fixedDueDateSchedule = fixedDueDateSchedules[0];
-      return loan;
-    });
   }
 
   fetchItemByBarcode(barcode) {
@@ -262,7 +265,7 @@ class Scan extends React.Component {
       if (!items.length) {
         throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
       }
-      return items;
+      return items[0];
     });
   }
 
@@ -282,24 +285,65 @@ class Scan extends React.Component {
   // requested item. If so, this function will generate an error that results
   // in a validation error message appearing beneath the barcode input field.
   // If no loan is found, the items array is returned as a pass-through value.
-  checkForLoan(items) {
-    const itemId = items[0].id;
+  checkForLoan(item) {
+    const itemId = item.id;
     const query = `(itemId="${itemId}" and status.name<>"Closed")`;
 
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (loans.length) {
         throw new SubmissionError({ item: { barcode: 'Item is not available for checkout', _error: 'Item is checked out' } });
       }
-      return items;
+      return item;
     });
   }
 
-  postLoan(userId, proxyUserId, itemId) {
+  fetchLoanPolicyId(item) {
+    const { materialType, permanentLoanType, permanentLocation } = item;
+    const { selPatron } = this.props.resources;
+    const params = toParams({
+      shelving_location_id: permanentLocation.id,
+      item_type_id: materialType.id,
+      loan_type_id: permanentLoanType.id,
+      patron_type_id: selPatron.patronGroup,
+    });
+
+    this.props.mutator.loanRules.reset();
+    return this.props.mutator.loanRules.GET({ params }).then((rule) => {
+      item.loanPolicyId = rule.loanPolicyId;
+      return item;
+    });
+  }
+
+  fetchLoanPolicy(item) {
+    const query = `(id=="${item.loanPolicyId}")`;
+    this.props.mutator.loanPolicies.reset();
+    return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
+      const loanPolicy = policies.find(p => p.id === item.loanPolicyId);
+      item.loanPolicy = loanPolicy;
+      return item;
+    });
+  }
+
+  fetchFixedDueDateSchedules(item) {
+    if (!item || !item.loanPolicy || !item.loanPolicy.loansPolicy.fixedDueDateSchedule) {
+      return item;
+    }
+
+    const query = `(id=="${item.loanPolicy.loansPolicy.fixedDueDateSchedule}")`;
+    this.props.mutator.fixedDueDateSchedules.reset();
+    return this.props.mutator.fixedDueDateSchedules.GET({ params: { query } }).then((fixedDueDateSchedules) => {
+      item.loanPolicy.fixedDueDateSchedule = fixedDueDateSchedules[0];
+      return item;
+    });
+  }
+
+  postLoan(item, userId, proxyUserId) {
     const loanDate = new Date();
     const dueDate = new Date();
+    const itemId = item.id;
     dueDate.setDate(loanDate.getDate() + 14);
 
-    const loan = {
+    const loanData = {
       id: uuid(),
       userId,
       itemId,
@@ -312,10 +356,13 @@ class Scan extends React.Component {
     };
 
     if (proxyUserId !== userId) {
-      loan.proxyUserId = proxyUserId;
+      loanData.proxyUserId = proxyUserId;
     }
 
-    return this.props.mutator.loans.POST(loan);
+    return this.props.mutator.loans.POST(loanData).then((loan) => {
+      loan.loanPolicy = item.loanPolicy;
+      return loan;
+    });
   }
 
   clearField(formName, fieldName) {

@@ -16,6 +16,11 @@ const intervalPeriods = {
   5: 'months',
 };
 
+// serialized object into http params
+export function toParams(obj) {
+  return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join('&');
+}
+
 export function getFullName(user) {
   return `${_.get(user, ['personal', 'lastName'], '')},
     ${_.get(user, ['personal', 'firstName'], '')}
