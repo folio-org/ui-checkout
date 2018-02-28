@@ -1,18 +1,18 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
+import Icon from '@folio/stripes-components/lib/Icon';
 
 import PatronForm from './lib/PatronForm';
 import ViewPatron from './lib/ViewPatron';
 import ScanFooter from './lib/ScanFooter';
 import ScanItems from './ScanItems';
-
 import { patronIdentifierMap } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery } from './util';
+import css from './Scan.css';
 
 class Scan extends React.Component {
   static propTypes = {
@@ -62,11 +62,6 @@ class Scan extends React.Component {
     }),
   };
 
-  static defaultProps = {
-    resources: {},
-    mutator: {},
-  };
-
   static manifest = Object.freeze({
     selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
@@ -113,6 +108,7 @@ class Scan extends React.Component {
     this.findPatron = this.findPatron.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
+    this.state = { loading: false };
   }
 
   onClickDone() {
@@ -146,6 +142,7 @@ class Scan extends React.Component {
     this.clearResources();
     const idents = this.getPatronIdentifiers();
     const query = buildIdentifierQuery(patron, idents);
+    this.setState({ loading: true });
 
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
@@ -155,8 +152,8 @@ class Scan extends React.Component {
       return patrons;
     }).then((patrons) => {
       this.fetchProxies(patrons[0]);
-      this.fetchSponsors(patrons[0]);
-    });
+      return this.fetchSponsors(patrons[0]);
+    }).finally(() => this.setState({ loading: false }));
   }
 
   fetchProxies(patron) {
@@ -191,7 +188,6 @@ class Scan extends React.Component {
     const settings = (resources.settings || {}).records || [];
     const proxiesFor = resources.proxiesFor || {};
     const sponsorOf = resources.sponsorOf || {};
-
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
@@ -206,21 +202,8 @@ class Scan extends React.Component {
       proxy = patrons[0];
     }
 
-    const containerStyle = {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      height: '100%',
-      width: '100%',
-      position: 'absolute',
-    };
-
-    if (patrons.length && scannedTotal) {
-      containerStyle.height = '98.6%';
-    }
-
     return (
-      <div style={containerStyle}>
+      <div className={css.container}>
         <Paneset static>
           <Pane defaultWidth="35%" paneTitle="Scan patron card">
             <PatronForm
@@ -229,6 +212,7 @@ class Scan extends React.Component {
               patron={selPatron}
               {...this.props}
             />
+            {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
             {patrons.length > 0 && proxiesFor.hasLoaded && sponsorOf.hasLoaded &&
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
