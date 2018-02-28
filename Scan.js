@@ -1,17 +1,15 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import dateFormat from 'dateformat';
-import uuid from 'uuid';
+
 import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 
 import PatronForm from './lib/PatronForm';
-import ItemForm from './lib/ItemForm';
 import ViewPatron from './lib/ViewPatron';
-import ViewItem from './lib/ViewItem';
 import ScanFooter from './lib/ScanFooter';
+import ScanItems from './ScanItems';
 
 import { patronIdentifierMap } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery } from './util';
@@ -28,9 +26,6 @@ class Scan extends React.Component {
       patrons: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      items: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
       settings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -40,10 +35,10 @@ class Scan extends React.Component {
       sponsorOf: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      selPatron: PropTypes.object,
       userIdentifierPref: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      selPatron: PropTypes.object,
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
@@ -57,18 +52,6 @@ class Scan extends React.Component {
       sponsorOf: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
-      }),
-      items: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      loanPolicies: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      loans: PropTypes.shape({
-        GET: PropTypes.func,
-        POST: PropTypes.func,
       }),
       selPatron: PropTypes.shape({
         replace: PropTypes.func,
@@ -113,27 +96,6 @@ class Scan extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
-    items: {
-      type: 'okapi',
-      records: 'items',
-      path: 'inventory/items',
-      accumulate: 'true',
-      fetch: false,
-    },
-    loans: {
-      type: 'okapi',
-      records: 'loans',
-      path: 'circulation/loans',
-      accumulate: 'true',
-      fetch: false,
-    },
-    loanPolicies: {
-      type: 'okapi',
-      records: 'loanPolicies',
-      path: 'loan-policy-storage/loan-policies',
-      accumulate: 'true',
-      fetch: false,
-    },
     settings: {
       type: 'okapi',
       records: 'configs',
@@ -146,8 +108,9 @@ class Scan extends React.Component {
 
     this.store = props.stripes.store;
     this.connectedViewPatron = props.stripes.connect(ViewPatron);
+    this.connectedScanItems = props.stripes.connect(ScanItems);
+
     this.findPatron = this.findPatron.bind(this);
-    this.checkout = this.checkout.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
   }
@@ -196,55 +159,6 @@ class Scan extends React.Component {
     });
   }
 
-  checkout(data) {
-    if (!data.item) {
-      throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
-    }
-
-    const patrons = (this.props.resources.patrons || {}).records || [];
-
-    if (!patrons.length) {
-      return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
-    }
-
-    const proxyUserId = patrons[0].id;
-    const userId = this.props.resources.selPatron.id;
-
-    return this.fetchItemByBarcode(data.item.barcode)
-      .then(items => this.checkForLoan(items))
-      .then(items => this.postLoan(userId, proxyUserId, items[0].id))
-      .then(loan => this.fetchLoanPolicy(loan))
-      .then(loan => this.addScannedItem(loan))
-      .then(() => this.clearField('itemForm', 'item.barcode'));
-  }
-
-  addScannedItem(loan) {
-    const scannedItems = [loan].concat(this.props.resources.scannedItems);
-    return this.props.mutator.scannedItems.replace(scannedItems);
-  }
-
-  fetchLoanPolicy(loan) {
-    const query = `(id=="${loan.loanPolicyId}")`;
-    this.props.mutator.loanPolicies.reset();
-    return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
-      // eslint-disable-next-line no-param-reassign
-      if (!policies.length) return loan;
-      loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-      return loan;
-    });
-  }
-
-  fetchItemByBarcode(barcode) {
-    const query = `(barcode="${barcode}")`;
-    this.props.mutator.items.reset();
-    return this.props.mutator.items.GET({ params: { query } }).then((items) => {
-      if (!items.length) {
-        throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
-      }
-      return items;
-    });
-  }
-
   fetchProxies(patron) {
     const query = `(proxyUserId="${patron.id}")`;
     this.props.mutator.proxiesFor.reset();
@@ -255,46 +169,6 @@ class Scan extends React.Component {
     const query = `(userId="${patron.id}")`;
     this.props.mutator.sponsorOf.reset();
     return this.props.mutator.sponsorOf.GET({ params: { query } });
-  }
-
-  // Before trying to create a new loan, check to see if one exists for the
-  // requested item. If so, this function will generate an error that results
-  // in a validation error message appearing beneath the barcode input field.
-  // If no loan is found, the items array is returned as a pass-through value.
-  checkForLoan(items) {
-    const itemId = items[0].id;
-    const query = `(itemId="${itemId}" and status.name<>"Closed")`;
-
-    return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
-      if (loans.length) {
-        throw new SubmissionError({ item: { barcode: 'Item is not available for checkout', _error: 'Item is checked out' } });
-      }
-      return items;
-    });
-  }
-
-  postLoan(userId, proxyUserId, itemId) {
-    const loanDate = new Date();
-    const dueDate = new Date();
-    dueDate.setDate(loanDate.getDate() + 14);
-
-    const loan = {
-      id: uuid(),
-      userId,
-      itemId,
-      loanDate: dateFormat(loanDate, "yyyy-mm-dd'T'HH:MM:ss'Z'"),
-      dueDate: dateFormat(dueDate, "yyyy-mm-dd'T'HH:MM:ss'Z'"),
-      action: 'checkedout',
-      status: {
-        name: 'Open',
-      },
-    };
-
-    if (proxyUserId !== userId) {
-      loan.proxyUserId = proxyUserId;
-    }
-
-    return this.props.mutator.loans.POST(loan);
   }
 
   clearField(formName, fieldName) {
@@ -360,17 +234,23 @@ class Scan extends React.Component {
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
+                proxy={proxy}
                 proxiesFor={proxiesFor.records}
                 sponsorOf={sponsorOf.records}
-                proxy={proxy}
                 settings={settings}
                 {...this.props}
               />
             }
           </Pane>
           <Pane defaultWidth="65%" paneTitle="Scan items">
-            <ItemForm onSubmit={this.checkout} patron={selPatron} total={scannedTotal} onSessionEnd={() => this.onClickDone()} />
-            <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
+            <this.connectedScanItems
+              parentMutator={this.props.mutator}
+              parentResources={this.props.resources}
+              stripes={this.props.stripes}
+              patron={patron}
+              proxy={proxy}
+              onSessionEnd={() => this.onClickDone()}
+            />
           </Pane>
         </Paneset>
         {patrons.length > 0 &&

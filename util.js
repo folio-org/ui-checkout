@@ -1,25 +1,26 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
-import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
+import {
+  defaultPatronIdentifier,
+  patronIdentifierMap,
+  loanProfileTypesMap,
+  intervalPeriodsMap,
+} from './constants';
 
-const loanProfileTypes = {
-  FIXED: '1',
-  ROLLING: '2',
-  INDEFINITE: '3',
-};
-
-const intervalPeriods = {
-  1: 'minutes',
-  2: 'hours',
-  3: 'days',
-  4: 'weeks',
-  5: 'months',
-};
+// serialized object into http params
+export function toParams(obj) {
+  return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join('&');
+}
 
 export function getFullName(user) {
-  return `${_.get(user, ['personal', 'lastName'], '')},
-    ${_.get(user, ['personal', 'firstName'], '')}
-    ${_.get(user, ['personal', 'middleName'], '')}`;
+  return `${get(user, ['personal', 'lastName'], '')},
+    ${get(user, ['personal', 'firstName'], '')}
+    ${get(user, ['personal', 'middleName'], '')}`;
+}
+
+export function isRollingProfileType(loanProfile) {
+  return (loanProfile.profileId === loanProfileTypesMap.ROLLING ||
+    loanProfile.profileId === 'ROLLING');
 }
 
 export function getDueDate(loan) {
@@ -29,15 +30,25 @@ export function getDueDate(loan) {
   const period = loanProfile.period || {};
 
   // rolling type
-  if (loanProfile.profileId === loanProfileTypes.ROLLING && loanPolicy.loanable) {
-    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
-      return moment().add(period.duration, intervalPeriods[period.intervalId]);
+  if (isRollingProfileType(loanProfile) && loanPolicy.loanable) {
+    if (loanPolicy.fixedDueDateSchedule) {
+      return loanPolicy.fixedDueDateSchedule.schedule.due;
     }
 
-    return moment().add(period.duration, intervalPeriods[period.intervalId]);
+    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
+      return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
+    }
+
+    return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
   }
 
   return loan.dueDate;
+}
+
+export function getFixedDueDateSchedule(schedules) {
+  const today = moment(new Date());
+  return schedules.find(s =>
+    today.isBetween(moment(s.from).startOf('day'), moment(s.to).endOf('day')));
 }
 
 export function getPatronIdentifiers(idents) {
@@ -53,7 +64,6 @@ export function buildIdentifierQuery(patron, idents) {
 
 export function isProxyDisabled(user, proxyMap) {
   const proxy = proxyMap[user.id];
-
   return proxy && proxy.meta.expirationDate &&
     moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
 }
