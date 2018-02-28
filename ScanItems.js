@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import dateFormat from 'dateformat';
 import uuid from 'uuid';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
+import Icon from '@folio/stripes-components/lib/Icon';
 
 import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
@@ -94,6 +95,7 @@ class ScanItems extends React.Component {
     super(props);
     this.store = props.stripes.store;
     this.checkout = this.checkout.bind(this);
+    this.state = { loading: false };
   }
 
   checkout(data) {
@@ -105,12 +107,16 @@ class ScanItems extends React.Component {
       return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
     }
 
+    this.setState({ loading: true });
+    this.clearError('itemForm');
+
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.checkForLoan(item))
       .then(item => this.validateLoanPolicy(item))
       .then(item => this.postLoan(item))
       .then(loan => this.addScannedItem(loan))
-      .then(() => this.clearField('itemForm', 'item.barcode'));
+      .then(() => this.clearField('itemForm', 'item.barcode'))
+      .finally(() => this.setState({ loading: false }));
   }
 
   validateLoanPolicy(data) {
@@ -249,6 +255,10 @@ class ScanItems extends React.Component {
     this.store.dispatch(change(formName, fieldName, ''));
   }
 
+  clearError(formName) {
+    this.store.dispatch(stopSubmit(formName, {}));
+  }
+
   dispatchError(formName, fieldName, errors) {
     this.store.dispatch(stopSubmit(formName, errors));
     this.store.dispatch(setSubmitFailed(formName, [fieldName]));
@@ -262,6 +272,7 @@ class ScanItems extends React.Component {
     return (
       <div>
         <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} />
+        {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
         <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
       </div>
     );

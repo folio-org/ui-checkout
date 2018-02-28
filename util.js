@@ -1,6 +1,11 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
-import { defaultPatronIdentifier, patronIdentifierMap, loanProfileTypesMap, intervalPeriodsMap } from './constants';
+import {
+  defaultPatronIdentifier,
+  patronIdentifierMap,
+  loanProfileTypesMap,
+  intervalPeriodsMap,
+} from './constants';
 
 // serialized object into http params
 export function toParams(obj) {
@@ -8,9 +13,9 @@ export function toParams(obj) {
 }
 
 export function getFullName(user) {
-  return `${_.get(user, ['personal', 'lastName'], '')},
-    ${_.get(user, ['personal', 'firstName'], '')}
-    ${_.get(user, ['personal', 'middleName'], '')}`;
+  return `${get(user, ['personal', 'lastName'], '')},
+    ${get(user, ['personal', 'firstName'], '')}
+    ${get(user, ['personal', 'middleName'], '')}`;
 }
 
 export function isRollingProfileType(loanProfile) {
@@ -59,7 +64,6 @@ export function buildIdentifierQuery(patron, idents) {
 
 export function isProxyDisabled(user, proxyMap) {
   const proxy = proxyMap[user.id];
-
   return proxy && proxy.meta.expirationDate &&
     moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
 }
