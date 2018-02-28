@@ -1,20 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
-import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
-
-const loanProfileTypes = {
-  FIXED: '1',
-  ROLLING: '2',
-  INDEFINITE: '3',
-};
-
-const intervalPeriods = {
-  1: 'minutes',
-  2: 'hours',
-  3: 'days',
-  4: 'weeks',
-  5: 'months',
-};
+import { defaultPatronIdentifier, patronIdentifierMap, loanProfileTypesMap, intervalPeriodsMap } from './constants';
 
 // serialized object into http params
 export function toParams(obj) {
@@ -27,6 +13,11 @@ export function getFullName(user) {
     ${_.get(user, ['personal', 'middleName'], '')}`;
 }
 
+export function isRollingProfileType(loanProfile) {
+  return (loanProfile.profileId === loanProfileTypesMap.ROLLING ||
+    loanProfile.profileId === 'ROLLING');
+}
+
 export function getDueDate(loan) {
   const loanPolicy = loan.loanPolicy;
   const loanProfile = loanPolicy.loansPolicy || {};
@@ -34,15 +25,25 @@ export function getDueDate(loan) {
   const period = loanProfile.period || {};
 
   // rolling type
-  if (loanProfile.profileId === loanProfileTypes.ROLLING && loanPolicy.loanable) {
-    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
-      return moment().add(period.duration, intervalPeriods[period.intervalId]);
+  if (isRollingProfileType(loanProfile) && loanPolicy.loanable) {
+    if (loanPolicy.fixedDueDateSchedule) {
+      return loanPolicy.fixedDueDateSchedule.schedule.due;
     }
 
-    return moment().add(period.duration, intervalPeriods[period.intervalId]);
+    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
+      return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
+    }
+
+    return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
   }
 
   return loan.dueDate;
+}
+
+export function getFixedDueDateSchedule(schedules) {
+  const today = moment(new Date());
+  return schedules.find(s =>
+    today.isBetween(moment(s.from).startOf('day'), moment(s.to).endOf('day')));
 }
 
 export function getPatronIdentifiers(idents) {

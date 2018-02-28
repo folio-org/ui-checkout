@@ -1,3 +1,8 @@
+export const errorTypes = {
+  INVALID_SCHEDULE: 'Invalid schedule',
+  INVALID_ITEM: 'Scan failed',
+};
+
 export const patronIdentifierTypes = [
   { key: 'BARCODE', label: 'Barcode', queryKey: 'barcode' },
   { key: 'EXTERNAL', label: 'External system id', queryKey: 'externalSystemId' },
@@ -37,6 +42,20 @@ export const intervalPeriods = [
   { label: 'Weeks', id: 4, value: 4 },
   { label: 'Months', id: 5, value: 5 },
 ];
+
+export const loanProfileTypesMap = {
+  FIXED: '1',
+  ROLLING: '2',
+  INDEFINITE: '3',
+};
+
+export const intervalPeriodsMap = {
+  1: 'minutes',
+  2: 'hours',
+  3: 'days',
+  4: 'weeks',
+  5: 'months',
+};
 
 export const dueDateManagementOptions = [
   { label: 'Keep the current due date', id: 1, value: 1 },
