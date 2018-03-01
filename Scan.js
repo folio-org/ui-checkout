@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SubmissionError, change, reset, stopSubmit, setSubmitFailed } from 'redux-form';
+import { SubmissionError, reset } from 'redux-form';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
@@ -111,7 +111,7 @@ class Scan extends React.Component {
     this.state = { loading: false };
   }
 
-  onClickDone() {
+  onSessionEnd() {
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
@@ -166,15 +166,6 @@ class Scan extends React.Component {
     const query = `(userId="${patron.id}")`;
     this.props.mutator.sponsorOf.reset();
     return this.props.mutator.sponsorOf.GET({ params: { query } });
-  }
-
-  clearField(formName, fieldName) {
-    this.store.dispatch(change(formName, fieldName, ''));
-  }
-
-  dispatchError(formName, fieldName, errors) {
-    this.store.dispatch(stopSubmit(formName, errors));
-    this.store.dispatch(setSubmitFailed(formName, [fieldName]));
   }
 
   clearForm(formName) {
@@ -233,12 +224,12 @@ class Scan extends React.Component {
               stripes={this.props.stripes}
               patron={patron}
               proxy={proxy}
-              onSessionEnd={() => this.onClickDone()}
+              onSessionEnd={() => this.onSessionEnd()}
             />
           </Pane>
         </Paneset>
         {patrons.length > 0 &&
-          <ScanFooter buttonId="clickable-done-footer" total={scannedTotal} onSessionEnd={() => this.onClickDone()} />}
+          <ScanFooter buttonId="clickable-done-footer" total={scannedTotal} onSessionEnd={() => this.onSessionEnd()} />}
       </div>
     );
   }

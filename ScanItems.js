@@ -138,7 +138,9 @@ class ScanItems extends React.Component {
       if (!schedule) {
         throw new SubmissionError({
           item: {
-            barcode: `Item can't be checked out as the loan date falls outside of the date ranges in the loan policy. Please review ${item.loanPolicy.name} before retrying checking out.`,
+            barcode: `Item can't be checked out as the loan date falls outside
+             of the date ranges in the loan policy.
+             Please review ${item.loanPolicy.name} before retrying checking out.`,
             _error: 'Invalid schedule',
           },
         });
