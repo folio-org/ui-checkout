@@ -40,6 +40,7 @@
 * Prevent expired sponsors and expired proxy relationships from being selected. Fixes UICHKOUT-53.
 * Get fixed loan period from loan policy. Fixes UICHKOUT-66.
 * Move checkout links into actions menu. Fixes UICHKOUT-74.
+* Make borrowing patron more prominent. Fixes UICHKOUT-47. Available since v1.1.3.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
