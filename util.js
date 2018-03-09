@@ -4,7 +4,6 @@ import {
   defaultPatronIdentifier,
   patronIdentifierMap,
   loanProfileTypesMap,
-  intervalPeriodsMap,
 } from './constants';
 
 // serialized object into http params
@@ -23,23 +22,20 @@ export function isRollingProfileType(loanProfile) {
     loanProfile.profileId === 'ROLLING');
 }
 
+export function isFixedProfileType(loanProfile) {
+  return (loanProfile.profileId === loanProfileTypesMap.FIXED ||
+    loanProfile.profileId === 'FIXED');
+}
+
 export function getDueDate(loan) {
   const loanPolicy = loan.loanPolicy;
   const loanProfile = loanPolicy.loansPolicy || {};
-  const renewalProfile = loanProfile.renewalsPolicy || {};
-  const period = loanProfile.period || {};
 
-  // rolling type
-  if (isRollingProfileType(loanProfile) && loanPolicy.loanable) {
+  // fixed type
+  if (isFixedProfileType(loanProfile) && loanPolicy.loanable) {
     if (loanPolicy.fixedDueDateSchedule) {
       return loanPolicy.fixedDueDateSchedule.schedule.due;
     }
-
-    if (loanPolicy.renewable && !renewalProfile.differentPeriod) {
-      return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
-    }
-
-    return moment().add(period.duration, intervalPeriodsMap[period.intervalId]);
   }
 
   return loan.dueDate;
