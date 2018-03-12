@@ -24,7 +24,7 @@
 * Display loan policy associated with loan on check out. Fixes UICHKOUT-37.
 * Get rolling loan period from loan policy. Fixes UICHKOUT-25.
 * Get renewal loan period from Loan Policy. Fixes UICHKOUT-24.
-* Don't bind non-existant function; that's bad. Fixes UICHKOUT-50.
+* Don't bind non-existent function; that's bad. Fixes UICHKOUT-50.
 * Favor Link over href. Refs STRIPES-482.
 * Fix validation errors. Fixes UICHKOUT-56.
 * Prune unused deps; update stripes-connect. Refs STRIPES-490, STRIPES-501.
