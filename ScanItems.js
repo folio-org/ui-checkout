@@ -7,7 +7,7 @@ import Icon from '@folio/stripes-components/lib/Icon';
 
 import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
-import { toParams, getFixedDueDateSchedule } from './util';
+import { toParams, getFixedDueDateSchedule, isFixedProfileType } from './util';
 
 class ScanItems extends React.Component {
   static propTypes = {
@@ -124,9 +124,20 @@ class ScanItems extends React.Component {
       .then(item => this.fetchLoanPolicy(item))
       .then(item => this.fetchFixedDueDateSchedules(item))
       .then((item) => {
-        this.validateFixedDueSchedule(item);
+        this.validateLoan(item);
         return item;
       });
+  }
+
+  validateLoan(item) {
+    const { loanPolicy } = item;
+    const loanProfile = loanPolicy.loansPolicy || {};
+
+    if (isFixedProfileType(loanProfile)) {
+      this.validateFixedDueSchedule(item);
+    }
+
+    return item;
   }
 
   // eslint-disable-next-line class-methods-use-this
