@@ -78,6 +78,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait(222)
           .click('#username-checkbox')
           .wait(222)
+          .click('#clickable-savescanid')
           .then(() => { done(); })
           .catch(done);
       });
