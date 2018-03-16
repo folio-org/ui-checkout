@@ -35,7 +35,7 @@ class Scan extends React.Component {
       sponsorOf: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      userIdentifierPref: PropTypes.shape({
+      checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       selPatron: PropTypes.object,
@@ -65,10 +65,10 @@ class Scan extends React.Component {
   static manifest = Object.freeze({
     selPatron: { initialValue: null },
     scannedItems: { initialValue: [] },
-    userIdentifierPref: {
+    checkoutSettings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module=CHECKOUT and configName=pref_patron_identifier)',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
     },
     proxiesFor: {
       type: 'okapi',
@@ -118,8 +118,8 @@ class Scan extends React.Component {
   }
 
   getPatronIdentifiers() {
-    const idents = (this.props.resources.userIdentifierPref || {}).records || [];
-    return getPatronIdentifiers(idents);
+    const checkoutSettings = (this.props.resources.checkoutSettings || {}).records || [];
+    return getPatronIdentifiers(checkoutSettings);
   }
 
   clearResources() {
@@ -174,7 +174,7 @@ class Scan extends React.Component {
 
   render() {
     const resources = this.props.resources;
-    const userIdentifierPref = (resources.userIdentifierPref || {}).records || [];
+    const checkoutSettings = (resources.checkoutSettings || {}).records || [];
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
     const proxiesFor = resources.proxiesFor || {};
@@ -183,7 +183,7 @@ class Scan extends React.Component {
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
 
-    if (!userIdentifierPref) return <div />;
+    if (!checkoutSettings) return <div />;
 
     let patron = patrons[0];
     let proxy = selPatron;
