@@ -1,13 +1,14 @@
 import React from 'react';
+import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
-import dateFormat from 'dateformat';
 import uuid from 'uuid';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
 import Icon from '@folio/stripes-components/lib/Icon';
 
 import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
-import { toParams, getFixedDueDateSchedule, isFixedProfileType } from './util';
+import { toParams } from './util';
+import { calculateDueDate, isLoanProfileFixed, getFixedDueDateSchedule } from './loanUtil';
 
 class ScanItems extends React.Component {
   static propTypes = {
@@ -133,7 +134,7 @@ class ScanItems extends React.Component {
     const { loanPolicy } = item;
     const loanProfile = loanPolicy.loansPolicy || {};
 
-    if (isFixedProfileType(loanProfile)) {
+    if (isLoanProfileFixed(loanProfile)) {
       this.validateFixedDueSchedule(item);
     }
 
@@ -235,19 +236,15 @@ class ScanItems extends React.Component {
 
   postLoan(item) {
     const { patron, proxy } = this.props;
-    const loanDate = new Date();
-    const dueDate = new Date();
     const itemId = item.id;
     const userId = patron.id;
-
-    dueDate.setDate(loanDate.getDate() + 14);
 
     const loanData = {
       id: uuid(),
       userId,
       itemId,
-      loanDate: dateFormat(loanDate, "yyyy-mm-dd'T'HH:MM:ss'Z'"),
-      dueDate: dateFormat(dueDate, "yyyy-mm-dd'T'HH:MM:ss'Z'"),
+      loanDate: moment().utc().format(),
+      dueDate: calculateDueDate(item).format(),
       action: 'checkedout',
       status: {
         name: 'Open',
