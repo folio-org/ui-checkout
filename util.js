@@ -47,10 +47,17 @@ export function getFixedDueDateSchedule(schedules) {
     today.isBetween(moment(s.from).startOf('day'), moment(s.to).endOf('day')));
 }
 
-export function getPatronIdentifiers(idents) {
-  return (idents.length && idents[0].value) ?
-    idents[0].value.split(',') :
-    [defaultPatronIdentifier];
+export function getPatronIdentifiers(checkoutSettings) {
+  if (checkoutSettings.length && checkoutSettings[0].value) {
+    try {
+      const idents = JSON.parse(checkoutSettings[0].value).prefPatronIdentifier;
+      if (idents) return idents.split(',');
+    } catch (e) {
+      return [defaultPatronIdentifier];
+    }
+  }
+
+  return [defaultPatronIdentifier];
 }
 
 export function buildIdentifierQuery(patron, idents) {
