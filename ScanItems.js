@@ -244,7 +244,7 @@ class ScanItems extends React.Component {
       userId,
       itemId,
       loanDate: moment().utc().format(),
-      dueDate: calculateDueDate(item).format(),
+      dueDate: calculateDueDate(item).utc().format(),
       action: 'checkedout',
       status: {
         name: 'Open',
