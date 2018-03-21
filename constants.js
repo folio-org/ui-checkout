@@ -1,14 +1,9 @@
 export const errorTypes = {
-  INVALID_SCHEDULE: 'Invalid schedule',
-  INVALID_ITEM: 'Scan failed',
+  INVALID_SCHEDULE: 1,
+  INVALID_ITEM: 2,
+  SCAN_FAILED: 3,
+  ITEM_CHECKED_OUT: 4,
 };
-
-export const patronIdentifierTypes = [
-  { key: 'BARCODE', label: 'Barcode', queryKey: 'barcode' },
-  { key: 'EXTERNAL', label: 'External system id', queryKey: 'externalSystemId' },
-  { key: 'FOLIO', label: 'FOLIO record number', queryKey: 'id' },
-  { key: 'USER', label: 'Username', queryKey: 'username' },
-];
 
 export const patronIdentifierMap = {
   BARCODE: 'barcode',
@@ -19,8 +14,8 @@ export const patronIdentifierMap = {
 
 export const patronLabelMap = {
   BARCODE: 'barcode',
-  EXTERNAL: 'external system id',
-  FOLIO: 'folio record number',
+  EXTERNAL: 'externalSystemId',
+  FOLIO: 'folioRecordNumber',
   USER: 'username',
 };
 

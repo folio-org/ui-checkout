@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, isString, isArray, isObject, map } from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import { FormattedTime } from 'react-intl';
@@ -44,4 +44,29 @@ export function isProxyDisabled(user, proxyMap) {
   const proxy = proxyMap[user.id];
   return proxy && proxy.meta.expirationDate &&
     moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
+}
+
+export function translate(obj, namespace, stripes) {
+  if (isString(obj)) {
+    return translateMessage(obj, namespace, stripes);
+  }
+
+  if (isArray(obj)) {
+    return map(obj, id => translateMessage(id, namespace, stripes));
+  }
+
+  if (isObject(obj)) {
+    const messages = {};
+    for (const key in obj) {
+      messages[key] = translateMessage(obj[key], namespace, stripes);
+    }
+    return messages;
+  }
+
+  return obj;
+}
+
+export function translateMessage(key, namespace, stripes) {
+  const id = `${namespace}.${key}`;
+  return stripes.intl.formatMessage({ id });
 }
