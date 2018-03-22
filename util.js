@@ -46,27 +46,38 @@ export function isProxyDisabled(user, proxyMap) {
     moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
 }
 
-export function translate(obj, namespace, stripes) {
-  if (isString(obj)) {
-    return translateMessage(obj, namespace, stripes);
+export function translate(message, ...args) {
+  if (isString(message)) {
+    return translateMessage(message, ...args);
   }
 
-  if (isArray(obj)) {
-    return map(obj, id => translateMessage(id, namespace, stripes));
+  if (isArray(message)) {
+    return map(message, key =>
+      (isObject(message) && options.key) ?
+        translateMessage(message, ...args) :
+        translateObject(message, ...args)
+    );
   }
 
-  if (isObject(obj)) {
+  if (isObject(message)) {
     const messages = {};
-    for (const key in obj) {
-      messages[key] = translateMessage(obj[key], namespace, stripes);
+    for (const key in message) {
+      messages[key] = translateMessage(message[key], ...args);
     }
     return messages;
   }
 
-  return obj;
+  return message;
 }
 
-export function translateMessage(key, namespace, stripes) {
-  const id = `${namespace}.${key}`;
-  return stripes.intl.formatMessage({ id });
+export function translateObject(message, values, options = {}, stripes) {
+  const messageStr = message[options.key];
+  const translated = translateMessage(messageStr, values, options, stripes);
+  return Object.assign(message, { [options.key]: translated });
+}
+
+export function translateMessage(message, values, options = {}, stripes) {
+  const { namespace } = options;
+  const id = options.namespace ? `${namespace}.${message}` : message;
+  return stripes.intl.formatMessage({ id }, values);
 }

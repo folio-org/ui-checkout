@@ -28,7 +28,9 @@ class CheckOutRouting extends React.Component {
   getChildContext() {
     return {
       history: this.props.history,
-      translate: obj => translate(obj, 'ui-checkout', this.props.stripes),
+      translate: (message, values) => {
+        return translate(message, values, { namespace: 'ui-checkout' }, this.props.stripes);
+      }
     };
   }
 
