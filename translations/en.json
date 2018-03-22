@@ -20,5 +20,12 @@
   "loanPolicy": "Loan Policy",
   "dueDate": "Due Date",
   "time": "Time",
-  "loanDetails": "Loan details"
+  "loanDetails": "Loan details",
+  "patronGroup": "Patron Group",
+  "statusActive": "Active",
+  "statusInactive": "Inactive",
+  "status": "Status",
+  "userExpiration": "User Expiration",
+  "endSession": "End Session",
+  "totalItemsScanned": "Total items scanned: {total}"
 }
