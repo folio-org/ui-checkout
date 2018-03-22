@@ -67,22 +67,22 @@ export function translateObject(message, values, options = {}, stripes) {
 // Available options:
 //
 // namespace - prefix each message
-// key - used with array of objects to indicate which object's prop should be translated
-export function translate(message, ...args) {
+// key - used with array of objects to indicate which object's property should be translated
+export function translate(message, values, options, stripes) {
   if (isString(message)) {
-    return translateMessage(message, ...args);
+    return translateMessage(message, values, options, stripes);
   }
 
   if (isArray(message)) {
     return message.map(key => (isObject(key) ?
-      translateObject(key, ...args) :
-      translateMessage(key, ...args)));
+      translateObject(key, values, options, stripes) :
+      translateMessage(key, values, options, stripes)));
   }
 
   if (isObject(message)) {
     const messages = {};
     forOwn(message, (value, key) => {
-      messages[key] = translateMessage(value, ...args);
+      messages[key] = translateMessage(value, values, options, stripes);
     });
 
     return messages;
