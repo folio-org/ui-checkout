@@ -163,7 +163,7 @@ class ScanItems extends React.Component {
       if (!schedule) {
         throw new SubmissionError({
           item: {
-            barcode: this.context.translate('checkoutDateRangeError', { lonaPolicyName: item.loanPolicy.name }),
+            barcode: this.context.translate('checkoutDateRangeError', { name: item.loanPolicy.name }),
             _error: errorTypes.INVALID_SCHEDULE,
           },
         });

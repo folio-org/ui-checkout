@@ -3,8 +3,8 @@
   "externalSystemId": "external system id",
   "folioRecordNumber": "folio record number",
   "username": "username",
-  "filloutMessage": "Please fill this out to continue",
-  "checkoutDateRangeError": "Item can't be checked out as the loan date falls outside of the date ranges in the loan policy. Please review {policyName} before retrying checking out.",
+  "missingDataError": "Please fill this out to continue",
+  "checkoutDateRangeError": "Item can't be checked out as the loan date falls outside of the date ranges in the loan policy. Please review {name} before retrying checking out.",
   "itemNotFoundError": "Item with this barcode does not exist",
   "itemNotAvailableError": "Item is not available for checkout",
   "userNotFoundError": "User with this {identifier} does not exist",
@@ -13,5 +13,12 @@
   "openLoans": "Open loans",
   "proxyExpiration": "Proxy Expiration",
   "borrowerProxy": "Borrower's proxy",
-  "borrower": "Borrower"
+  "borrower": "Borrower",
+  "noItemsEntered": "No items have been entered yet",
+  "numberAbbreviation": "No.",
+  "title": "Title",
+  "loanPolicy": "Loan Policy",
+  "dueDate": "Due Date",
+  "time": "Time",
+  "loanDetails": "Loan details"
 }
