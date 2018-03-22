@@ -1,4 +1,4 @@
-import { get, isString, isArray, isObject, map } from 'lodash';
+import { get, isString, isArray, isObject, forOwn } from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
 import { FormattedTime } from 'react-intl';
@@ -46,28 +46,10 @@ export function isProxyDisabled(user, proxyMap) {
     moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
 }
 
-export function translate(message, ...args) {
-  if (isString(message)) {
-    return translateMessage(message, ...args);
-  }
-
-  if (isArray(message)) {
-    return map(message, key =>
-      (isObject(message) && options.key) ?
-        translateMessage(message, ...args) :
-        translateObject(message, ...args)
-    );
-  }
-
-  if (isObject(message)) {
-    const messages = {};
-    for (const key in message) {
-      messages[key] = translateMessage(message[key], ...args);
-    }
-    return messages;
-  }
-
-  return message;
+export function translateMessage(message, values, options = {}, stripes) {
+  const { namespace } = options;
+  const id = namespace ? `${namespace}.${message}` : message;
+  return stripes.intl.formatMessage({ id }, values);
 }
 
 export function translateObject(message, values, options = {}, stripes) {
@@ -76,8 +58,34 @@ export function translateObject(message, values, options = {}, stripes) {
   return Object.assign(message, { [options.key]: translated });
 }
 
-export function translateMessage(message, values, options = {}, stripes) {
-  const { namespace } = options;
-  const id = options.namespace ? `${namespace}.${message}` : message;
-  return stripes.intl.formatMessage({ id }, values);
+// Util function to handle some common translation use cases.
+// string: message - translate(message, values)
+// map:    { key1: message1, key: message2 } - translate(map)
+// array:  [ { id: 1, value: message1 }, { id: 2, value: message2 } ] - translate(array, {}, { key: 'value' });
+//
+// Available options:
+//
+// namespace - to prefix each message
+// key - used with array of objects to indicate which object's field should be translated
+export function translate(message, ...args) {
+  if (isString(message)) {
+    return translateMessage(message, ...args);
+  }
+
+  if (isArray(message)) {
+    return message.map(key => (isObject(key) ?
+      translateObject(key, ...args) :
+      translateMessage(key, ...args)));
+  }
+
+  if (isObject(message)) {
+    const messages = {};
+    forOwn(message, (value, key) => {
+      messages[key] = translateMessage(value, ...args);
+    });
+
+    return messages;
+  }
+
+  return message;
 }

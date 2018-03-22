@@ -177,7 +177,7 @@ class ScanItems extends React.Component {
           item: {
             barcode: 'Item with this barcode does not exist',
             _error: errorTypes.INVALID_ITEM,
-          }
+          },
         });
       }
       return items[0];
@@ -198,7 +198,7 @@ class ScanItems extends React.Component {
           item: {
             barcode: 'Item is not available for checkout',
             _error: errorTypes.ITEM_CHECKED_OUT,
-          }
+          },
         });
       }
       return item;

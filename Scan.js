@@ -10,10 +10,9 @@ import PatronForm from './lib/PatronForm';
 import ViewPatron from './lib/ViewPatron';
 import ScanFooter from './lib/ScanFooter';
 import ScanItems from './ScanItems';
-import { patronIdentifierMap } from './constants';
+import { patronIdentifierMap, errorTypes } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery } from './util';
 import css from './Scan.css';
-import { errorTypes } from './constants';
 
 class Scan extends React.Component {
   static contextTypes = {
@@ -145,7 +144,7 @@ class Scan extends React.Component {
       throw new SubmissionError({
         patron: {
           identifier: this.context.translate('filloutMessage'),
-        }
+        },
       });
     }
 
@@ -161,7 +160,7 @@ class Scan extends React.Component {
           patron: {
             identifier: `User with this ${identifier} does not exist`,
             _error: errorTypes.SCAN_FAILED,
-          }
+          },
         });
       }
       return patrons;
