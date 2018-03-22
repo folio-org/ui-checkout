@@ -59,14 +59,15 @@ export function translateObject(message, values, options = {}, stripes) {
 }
 
 // Util function to handle some common translation use cases.
-// string: message - translate(message, values)
-// map:    { key1: message1, key: message2 } - translate(map)
-// array:  [ { id: 1, value: message1 }, { id: 2, value: message2 } ] - translate(array, {}, { key: 'value' });
+//
+// string: message1 - translate(message1, values)
+// map: { key1: message1, key2: message2 } - translate(map)
+// array of objects: [ { id: 1, value: message1 }, { id: 2, value: message2 } ] - translate(array, {}, { key: 'value' });
 //
 // Available options:
 //
-// namespace - to prefix each message
-// key - used with array of objects to indicate which object's field should be translated
+// namespace - prefix each message
+// key - used with array of objects to indicate which object's prop should be translated
 export function translate(message, ...args) {
   if (isString(message)) {
     return translateMessage(message, ...args);
