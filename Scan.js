@@ -33,12 +33,6 @@ class Scan extends React.Component {
       settings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      proxiesFor: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      sponsorOf: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
       checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -46,14 +40,6 @@ class Scan extends React.Component {
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      proxiesFor: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      sponsorOf: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -73,20 +59,6 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'configs',
       path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
-    },
-    proxiesFor: {
-      type: 'okapi',
-      records: 'proxiesFor',
-      path: 'proxiesfor',
-      accumulate: 'true',
-      fetch: false,
-    },
-    sponsorOf: {
-      type: 'okapi',
-      records: 'proxiesFor',
-      path: 'proxiesfor',
-      accumulate: 'true',
-      fetch: false,
     },
     patrons: {
       type: 'okapi',
@@ -164,22 +136,7 @@ class Scan extends React.Component {
         });
       }
       return patrons;
-    }).then((patrons) => {
-      this.fetchProxies(patrons[0]);
-      return this.fetchSponsors(patrons[0]);
     }).finally(() => this.setState({ loading: false }));
-  }
-
-  fetchProxies(patron) {
-    const query = `(proxyUserId="${patron.id}")`;
-    this.props.mutator.proxiesFor.reset();
-    return this.props.mutator.proxiesFor.GET({ params: { query } });
-  }
-
-  fetchSponsors(patron) {
-    const query = `(userId="${patron.id}")`;
-    this.props.mutator.sponsorOf.reset();
-    return this.props.mutator.sponsorOf.GET({ params: { query } });
   }
 
   clearForm(formName) {
@@ -191,8 +148,6 @@ class Scan extends React.Component {
     const checkoutSettings = (resources.checkoutSettings || {}).records || [];
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
-    const proxiesFor = resources.proxiesFor || {};
-    const sponsorOf = resources.sponsorOf || {};
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
@@ -220,14 +175,12 @@ class Scan extends React.Component {
               {...this.props}
             />
             {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-            {patrons.length > 0 && proxiesFor.hasLoaded && sponsorOf.hasLoaded &&
+            {patrons.length > 0 &&
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
                 proxy={proxy}
-                proxiesFor={proxiesFor.records}
-                sponsorOf={sponsorOf.records}
                 settings={settings}
                 {...this.props}
               />
