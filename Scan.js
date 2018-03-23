@@ -10,11 +10,15 @@ import PatronForm from './lib/PatronForm';
 import ViewPatron from './lib/ViewPatron';
 import ScanFooter from './lib/ScanFooter';
 import ScanItems from './ScanItems';
-import { patronIdentifierMap } from './constants';
+import { patronIdentifierMap, errorTypes } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery } from './util';
 import css from './Scan.css';
 
 class Scan extends React.Component {
+  static contextTypes = {
+    translate: PropTypes.func,
+  };
+
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
@@ -98,9 +102,10 @@ class Scan extends React.Component {
     },
   });
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
 
+    this.context = context;
     this.store = props.stripes.store;
     this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.connectedScanItems = props.stripes.connect(ScanItems);
@@ -136,7 +141,11 @@ class Scan extends React.Component {
     const patron = data.patron;
 
     if (!patron) {
-      throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
+      throw new SubmissionError({
+        patron: {
+          identifier: this.context.translate('filloutMessage'),
+        },
+      });
     }
 
     this.clearResources();
@@ -147,7 +156,12 @@ class Scan extends React.Component {
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
-        throw new SubmissionError({ patron: { identifier: `User with this ${identifier} does not exist`, _error: 'Scan failed' } });
+        throw new SubmissionError({
+          patron: {
+            identifier: this.context.translate('userNotFoundError', { identifier }),
+            _error: errorTypes.SCAN_FAILED,
+          },
+        });
       }
       return patrons;
     }).then((patrons) => {
@@ -183,6 +197,8 @@ class Scan extends React.Component {
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
 
+    const { translate } = this.context;
+
     if (!checkoutSettings) return <div />;
 
     let patron = patrons[0];
@@ -196,7 +212,7 @@ class Scan extends React.Component {
     return (
       <div className={css.container}>
         <Paneset static>
-          <Pane defaultWidth="35%" paneTitle="Scan patron card">
+          <Pane defaultWidth="35%" paneTitle={translate('scanPatronCard')}>
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
@@ -217,7 +233,7 @@ class Scan extends React.Component {
               />
             }
           </Pane>
-          <Pane defaultWidth="65%" paneTitle="Scan items">
+          <Pane defaultWidth="65%" paneTitle={translate('scanPatronCard')}>
             <this.connectedScanItems
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}

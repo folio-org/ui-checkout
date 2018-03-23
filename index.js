@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
+import { translate } from './util';
 
 class CheckOutRouting extends React.Component {
   static childContextTypes = {
     history: PropTypes.object,
+    translate: PropTypes.func,
   };
 
   static propTypes = {
@@ -24,7 +26,11 @@ class CheckOutRouting extends React.Component {
   }
 
   getChildContext() {
-    return { history: this.props.history };
+    return {
+      history: this.props.history,
+      translate: (message, values) =>
+        translate(message, values, { namespace: 'ui-checkout' }, this.props.stripes),
+    };
   }
 
   NoMatch() {

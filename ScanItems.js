@@ -9,8 +9,13 @@ import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
 import { toParams } from './util';
 import { calculateDueDate, isLoanProfileFixed, getFixedDueDateSchedule } from './loanUtil';
+import { errorTypes } from './constants';
 
 class ScanItems extends React.Component {
+  static contextTypes = {
+    translate: PropTypes.func,
+  };
+
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
@@ -100,12 +105,22 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
+    const { translate } = this.context;
+
     if (!data.item) {
-      throw new SubmissionError({ item: { barcode: 'Please fill this out to continue' } });
+      throw new SubmissionError({
+        item: {
+          barcode: translate('filloutMessage'),
+        },
+      });
     }
 
     if (!this.props.patron) {
-      return this.dispatchError('patronForm', 'patron.identifier', { patron: { identifier: 'Please fill this out to continue' } });
+      return this.dispatchError('patronForm', 'patron.identifier', {
+        patron: {
+          identifier: translate('filloutMessage'),
+        },
+      });
     }
 
     this.setState({ loading: true });
@@ -150,10 +165,8 @@ class ScanItems extends React.Component {
       if (!schedule) {
         throw new SubmissionError({
           item: {
-            barcode: `Item can't be checked out as the loan date falls outside
-             of the date ranges in the loan policy.
-             Please review ${item.loanPolicy.name} before retrying checking out.`,
-            _error: 'Invalid schedule',
+            barcode: this.context.translate('checkoutDateRangeError', { name: item.loanPolicy.name }),
+            _error: errorTypes.INVALID_SCHEDULE,
           },
         });
       }
@@ -172,7 +185,12 @@ class ScanItems extends React.Component {
     this.props.mutator.items.reset();
     return this.props.mutator.items.GET({ params: { query } }).then((items) => {
       if (!items.length) {
-        throw new SubmissionError({ item: { barcode: 'Item with this barcode does not exist', _error: 'Scan failed' } });
+        throw new SubmissionError({
+          item: {
+            barcode: this.context.translate('itemNotFoundError'),
+            _error: errorTypes.INVALID_ITEM,
+          },
+        });
       }
       return items[0];
     });
@@ -188,7 +206,12 @@ class ScanItems extends React.Component {
 
     return this.props.mutator.loans.GET({ params: { query } }).then((loans) => {
       if (loans.length) {
-        throw new SubmissionError({ item: { barcode: 'Item is not available for checkout', _error: 'Item is checked out' } });
+        throw new SubmissionError({
+          item: {
+            barcode: this.context.translate('itemNotAvailableError'),
+            _error: errorTypes.ITEM_CHECKED_OUT,
+          },
+        });
       }
       return item;
     });
