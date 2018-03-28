@@ -115,7 +115,7 @@ class Scan extends React.Component {
     if (!patron) {
       throw new SubmissionError({
         patron: {
-          identifier: this.context.translate('filloutMessage'),
+          identifier: this.context.translate('missingDataError'),
         },
       });
     }
