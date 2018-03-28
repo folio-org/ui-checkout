@@ -10,11 +10,15 @@ import PatronForm from './lib/PatronForm';
 import ViewPatron from './lib/ViewPatron';
 import ScanFooter from './lib/ScanFooter';
 import ScanItems from './ScanItems';
-import { patronIdentifierMap } from './constants';
+import { patronIdentifierMap, errorTypes } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery } from './util';
 import css from './Scan.css';
 
 class Scan extends React.Component {
+  static contextTypes = {
+    translate: PropTypes.func,
+  };
+
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
@@ -29,12 +33,6 @@ class Scan extends React.Component {
       settings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      proxiesFor: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
-      sponsorOf: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
-      }),
       checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -42,14 +40,6 @@ class Scan extends React.Component {
     }),
     mutator: PropTypes.shape({
       patrons: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      proxiesFor: PropTypes.shape({
-        GET: PropTypes.func,
-        reset: PropTypes.func,
-      }),
-      sponsorOf: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -70,20 +60,6 @@ class Scan extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
     },
-    proxiesFor: {
-      type: 'okapi',
-      records: 'proxiesFor',
-      path: 'proxiesfor',
-      accumulate: 'true',
-      fetch: false,
-    },
-    sponsorOf: {
-      type: 'okapi',
-      records: 'proxiesFor',
-      path: 'proxiesfor',
-      accumulate: 'true',
-      fetch: false,
-    },
     patrons: {
       type: 'okapi',
       records: 'users',
@@ -98,9 +74,10 @@ class Scan extends React.Component {
     },
   });
 
-  constructor(props) {
+  constructor(props, context) {
     super(props);
 
+    this.context = context;
     this.store = props.stripes.store;
     this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.connectedScanItems = props.stripes.connect(ScanItems);
@@ -136,7 +113,11 @@ class Scan extends React.Component {
     const patron = data.patron;
 
     if (!patron) {
-      throw new SubmissionError({ patron: { identifier: 'Please fill this out to continue' } });
+      throw new SubmissionError({
+        patron: {
+          identifier: this.context.translate('missingDataError'),
+        },
+      });
     }
 
     this.clearResources();
@@ -147,25 +128,15 @@ class Scan extends React.Component {
     return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
       if (!patrons.length) {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
-        throw new SubmissionError({ patron: { identifier: `User with this ${identifier} does not exist`, _error: 'Scan failed' } });
+        throw new SubmissionError({
+          patron: {
+            identifier: this.context.translate('userNotFoundError', { identifier }),
+            _error: errorTypes.SCAN_FAILED,
+          },
+        });
       }
       return patrons;
-    }).then((patrons) => {
-      this.fetchProxies(patrons[0]);
-      return this.fetchSponsors(patrons[0]);
     }).finally(() => this.setState({ loading: false }));
-  }
-
-  fetchProxies(patron) {
-    const query = `(proxyUserId="${patron.id}")`;
-    this.props.mutator.proxiesFor.reset();
-    return this.props.mutator.proxiesFor.GET({ params: { query } });
-  }
-
-  fetchSponsors(patron) {
-    const query = `(userId="${patron.id}")`;
-    this.props.mutator.sponsorOf.reset();
-    return this.props.mutator.sponsorOf.GET({ params: { query } });
   }
 
   clearForm(formName) {
@@ -177,11 +148,11 @@ class Scan extends React.Component {
     const checkoutSettings = (resources.checkoutSettings || {}).records || [];
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
-    const proxiesFor = resources.proxiesFor || {};
-    const sponsorOf = resources.sponsorOf || {};
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
+
+    const { translate } = this.context;
 
     if (!checkoutSettings) return <div />;
 
@@ -196,7 +167,7 @@ class Scan extends React.Component {
     return (
       <div className={css.container}>
         <Paneset static>
-          <Pane defaultWidth="35%" paneTitle="Scan patron card">
+          <Pane defaultWidth="35%" paneTitle={translate('scanPatronCard')}>
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
@@ -204,20 +175,18 @@ class Scan extends React.Component {
               {...this.props}
             />
             {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-            {patrons.length > 0 && proxiesFor.hasLoaded && sponsorOf.hasLoaded &&
+            {patrons.length > 0 &&
               <this.connectedViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
                 proxy={proxy}
-                proxiesFor={proxiesFor.records}
-                sponsorOf={sponsorOf.records}
                 settings={settings}
                 {...this.props}
               />
             }
           </Pane>
-          <Pane defaultWidth="65%" paneTitle="Scan items">
+          <Pane defaultWidth="65%" paneTitle={translate('scanItems')}>
             <this.connectedScanItems
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}

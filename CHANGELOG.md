@@ -41,8 +41,11 @@
 * Get fixed loan period from loan policy. Fixes UICHKOUT-66.
 * Move checkout links into actions menu. Fixes UICHKOUT-74.
 * Make borrowing patron more prominent. Fixes UICHKOUT-47. Available since v1.1.3.
-* Update test to save Scan ID settings. Refs UITEST-20. 
+* Update test to save Scan ID settings. Refs UITEST-20.
 * Refactor checkout settings. Refs UICIRC-47.
+* Extract hardcoded labels so they can be translated. Fixes UICHKOUT-75.
+* Extract proxy modal into `<ProxyManager>`. Fixes STSMACOM-58.
+* Ignore yarn-error.log file. Refs STRIPES-517.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
