@@ -110,7 +110,7 @@ class ScanItems extends React.Component {
     if (!data.item) {
       throw new SubmissionError({
         item: {
-          barcode: translate('filloutMessage'),
+          barcode: translate('missingDataError'),
         },
       });
     }
@@ -118,7 +118,7 @@ class ScanItems extends React.Component {
     if (!this.props.patron) {
       return this.dispatchError('patronForm', 'patron.identifier', {
         patron: {
-          identifier: translate('filloutMessage'),
+          identifier: translate('missingDataError'),
         },
       });
     }
