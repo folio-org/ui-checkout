@@ -186,7 +186,7 @@ class Scan extends React.Component {
               />
             }
           </Pane>
-          <Pane defaultWidth="65%" paneTitle={translate('scanPatronCard')}>
+          <Pane defaultWidth="65%" paneTitle={translate('scanItems')}>
             <this.connectedScanItems
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}
