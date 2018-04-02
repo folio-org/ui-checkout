@@ -4,12 +4,16 @@ import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
 import Icon from '@folio/stripes-components/lib/Icon';
+import ReactAudioPlayer from 'react-audio-player';
 
 import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
 import { toParams } from './util';
 import { calculateDueDate, isLoanProfileFixed, getFixedDueDateSchedule } from './loanUtil';
 import { errorTypes } from './constants';
+
+import checkoutSuccessSound from './sound/checkout_success.m4a';
+import checkoutErrorSound from './sound/checkout_error.m4a';
 
 class ScanItems extends React.Component {
   static contextTypes = {
@@ -58,6 +62,7 @@ class ScanItems extends React.Component {
     patron: PropTypes.object,
     proxy: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
+    settings: PropTypes.object,
   };
 
   static manifest = Object.freeze({
@@ -95,13 +100,15 @@ class ScanItems extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+
   });
 
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
     this.checkout = this.checkout.bind(this);
-    this.state = { loading: false };
+    this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
+    this.state = { loading: false, checkoutStatus: null };
   }
 
   checkout(data) {
@@ -132,6 +139,10 @@ class ScanItems extends React.Component {
       .then(item => this.postLoan(item))
       .then(loan => this.addScannedItem(loan))
       .then(() => this.clearField('itemForm', 'item.barcode'))
+      .catch((error) => {
+        this.setState({ checkoutStatus: 'error' });
+        throw error;
+      })
       .finally(() => this.setState({ loading: false }));
   }
 
@@ -278,6 +289,8 @@ class ScanItems extends React.Component {
       loanData.proxyUserId = proxy.id;
     }
 
+    this.setState({ checkoutStatus: 'success' });
+
     return this.props.mutator.loans.POST(loanData).then((loan) => {
       loan.loanPolicy = item.loanPolicy;
       return loan;
@@ -297,16 +310,28 @@ class ScanItems extends React.Component {
     this.store.dispatch(setSubmitFailed(formName, [fieldName]));
   }
 
+  onFinishedPlaying() {
+    this.setState({ checkoutStatus: null });
+  }
+
   render() {
-    const { parentResources, onSessionEnd, patron } = this.props;
+    const { parentResources, onSessionEnd, patron, settings } = this.props;
+    const { checkoutStatus } = this.state;
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
+    const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
 
     return (
       <div>
         <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
         <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
+        {settings.audioAlertsEnabled && checkoutStatus &&
+        <ReactAudioPlayer
+          src={checkoutSound}
+          autoPlay
+          onEnded={this.onFinishedPlaying}
+        />}
       </div>
     );
   }

@@ -22,14 +22,22 @@ export function formatTime(dateStr) {
   return (<FormattedTime value={localDateStr} />);
 }
 
+export function getCheckoutSettings(checkoutSettings) {
+  if (!checkoutSettings.length) return {};
+
+  try {
+    return JSON.parse(checkoutSettings[0].value);
+  } catch (e) {
+    return {};
+  }
+}
+
 export function getPatronIdentifiers(checkoutSettings) {
-  if (checkoutSettings.length && checkoutSettings[0].value) {
-    try {
-      const idents = JSON.parse(checkoutSettings[0].value).prefPatronIdentifier;
-      if (idents) return idents.split(',');
-    } catch (e) {
-      return [defaultPatronIdentifier];
-    }
+  const settings = getCheckoutSettings(checkoutSettings);
+
+  if (settings && settings.prefPatronIdentifier) {
+    const idents = settings.prefPatronIdentifier;
+    if (idents) return idents.split(',');
   }
 
   return [defaultPatronIdentifier];
