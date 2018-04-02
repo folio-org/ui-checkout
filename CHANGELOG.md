@@ -47,6 +47,7 @@
 * Extract proxy modal into `<ProxyManager>`. Fixes STSMACOM-58.
 * Ignore yarn-error.log file. Refs STRIPES-517.
 * Bug fix: translate table-headers fixes patron lookup. Fixes UICHKOUT-411.
+* Fix rolling loan due date calculation. Fixes UICHKOUT-408.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)

@@ -5,6 +5,22 @@ export const errorTypes = {
   ITEM_CHECKED_OUT: 4,
 };
 
+export const intervalPeriodsMap = {
+  MINUTE: 'minutes',
+  HOUR: 'hours',
+  DAY: 'days',
+  WEEK: 'weeks',
+  MONTH: 'months',
+};
+
+export const intervalIdsMap = {
+  1: 'minutes',
+  2: 'hours',
+  3: 'days',
+  4: 'weeks',
+  5: 'months',
+};
+
 export const patronIdentifierMap = {
   BARCODE: 'barcode',
   EXTERNAL: 'externalSystemId',
@@ -17,6 +33,11 @@ export const patronLabelMap = {
   EXTERNAL: 'externalSystemId',
   FOLIO: 'folioRecordNumber',
   USER: 'username',
+};
+
+export const renewFromMap = {
+  CURRENT_DUE_DATE: '1',
+  SYSTEM_DATE: '2',
 };
 
 export const defaultPatronIdentifier = 'BARCODE';
