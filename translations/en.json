@@ -44,5 +44,10 @@
   "patronIdentifier": "Patron Identifier",
   "scanOrEnterItemBarcode": "Scan or enter item barcode",
   "itemId": "Item ID",
-  "okay": "Okay"
+  "okay": "Okay",
+
+  "user.name": "Name",
+  "user.username": "Username",
+  "user.barcode": "Barcode",
+  "user.patronGroup": "Patron group"
 }
