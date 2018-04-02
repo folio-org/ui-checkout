@@ -11,7 +11,7 @@ import ViewPatron from './lib/ViewPatron';
 import ScanFooter from './lib/ScanFooter';
 import ScanItems from './ScanItems';
 import { patronIdentifierMap, errorTypes } from './constants';
-import { getPatronIdentifiers, buildIdentifierQuery } from './util';
+import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from './util';
 import css from './Scan.css';
 
 class Scan extends React.Component {
@@ -145,7 +145,7 @@ class Scan extends React.Component {
 
   render() {
     const resources = this.props.resources;
-    const checkoutSettings = (resources.checkoutSettings || {}).records || [];
+    const checkoutSettings = getCheckoutSettings((resources.checkoutSettings || {}).records || []);
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
     const scannedItems = resources.scannedItems || [];
@@ -193,6 +193,7 @@ class Scan extends React.Component {
               stripes={this.props.stripes}
               patron={patron}
               proxy={proxy}
+              settings={checkoutSettings}
               onSessionEnd={() => this.onSessionEnd()}
             />
           </Pane>
