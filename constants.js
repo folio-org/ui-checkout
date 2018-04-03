@@ -43,9 +43,9 @@ export const renewFromMap = {
 export const defaultPatronIdentifier = 'BARCODE';
 
 export const loanProfileTypesMap = {
-  FIXED: '1',
-  ROLLING: '2',
-  INDEFINITE: '3',
+  FIXED: 'Fixed',
+  ROLLING: 'Rolling',
+  INDEFINITE: 'Indefinite',
 };
 
 export default '';
