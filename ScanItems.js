@@ -8,7 +8,6 @@ import ReactAudioPlayer from 'react-audio-player';
 
 import ItemForm from './lib/ItemForm';
 import ViewItem from './lib/ViewItem';
-import { toParams } from './util';
 import { calculateDueDate, isLoanProfileFixed, getFixedDueDateSchedule } from './loanUtil';
 import { errorTypes } from './constants';
 
@@ -231,12 +230,12 @@ class ScanItems extends React.Component {
   fetchLoanPolicyId(item) {
     const { materialType, permanentLoanType, permanentLocation } = item;
     const { patron } = this.props;
-    const params = toParams({
+    const params = {
       shelving_location_id: permanentLocation.id,
       item_type_id: materialType.id,
       loan_type_id: permanentLoanType.id,
       patron_type_id: patron.patronGroup,
-    });
+    };
 
     this.props.mutator.loanRules.reset();
     return this.props.mutator.loanRules.GET({ params }).then((rule) => {
