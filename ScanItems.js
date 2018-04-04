@@ -42,6 +42,10 @@ class ScanItems extends React.Component {
         GET: PropTypes.func,
         POST: PropTypes.func,
       }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -76,6 +80,13 @@ class ScanItems extends React.Component {
       type: 'okapi',
       records: 'loans',
       path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      path: 'request-storage/requests',
       accumulate: 'true',
       fetch: false,
     },
@@ -134,6 +145,7 @@ class ScanItems extends React.Component {
 
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.checkForLoan(item))
+      .then(item => this.checkForRequest(item))
       .then(item => this.validateLoanPolicy(item))
       .then(item => this.postLoan(item))
       .then(loan => this.addScannedItem(loan))
@@ -223,6 +235,24 @@ class ScanItems extends React.Component {
           },
         });
       }
+      return item;
+    });
+  }
+
+  checkForRequest(item) {
+    const itemId = item.id;
+    const query = `(itemId="${itemId}")`;
+
+    return this.props.mutator.requests.GET({ params: { query } }).then((requests) => {
+      if (requests.length) {
+        throw new SubmissionError({
+          item: {
+            barcode: this.context.translate('itemNotAvailableError'),
+            _error: errorTypes.ITEM_CHECKED_OUT,
+          },
+        });
+      }
+
       return item;
     });
   }
