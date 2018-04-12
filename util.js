@@ -48,12 +48,6 @@ export function buildIdentifierQuery(patron, idents) {
   return `(${query.join(' OR ')})`;
 }
 
-export function isProxyDisabled(user, proxyMap) {
-  const proxy = proxyMap[user.id];
-  return proxy && proxy.meta.expirationDate &&
-    moment(proxy.meta.expirationDate).isSameOrBefore(new Date());
-}
-
 export function translateMessage(message, values, options = {}, stripes) {
   const { namespace } = options;
   const id = namespace ? `${namespace}.${message}` : message;
