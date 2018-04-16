@@ -285,11 +285,11 @@ class ScanItems extends React.Component {
   }
 
   fetchFixedDueDateSchedules(item) {
-    if (!item || !item.loanPolicy || !item.loanPolicy.loansPolicy.fixedDueDateSchedule) {
+    if (!item || !item.loanPolicy || !item.loanPolicy.loansPolicy.fixedDueDateScheduleId) {
       return item;
     }
 
-    const query = `(id=="${item.loanPolicy.loansPolicy.fixedDueDateSchedule}")`;
+    const query = `(id=="${item.loanPolicy.loansPolicy.fixedDueDateScheduleId}")`;
     this.props.mutator.fixedDueDateSchedules.reset();
     return this.props.mutator.fixedDueDateSchedules.GET({ params: { query } }).then((fixedDueDateSchedules) => {
       item.loanPolicy.fixedDueDateSchedule = fixedDueDateSchedules[0];
