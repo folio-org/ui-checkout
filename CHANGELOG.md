@@ -54,7 +54,7 @@
 * Show error when trying to check out item that has been requested. Fixes UICHKOUT-410.
 * Stop using 'diku_admin' user for error message test, use find-user plugin. UICHKOUT-414.
 * Replace fixedDueDateSchedule with fixedDueDateScheduleId. Fixes UICHKOUT-417.
-* Add null pointer check in componentWillReceiveProps. Fixes UICHKOUT-418.
+* Initialize patron object to empty rather than null. Fixes UICHKOUT-418.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
