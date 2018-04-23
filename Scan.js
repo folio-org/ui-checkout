@@ -53,7 +53,7 @@ class Scan extends React.Component {
   };
 
   static manifest = Object.freeze({
-    selPatron: { initialValue: null },
+    selPatron: { initialValue: {} },
     scannedItems: { initialValue: [] },
     checkoutSettings: {
       type: 'okapi',
