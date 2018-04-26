@@ -1,4 +1,4 @@
-module.exports.test = function(uiTestCtx) {
+module.exports.test = () => {
 
 
-}
+};
