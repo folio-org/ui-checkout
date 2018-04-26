@@ -42,10 +42,14 @@ class ScanItems extends React.Component {
         GET: PropTypes.func,
         POST: PropTypes.func,
       }),
+      checkout: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
@@ -110,6 +114,12 @@ class ScanItems extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    checkout: {
+      type: 'okapi',
+      path: 'circulation/check-out-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    }
 
   });
 
@@ -140,9 +150,20 @@ class ScanItems extends React.Component {
       });
     }
 
-    this.setState({ loading: true });
+    this.setState({ loading: true, checkoutStatus: 'success' });
     this.clearError('itemForm');
 
+    const loanData = {
+      itemBarcode: data.item.barcode,
+      userBarcode: this.props.patron.barcode,
+      loanDate: moment().utc().format(),
+    };
+
+    return this.props.mutator.checkout.POST(loanData)
+      .catch(resp => resp.json().then(error => this.handleErrors(error)))
+      .finally(() => this.setState({ loading: false }));
+
+    /*
     return this.fetchItemByBarcode(data.item.barcode)
       .then(item => this.checkForLoan(item))
       .then(item => this.checkForRequest(item))
@@ -155,6 +176,25 @@ class ScanItems extends React.Component {
         throw error;
       })
       .finally(() => this.setState({ loading: false }));
+    */
+  }
+
+  handleErrors(error) {
+    const { parameters } = ((error.errors || [])[0] || {});
+    this.setState({ checkoutStatus: 'error' });
+
+    if (!parameters || !parameters.length) {
+      // TODO throw unknown error
+    }
+
+    const { key } = parameters[0];
+
+    throw new SubmissionError({
+      item: {
+        barcode: this.context.translate(key),
+        _error: key,
+      },
+    });
   }
 
   validateLoanPolicy(data) {
