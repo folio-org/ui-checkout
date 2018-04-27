@@ -116,7 +116,9 @@ class ScanItems extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
+    this.itemInput = null;
     this.checkout = this.checkout.bind(this);
+    this.getChildRef = this.getChildRef.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
   }
@@ -149,7 +151,11 @@ class ScanItems extends React.Component {
       .then(item => this.validateLoanPolicy(item))
       .then(item => this.postLoan(item))
       .then(loan => this.addScannedItem(loan))
-      .then(() => this.clearField('itemForm', 'item.barcode'))
+      .then(() => {
+        this.clearField('itemForm', 'item.barcode');
+        const input = this.itemInput.getRenderedComponent().input;
+        setTimeout(() => input.focus());
+      })
       .catch((error) => {
         this.setState({ checkoutStatus: 'error' });
         throw error;
@@ -343,6 +349,10 @@ class ScanItems extends React.Component {
     this.setState({ checkoutStatus: null });
   }
 
+  getChildRef(r) {
+    this.itemInput = r;
+  }
+
   render() {
     const { parentResources, onSessionEnd, patron, settings } = this.props;
     const { checkoutStatus } = this.state;
@@ -352,7 +362,7 @@ class ScanItems extends React.Component {
 
     return (
       <div>
-        <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} />
+        <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} retrieveRef={this.getChildRef} />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
         <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
         {settings.audioAlertsEnabled && checkoutStatus &&
