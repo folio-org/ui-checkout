@@ -56,6 +56,8 @@
 * Stop using 'diku_admin' user for error message test, use find-user plugin. UICHKOUT-414.
 * Replace fixedDueDateSchedule with fixedDueDateScheduleId. Fixes UICHKOUT-417.
 * Initialize patron object to empty rather than null. Fixes UICHKOUT-418.
+* Wire up new checkout API. Fixes UICHKOUT-419.
+* Added link to borrower's open loans from the open loans count. Fixes UICHKOUT-424.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)

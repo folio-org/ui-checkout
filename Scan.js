@@ -79,7 +79,6 @@ class Scan extends React.Component {
 
     this.context = context;
     this.store = props.stripes.store;
-    this.connectedViewPatron = props.stripes.connect(ViewPatron);
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
     this.findPatron = this.findPatron.bind(this);
@@ -176,7 +175,7 @@ class Scan extends React.Component {
             />
             {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
             {patrons.length > 0 &&
-              <this.connectedViewPatron
+              <ViewPatron
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
