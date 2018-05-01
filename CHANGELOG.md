@@ -58,6 +58,7 @@
 * Initialize patron object to empty rather than null. Fixes UICHKOUT-418.
 * Wire up new checkout API. Fixes UICHKOUT-419.
 * Added link to borrower's open loans from the open loans count. Fixes UICHKOUT-424.
+* Adjust columns width on the checkout screen. Fixes UICHKOUT-423.
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)
