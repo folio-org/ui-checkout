@@ -22,7 +22,6 @@ module.exports.test = function uiTest(uiTestCtx) {
       it('should show error when scanning item before patron card', (done) => {
         nightmare
           .wait('#input-item-barcode')
-          .wait(2222)
           .click('#input-item-barcode')
           .insert('#input-item-barcode', 'item-before-patron')
           .click('#clickable-add-item')
@@ -71,7 +70,6 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('a[href="/settings/circulation/checkout"]')
           .click('a[href="/settings/circulation/checkout"]')
           .wait('#username-checkbox')
-          .wait(1000)
           .evaluate(() => {
             const list = document.querySelectorAll('[data-checked="true"]');
             list.forEach(el => (el.click()));
