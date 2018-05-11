@@ -97,13 +97,12 @@ class ScanItems extends React.Component {
       userBarcode: this.props.patron.barcode,
       loanDate: moment().utc().format(),
     };
-
     return this.props.mutator.checkout.POST(loanData)
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.clearField('itemForm', 'item.barcode');
-        const input = this.itemInput.getRenderedComponent().input;
+        const input = this.itemInput.input;
         setTimeout(() => input.focus());
       })
       .catch(resp => resp.json().then(error => this.handleErrors(error)))
