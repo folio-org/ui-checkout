@@ -17,4 +17,4 @@ Other [modules](http://dev.folio.org/source-code/#client-side).
 See project [UICHKOUT](https://issues.folio.org/browse/UICHKOUT)
 at the [FOLIO issue tracker](http://dev.folio.org/community/guide-issues).
 
-Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
+Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/) 
