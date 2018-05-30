@@ -107,13 +107,14 @@ class ScanItems extends React.Component {
         setTimeout(() => input.focus());
       })
       .catch(resp => {
-        if (resp.status >= 500) {
-          return resp.text().then(error => {
-            alert(error); // eslint-disable-line no-alert
-          });
-        } else {
+        const contentType = resp.headers.get('Content-Type');
+        if (contentType && contentType.startsWith('application/json')) {
           return resp.json().then(error => {
             this.handleErrors(error);
+          });
+        } else {
+          return resp.text().then(error => {
+            alert(error); // eslint-disable-line no-alert
           });
         }
       })
