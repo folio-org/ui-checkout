@@ -178,7 +178,7 @@ class ScanItems extends React.Component {
       <div>
         <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} retrieveRef={this.getChildRef} />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} />
+        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} />
         {settings.audioAlertsEnabled && checkoutStatus &&
         <ReactAudioPlayer
           src={checkoutSound}
