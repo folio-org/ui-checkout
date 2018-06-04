@@ -89,7 +89,7 @@ class ScanItems extends React.Component {
       });
     }
 
-    this.setState({ loading: true, checkoutStatus: 'success' });
+    this.setState({ loading: true });
     this.clearError('itemForm');
 
     const loanData = {
@@ -102,11 +102,13 @@ class ScanItems extends React.Component {
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
+        this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
         const input = this.itemInput.getRenderedComponent().input;
         setTimeout(() => input.focus());
       })
       .catch(resp => {
+        this.setState({ checkoutStatus: 'error' });
         const contentType = resp.headers.get('Content-Type');
         if (contentType && contentType.startsWith('application/json')) {
           return resp.json().then(error => {
@@ -127,7 +129,6 @@ class ScanItems extends React.Component {
       { barcode: this.translate('unknownError'), _error: 'unknownError' } :
       { barcode: message, _error: parameters[0].key };
 
-    this.setState({ checkoutStatus: 'error' });
     throw new SubmissionError({ item: itemError });
   }
 
