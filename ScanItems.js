@@ -107,6 +107,7 @@ class ScanItems extends React.Component {
         setTimeout(() => input.focus());
       })
       .catch(resp => {
+        this.setState({ checkoutStatus: 'error' });
         const contentType = resp.headers.get('Content-Type');
         if (contentType && contentType.startsWith('application/json')) {
           return resp.json().then(error => {
@@ -115,7 +116,6 @@ class ScanItems extends React.Component {
         } else {
           return resp.text().then(error => {
             alert(error); // eslint-disable-line no-alert
-            this.setState({ checkoutStatus: 'error' });
           });
         }
       })
@@ -128,7 +128,6 @@ class ScanItems extends React.Component {
       { barcode: this.translate('unknownError'), _error: 'unknownError' } :
       { barcode: message, _error: parameters[0].key };
 
-    this.setState({ checkoutStatus: 'error' });
     throw new SubmissionError({ item: itemError });
   }
 
