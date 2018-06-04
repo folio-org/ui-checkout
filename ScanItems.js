@@ -89,6 +89,7 @@ class ScanItems extends React.Component {
       });
     }
 
+    this.setState({ loading: true });
     this.clearError('itemForm');
 
     const loanData = {
@@ -101,7 +102,7 @@ class ScanItems extends React.Component {
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
-        this.setState({ loading: true, checkoutStatus: 'success' });
+        this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
         const input = this.itemInput.getRenderedComponent().input;
         setTimeout(() => input.focus());
