@@ -89,7 +89,6 @@ class ScanItems extends React.Component {
       });
     }
 
-    this.setState({ loading: true, checkoutStatus: 'success' });
     this.clearError('itemForm');
 
     const loanData = {
@@ -102,6 +101,7 @@ class ScanItems extends React.Component {
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
+        this.setState({ loading: true, checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
         const input = this.itemInput.getRenderedComponent().input;
         setTimeout(() => input.focus());
@@ -115,6 +115,7 @@ class ScanItems extends React.Component {
         } else {
           return resp.text().then(error => {
             alert(error); // eslint-disable-line no-alert
+            this.setState({ checkoutStatus: 'error' });
           });
         }
       })
