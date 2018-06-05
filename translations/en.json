@@ -23,6 +23,7 @@
   "loanPolicy": "Loan Policy",
   "dueDate": "Due Date",
   "time": "Time",
+  "itemDetails": "Item details",
   "loanDetails": "Loan details",
   "patronGroup": "Patron Group",
   "active": "Active",
