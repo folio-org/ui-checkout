@@ -15,10 +15,6 @@ import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from 
 import css from './Scan.css';
 
 class Scan extends React.Component {
-  static contextTypes = {
-    translate: PropTypes.func,
-  };
-
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
@@ -50,6 +46,10 @@ class Scan extends React.Component {
         replace: PropTypes.func,
       }),
     }),
+  };
+
+  static contextTypes = {
+    translate: PropTypes.func,
   };
 
   static manifest = Object.freeze({

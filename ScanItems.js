@@ -12,10 +12,6 @@ import checkoutSuccessSound from './sound/checkout_success.m4a';
 import checkoutErrorSound from './sound/checkout_error.m4a';
 
 class ScanItems extends React.Component {
-  static contextTypes = {
-    translate: PropTypes.func,
-  };
-
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
@@ -42,6 +38,10 @@ class ScanItems extends React.Component {
     patron: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
     settings: PropTypes.object,
+  };
+
+  static contextTypes = {
+    translate: PropTypes.func,
   };
 
   static manifest = Object.freeze({
