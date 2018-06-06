@@ -54,6 +54,7 @@ class Scan extends React.Component {
 
   static manifest = Object.freeze({
     selPatron: { initialValue: {} },
+    query:{},
     scannedItems: { initialValue: [] },
     checkoutSettings: {
       type: 'okapi',
@@ -187,6 +188,7 @@ class Scan extends React.Component {
           </Pane>
           <Pane defaultWidth="65%" paneTitle={translate('scanItems')}>
             <this.connectedScanItems
+              {...this.props}
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}
               stripes={this.props.stripes}
