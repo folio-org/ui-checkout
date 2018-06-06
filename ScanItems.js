@@ -58,7 +58,6 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
-    query: {},
   });
 
   constructor(props) {
@@ -66,7 +65,7 @@ class ScanItems extends React.Component {
     this.store = props.stripes.store;
     this.itemInput = null;
     this.checkout = this.checkout.bind(this);
-    this.cViewItem = props.stripes.connect(ViewItem);
+
     this.getChildRef = this.getChildRef.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
@@ -181,7 +180,7 @@ class ScanItems extends React.Component {
       <div>
         <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} retrieveRef={this.getChildRef} />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <this.cViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props}/>
+        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props}/>
         {settings.audioAlertsEnabled && checkoutStatus &&
         <ReactAudioPlayer
           src={checkoutSound}

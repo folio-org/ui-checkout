@@ -18,14 +18,7 @@ class CheckOutRouting extends React.Component {
     history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    mutator: PropTypes.shape({
-      query: PropTypes.object.isRequired,
-    }),
   }
-
-  static manifest = Object.freeze({
-    query: {},
-  });
 
   constructor(props) {
     super(props);
