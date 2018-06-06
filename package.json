@@ -15,6 +15,7 @@
     "type": "app",
     "displayName": "Check out",
     "route": "/checkout",
+    "queryResource": "query",
     "icons": [
       {
         "name": "app",
