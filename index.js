@@ -6,11 +6,6 @@ import Scan from './Scan';
 import { translate } from './util';
 
 class CheckOutRouting extends React.Component {
-  static childContextTypes = {
-    history: PropTypes.object,
-    translate: PropTypes.func,
-  };
-
   static propTypes = {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
@@ -19,6 +14,11 @@ class CheckOutRouting extends React.Component {
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
   }
+
+  static childContextTypes = {
+    history: PropTypes.object,
+    translate: PropTypes.func,
+  };
 
   constructor(props) {
     super(props);
