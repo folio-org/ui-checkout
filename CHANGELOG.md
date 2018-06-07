@@ -59,7 +59,7 @@
 * Wire up new checkout API. Fixes UICHKOUT-419.
 * Added link to borrower's open loans from the open loans count. Fixes UICHKOUT-424.
 * Adjust columns width on the checkout screen. Fixes UICHKOUT-423.
-* Accomodate ui-users "show inactive users" filter. Refs UIU-400.
+* Accommodate ui-users "show inactive users" filter. Refs UIU-400.
 * Remove old code responsible for the checkout processing. Fixes UICHKOUT-431.
 * Added ability to change due date of newly checked-out items. Refs UIU-497.
 * Update to current users interface. Refs UIU-495.
