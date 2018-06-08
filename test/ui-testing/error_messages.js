@@ -81,7 +81,7 @@ module.exports.test = function uiTest(uiTestCtx) {
               .wait('#username-checkbox')
               .click('#username-checkbox')
               .wait('#clickable-savescanid')
-              .click('#clickable-savescanid')
+              .click('#clickable-savescanid');
           })
           .then(() => { done(); })
           .catch(done);
