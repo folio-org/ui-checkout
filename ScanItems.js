@@ -177,7 +177,6 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
-          retrieveRef={this.getChildRef}
         />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
         <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props} />
