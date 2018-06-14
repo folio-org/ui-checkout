@@ -12,6 +12,22 @@ import checkoutSuccessSound from './sound/checkout_success.m4a';
 import checkoutErrorSound from './sound/checkout_error.m4a';
 
 class ScanItems extends React.Component {
+  static manifest = Object.freeze({
+    loanPolicies: {
+      type: 'okapi',
+      records: 'loanPolicies',
+      path: 'loan-policy-storage/loan-policies',
+      accumulate: 'true',
+      fetch: false,
+    },
+    checkout: {
+      type: 'okapi',
+      path: 'circulation/check-out-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     mutator: PropTypes.shape({
@@ -44,31 +60,13 @@ class ScanItems extends React.Component {
     translate: PropTypes.func,
   };
 
-  static manifest = Object.freeze({
-    loanPolicies: {
-      type: 'okapi',
-      records: 'loanPolicies',
-      path: 'loan-policy-storage/loan-policies',
-      accumulate: 'true',
-      fetch: false,
-    },
-    checkout: {
-      type: 'okapi',
-      path: 'circulation/check-out-by-barcode',
-      fetch: false,
-      throwErrors: false,
-    },
-  });
-
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
-    this.itemInput = null;
     this.checkout = this.checkout.bind(this);
-
-    this.getChildRef = this.getChildRef.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
+    this.itemInput = React.createRef();
   }
 
   checkout(data) {
@@ -105,8 +103,7 @@ class ScanItems extends React.Component {
       .then(() => {
         this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
-        const input = this.itemInput.getRenderedComponent().input;
-        setTimeout(() => input.focus());
+        this.itemInput.current.wrappedInstance.focusInput();
       })
       .catch(resp => {
         this.setState({ checkoutStatus: 'error' });
@@ -165,10 +162,6 @@ class ScanItems extends React.Component {
     this.setState({ checkoutStatus: null });
   }
 
-  getChildRef(r) {
-    this.itemInput = r;
-  }
-
   render() {
     const { parentResources, onSessionEnd, patron, settings } = this.props;
     const { checkoutStatus } = this.state;
@@ -178,7 +171,14 @@ class ScanItems extends React.Component {
 
     return (
       <div>
-        <ItemForm onSubmit={this.checkout} patron={patron} total={scannedTotal} onSessionEnd={onSessionEnd} retrieveRef={this.getChildRef} />
+        <ItemForm
+          ref={this.itemInput}
+          onSubmit={this.checkout}
+          patron={patron}
+          total={scannedTotal}
+          onSessionEnd={onSessionEnd}
+          retrieveRef={this.getChildRef}
+        />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
         <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props} />
         {settings.audioAlertsEnabled && checkoutStatus &&

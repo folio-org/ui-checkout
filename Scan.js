@@ -15,6 +15,29 @@ import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from 
 import css from './Scan.css';
 
 class Scan extends React.Component {
+  static manifest = Object.freeze({
+    selPatron: { initialValue: {} },
+    query: { initialValue: {} },
+    scannedItems: { initialValue: [] },
+    checkoutSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
+    },
+    patrons: {
+      type: 'okapi',
+      records: 'users',
+      path: 'users',
+      accumulate: 'true',
+      fetch: false,
+    },
+    settings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
+    },
+  });
+
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
@@ -51,29 +74,6 @@ class Scan extends React.Component {
   static contextTypes = {
     translate: PropTypes.func,
   };
-
-  static manifest = Object.freeze({
-    selPatron: { initialValue: {} },
-    query: { initialValue: {} },
-    scannedItems: { initialValue: [] },
-    checkoutSettings: {
-      type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
-    },
-    patrons: {
-      type: 'okapi',
-      records: 'users',
-      path: 'users',
-      accumulate: 'true',
-      fetch: false,
-    },
-    settings: {
-      type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
-    },
-  });
 
   constructor(props, context) {
     super(props);
