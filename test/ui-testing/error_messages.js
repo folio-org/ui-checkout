@@ -71,6 +71,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('a[href="/settings/circulation/checkout"]')
           .click('a[href="/settings/circulation/checkout"]')
           .wait('#username-checkbox')
+          .wait(1111)
           .evaluate(() => {
             const list = document.querySelectorAll('[data-checked="true"]');
             list.forEach(el => (el.click()));
