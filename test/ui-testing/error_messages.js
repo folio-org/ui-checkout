@@ -111,7 +111,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#section-item div[class*="Error"]')
           .evaluate(() => {
             const errorText = document.querySelector('#section-item div[class*="Error"]').innerText;
-            if (!errorText.startsWith('No item with barcode')) {
+            if (!errorText.startsWith('item could not be found')) {
               throw new Error('Error message not found for wrong item barcode');
             }
           })
