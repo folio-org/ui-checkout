@@ -13,7 +13,7 @@
   "main": "index.js",
   "stripes": {
     "type": "app",
-    "displayName": "Check out",
+    "displayName": "ui-checkout.meta.title",
     "route": "/checkout",
     "queryResource": "query",
     "icons": [
