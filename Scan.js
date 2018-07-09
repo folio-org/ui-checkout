@@ -85,9 +85,27 @@ class Scan extends React.Component {
     this.findPatron = this.findPatron.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
+    this.idleTimer = this.idleTimer.bind(this);
+    this.onActive = this.onActive.bind(this);
+    this.onIdle = this.onIdle.bind(this);
+
     this.state = { loading: false };
   }
-
+  idleTimer(settings) {
+    const setTimeout = (+settings.checkoutTimeoutDuration * 15 * 1000);
+    const { stripes } = this.props;
+    //checkout Timeout needs to be set from settings
+    if (!settings.checkoutTimeout) return (<div />);
+    //If set return idle timer
+    return (stripes.setIdleTimer(this.onActive,this.onIdle,setTimeout));
+  }
+  onActive = () => {
+    console.log('Active');
+  }
+  onIdle = () => {
+    console.log('Idle');
+    this.onSessionEnd();
+  }
   onSessionEnd() {
     this.clearResources();
     this.clearForm('itemForm');
@@ -151,6 +169,8 @@ class Scan extends React.Component {
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
+    const inactivityTimer  = this.idleTimer(checkoutSettings); //stripes.setIdleTimer(onActive,onIdle,5000);
+    console.log("inactiveTimer: ",inactivityTimer)
 
     const { translate } = this.context;
 
@@ -166,6 +186,7 @@ class Scan extends React.Component {
 
     return (
       <div className={css.container}>
+        {inactivityTimer}
         <Paneset static>
           <Pane defaultWidth="35%" paneTitle={translate('scanPatronCard')}>
             <PatronForm
