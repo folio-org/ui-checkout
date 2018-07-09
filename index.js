@@ -10,27 +10,13 @@ class CheckOutRouting extends React.Component {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
-    history: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
   }
 
-  static childContextTypes = {
-    history: PropTypes.object,
-    translate: PropTypes.func,
-  };
-
   constructor(props) {
     super(props);
     this.connectedApp = props.stripes.connect(Scan);
-  }
-
-  getChildContext() {
-    return {
-      history: this.props.history,
-      translate: (message, values) =>
-        translate(message, values, { namespace: 'ui-checkout' }, this.props.stripes),
-    };
   }
 
   NoMatch() {
