@@ -44,11 +44,14 @@ class CheckOutRouting extends React.Component {
 
   render() {
     const { match: { path } } = this.props;
+    const translateMsg = (message, values) => translate(message, values, { namespace: 'ui-checkout' }, this.props.stripes);
     return (
       <Switch>
         <Route
           path={`${path}`}
-          render={() => <this.connectedApp {...this.props} />}
+          render={() => (
+            <this.connectedApp {...this.props} translate={translateMsg} />
+          )}
         />
         <Route component={() => { this.NoMatch(); }} />
       </Switch>

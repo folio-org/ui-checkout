@@ -30,6 +30,7 @@ class ScanItems extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
+    translate: PropTypes.func.isRequired,
     mutator: PropTypes.shape({
       loanPolicies: PropTypes.shape({
         GET: PropTypes.func,
@@ -56,10 +57,6 @@ class ScanItems extends React.Component {
     settings: PropTypes.object,
   };
 
-  static contextTypes = {
-    translate: PropTypes.func,
-  };
-
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
@@ -70,7 +67,7 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
-    const { translate } = this.context;
+    const { translate } = this.props;
 
     if (!data.item) {
       throw new SubmissionError({
@@ -163,7 +160,7 @@ class ScanItems extends React.Component {
   }
 
   render() {
-    const { parentResources, onSessionEnd, patron, settings } = this.props;
+    const { parentResources, onSessionEnd, patron, settings, translate } = this.props;
     const { checkoutStatus } = this.state;
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
@@ -177,9 +174,10 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
+          translate={translate}
         />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props} />
+        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} translate={translate} {...this.props} />
         {settings.audioAlertsEnabled && checkoutStatus &&
         <ReactAudioPlayer
           src={checkoutSound}
