@@ -40,6 +40,7 @@ class Scan extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
+    translate: PropTypes.func,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -71,14 +72,8 @@ class Scan extends React.Component {
     }),
   };
 
-  static contextTypes = {
-    translate: PropTypes.func,
-  };
-
-  constructor(props, context) {
+  constructor(props) {
     super(props);
-
-    this.context = context;
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
@@ -115,7 +110,7 @@ class Scan extends React.Component {
     if (!patron) {
       throw new SubmissionError({
         patron: {
-          identifier: this.context.translate('missingDataError'),
+          identifier: this.props.translate('missingDataError'),
         },
       });
     }
@@ -130,7 +125,7 @@ class Scan extends React.Component {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
         throw new SubmissionError({
           patron: {
-            identifier: this.context.translate('userNotFoundError', { identifier }),
+            identifier: this.props.translate('userNotFoundError', { identifier }),
             _error: errorTypes.SCAN_FAILED,
           },
         });
@@ -152,7 +147,7 @@ class Scan extends React.Component {
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
 
-    const { translate } = this.context;
+    const { translate } = this.props;
 
     if (!checkoutSettings) return <div />;
 
@@ -172,6 +167,7 @@ class Scan extends React.Component {
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
+              translate={this.props.translate}
               {...this.props}
             />
             {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
@@ -182,6 +178,7 @@ class Scan extends React.Component {
                 patron={patron}
                 proxy={proxy}
                 settings={settings}
+                translate={this.props.translate}
                 {...this.props}
               />
             }
@@ -189,6 +186,7 @@ class Scan extends React.Component {
           <Pane defaultWidth="65%" paneTitle={translate('scanItems')}>
             <this.connectedScanItems
               {...this.props}
+              translate={this.props.translate}
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}
               stripes={this.props.stripes}
@@ -200,7 +198,12 @@ class Scan extends React.Component {
           </Pane>
         </Paneset>
         {patrons.length > 0 &&
-          <ScanFooter buttonId="clickable-done-footer" total={scannedTotal} onSessionEnd={() => this.onSessionEnd()} />}
+          <ScanFooter
+            buttonId="clickable-done-footer"
+            total={scannedTotal}
+            onSessionEnd={() => this.onSessionEnd()}
+            translate={this.props.translate}
+          />}
       </div>
     );
   }
