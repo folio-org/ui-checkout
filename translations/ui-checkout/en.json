@@ -47,7 +47,7 @@
   "patronIdentifier": "Patron Identifier",
   "scanOrEnterItemBarcode": "Scan or enter item barcode",
   "itemId": "Item ID",
-  "okay": "Okay",
+  "close": "Close",
 
   "user.name": "Name",
   "user.username": "Username",
