@@ -84,23 +84,30 @@ class Scan extends React.Component {
     this.onActive = this.onActive.bind(this);
     this.onIdle = this.onIdle.bind(this);
 
-    this.state = { loading: false };
+    this.state = { loading: false ,
+                    openModel: false
+                  };
   }
+
   idleTimer(settings) {
-    const setTimeout = (+settings.checkoutTimeoutDuration * 15 * 1000);
-    const { stripes } = this.props;
     //checkout Timeout needs to be set from settings
     if (!settings.checkoutTimeout) return (<div />);
+
     //If set return idle timer
+    const setTimeout = (+settings.checkoutTimeoutDuration * 60 * 1000);
+    const { stripes } = this.props;
     return (stripes.setIdleTimer(this.onActive,this.onIdle,setTimeout));
   }
+
   onActive = () => {
     console.log('Active');
   }
+
   onIdle = () => {
     console.log('Idle');
     this.onSessionEnd();
   }
+
   onSessionEnd() {
     this.clearResources();
     this.clearForm('itemForm');
@@ -226,6 +233,7 @@ class Scan extends React.Component {
             translate={this.props.translate}
           />}
       </div>
+
     );
   }
 }
