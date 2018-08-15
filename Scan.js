@@ -149,8 +149,6 @@ class Scan extends React.Component {
 
     const { translate } = this.props;
 
-    if (!checkoutSettings) return <div />;
-
     let patron = patrons[0];
     let proxy = selPatron;
 
