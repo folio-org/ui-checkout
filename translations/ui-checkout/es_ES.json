@@ -36,5 +36,21 @@
     "user.name": "Nombre",
     "user.username": "Nombre de usuario",
     "user.barcode": "Código de barras",
-    "user.patronGroup": "Grupo de Usuarios"
+    "user.patronGroup": "Grupo de Usuarios",
+    "close": "Cerrar",
+    "meta.title": "Check out",
+    "barcode": "barcode",
+    "username": "username",
+    "title": "Title",
+    "time": "Time",
+    "itemDetails": "Item details",
+    "loanDetails": "Loan details",
+    "status": "Status",
+    "endSession": "End Session",
+    "whoAreYouActingAs": "Who are you acting as?",
+    "cancel": "Cancel",
+    "self": "Self",
+    "isActingAs": "is acting as",
+    "enter": "Enter",
+    "itemId": "Item ID"
 }
