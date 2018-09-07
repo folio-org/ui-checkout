@@ -91,7 +91,7 @@ class Scan extends React.Component {
 
   idleTimer(settings) {
     //checkout Timeout needs to be set from settings
-    if (!settings.checkoutTimeout) return (<div />);
+    if (!settings || !settings.checkoutTimeout) return (<div />);
 
     //If set return idle timer
     const setTimeout = (+settings.checkoutTimeoutDuration * 60 * 1000);
