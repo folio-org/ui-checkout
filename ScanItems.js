@@ -57,6 +57,10 @@ class ScanItems extends React.Component {
     settings: PropTypes.object,
   };
 
+  static defaultProps = {
+    settings: {},
+  };
+
   constructor(props) {
     super(props);
     this.store = props.stripes.store;

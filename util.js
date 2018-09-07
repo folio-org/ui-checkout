@@ -23,7 +23,7 @@ export function formatTime(dateStr) {
 }
 
 export function getCheckoutSettings(checkoutSettings) {
-  if (!checkoutSettings.length) return {};
+  if (!checkoutSettings.length) return undefined;
 
   try {
     return JSON.parse(checkoutSettings[0].value);
