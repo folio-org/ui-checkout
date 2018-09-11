@@ -3,7 +3,7 @@
 ## Release 1.2.0 in progress
 
 * Dependency on item-storage: 5.0
-* Dependency on circulation: 3.0
+* Dependency on circulation: 3.0 or 4.0
 * Fix spelling of parameter to lookup-users. UIS-71.
 * Remove metadata property from JSON before PUTting settings. UICHKOUT-15.
 * Add Patron info. UICHKOUT-5.
