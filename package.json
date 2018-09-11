@@ -64,10 +64,10 @@
     "test": "(cd ../ui-testing; yarn test-module -- -o --run=checkout:error_messages --host=localhost)"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^1.1.0",
+    "@folio/eslint-config-stripes": "^2.0.3",
     "@folio/stripes-cli": "^1.2.0",
     "babel-core": "^6.17.0",
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^8.2.6",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
@@ -75,9 +75,9 @@
     "eslint": "^4.8.0"
   },
   "dependencies": {
-    "@folio/stripes-components": "^3.0.0",
+    "@folio/stripes-components": "^3.0.8",
     "@folio/stripes-form": "^0.8.2",
-    "@folio/stripes-smart-components": "^1.4.15",
+    "@folio/stripes-smart-components": "^1.4.23",
     "dateformat": "^2.0.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.10",
@@ -89,8 +89,8 @@
     "uuid": "^3.0.1"
   },
   "peerDependencies": {
-    "@folio/stripes-connect": "^3.1.0",
-    "@folio/stripes-core": "^2.7.0",
+    "@folio/stripes-connect": "^3.1.1",
+    "@folio/stripes-core": "^2.11.1",
     "react": "*"
   },
   "optionalDependencies": {
