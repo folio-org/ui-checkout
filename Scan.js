@@ -81,12 +81,15 @@ class Scan extends React.Component {
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false };
+    this.patronFormRef = React.createRef();
   }
 
   onSessionEnd() {
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
+    const patronFormInst = this.patronFormRef.current.wrappedInstance;
+    setTimeout(() => patronFormInst.focusInput());
   }
 
   getPatronIdentifiers() {
@@ -165,6 +168,7 @@ class Scan extends React.Component {
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
+              ref={this.patronFormRef}
               translate={this.props.translate}
               {...this.props}
             />
