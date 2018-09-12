@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
+import createInactivityTimer from 'inactivity-timer';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
@@ -82,6 +83,14 @@ class Scan extends React.Component {
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false };
     this.patronFormRef = React.createRef();
+
+    const timer = createInactivityTimer('3s', () => {
+      console.log('inactive for 3 seconds');
+    });
+    document.addEventListener('mousemove', () => {
+      console.log('not inactive');
+      timer.signal();
+    });
   }
 
   onSessionEnd() {
@@ -149,22 +158,6 @@ class Scan extends React.Component {
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
-    let inactivityTimer = <div />;
-    if (checkoutSettings && checkoutSettings.checkoutTimeout) {
-      const setTimeout = (+checkoutSettings.checkoutTimeoutDuration * 1000);
-      inactivityTimer = this.props.stripes.setIdleTimer(
-        () => {
-          console.log('*** Active');
-        },
-        () => {
-          console.log('*** Idle: this =', this);
-          this.onSessionEnd();
-        },
-        setTimeout
-      );
-    }
-
-    console.log('inactiveTimer: ', inactivityTimer);
 
     const { translate } = this.props;
 
@@ -178,7 +171,6 @@ class Scan extends React.Component {
 
     return (
       <div className={css.container}>
-        {inactivityTimer}
         <Paneset static>
           <Pane defaultWidth="35%" paneTitle={translate('scanPatronCard')}>
             <PatronForm
