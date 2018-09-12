@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## Release 1.2.0 in progress
+## Release 1.2.0 (https://github.com/folio-org/ui-checkout/tree/v1.2.0) (2018-09-12)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.2...v1.2.0)
 
 * Dependency on item-storage: 5.0
 * Dependency on circulation: 3.0 or 4.0
