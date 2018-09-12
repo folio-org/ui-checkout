@@ -64,7 +64,7 @@
     "test": "(cd ../ui-testing; yarn test-module -- -o --run=checkout:error_messages --host=localhost)"
   },
   "devDependencies": {
-    "@folio/eslint-config-stripes": "^3.1.0",
+    "@folio/eslint-config-stripes": "^3.2.0",
     "@folio/stripes-cli": "^1.4.0",
     "@folio/stripes-connect": "^3.1.0",
     "@folio/stripes-core": "^2.11.0",
