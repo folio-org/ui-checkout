@@ -1,12 +1,14 @@
 # Change history for ui-checkout
 
-## Release 1.2.0 in progress
+## Release 1.2.0 (https://github.com/folio-org/ui-checkout/tree/v1.2.0) (2018-09-12)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.2...v1.2.0)
 
 * Dependency on item-storage: 5.0
-* Dependency on circulation: 3.0
+* Dependency on circulation: 3.0 or 4.0
 * Fix spelling of parameter to lookup-users. UIS-71.
 * Remove metadata property from JSON before PUTting settings. UICHKOUT-15.
 * Add Patron info. UICHKOUT-5.
+* Search and Select User on Check-Out Screen. UICHKOUT-7.
 * Remove fixed dependency on plugin-find-users 1.0.0. Refs STRIPES-478, Fixes UICHKOUT-18.
 * Use PropTypes, not React.PropTypes. Refs STRIPES-427.
 * Refactor `dataKey`. Fixes UICHKOUT-23.
@@ -38,6 +40,7 @@
 * Remove settings from ui-checkout. Fixes UICHKOUT-64.
 * Add link to loan details from checkout. Fixes UICHKOUT-36.
 * Relabel the sponsor section in the proxy modal pop up. Fixes UICHKOUT-51.
+* Display expiration status information for proxy/sponser relationships in the proxy modal pop up UICHKOUT-52
 * Prevent expired sponsors and expired proxy relationships from being selected. Fixes UICHKOUT-53.
 * Get fixed loan period from loan policy. Fixes UICHKOUT-66.
 * Move checkout links into actions menu. Fixes UICHKOUT-74.
@@ -58,7 +61,9 @@
 * Initialize patron object to empty rather than null. Fixes UICHKOUT-418.
 * Wire up new checkout API. Fixes UICHKOUT-419.
 * Added link to borrower's open loans from the open loans count. Fixes UICHKOUT-424.
+* Use == for looking up records by exact match. UICHKOUT-422.
 * Adjust columns width on the checkout screen. Fixes UICHKOUT-423.
+* Relocate language files. UICHKOUT-427.
 * Accommodate ui-users "show inactive users" filter. Refs UIU-400.
 * Remove old code responsible for the checkout processing. Fixes UICHKOUT-431.
 * Added ability to change due date of newly checked-out items. Refs UIU-497.
@@ -67,6 +72,8 @@
 * Fix input focus issues. Fixes UICHKOUT-432.
 * Show error messages on error modal. Fixes UICHKOUT-406.
 * stripes-components dep consistent with stripes-core's.
+* Position cursor on app start, after item processing, and on "End Session". UICHKOUT-442.
+* Bug fixes not mentioned in separate change log entries: UICHKOUT-8, UICHKOUT-39, UICHKOUT-46, UICHKOUT-63, UICHKOUT-65, UICHKOUT-412, UICHKOUT-421, UICHKOUT-425, UICHKOUT-426, UICHKOUT-430, UICHKOUT-437
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.1...v1.1.2)

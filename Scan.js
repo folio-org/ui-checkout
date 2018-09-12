@@ -80,13 +80,12 @@ class Scan extends React.Component {
     this.findPatron = this.findPatron.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
+    this.state = { loading: false };
+    this.patronFormRef = React.createRef();
     this.idleTimer = this.idleTimer.bind(this);
     this.onActive = this.onActive.bind(this);
     this.onIdle = this.onIdle.bind(this);
 
-    this.state = { loading: false ,
-                    openModel: false
-                  };
   }
 
   idleTimer(settings) {
@@ -112,6 +111,8 @@ class Scan extends React.Component {
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
+    const patronFormInst = this.patronFormRef.current.wrappedInstance;
+    setTimeout(() => patronFormInst.focusInput());
   }
 
   getPatronIdentifiers() {
@@ -193,6 +194,7 @@ class Scan extends React.Component {
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
+              ref={this.patronFormRef}
               translate={this.props.translate}
               {...this.props}
             />
@@ -231,7 +233,6 @@ class Scan extends React.Component {
             translate={this.props.translate}
           />}
       </div>
-
     );
   }
 }
