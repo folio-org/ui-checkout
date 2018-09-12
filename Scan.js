@@ -2,6 +2,7 @@ import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
+import createInactivityTimer from 'inactivity-timer';
 import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
@@ -82,14 +83,40 @@ class Scan extends React.Component {
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false };
     this.patronFormRef = React.createRef();
+    this.timer = undefined;
+  }
+
+  componentDidUpdate() {
+    if (this.timer !== undefined) return;
+
+    const settings = this.props.resources.checkoutSettings;
+    if (!settings || !settings.records || settings.records.length === 0) return;
+
+    const parsed = getCheckoutSettings(settings.records);
+
+    if (!parsed.checkoutTimeout) {
+      this.timer = null; // so we don't keep trying
+      return;
+    }
+
+    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+      this.onSessionEnd();
+    });
+    ['keydown', 'mousedown'].forEach((event) => {
+      document.addEventListener(event, () => this.timer.signal());
+    });
   }
 
   onSessionEnd() {
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
-    const patronFormInst = this.patronFormRef.current.wrappedInstance;
-    setTimeout(() => patronFormInst.focusInput());
+    const current = this.patronFormRef.current;
+    // This is not defined when the timeout fires while another app is active: which is fine
+    if (current) {
+      const patronFormInst = current.wrappedInstance;
+      setTimeout(() => patronFormInst.focusInput());
+    }
   }
 
   getPatronIdentifiers() {
