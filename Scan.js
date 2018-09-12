@@ -99,7 +99,7 @@ class Scan extends React.Component {
       return;
     }
 
-    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}s`, () => {
+    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
       this.onSessionEnd();
     });
     ['keydown', 'mousedown'].forEach((event) => {
@@ -112,12 +112,10 @@ class Scan extends React.Component {
     this.clearForm('itemForm');
     this.clearForm('patronForm');
     const current = this.patronFormRef.current;
+    // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
       const patronFormInst = current.wrappedInstance;
       setTimeout(() => patronFormInst.focusInput());
-    } else {
-      // This is not defined when the timeout fires while another app is active
-      console.error('no wrapped instance'); // eslint-disable-line no-console
     }
   }
 
