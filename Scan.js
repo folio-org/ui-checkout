@@ -85,17 +85,16 @@ class Scan extends React.Component {
     this.idleTimer = this.idleTimer.bind(this);
     this.onActive = this.onActive.bind(this);
     this.onIdle = this.onIdle.bind(this);
-
   }
 
   idleTimer(settings) {
-    //checkout Timeout needs to be set from settings
+    // checkout Timeout needs to be set from settings
     if (!settings || !settings.checkoutTimeout) return (<div />);
 
-    //If set return idle timer
+    // If set return idle timer
     const setTimeout = (+settings.checkoutTimeoutDuration * 1000);
     const { stripes } = this.props;
-    return (stripes.setIdleTimer(this.onActive,this.onIdle,setTimeout));
+    return (stripes.setIdleTimer(this.onActive, this.onIdle, setTimeout));
   }
 
   onActive = () => {
