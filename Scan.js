@@ -83,13 +83,27 @@ class Scan extends React.Component {
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false };
     this.patronFormRef = React.createRef();
+    this.timer = undefined;
+  }
 
-    const timer = createInactivityTimer('3s', () => {
-      console.log('inactive for 3 seconds');
+  componentDidUpdate() {
+    if (this.timer !== undefined) return;
+
+    const settings = this.props.resources.checkoutSettings;
+    if (!settings || !settings.records || settings.records.length === 0) return;
+
+    const parsed = getCheckoutSettings(settings.records);
+
+    if (!parsed.checkoutTimeout) {
+      this.timer = null; // so we don't keep trying
+      return;
+    }
+
+    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}s`, () => {
+      this.onSessionEnd();
     });
-    document.addEventListener('mousemove', () => {
-      console.log('not inactive');
-      timer.signal();
+    ['keydown', 'mousedown'].forEach((event) => {
+      document.addEventListener(event, () => this.timer.signal());
     });
   }
 
@@ -97,8 +111,14 @@ class Scan extends React.Component {
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
-    const patronFormInst = this.patronFormRef.current.wrappedInstance;
-    setTimeout(() => patronFormInst.focusInput());
+    const current = this.patronFormRef.current;
+    if (current) {
+      const patronFormInst = current.wrappedInstance;
+      setTimeout(() => patronFormInst.focusInput());
+    } else {
+      // This is not defined when the timeout fires while another app is active
+      console.error('no wrapped instance'); // eslint-disable-line no-console
+    }
   }
 
   getPatronIdentifiers() {
