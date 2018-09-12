@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## Release 1.2.0 in progress
+## Release 1.2.0 (https://github.com/folio-org/ui-checkout/tree/v1.2.0) (2018-09-12)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.1.2...v1.2.0)
 
 * Dependency on item-storage: 5.0
 * Dependency on circulation: 3.0 or 4.0
@@ -71,6 +72,7 @@
 * Fix input focus issues. Fixes UICHKOUT-432.
 * Show error messages on error modal. Fixes UICHKOUT-406.
 * stripes-components dep consistent with stripes-core's.
+* Position cursor on app start, after item processing, and on "End Session". UICHKOUT-442.
 * Bug fixes not mentioned in separate change log entries: UICHKOUT-8, UICHKOUT-39, UICHKOUT-46, UICHKOUT-63, UICHKOUT-65, UICHKOUT-412, UICHKOUT-421, UICHKOUT-425, UICHKOUT-426, UICHKOUT-430, UICHKOUT-437
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
