@@ -93,17 +93,17 @@ class Scan extends React.Component {
     if (!settings || !settings.checkoutTimeout) return (<div />);
 
     //If set return idle timer
-    const setTimeout = (+settings.checkoutTimeoutDuration * 60 * 1000);
+    const setTimeout = (+settings.checkoutTimeoutDuration * 1000);
     const { stripes } = this.props;
     return (stripes.setIdleTimer(this.onActive,this.onIdle,setTimeout));
   }
 
   onActive = () => {
-    console.log('Active');
+    console.log('*** Active');
   }
 
   onIdle = () => {
-    console.log('Idle');
+    console.log('*** Idle');
     this.onSessionEnd();
   }
 
