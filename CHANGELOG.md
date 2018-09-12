@@ -71,6 +71,7 @@
 * Fix input focus issues. Fixes UICHKOUT-432.
 * Show error messages on error modal. Fixes UICHKOUT-406.
 * stripes-components dep consistent with stripes-core's.
+* Position cursor on app start, after item processing, and on "End Session". UICHKOUT-442.
 * Bug fixes not mentioned in separate change log entries: UICHKOUT-8, UICHKOUT-39, UICHKOUT-46, UICHKOUT-63, UICHKOUT-65, UICHKOUT-412, UICHKOUT-421, UICHKOUT-425, UICHKOUT-426, UICHKOUT-430, UICHKOUT-437
 
 ## [1.1.2](https://github.com/folio-org/ui-checkout/tree/v1.1.2) (2017-09-02)
