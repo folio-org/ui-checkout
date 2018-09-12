@@ -172,8 +172,8 @@ class Scan extends React.Component {
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
-    const inactivityTimer  = this.idleTimer(checkoutSettings); //stripes.setIdleTimer(onActive,onIdle,5000);
-    console.log("inactiveTimer: ",inactivityTimer)
+    const inactivityTimer = this.idleTimer(checkoutSettings); // stripes.setIdleTimer(onActive,onIdle,5000);
+    console.log('inactiveTimer: ', inactivityTimer);
 
     const { translate } = this.props;
 
