@@ -82,28 +82,6 @@ class Scan extends React.Component {
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false };
     this.patronFormRef = React.createRef();
-    this.idleTimer = this.idleTimer.bind(this);
-    this.onActive = this.onActive.bind(this);
-    this.onIdle = this.onIdle.bind(this);
-  }
-
-  idleTimer(settings) {
-    // checkout Timeout needs to be set from settings
-    if (!settings || !settings.checkoutTimeout) return (<div />);
-
-    // If set return idle timer
-    const setTimeout = (+settings.checkoutTimeoutDuration * 1000);
-    const { stripes } = this.props;
-    return (stripes.setIdleTimer(this.onActive, this.onIdle, setTimeout));
-  }
-
-  onActive = () => {
-    console.log('*** Active');
-  }
-
-  onIdle = () => {
-    console.log('*** Idle');
-    this.onSessionEnd();
   }
 
   onSessionEnd() {
@@ -171,7 +149,21 @@ class Scan extends React.Component {
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
-    const inactivityTimer = this.idleTimer(checkoutSettings); // stripes.setIdleTimer(onActive,onIdle,5000);
+    let inactivityTimer = <div />;
+    if (checkoutSettings && checkoutSettings.checkoutTimeout) {
+      const setTimeout = (+checkoutSettings.checkoutTimeoutDuration * 1000);
+      inactivityTimer = this.props.stripes.setIdleTimer(
+        () => {
+          console.log('*** Active');
+        },
+        () => {
+          console.log('*** Idle: this =', this);
+          this.onSessionEnd();
+        },
+        setTimeout
+      );
+    }
+
     console.log('inactiveTimer: ', inactivityTimer);
 
     const { translate } = this.props;
