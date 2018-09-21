@@ -2,6 +2,7 @@
 
 ## Release 1.3.0 (IN PROGRESS)
 
+* Add alternate dependency on `item-storage` 6.0 UICHKOUT-445
 * Clear check-out page when session expires. Available from v1.2.1. Fixes UICHKOUT-70.
 
 ## Release 1.2.0 (https://github.com/folio-org/ui-checkout/tree/v1.2.0) (2018-09-12)
