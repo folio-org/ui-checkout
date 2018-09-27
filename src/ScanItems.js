@@ -5,11 +5,11 @@ import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form
 import Icon from '@folio/stripes-components/lib/Icon';
 import ReactAudioPlayer from 'react-audio-player';
 
-import ItemForm from './lib/ItemForm';
-import ViewItem from './lib/ViewItem';
+import ItemForm from './components/ItemForm';
+import ViewItem from './components/ViewItem';
 
-import checkoutSuccessSound from './sound/checkout_success.m4a';
-import checkoutErrorSound from './sound/checkout_error.m4a';
+import checkoutSuccessSound from '../sound/checkout_success.m4a';
+import checkoutErrorSound from '../sound/checkout_error.m4a';
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({

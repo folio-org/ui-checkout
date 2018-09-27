@@ -7,9 +7,9 @@ import Paneset from '@folio/stripes-components/lib/Paneset';
 import Pane from '@folio/stripes-components/lib/Pane';
 import Icon from '@folio/stripes-components/lib/Icon';
 
-import PatronForm from './lib/PatronForm';
-import ViewPatron from './lib/ViewPatron';
-import ScanFooter from './lib/ScanFooter';
+import PatronForm from './components/PatronForm';
+import ViewPatron from './components/ViewPatron';
+import ScanFooter from './components/ScanFooter';
 import ScanItems from './ScanItems';
 import { patronIdentifierMap, errorTypes } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from './util';
