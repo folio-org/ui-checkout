@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import Headline from '@folio/stripes-components/lib/Headline';
-import ProxyManager from '@folio/stripes-smart-components/lib/ProxyManager';
+import { Col, Headline, KeyValue, Row } from '@folio/stripes/components';
+import { ProxyManager } from '@folio/stripes/smart-components';
 import UserDetail from '../UserDetail';
 import css from './ViewPatron.css';
 

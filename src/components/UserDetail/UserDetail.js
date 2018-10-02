@@ -2,8 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import KeyValue from '@folio/stripes-components/lib/KeyValue';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import { Col, KeyValue, Row } from '@folio/stripes/components';
 import { getFullName } from '../../util';
 import css from './UserDetail.css';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
-import Icon from '@folio/stripes-components/lib/Icon';
+import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
 
 import ItemForm from './components/ItemForm';
