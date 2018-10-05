@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@folio/stripes-components/lib/Button';
+import { Button } from '@folio/stripes/components';
 
 import css from './ScanTotal.css';
 

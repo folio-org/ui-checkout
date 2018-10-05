@@ -3,9 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
-import Paneset from '@folio/stripes-components/lib/Paneset';
-import Pane from '@folio/stripes-components/lib/Pane';
-import Icon from '@folio/stripes-components/lib/Icon';
+import { Icon, Pane, Paneset } from '@folio/stripes/components';
 
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';

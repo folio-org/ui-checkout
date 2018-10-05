@@ -3,12 +3,8 @@ import moment from 'moment'; // eslint-disable-line import/no-extraneous-depende
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import ChangeDueDateDialog from '@folio/stripes-smart-components/lib/ChangeDueDateDialog';
-import MultiColumnList from '@folio/stripes-components/lib/MultiColumnList';
-import Button from '@folio/stripes-components/lib/Button';
-import { UncontrolledDropdown } from '@folio/stripes-components/lib/Dropdown';
-import MenuItem from '@folio/stripes-components/lib/MenuItem';
-import DropdownMenu from '@folio/stripes-components/lib/DropdownMenu';
+import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
+import { Button, DropdownMenu, MenuItem, MultiColumnList, UncontrolledDropdown } from '@folio/stripes/components';
 
 const sortMap = {
   no: loan => loan.no,

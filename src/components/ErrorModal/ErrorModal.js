@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Modal from '@folio/stripes-components/lib/Modal';
-import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from '@folio/stripes-components/lib//LayoutGrid';
+import { Button, Col, Modal, Row } from '@folio/stripes/components';
 
 class ErrorModal extends React.Component {
   static propTypes = {

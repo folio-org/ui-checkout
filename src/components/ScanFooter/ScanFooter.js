@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
+import { Row, Col } from '@folio/stripes/components';
 
 import ScanTotal from '../ScanTotal';
 import css from './ScanFooter.css';

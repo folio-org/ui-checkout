@@ -2,10 +2,8 @@ import { find } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import TextField from '@folio/stripes-components/lib/TextField';
-import Button from '@folio/stripes-components/lib/Button';
-import { Row, Col } from '@folio/stripes-components/lib/LayoutGrid';
-import { Pluggable } from '@folio/stripes-core';
+import { Button, Col, Row, TextField } from '@folio/stripes/components';
+import { Pluggable } from '@folio/stripes/core';
 
 import { patronIdentifierMap, patronLabelMap } from '../../constants';
 
