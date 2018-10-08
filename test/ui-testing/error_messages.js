@@ -1,4 +1,4 @@
-/* global it describe Nightmare before after */
+/* global it describe Nightmare before after  */
 module.exports.test = function uiTest(uiTestCtx) {
   const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
 
@@ -19,8 +19,20 @@ module.exports.test = function uiTest(uiTestCtx) {
           .use(openApp(nightmare, config, done, 'checkout', testVersion))
           .then(result => result);
       });
+      /* Why on earth are we clicking into the settings app?!?
+       * Clicking out out to a different app and then back into checkin
+       * restores checkin to its virgin state with all fields empty.
+       * We need empty fields so we can accurately test the error message
+       * that appear when bad data, or out of order data, is added to different
+       * fields.
+       */
       it('should show error when scanning item before patron card', (done) => {
         nightmare
+          .wait(config.select.settings)
+          .click(config.select.settings)
+          .wait('#clickable-checkout-module')
+          .click('#clickable-checkout-module')
+          .wait('#checkout-module-display')
           .wait('#input-item-barcode')
           .click('#input-item-barcode')
           .insert('#input-item-barcode', 'item-before-patron')
@@ -39,26 +51,23 @@ module.exports.test = function uiTest(uiTestCtx) {
       });
       it('should show error when entering wrong patron ID', (done) => {
         nightmare
+          .wait(config.select.settings)
+          .click(config.select.settings)
+          .wait('#clickable-checkout-module')
+          .click('#clickable-checkout-module')
+          .wait('#checkout-module-display')
           .wait('#input-patron-identifier')
           .insert('#input-patron-identifier', 'wrong-patron-id')
+          .wait('#clickable-find-patron')
           .click('#clickable-find-patron')
-          .wait(() => {
-            const eNode = document.querySelector('#section-patron div[class*="Error"]');
-            if (eNode !== null && eNode.innerText.startsWith('User')) {
-              return true;
-            }
-            return false;
-          })
+          .wait('#section-patron div[class*="Error"]')
           .evaluate(() => {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
             if (!errorText.startsWith('User')) {
               throw new Error('Error message not found for invalid user input');
             }
           })
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => {
-            done();
-          })
+          .then(done)
           .catch(done);
       });
       it('should set patron scan ID to "User"', (done) => {
