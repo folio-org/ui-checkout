@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 1.4.0 (IN PROGRESS)
+## [1.3.1](https://github.com/folio-org/ui-checkout/tree/v1.3.1) (2018-10-09)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.3.0...v1.3.1)
 
 * Reset app between tests. Refs UICHKOUT-448.
 
