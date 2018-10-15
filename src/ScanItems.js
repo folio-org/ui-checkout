@@ -104,7 +104,6 @@ class ScanItems extends React.Component {
       .then(() => {
         this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
-        this.itemInput.current.wrappedInstance.focusInput();
       })
       .catch(resp => {
         this.setState({ checkoutStatus: 'error' });
