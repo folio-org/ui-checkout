@@ -1,6 +1,6 @@
 /* global it describe Nightmare before after  */
 module.exports.test = function uiTest(uiTestCtx) {
-  const { config, helpers: { login, openApp, logout }, meta: { testVersion } } = uiTestCtx;
+  const { config, helpers: { login, openApp, logout, circSettingsCheckoutByBarcodeAndUsername }, meta: { testVersion } } = uiTestCtx;
 
   describe('Module test: checkout:error_messages.', function checkout() {
     const nightmare = new Nightmare(config.nightmare);
@@ -19,6 +19,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .use(openApp(nightmare, config, done, 'checkout', testVersion))
           .then(result => result);
       });
+
       /* Why on earth are we clicking into the settings app?!?
        * Clicking out out to a different app and then back into checkin
        * restores checkin to its virgin state with all fields empty.
@@ -44,11 +45,10 @@ module.exports.test = function uiTest(uiTestCtx) {
               throw new Error('Error message not found for item entered before patron found');
             }
           })
-          .then(() => {
-            done();
-          })
+          .then(done)
           .catch(done);
       });
+
       it('should show error when entering wrong patron ID', (done) => {
         nightmare
           .wait(config.select.settings)
@@ -70,32 +70,11 @@ module.exports.test = function uiTest(uiTestCtx) {
           .then(done)
           .catch(done);
       });
-      it('should set patron scan ID to "User"', (done) => {
-        nightmare
-          .wait(config.select.settings)
-          .click(config.select.settings)
-          .wait('#clickable-settings')
-          .wait('a[href="/settings/circulation"]')
-          .click('a[href="/settings/circulation"]')
-          .wait('a[href="/settings/circulation/checkout"]')
-          .click('a[href="/settings/circulation/checkout"]')
-          .wait('#username-checkbox')
-          .wait(1111)
-          .evaluate(() => {
-            const list = document.querySelectorAll('[data-checked="true"]');
-            list.forEach(el => (el.click()));
-          })
-          .then(() => {
-            nightmare
-              .wait(222)
-              .wait('#username-checkbox')
-              .click('#username-checkbox')
-              .wait('#clickable-savescanid')
-              .click('#clickable-savescanid');
-          })
-          .then(() => { done(); })
-          .catch(done);
+
+      it('should configure checkout for barcode and username', (done) => {
+        circSettingsCheckoutByBarcodeAndUsername(nightmare, config, done);
       });
+
       it('should find existing patron', (done) => {
         nightmare
           .wait('#clickable-checkout-module')
@@ -113,6 +92,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .then(() => { done(); })
           .catch(done);
       });
+
       it('should show error when entering wrong item ID', (done) => {
         nightmare
           .insert('#input-item-barcode', 'wrong-item-barcode')
@@ -124,8 +104,7 @@ module.exports.test = function uiTest(uiTestCtx) {
               throw new Error('Error message not found for wrong item barcode');
             }
           })
-          .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
-          .then(() => { done(); })
+          .then(done)
           .catch(done);
       });
     });
