@@ -44,7 +44,9 @@ class UserDetail extends React.Component {
         <Link className={css.marginRight} to={path}>
           <strong>{getFullName(user)}</strong>
         </Link>
-        <strong>Barcode: </strong>
+        <strong>
+          {`${this.props.translate('user.barcode')}:`}
+        </strong>
         {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : '-'}
       </span>
     );
