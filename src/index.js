@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import Scan from './Scan';
-import { translate } from './util';
 
 class CheckOutRouting extends React.Component {
   static propTypes = {
@@ -35,13 +34,12 @@ class CheckOutRouting extends React.Component {
 
   render() {
     const { match: { path } } = this.props;
-    const translateMsg = (message, values) => translate(message, values, { namespace: 'ui-checkout' }, this.props.stripes);
     return (
       <Switch>
         <Route
           path={`${path}`}
           render={() => (
-            <this.connectedApp {...this.props} translate={translateMsg} />
+            <this.connectedApp {...this.props} />
           )}
         />
         <Route component={() => { this.NoMatch(); }} />

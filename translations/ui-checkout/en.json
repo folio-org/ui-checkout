@@ -52,5 +52,6 @@
   "user.name": "Name",
   "user.username": "Username",
   "user.barcode": "Barcode",
+  "user.detail.barcode": "Barcode:",
   "user.patronGroup": "Patron group"
 }

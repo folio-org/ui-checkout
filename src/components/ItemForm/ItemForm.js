@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, reset, getFormSubmitErrors } from 'redux-form';
 import { Col, Button, Row, TextField } from '@folio/stripes/components';
 import { withStripes } from '@folio/stripes/core';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 
 import ScanTotal from '../ScanTotal';
 import ErrorModal from '../ErrorModal';
@@ -14,7 +15,7 @@ class ItemForm extends React.Component {
     submitting: PropTypes.bool,
     patron: PropTypes.object,
     stripes: PropTypes.object,
-    translate: PropTypes.func,
+    intl: intlShape.isRequired,
   };
 
   constructor() {
@@ -56,12 +57,12 @@ class ItemForm extends React.Component {
     const errors = this.getFormErrors();
     const error = errors.item || {};
     return (
-      <ErrorModal open={!isEmpty(error)} onClose={this.clearForm} message={error.barcode} translate={this.props.translate} />
+      <ErrorModal open={!isEmpty(error)} onClose={this.clearForm} message={error.barcode} />
     );
   }
 
   render() {
-    const { submitting, handleSubmit, translate } = this.props;
+    const { submitting, handleSubmit, intl } = this.props;
     const validationEnabled = false;
     return (
       <form id="item-form" onSubmit={handleSubmit}>
@@ -69,8 +70,8 @@ class ItemForm extends React.Component {
           <Col xs={4}>
             <Field
               name="item.barcode"
-              placeholder={translate('scanOrEnterItemBarcode')}
-              aria-label={translate('itemId')}
+              placeholder={intl.formatMessage({ id: 'ui-checkout.scanOrEnterItemBarcode' })}
+              aria-label={intl.formatMessage({ id: 'ui-checkout.itemId' })}
               fullWidth
               id="input-item-barcode"
               component={TextField}
@@ -86,14 +87,14 @@ class ItemForm extends React.Component {
               buttonStyle="primary"
               disabled={submitting}
             >
-              {translate('enter')}
+              <FormattedMessage id="ui-checkout.enter" />
             </Button>
           </Col>
           {
             !isEmpty(this.props.patron) &&
             <Col xs={6}>
               <Row end="xs">
-                <ScanTotal buttonId="clickable-done" {...this.props} translate={this.props.translate} />
+                <ScanTotal buttonId="clickable-done" {...this.props} />
               </Row>
             </Col>
           }
@@ -106,4 +107,4 @@ class ItemForm extends React.Component {
 
 export default reduxForm({
   form: 'itemForm',
-})(withStripes(ItemForm));
+})(withStripes(injectIntl(ItemForm)));
