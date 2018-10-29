@@ -181,7 +181,7 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
         />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props} />
+        <ViewItem scannedItems={scannedItems} {...this.props} />
         {settings.audioAlertsEnabled && checkoutStatus &&
         <ReactAudioPlayer
           src={checkoutSound}
