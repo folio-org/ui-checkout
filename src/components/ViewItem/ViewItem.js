@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import { Button, DropdownMenu, MenuItem, MultiColumnList, UncontrolledDropdown } from '@folio/stripes/components';
@@ -25,13 +25,14 @@ class ViewItem extends React.Component {
       id: PropTypes.string,
     }),
     parentMutator: PropTypes.object.isRequired,
-    translate: PropTypes.func,
+    intl: intlShape.isRequired,
   };
 
   constructor(props) {
     super(props);
-    this.formatTime = this.props.stripes.formatTime;
-    this.formatDate = this.props.stripes.formatDate;
+    const { intl } = props;
+    this.formatTime = intl.formatTime;
+    this.formatDate = intl.formatDate;
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.connectedChangeDueDateDialog = props.stripes.connect(ChangeDueDateDialog);
     this.onMenuToggle = this.onMenuToggle.bind(this);
@@ -45,13 +46,13 @@ class ViewItem extends React.Component {
       changeDueDateDialogOpen: false,
     };
 
-    this.columnMapping = props.translate({
-      no: 'numberAbbreviation',
-      title: 'title',
-      loanPolicy: 'loanPolicy',
-      dueDate: 'dueDate',
-      loanDate: 'time',
-    });
+    this.columnMapping = {
+      no: intl.formatMessage({ id: 'ui-checkout.numberAbbreviation' }),
+      title: intl.formatMessage({ id: 'ui-checkout.title' }),
+      loanPolicy: intl.formatMessage({ id: 'ui-checkout.loanPolicy' }),
+      dueDate: intl.formatMessage({ id: 'ui-checkout.dueDate' }),
+      loanDate: intl.formatMessage({ id: 'ui-checkout.time' }),
+    };
   }
 
   onSort(e, meta) {
@@ -138,19 +139,36 @@ class ViewItem extends React.Component {
         <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
         <DropdownMenu data-role="menu" pullRight width="10em">
           <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-            <Button buttonStyle="dropdownItem" href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}>{this.props.translate('itemDetails')}</Button>
+            <Button
+              buttonStyle="dropdownItem"
+              href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
+            >
+              <FormattedMessage id="ui-checkout.itemDetails" />
+            </Button>
           </MenuItem>
           <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-            <Button buttonStyle="dropdownItem" href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}>{this.props.translate('loanDetails')}</Button>
+            <Button
+              buttonStyle="dropdownItem"
+              href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
+            >
+              <FormattedMessage id="ui-checkout.loanDetails" />
+            </Button>
           </MenuItem>
           {
             this.props.stripes.hasPerm('ui-circulation.settings.loan-policies') &&
             <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
-              <Button buttonStyle="dropdownItem" href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}>{this.props.translate('loanPolicy')}</Button>
+              <Button
+                buttonStyle="dropdownItem"
+                href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
+              >
+                <FormattedMessage id="ui-checkout.loanPolicy" />
+              </Button>
             </MenuItem>
           }
           <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
-            <Button buttonStyle="dropdownItem"><FormattedMessage id="stripes-smart-components.cddd.changeDueDate" /></Button>
+            <Button buttonStyle="dropdownItem">
+              <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
+            </Button>
           </MenuItem>
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -173,6 +191,7 @@ class ViewItem extends React.Component {
   }
 
   render() {
+    const { intl } = this.props;
     const { sortOrder, sortDirection } = this.state;
     const scannedItems = this.props.scannedItems;
     const size = scannedItems.length;
@@ -190,7 +209,7 @@ class ViewItem extends React.Component {
           rowMetadata={['id']}
           formatter={this.getItemFormatter()}
           columnWidths={{ 'no': 28, 'barcode': 120, 'title': 250, 'loanPolicy': 145, 'dueDate': 75, 'time': 70, ' ': 40 }}
-          isEmptyMessage={this.props.translate('noItemsEntered')}
+          isEmptyMessage={intl.formatMessage({ id: 'ui-checkout.noItemsEntered' })}
           onHeaderClick={this.onSort}
           sortOrder={sortOrder[0]}
           sortDirection={`${sortDirection[0]}ending`}
@@ -201,4 +220,4 @@ class ViewItem extends React.Component {
   }
 }
 
-export default ViewItem;
+export default injectIntl(ViewItem);

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { Col, Headline, KeyValue, Row } from '@folio/stripes/components';
 import { ProxyManager } from '@folio/stripes/smart-components';
 import UserDetail from '../UserDetail';
@@ -8,7 +9,7 @@ import css from './ViewPatron.css';
 class ViewPatron extends React.Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    translate: PropTypes.func,
+    intl: intlShape.isRequired,
     patron: PropTypes.object.isRequired,
     proxy: PropTypes.object.isRequired,
     onSelectPatron: PropTypes.func.isRequired,
@@ -24,22 +25,36 @@ class ViewPatron extends React.Component {
   }
 
   render() {
-    const { patron, proxy, translate } = this.props;
+    const { patron, proxy, intl } = this.props;
     const patronDetail = (
       <div>
         <br />
-        <this.connectedPatronDetail id="patron-detail" label={<Headline size="medium">{translate('borrower')}</Headline>} user={patron} translate={translate} renderLoans {...this.props} />
+        <this.connectedPatronDetail
+          id="patron-detail"
+          label={<Headline size="medium"><FormattedMessage id="ui-checkout.borrower" /></Headline>}
+          user={patron}
+          renderLoans
+          {...this.props}
+        />
       </div>
     );
 
     const proxyDetail = (
       <div>
         <br />
-        <this.connectedProxyDetail id="proxy-detail" label={translate('borrowerProxy')} user={proxy} translate={translate} {...this.props} />
+        <this.connectedProxyDetail
+          id="proxy-detail"
+          label={intl.formatMessage({ id: 'ui-checkout.borrowerProxy' })}
+          user={proxy}
+          {...this.props}
+        />
         <div className={css.section}>
           <Row>
             <Col xs={4}>
-              <KeyValue label={translate('proxyExpiration')} value="-" />
+              <KeyValue
+                label={intl.formatMessage({ id: 'ui-checkout.proxyExpiration' })}
+                value="-"
+              />
             </Col>
           </Row>
         </div>
@@ -61,4 +76,4 @@ class ViewPatron extends React.Component {
   }
 }
 
-export default ViewPatron;
+export default injectIntl(ViewPatron);

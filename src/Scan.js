@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
+import { intlShape, injectIntl } from 'react-intl';
 
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
@@ -39,7 +40,7 @@ class Scan extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    translate: PropTypes.func,
+    intl: intlShape.isRequired,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -133,12 +134,13 @@ class Scan extends React.Component {
   }
 
   findPatron(data) {
+    const { intl } = this.props;
     const patron = data.patron;
 
     if (!patron) {
       throw new SubmissionError({
         patron: {
-          identifier: this.props.translate('missingDataError'),
+          identifier: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
         },
       });
     }
@@ -153,7 +155,7 @@ class Scan extends React.Component {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
         throw new SubmissionError({
           patron: {
-            identifier: this.props.translate('userNotFoundError', { identifier }),
+            identifier: intl.formatMessage({ id: 'ui-checkout.userNotFoundError' }, { identifier }),
             _error: errorTypes.SCAN_FAILED,
           },
         });
@@ -167,15 +169,13 @@ class Scan extends React.Component {
   }
 
   render() {
-    const resources = this.props.resources;
+    const { resources, intl } = this.props;
     const checkoutSettings = getCheckoutSettings((resources.checkoutSettings || {}).records || []);
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
     const scannedItems = resources.scannedItems || [];
     const selPatron = resources.selPatron;
     const scannedTotal = scannedItems.length;
-
-    const { translate } = this.props;
 
     let patron = patrons[0];
     let proxy = selPatron;
@@ -188,13 +188,15 @@ class Scan extends React.Component {
     return (
       <div className={css.container}>
         <Paneset static>
-          <Pane defaultWidth="35%" paneTitle={translate('scanPatronCard')}>
+          <Pane
+            defaultWidth="35%"
+            paneTitle={intl.formatMessage({ id: 'ui-checkout.scanPatronCard' })}
+          >
             <PatronForm
               onSubmit={this.findPatron}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               ref={this.patronFormRef}
-              translate={this.props.translate}
               {...this.props}
             />
             {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
@@ -205,15 +207,16 @@ class Scan extends React.Component {
                 patron={patron}
                 proxy={proxy}
                 settings={settings}
-                translate={this.props.translate}
                 {...this.props}
               />
             }
           </Pane>
-          <Pane defaultWidth="65%" paneTitle={translate('scanItems')}>
+          <Pane
+            defaultWidth="65%"
+            paneTitle={intl.formatMessage({ id: 'ui-checkout.scanItems' })}
+          >
             <this.connectedScanItems
               {...this.props}
-              translate={this.props.translate}
               parentMutator={this.props.mutator}
               parentResources={this.props.resources}
               stripes={this.props.stripes}
@@ -229,11 +232,10 @@ class Scan extends React.Component {
             buttonId="clickable-done-footer"
             total={scannedTotal}
             onSessionEnd={() => this.onSessionEnd()}
-            translate={this.props.translate}
           />}
       </div>
     );
   }
 }
 
-export default Scan;
+export default injectIntl(Scan);

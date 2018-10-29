@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
 import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
+import { intlShape, injectIntl } from 'react-intl';
 
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
@@ -30,7 +31,7 @@ class ScanItems extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    translate: PropTypes.func.isRequired,
+    intl: intlShape.isRequired,
     mutator: PropTypes.shape({
       loanPolicies: PropTypes.shape({
         GET: PropTypes.func,
@@ -71,12 +72,12 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
-    const { translate } = this.props;
+    const { intl } = this.props;
 
     if (!data.item) {
       throw new SubmissionError({
         item: {
-          barcode: translate('missingDataError'),
+          barcode: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
         },
       });
     }
@@ -84,7 +85,7 @@ class ScanItems extends React.Component {
     if (!this.props.patron) {
       return this.dispatchError('patronForm', 'patron.identifier', {
         patron: {
-          identifier: translate('missingDataError'),
+          identifier: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
         },
       });
     }
@@ -123,8 +124,9 @@ class ScanItems extends React.Component {
 
   handleErrors(error) {
     const { parameters, message } = ((error.errors || [])[0] || {});
+    const { intl } = this.props;
     const itemError = (!parameters || !parameters.length) ?
-      { barcode: this.translate('unknownError'), _error: 'unknownError' } :
+      { barcode: intl.formatMessage({ id: 'ui-checkout.unknownError' }), _error: 'unknownError' } :
       { barcode: message, _error: parameters[0].key };
 
     throw new SubmissionError({ item: itemError });
@@ -163,7 +165,7 @@ class ScanItems extends React.Component {
   }
 
   render() {
-    const { parentResources, onSessionEnd, patron, settings, translate } = this.props;
+    const { parentResources, onSessionEnd, patron, settings } = this.props;
     const { checkoutStatus } = this.state;
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
@@ -177,10 +179,9 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
-          translate={translate}
         />
         {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} translate={translate} {...this.props} />
+        <ViewItem stripes={this.props.stripes} scannedItems={scannedItems} patron={patron} {...this.props} />
         {settings.audioAlertsEnabled && checkoutStatus &&
         <ReactAudioPlayer
           src={checkoutSound}
@@ -192,4 +193,4 @@ class ScanItems extends React.Component {
   }
 }
 
-export default ScanItems;
+export default injectIntl(ScanItems);

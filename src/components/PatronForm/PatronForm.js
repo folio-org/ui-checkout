@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 
 import { patronIdentifierMap, patronLabelMap } from '../../constants';
 
@@ -15,21 +16,22 @@ class PatronForm extends React.Component {
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
     patron: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-    translate: PropTypes.func,
+    intl: intlShape.isRequired
   };
 
   constructor(props) {
     super(props);
+    const { intl } = props;
     this.selectUser = this.selectUser.bind(this);
     this.barcodeEl = React.createRef();
 
     // map column-IDs to table-header-values
-    this.columnMapping = props.translate({
-      name: 'user.name',
-      patronGroup: 'user.patronGroup',
-      username: 'user.username',
-      barcode: 'user.barcode',
-    });
+    this.columnMapping = {
+      name: intl.formatMessage({ id: 'ui-checkout.user.name' }),
+      patronGroup: intl.formatMessage({ id: 'ui-checkout.user.patronGroup' }),
+      username: intl.formatMessage({ id: 'ui-checkout.user.username' }),
+      barcode: intl.formatMessage({ id: 'ui-checkout.user.barcode' })
+    };
   }
 
   componentDidMount() {
@@ -52,7 +54,7 @@ class PatronForm extends React.Component {
   }
 
   selectUser(user) {
-    const { userIdentifiers, handleSubmit } = this.props;
+    const { userIdentifiers, handleSubmit, intl } = this.props;
     const ident = find(userIdentifiers, i => user[patronIdentifierMap[i]]);
 
     if (ident) {
@@ -61,16 +63,15 @@ class PatronForm extends React.Component {
     } else {
       const { username } = user;
       const identifier = patronIdentifierMap[userIdentifiers[0]];
-      Object.assign(user, { error: this.props.translate('missingIdentifierError', { username, identifier }) });
+      Object.assign(user, { error: intl.formatMessage({ id: 'ui-checkout.missingIdentifierError' }, { username, identifier }) });
     }
   }
 
   render() {
-    const { userIdentifiers, submitting, handleSubmit } = this.props;
+    const { userIdentifiers, submitting, handleSubmit, intl } = this.props;
     const validationEnabled = false;
     const disableRecordCreation = true;
     const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
-    const { translate } = this.props;
 
     return (
       <form id="patron-form" onSubmit={handleSubmit}>
@@ -78,8 +79,8 @@ class PatronForm extends React.Component {
           <Col xs={9}>
             <Field
               name="patron.identifier"
-              placeholder={translate('scanOrEnterPatronId', { identifier })}
-              aria-label={translate('patronIdentifier')}
+              placeholder={intl.formatMessage({ id: 'ui-checkout.scanOrEnterPatronId' }, { identifier })}
+              aria-label={intl.formatMessage({ id: 'ui-checkout.patronIdentifier' })}
               fullWidth
               id="input-patron-identifier"
               component={TextField}
@@ -92,7 +93,7 @@ class PatronForm extends React.Component {
               type="find-user"
               id="clickable-find-user"
               {...this.props}
-              searchLabel={translate('patronLookup')}
+              searchLabel={intl.formatMessage({ id: 'ui-checkout.patronLookup' })}
               marginTop0
               searchButtonStyle="link"
               dataKey="patron"
@@ -116,7 +117,7 @@ class PatronForm extends React.Component {
               buttonStyle="primary"
               disabled={submitting}
             >
-              {translate('enter')}
+              <FormattedMessage id="ui-checkout.enter" />
             </Button>
           </Col>
         </Row>
@@ -127,4 +128,4 @@ class PatronForm extends React.Component {
 
 export default reduxForm({
   form: 'patronForm',
-})(PatronForm);
+})(injectIntl(PatronForm));
