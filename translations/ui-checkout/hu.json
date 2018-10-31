@@ -52,5 +52,6 @@
     "self": "Önálló",
     "isActingAs": "úgy viselkedik, mint",
     "enter": "Enter",
-    "itemId": "Tételazonosító"
+    "itemId": "Tételazonosító",
+    "user.detail.barcode": "Barcode:"
 }
