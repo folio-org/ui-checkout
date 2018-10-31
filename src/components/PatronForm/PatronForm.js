@@ -105,7 +105,7 @@ class PatronForm extends React.Component {
                   sort: 'Name',
                 });
               }}
-              visibleColumns={['name', 'patronGroup', 'username', 'barcode']}
+              visibleColumns={['active', 'name', 'patronGroup', 'username', 'barcode']}
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
             />
