@@ -52,5 +52,6 @@
     "self": "Self",
     "isActingAs": "is acting as",
     "enter": "Enter",
-    "itemId": "Item ID"
+    "itemId": "Item ID",
+    "user.detail.barcode": "Barcode:"
 }
