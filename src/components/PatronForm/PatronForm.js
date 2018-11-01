@@ -16,7 +16,8 @@ class PatronForm extends React.Component {
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
     patron: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-    intl: intlShape.isRequired
+    intl: intlShape.isRequired,
+    forwardedRef: PropTypes.instanceOf(Element)
   };
 
   constructor(props) {
