@@ -23,8 +23,6 @@ class PatronForm extends React.Component {
     super(props);
     const { intl } = props;
     this.selectUser = this.selectUser.bind(this);
-    this.barcodeEl = React.createRef();
-
     // map column-IDs to table-header-values
     this.columnMapping = {
       name: intl.formatMessage({ id: 'ui-checkout.user.name' }),
@@ -39,9 +37,8 @@ class PatronForm extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!this.barcodeEl.current) return;
-
-    const input = this.barcodeEl.current.getRenderedComponent().getInput();
+    const { forwardedRef } = this.props;
+    const input = forwardedRef.current.getRenderedComponent().getInput();
 
     // Refocus on the patron barcode input if the submitted value fails
     if (document.activeElement !== input && !this.props.patron.id && this.props.submitFailed) {
@@ -50,7 +47,8 @@ class PatronForm extends React.Component {
   }
 
   focusInput() {
-    this.barcodeEl.current.getRenderedComponent().focusInput();
+    const { forwardedRef } = this.props;
+    forwardedRef.current.getRenderedComponent().focusInput();
   }
 
   selectUser(user) {
@@ -72,6 +70,7 @@ class PatronForm extends React.Component {
     const validationEnabled = false;
     const disableRecordCreation = true;
     const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
+    const { forwardedRef } = this.props;
 
     return (
       <form id="patron-form" onSubmit={handleSubmit}>
@@ -85,7 +84,7 @@ class PatronForm extends React.Component {
               id="input-patron-identifier"
               component={TextField}
               withRef
-              ref={this.barcodeEl}
+              ref={forwardedRef}
               validationEnabled={validationEnabled}
             />
             <Pluggable
