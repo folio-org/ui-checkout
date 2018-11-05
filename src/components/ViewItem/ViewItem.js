@@ -15,7 +15,7 @@ const sortMap = {
   time: loan => moment(loan.dueDate).format('hh:mm a'),
 };
 
-const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', ' '];
+const visibleColumns = ['no', 'Barcode', 'title', 'loanPolicy', 'dueDate', 'Time', ' '];
 
 class ViewItem extends React.Component {
   static propTypes = {
@@ -81,9 +81,9 @@ class ViewItem extends React.Component {
     return {
       'title': loan => _.get(loan, ['item', 'title']),
       'loanPolicy': loan => _.get(loan, ['loanPolicy', 'name']),
-      'barcode': loan => _.get(loan, ['item', 'barcode']),
+      'Barcode': loan => _.get(loan, ['item', 'barcode']),
       'dueDate': loan => (this.formatDate(loan.dueDate)),
-      'time': loan => (this.formatTime(loan.dueDate)),
+      'Time': loan => (this.formatTime(loan.dueDate)),
       ' ': loan => this.renderActions(loan),
     };
   }
@@ -208,7 +208,7 @@ class ViewItem extends React.Component {
           contentData={contentData}
           rowMetadata={['id']}
           formatter={this.getItemFormatter()}
-          columnWidths={{ 'no': 28, 'barcode': 120, 'title': 250, 'loanPolicy': 145, 'dueDate': 75, 'time': 70, ' ': 40 }}
+          columnWidths={{ 'barcode': 140, 'title': 180, 'loanPolicy': 150, 'dueDate': 100, 'time': 70, ' ': 40 }}
           isEmptyMessage={intl.formatMessage({ id: 'ui-checkout.noItemsEntered' })}
           onHeaderClick={this.onSort}
           sortOrder={sortOrder[0]}
