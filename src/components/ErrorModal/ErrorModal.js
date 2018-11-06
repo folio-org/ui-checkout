@@ -1,25 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Modal, Row } from '@folio/stripes/components';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 class ErrorModal extends React.Component {
   static propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
     message: PropTypes.string,
-    intl: intlShape.isRequired,
   };
 
   render() {
-    const { open, message, onClose, intl } = this.props;
+    const { open, message, onClose } = this.props;
 
     return (
       <Modal
         onClose={onClose}
         open={open}
         size="small"
-        label={intl.formatMessage({ id: 'ui-checkout.itemNotCheckedOut' })}
+        label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
         dismissible
       >
         <p>{message}</p>
@@ -35,4 +34,4 @@ class ErrorModal extends React.Component {
   }
 }
 
-export default injectIntl(ErrorModal);
+export default ErrorModal;

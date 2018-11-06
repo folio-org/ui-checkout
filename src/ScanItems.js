@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
 import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
-import { intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
@@ -31,7 +31,6 @@ class ScanItems extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
     mutator: PropTypes.shape({
       loanPolicies: PropTypes.shape({
         GET: PropTypes.func,
@@ -72,12 +71,10 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
-    const { intl } = this.props;
-
     if (!data.item) {
       throw new SubmissionError({
         item: {
-          barcode: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
+          barcode: <FormattedMessage id="ui-checkout.missingDataError" />,
         },
       });
     }
@@ -85,7 +82,7 @@ class ScanItems extends React.Component {
     if (!this.props.patron) {
       return this.dispatchError('patronForm', 'patron.identifier', {
         patron: {
-          identifier: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
+          identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
         },
       });
     }
@@ -124,9 +121,8 @@ class ScanItems extends React.Component {
 
   handleErrors(error) {
     const { parameters, message } = ((error.errors || [])[0] || {});
-    const { intl } = this.props;
     const itemError = (!parameters || !parameters.length) ?
-      { barcode: intl.formatMessage({ id: 'ui-checkout.unknownError' }), _error: 'unknownError' } :
+      { barcode: <FormattedMessage id="ui-checkout.unknownError" />, _error: 'unknownError' } :
       { barcode: message, _error: parameters[0].key };
 
     throw new SubmissionError({ item: itemError });
@@ -193,4 +189,4 @@ class ScanItems extends React.Component {
   }
 }
 
-export default injectIntl(ScanItems);
+export default ScanItems;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
-import { intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
@@ -40,7 +40,6 @@ class Scan extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
     resources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
@@ -134,13 +133,12 @@ class Scan extends React.Component {
   }
 
   findPatron(data) {
-    const { intl } = this.props;
     const patron = data.patron;
 
     if (!patron) {
       throw new SubmissionError({
         patron: {
-          identifier: intl.formatMessage({ id: 'ui-checkout.missingDataError' }),
+          identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
         },
       });
     }
@@ -155,7 +153,7 @@ class Scan extends React.Component {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
         throw new SubmissionError({
           patron: {
-            identifier: intl.formatMessage({ id: 'ui-checkout.userNotFoundError' }, { identifier }),
+            identifier: <FormattedMessage id="ui-checkout.userNotFoundError" values={{ identifier }} />,
             _error: errorTypes.SCAN_FAILED,
           },
         });
@@ -169,7 +167,7 @@ class Scan extends React.Component {
   }
 
   render() {
-    const { resources, intl } = this.props;
+    const { resources } = this.props;
     const checkoutSettings = getCheckoutSettings((resources.checkoutSettings || {}).records || []);
     const patrons = (resources.patrons || {}).records || [];
     const settings = (resources.settings || {}).records || [];
@@ -190,7 +188,7 @@ class Scan extends React.Component {
         <Paneset static>
           <Pane
             defaultWidth="35%"
-            paneTitle={intl.formatMessage({ id: 'ui-checkout.scanPatronCard' })}
+            paneTitle={<FormattedMessage id="ui-checkout.scanPatronCard" />}
           >
             <PatronForm
               onSubmit={this.findPatron}
@@ -213,7 +211,7 @@ class Scan extends React.Component {
           </Pane>
           <Pane
             defaultWidth="65%"
-            paneTitle={intl.formatMessage({ id: 'ui-checkout.scanItems' })}
+            paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
           >
             <this.connectedScanItems
               {...this.props}
@@ -238,4 +236,4 @@ class Scan extends React.Component {
   }
 }
 
-export default injectIntl(Scan);
+export default Scan;

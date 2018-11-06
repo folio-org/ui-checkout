@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Col, KeyValue, Row } from '@folio/stripes/components';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 import { getFullName } from '../../util';
 import css from './UserDetail.css';
 
@@ -32,7 +32,6 @@ class UserDetail extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
-    intl: intlShape.isRequired,
     renderLoans: PropTypes.bool,
   };
 
@@ -54,7 +53,6 @@ class UserDetail extends React.Component {
 
   renderLoans() {
     if (!this.props.renderLoans) return null;
-    const { intl } = this.props;
     const openLoansCount = _.get(this.props.resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
     const openLoansPath = `/users/view/${this.props.user.id}?layer=open-loans&query=`;
     const openLoansLink = <Link to={openLoansPath}>{openLoansCount}</Link>;
@@ -64,7 +62,7 @@ class UserDetail extends React.Component {
         <Row>
           <Col xs={4}>
             <KeyValue
-              label={intl.formatMessage({ id: 'ui-checkout.openLoans' })}
+              label={<FormattedMessage id="ui-checkout.openLoans" />}
               value={openLoansLink}
             />
           </Col>
@@ -74,7 +72,7 @@ class UserDetail extends React.Component {
   }
 
   render() {
-    const { user, resources, label, settings, intl } = this.props;
+    const { user, resources, label, settings } = this.props;
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
     const hasProfilePicture = !!(settings.length && settings[0].value === 'true');
@@ -101,20 +99,22 @@ class UserDetail extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={intl.formatMessage({ id: 'ui-checkout.patronGroup' })}
-                value={patronGroup.group}
-              />
+                label={<FormattedMessage id="ui-checkout.patronGroup" />}
+              >
+                {patronGroup.group}
+              </KeyValue>
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={intl.formatMessage({ id: 'ui-checkout.status' })}
-                value={intl.formatMessage({ id: statusVal })}
-              />
+                label={<FormattedMessage id="ui-checkout.status" />}
+              >
+                <FormattedMessage id={statusVal} />
+              </KeyValue>
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={intl.formatMessage({ id: 'ui-checkout.userExpiration' })}
-                value={user.expirationDate ? intl.formatDate(user.expirationDate) : '-'}
+                label={<FormattedMessage id="ui-checkout.userExpiration" />}
+                value={user.expirationDate ? <FormattedDate value={user.expirationDate} /> : '-'}
               />
             </Col>
           </Row>
@@ -126,4 +126,4 @@ class UserDetail extends React.Component {
   }
 }
 
-export default injectIntl(UserDetail);
+export default UserDetail;

@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
+import moment from 'moment';
 import React from 'react';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import PropTypes from 'prop-types';
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import { Button, DropdownMenu, MenuItem, MultiColumnList, UncontrolledDropdown } from '@folio/stripes/components';
@@ -25,14 +25,10 @@ class ViewItem extends React.Component {
       id: PropTypes.string,
     }),
     parentMutator: PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
   };
 
   constructor(props) {
     super(props);
-    const { intl } = props;
-    this.formatTime = intl.formatTime;
-    this.formatDate = intl.formatDate;
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.connectedChangeDueDateDialog = props.stripes.connect(ChangeDueDateDialog);
     this.onMenuToggle = this.onMenuToggle.bind(this);
@@ -47,11 +43,11 @@ class ViewItem extends React.Component {
     };
 
     this.columnMapping = {
-      no: intl.formatMessage({ id: 'ui-checkout.numberAbbreviation' }),
-      title: intl.formatMessage({ id: 'ui-checkout.title' }),
-      loanPolicy: intl.formatMessage({ id: 'ui-checkout.loanPolicy' }),
-      dueDate: intl.formatMessage({ id: 'ui-checkout.dueDate' }),
-      loanDate: intl.formatMessage({ id: 'ui-checkout.time' }),
+      no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
+      title: <FormattedMessage id="ui-checkout.title" />,
+      loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
+      dueDate: <FormattedMessage id="ui-checkout.dueDate" />,
+      loanDate: <FormattedMessage id="ui-checkout.time" />,
     };
   }
 
@@ -82,8 +78,8 @@ class ViewItem extends React.Component {
       'title': loan => _.get(loan, ['item', 'title']),
       'loanPolicy': loan => _.get(loan, ['loanPolicy', 'name']),
       'Barcode': loan => _.get(loan, ['item', 'barcode']),
-      'dueDate': loan => (this.formatDate(loan.dueDate)),
-      'Time': loan => (this.formatTime(loan.dueDate)),
+      'dueDate': loan => (<FormattedDate value={loan.dueDate} />),
+      'Time': loan => (<FormattedTime value={loan.dueDate} />),
       ' ': loan => this.renderActions(loan),
     };
   }
@@ -191,7 +187,6 @@ class ViewItem extends React.Component {
   }
 
   render() {
-    const { intl } = this.props;
     const { sortOrder, sortDirection } = this.state;
     const scannedItems = this.props.scannedItems;
     const size = scannedItems.length;
@@ -209,7 +204,7 @@ class ViewItem extends React.Component {
           rowMetadata={['id']}
           formatter={this.getItemFormatter()}
           columnWidths={{ 'barcode': 140, 'title': 180, 'loanPolicy': 150, 'dueDate': 100, 'time': 70, ' ': 40 }}
-          isEmptyMessage={intl.formatMessage({ id: 'ui-checkout.noItemsEntered' })}
+          isEmptyMessage={<FormattedMessage id="ui-checkout.noItemsEntered" />}
           onHeaderClick={this.onSort}
           sortOrder={sortOrder[0]}
           sortDirection={`${sortDirection[0]}ending`}
@@ -220,4 +215,4 @@ class ViewItem extends React.Component {
   }
 }
 
-export default injectIntl(ViewItem);
+export default ViewItem;
