@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, intlShape } from 'react-intl';
 
 import { patronIdentifierMap, patronLabelMap } from '../../constants';
 
@@ -22,14 +22,13 @@ class PatronForm extends React.Component {
 
   constructor(props) {
     super(props);
-    const { intl } = props;
     this.selectUser = this.selectUser.bind(this);
     // map column-IDs to table-header-values
     this.columnMapping = {
-      name: intl.formatMessage({ id: 'ui-checkout.user.name' }),
-      patronGroup: intl.formatMessage({ id: 'ui-checkout.user.patronGroup' }),
-      username: intl.formatMessage({ id: 'ui-checkout.user.username' }),
-      barcode: intl.formatMessage({ id: 'ui-checkout.user.barcode' })
+      name: <FormattedMessage id="ui-checkout.user.name" />,
+      patronGroup: <FormattedMessage id="ui-checkout.user.patronGroup" />,
+      username: <FormattedMessage id="ui-checkout.user.username" />,
+      barcode: <FormattedMessage id="ui-checkout.user.barcode" />
     };
   }
 
@@ -53,7 +52,7 @@ class PatronForm extends React.Component {
   }
 
   selectUser(user) {
-    const { userIdentifiers, handleSubmit, intl } = this.props;
+    const { userIdentifiers, handleSubmit } = this.props;
     const ident = find(userIdentifiers, i => user[patronIdentifierMap[i]]);
 
     if (ident) {
@@ -62,12 +61,12 @@ class PatronForm extends React.Component {
     } else {
       const { username } = user;
       const identifier = patronIdentifierMap[userIdentifiers[0]];
-      Object.assign(user, { error: intl.formatMessage({ id: 'ui-checkout.missingIdentifierError' }, { username, identifier }) });
+      Object.assign(user, { error: <FormattedMessage id="ui-checkout.missingIdentifierError" values={{ username, identifier }} /> });
     }
   }
 
   render() {
-    const { userIdentifiers, submitting, handleSubmit, intl } = this.props;
+    const { userIdentifiers, submitting, handleSubmit } = this.props;
     const validationEnabled = false;
     const disableRecordCreation = true;
     const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
@@ -77,23 +76,31 @@ class PatronForm extends React.Component {
       <form id="patron-form" onSubmit={handleSubmit}>
         <Row id="section-patron">
           <Col xs={9}>
-            <Field
-              name="patron.identifier"
-              placeholder={intl.formatMessage({ id: 'ui-checkout.scanOrEnterPatronId' }, { identifier })}
-              aria-label={intl.formatMessage({ id: 'ui-checkout.patronIdentifier' })}
-              fullWidth
-              id="input-patron-identifier"
-              component={TextField}
-              withRef
-              ref={forwardedRef}
-              validationEnabled={validationEnabled}
-            />
+            <FormattedMessage id="ui-checkout.scanOrEnterPatronId" values={{ identifier }}>
+              {placeholder => (
+                <FormattedMessage id="ui-checkout.patronIdentifier">
+                  {ariaLabel => (
+                    <Field
+                      name="patron.identifier"
+                      placeholder={placeholder}
+                      aria-label={ariaLabel}
+                      fullWidth
+                      id="input-patron-identifier"
+                      component={TextField}
+                      withRef
+                      ref={forwardedRef}
+                      validationEnabled={validationEnabled}
+                    />
+                  )}
+                </FormattedMessage>
+              )}
+            </FormattedMessage>
             <Pluggable
               aria-haspopup="true"
               type="find-user"
               id="clickable-find-user"
               {...this.props}
-              searchLabel={intl.formatMessage({ id: 'ui-checkout.patronLookup' })}
+              searchLabel={<FormattedMessage id="ui-checkout.patronLookup" />}
               marginTop0
               searchButtonStyle="link"
               dataKey="patron"
@@ -128,4 +135,4 @@ class PatronForm extends React.Component {
 
 export default reduxForm({
   form: 'patronForm',
-})(injectIntl(PatronForm));
+})(PatronForm);

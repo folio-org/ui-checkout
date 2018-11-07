@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm, reset, getFormSubmitErrors } from 'redux-form';
 import { Col, Button, Row, TextField } from '@folio/stripes/components';
 import { withStripes } from '@folio/stripes/core';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import ScanTotal from '../ScanTotal';
 import ErrorModal from '../ErrorModal';
@@ -15,7 +15,6 @@ class ItemForm extends React.Component {
     submitting: PropTypes.bool,
     patron: PropTypes.object,
     stripes: PropTypes.object,
-    intl: intlShape.isRequired,
   };
 
   constructor() {
@@ -62,23 +61,31 @@ class ItemForm extends React.Component {
   }
 
   render() {
-    const { submitting, handleSubmit, intl } = this.props;
+    const { submitting, handleSubmit } = this.props;
     const validationEnabled = false;
     return (
       <form id="item-form" onSubmit={handleSubmit}>
         <Row id="section-item">
           <Col xs={4}>
-            <Field
-              name="item.barcode"
-              placeholder={intl.formatMessage({ id: 'ui-checkout.scanOrEnterItemBarcode' })}
-              aria-label={intl.formatMessage({ id: 'ui-checkout.itemId' })}
-              fullWidth
-              id="input-item-barcode"
-              component={TextField}
-              ref={this.barcodeEl}
-              withRef
-              validationEnabled={validationEnabled}
-            />
+            <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
+              {placeholder => (
+                <FormattedMessage id="ui-checkout.itemId">
+                  {ariaLabel => (
+                    <Field
+                      name="item.barcode"
+                      placeholder={placeholder}
+                      aria-label={ariaLabel}
+                      fullWidth
+                      id="input-item-barcode"
+                      component={TextField}
+                      ref={this.barcodeEl}
+                      withRef
+                      validationEnabled={validationEnabled}
+                    />
+                  )}
+                </FormattedMessage>
+              )}
+            </FormattedMessage>
           </Col>
           <Col xs={2}>
             <Button
@@ -107,4 +114,4 @@ class ItemForm extends React.Component {
 
 export default reduxForm({
   form: 'itemForm',
-})(withStripes(injectIntl(ItemForm)));
+})(withStripes(ItemForm));

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Col, Headline, KeyValue, Row } from '@folio/stripes/components';
 import { ProxyManager } from '@folio/stripes/smart-components';
 import UserDetail from '../UserDetail';
@@ -9,7 +9,6 @@ import css from './ViewPatron.css';
 class ViewPatron extends React.Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
     patron: PropTypes.object.isRequired,
     proxy: PropTypes.object.isRequired,
     onSelectPatron: PropTypes.func.isRequired,
@@ -25,7 +24,7 @@ class ViewPatron extends React.Component {
   }
 
   render() {
-    const { patron, proxy, intl } = this.props;
+    const { patron, proxy } = this.props;
     const patronDetail = (
       <div>
         <br />
@@ -44,7 +43,7 @@ class ViewPatron extends React.Component {
         <br />
         <this.connectedProxyDetail
           id="proxy-detail"
-          label={intl.formatMessage({ id: 'ui-checkout.borrowerProxy' })}
+          label={<FormattedMessage id="ui-checkout.borrowerProxy" />}
           user={proxy}
           {...this.props}
         />
@@ -52,7 +51,7 @@ class ViewPatron extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={intl.formatMessage({ id: 'ui-checkout.proxyExpiration' })}
+                label={<FormattedMessage id="ui-checkout.proxyExpiration" />}
                 value="-"
               />
             </Col>
@@ -76,4 +75,4 @@ class ViewPatron extends React.Component {
   }
 }
 
-export default injectIntl(ViewPatron);
+export default ViewPatron;
