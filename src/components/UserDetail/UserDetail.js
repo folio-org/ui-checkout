@@ -46,6 +46,7 @@ class UserDetail extends React.Component {
         <strong>
           <FormattedMessage id="ui-checkout.user.detail.barcode" />
         </strong>
+        {' '}
         {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : '-'}
       </span>
     );
