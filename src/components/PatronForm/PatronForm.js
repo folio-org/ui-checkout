@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { Button, Col, Row, TextField } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { patronIdentifierMap, patronLabelMap } from '../../constants';
 
@@ -16,7 +16,6 @@ class PatronForm extends React.Component {
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
     patron: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-    intl: intlShape.isRequired,
     forwardedRef: PropTypes.instanceOf(Element)
   };
 
