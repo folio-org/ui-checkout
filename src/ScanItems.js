@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
@@ -71,6 +72,8 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
+    const { stripes, mutator, patron } = this.props;
+
     if (!data.item) {
       throw new SubmissionError({
         item: {
@@ -79,7 +82,7 @@ class ScanItems extends React.Component {
       });
     }
 
-    if (!this.props.patron) {
+    if (!patron) {
       return this.dispatchError('patronForm', 'patron.identifier', {
         patron: {
           identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
@@ -90,13 +93,15 @@ class ScanItems extends React.Component {
     this.setState({ loading: true });
     this.clearError('itemForm');
 
+    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const loanData = {
       itemBarcode: data.item.barcode,
-      userBarcode: this.props.patron.barcode,
+      userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
+      servicePointId
     };
 
-    return this.props.mutator.checkout.POST(loanData)
+    return mutator.checkout.POST(loanData)
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
