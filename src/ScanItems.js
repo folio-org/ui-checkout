@@ -93,12 +93,12 @@ class ScanItems extends React.Component {
     this.setState({ loading: true });
     this.clearError('itemForm');
 
-    const checkoutServicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
+    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const loanData = {
       itemBarcode: data.item.barcode,
       userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
-      checkoutServicePointId
+      servicePointId
     };
 
     return mutator.checkout.POST(loanData)
