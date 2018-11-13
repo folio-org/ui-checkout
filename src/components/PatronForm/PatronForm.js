@@ -94,6 +94,7 @@ class PatronForm extends React.Component {
                 </FormattedMessage>
               )}
             </FormattedMessage>
+
             <Pluggable
               aria-haspopup="true"
               type="find-user"
@@ -102,15 +103,8 @@ class PatronForm extends React.Component {
               searchLabel={<FormattedMessage id="ui-checkout.patronLookup" />}
               marginTop0
               searchButtonStyle="link"
-              dataKey="patron"
+              dataKey="patrons"
               selectUser={this.selectUser}
-              onCloseModal={(modalProps) => {
-                modalProps.parentMutator.query.update({
-                  query: '',
-                  filters: 'active.Active',
-                  sort: 'Name',
-                });
-              }}
               visibleColumns={['active', 'name', 'patronGroup', 'username', 'barcode']}
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
