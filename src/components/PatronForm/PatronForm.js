@@ -105,7 +105,7 @@ class PatronForm extends React.Component {
               searchButtonStyle="link"
               dataKey="patrons"
               selectUser={this.selectUser}
-              visibleColumns={['active', 'name', 'patronGroup', 'username', 'barcode']}
+              visibleColumns={['status', 'name', 'patronGroup', 'username', 'barcode']}
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
             />
