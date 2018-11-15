@@ -36,6 +36,12 @@ class Scan extends React.Component {
       records: 'configs',
       path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
     },
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -67,6 +73,10 @@ class Scan extends React.Component {
       }),
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
+      }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
       }),
     }),
   };

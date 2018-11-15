@@ -95,6 +95,18 @@ class ViewItem extends React.Component {
     this.setState({
       changeDueDateDialogOpen: false,
     });
+
+    this.refreshLoans();
+  }
+
+  refreshLoans() {
+    const { scannedItems, parentMutator } = this.props;
+    const ids = scannedItems.map(it => `id==${it.id}`).join(' or ');
+    const query = `(${ids})`;
+    parentMutator.loans.reset();
+    return parentMutator.loans.GET({ params: { query } }).then((resp) => {
+      parentMutator.scannedItems.replace(resp.loans);
+    });
   }
 
   handleOptionsChange(itemMeta, e) {

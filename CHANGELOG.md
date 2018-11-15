@@ -3,6 +3,7 @@
 ## 1.4.0 (IN PROGRESS)
 * Show `active` column in find-user popup. Refs STCOM-385.
 * Format the `active` attribute as `Status` on the find-user modal. Fixes UICHKOUT-472.
+* Update due date on checkout after changed. Fixes UICHKOUT-470.
 
 
 ## [1.3.1](https://github.com/folio-org/ui-checkout/tree/v1.3.1) (2018-10-09)
