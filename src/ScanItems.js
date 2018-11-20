@@ -72,7 +72,11 @@ class ScanItems extends React.Component {
   }
 
   checkout(data) {
-    const { stripes, mutator, patron } = this.props;
+    const {
+      stripes,
+      mutator,
+      patron
+    } = this.props;
 
     if (!data.item) {
       throw new SubmissionError({
@@ -98,7 +102,7 @@ class ScanItems extends React.Component {
       itemBarcode: data.item.barcode,
       userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
-      servicePointId
+      servicePointId,
     };
 
     return mutator.checkout.POST(loanData)
@@ -124,28 +128,46 @@ class ScanItems extends React.Component {
       .finally(() => this.setState({ loading: false }));
   }
 
-  handleErrors(error) {
-    const { parameters, message } = ((error.errors || [])[0] || {});
-    const itemError = (!parameters || !parameters.length) ?
-      { barcode: <FormattedMessage id="ui-checkout.unknownError" />, _error: 'unknownError' } :
-      { barcode: message, _error: parameters[0].key };
+  handleErrors({
+    errors: [
+      {
+        parameters,
+        message,
+      } = {},
+    ] = [],
+  }) {
+    const itemError = (!parameters || !parameters.length)
+      ? { barcode: <FormattedMessage id="ui-checkout.unknownError" />, _error: 'unknownError' }
+      : { barcode: message, _error: parameters[0].key };
 
     throw new SubmissionError({ item: itemError });
   }
 
   addScannedItem(loan) {
-    const scannedItems = [loan].concat(this.props.parentResources.scannedItems);
-    return this.props.parentMutator.scannedItems.replace(scannedItems);
+    const {
+      parentResources,
+      parentMutator,
+    } = this.props;
+
+    const scannedItems = [loan].concat(parentResources.scannedItems);
+
+    return parentMutator.scannedItems.replace(scannedItems);
   }
 
-  fetchLoanPolicy(loan) {
+  fetchLoanPolicy = async (loan) => {
+    const {
+      mutator: { loanPolicies },
+    } = this.props;
+
     const query = `(id=="${loan.loanPolicyId}")`;
-    this.props.mutator.loanPolicies.reset();
-    return this.props.mutator.loanPolicies.GET({ params: { query } }).then((policies) => {
-      const loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-      loan.loanPolicy = loanPolicy;
-      return loan;
-    });
+    loanPolicies.reset();
+
+    const policies = await loanPolicies.GET({ params: { query } });
+    const loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
+
+    loan.loanPolicy = loanPolicy;
+
+    return loan;
   }
 
   clearField(formName, fieldName) {
@@ -166,8 +188,18 @@ class ScanItems extends React.Component {
   }
 
   render() {
-    const { parentResources, onSessionEnd, patron, settings } = this.props;
-    const { checkoutStatus } = this.state;
+    const {
+      parentResources,
+      onSessionEnd,
+      patron,
+      settings: { audioAlertsEnabled },
+    } = this.props;
+
+    const {
+      checkoutStatus,
+      loading,
+    } = this.state;
+
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
     const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
@@ -181,14 +213,23 @@ class ScanItems extends React.Component {
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
         />
-        {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
-        <ViewItem scannedItems={scannedItems} {...this.props} />
-        {settings.audioAlertsEnabled && checkoutStatus &&
-        <ReactAudioPlayer
-          src={checkoutSound}
-          autoPlay
-          onEnded={this.onFinishedPlaying}
-        />}
+        {loading &&
+          <Icon
+            icon="spinner-ellipsis"
+            width="10px"
+          />
+        }
+        <ViewItem
+          scannedItems={scannedItems}
+          {...this.props}
+        />
+        {audioAlertsEnabled && checkoutStatus &&
+          <ReactAudioPlayer
+            src={checkoutSound}
+            autoPlay
+            onEnded={this.onFinishedPlaying}
+          />
+        }
       </div>
     );
   }

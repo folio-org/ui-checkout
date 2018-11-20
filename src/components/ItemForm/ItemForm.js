@@ -1,8 +1,21 @@
 import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm, reset, getFormSubmitErrors } from 'redux-form';
-import { Col, Button, Row, TextField } from '@folio/stripes/components';
+
+import {
+  Field,
+  reduxForm,
+  reset,
+  getFormSubmitErrors,
+} from 'redux-form';
+
+import {
+  Col,
+  Button,
+  Row,
+  TextField,
+} from '@folio/stripes/components';
+
 import { withStripes } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
 
@@ -30,16 +43,22 @@ class ItemForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.submitSucceeded) this.focusInput();
-    if (!this.props.patron || !this.props.patron.id) return;
+    const {
+      submitSucceeded,
+      patron,
+    } = this.props;
+
+    if (submitSucceeded) this.focusInput();
+    if (!patron || !patron.id) return;
     // Focus on the item barcode input after the patron is entered
-    if (!prevProps.patron || prevProps.patron.id !== this.props.patron.id) {
+    if (!prevProps.patron || prevProps.patron.id !== patron.id) {
       this.focusInput();
     }
   }
 
   getFormErrors() {
     const { stripes: { store } } = this.props;
+
     return getFormSubmitErrors('itemForm')(store.getState());
   }
 
@@ -55,16 +74,30 @@ class ItemForm extends React.Component {
   renderErrorModal() {
     const errors = this.getFormErrors();
     const error = errors.item || {};
+
     return (
-      <ErrorModal open={!isEmpty(error)} onClose={this.clearForm} message={error.barcode} />
+      <ErrorModal
+        open={!isEmpty(error)}
+        onClose={this.clearForm}
+        message={error.barcode}
+      />
     );
   }
 
   render() {
-    const { submitting, handleSubmit } = this.props;
+    const {
+      submitting,
+      handleSubmit,
+      patron,
+    } = this.props;
+
     const validationEnabled = false;
+
     return (
-      <form id="item-form" onSubmit={handleSubmit}>
+      <form
+        id="item-form"
+        onSubmit={handleSubmit}
+      >
         <Row id="section-item">
           <Col xs={4}>
             <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
@@ -98,10 +131,13 @@ class ItemForm extends React.Component {
             </Button>
           </Col>
           {
-            !isEmpty(this.props.patron) &&
+            !isEmpty(patron) &&
             <Col xs={6}>
               <Row end="xs">
-                <ScanTotal buttonId="clickable-done" {...this.props} />
+                <ScanTotal
+                  buttonId="clickable-done"
+                  {...this.props}
+                />
               </Row>
             </Col>
           }

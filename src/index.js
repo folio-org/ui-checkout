@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Route from 'react-router-dom/Route';
 import Switch from 'react-router-dom/Switch';
 import { hot } from 'react-hot-loader';
+import { FormattedMessage } from 'react-intl';
+
 import Scan from './Scan';
 
 class CheckOutRouting extends React.Component {
@@ -19,31 +21,34 @@ class CheckOutRouting extends React.Component {
     this.connectedApp = props.stripes.connect(Scan);
   }
 
-  NoMatch() {
+  noMatch = () => {
     return (
       <div>
-        <h2>Uh-oh!</h2>
-        <p>
-          How did you get to
-          {' '}
-          <tt>{this.props.location.pathname}</tt>
-          ?
-        </p>
+        <h2>
+          <FormattedMessage id="ui-checkout.error.oops" />
+        </h2>
+        <FormattedMessage
+          id="ui-checkout.error.routing"
+          values={{ pathname: <tt>{this.props.location.pathname}</tt> }}
+        />
       </div>
     );
-  }
+  };
 
   render() {
-    const { match: { path } } = this.props;
+    const {
+      match: { path },
+    } = this.props;
+
     return (
       <Switch>
         <Route
-          path={`${path}`}
+          path={path}
           render={() => (
             <this.connectedApp {...this.props} />
           )}
         />
-        <Route component={() => { this.NoMatch(); }} />
+        <Route render={this.noMatch} />
       </Switch>
     );
   }

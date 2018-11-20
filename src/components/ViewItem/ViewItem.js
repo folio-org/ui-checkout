@@ -4,7 +4,14 @@ import React from 'react';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import PropTypes from 'prop-types';
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
-import { Button, DropdownMenu, MenuItem, MultiColumnList, UncontrolledDropdown } from '@folio/stripes/components';
+
+import {
+  Button,
+  DropdownMenu,
+  MenuItem,
+  MultiColumnList,
+  UncontrolledDropdown,
+} from '@folio/stripes/components';
 
 const sortMap = {
   no: loan => loan.no,
@@ -54,7 +61,10 @@ class ViewItem extends React.Component {
   onSort(e, meta) {
     if (!sortMap[meta.alias]) return;
 
-    let { sortOrder, sortDirection } = this.state;
+    let {
+      sortOrder,
+      sortDirection,
+    } = this.state;
 
     if (sortOrder[0] !== meta.alias) {
       sortOrder = [meta.alias, sortOrder[0]];
@@ -99,21 +109,29 @@ class ViewItem extends React.Component {
     this.refreshLoans();
   }
 
-  refreshLoans() {
-    const { scannedItems, parentMutator } = this.props;
+  refreshLoans = async () => {
+    const {
+      scannedItems,
+      parentMutator,
+    } = this.props;
+
     const ids = scannedItems.map(it => `id==${it.id}`).join(' or ');
     const query = `(${ids})`;
     parentMutator.loans.reset();
-    return parentMutator.loans.GET({ params: { query } }).then((resp) => {
-      parentMutator.scannedItems.replace(resp.loans);
-    });
+
+    const response = await parentMutator.loans.GET({ params: { query } });
+
+    parentMutator.scannedItems.replace(response.loans);
   }
 
   handleOptionsChange(itemMeta, e) {
     e.preventDefault();
     e.stopPropagation();
 
-    const { loan, action } = itemMeta;
+    const {
+      loan,
+      action,
+    } = itemMeta;
 
     if (action && this[action]) {
       this[action](loan);
@@ -142,10 +160,24 @@ class ViewItem extends React.Component {
   }
 
   renderActions(loan) {
+    const { stripes } = this.props;
+
     return (
-      <UncontrolledDropdown onSelectItem={this.handleOptionsChange} onToggle={this.onMenuToggle}>
-        <Button data-role="toggle" buttonStyle="hover dropdownActive"><strong>•••</strong></Button>
-        <DropdownMenu data-role="menu" pullRight width="10em">
+      <UncontrolledDropdown
+        onSelectItem={this.handleOptionsChange}
+        onToggle={this.onMenuToggle}
+      >
+        <Button
+          data-role="toggle"
+          buttonStyle="hover dropdownActive"
+        >
+          <strong>•••</strong>
+        </Button>
+        <DropdownMenu
+          data-role="menu"
+          pullRight
+          width="10em"
+        >
           <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
             <Button
               buttonStyle="dropdownItem"
@@ -163,7 +195,7 @@ class ViewItem extends React.Component {
             </Button>
           </MenuItem>
           {
-            this.props.stripes.hasPerm('ui-circulation.settings.loan-policies') &&
+            stripes.hasPerm('ui-circulation.settings.loan-policies') &&
             <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
               <Button
                 buttonStyle="dropdownItem"
@@ -184,27 +216,54 @@ class ViewItem extends React.Component {
   }
 
   renderChangeDueDateDialog() {
-    const loan = this.props.scannedItems.find(item => this.state.activeLoan === item.id) || {};
+    const {
+      scannedItems,
+      stripes,
+      patron,
+    } = this.props;
+
+    const {
+      changeDueDateDialogOpen,
+      activeLoan,
+    } = this.state;
+
+    const loan = scannedItems.find(item => activeLoan === item.id) || {};
     const loanIds = [{ id: loan.id }];
 
     return (
       <this.connectedChangeDueDateDialog
-        stripes={this.props.stripes}
+        stripes={stripes}
         loanIds={loanIds}
         onClose={this.hideChangeDueDateDialog}
-        open={this.state.changeDueDateDialogOpen}
-        user={this.props.patron}
+        open={changeDueDateDialogOpen}
+        user={patron}
       />
     );
   }
 
   render() {
-    const { sortOrder, sortDirection } = this.state;
-    const scannedItems = this.props.scannedItems;
+    const {
+      scannedItems,
+    } = this.props;
+
+    const {
+      sortOrder,
+      sortDirection,
+    } = this.state;
+
     const size = scannedItems.length;
     const items = scannedItems.map((it, index) => ({ ...it, no: size - index }));
     const contentData = _.orderBy(items,
       [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
+
+    const columnWidths = {
+      'barcode': 140,
+      'title': 180,
+      'loanPolicy': 150,
+      'dueDate': 100,
+      'time': 70,
+      ' ': 40,
+    };
 
     return (
       <React.Fragment>
@@ -215,13 +274,13 @@ class ViewItem extends React.Component {
           contentData={contentData}
           rowMetadata={['id']}
           formatter={this.getItemFormatter()}
-          columnWidths={{ 'barcode': 140, 'title': 180, 'loanPolicy': 150, 'dueDate': 100, 'time': 70, ' ': 40 }}
+          columnWidths={columnWidths}
           isEmptyMessage={<FormattedMessage id="ui-checkout.noItemsEntered" />}
           onHeaderClick={this.onSort}
           sortOrder={sortOrder[0]}
           sortDirection={`${sortDirection[0]}ending`}
         />
-        { this.renderChangeDueDateDialog() }
+        {this.renderChangeDueDateDialog()}
       </React.Fragment>
     );
   }

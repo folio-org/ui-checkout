@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SubmissionError, reset } from 'redux-form';
@@ -128,21 +128,28 @@ class Scan extends React.Component {
   }
 
   getPatronIdentifiers() {
-    const checkoutSettings = (this.props.resources.checkoutSettings || {}).records || [];
+    const checkoutSettings = get(this.props.resources, ['checkoutSettings', 'records'], []);
+
     return getPatronIdentifiers(checkoutSettings);
   }
 
   clearResources() {
-    this.props.mutator.scannedItems.replace([]);
-    this.props.mutator.patrons.reset();
-    this.props.mutator.selPatron.replace({});
+    const {
+      scannedItems,
+      patrons,
+      selPatron,
+    } = this.props.mutator;
+
+    scannedItems.replace([]);
+    patrons.reset();
+    selPatron.replace({});
   }
 
   selectPatron(patron) {
     this.props.mutator.selPatron.replace(patron);
   }
 
-  findPatron(data) {
+  findPatron = async (data) => {
     const patron = data.patron;
 
     if (!patron) {
@@ -158,9 +165,12 @@ class Scan extends React.Component {
     const query = buildIdentifierQuery(patron, idents);
     this.setState({ loading: true });
 
-    return this.props.mutator.patrons.GET({ params: { query } }).then((patrons) => {
+    try {
+      const patrons = await this.props.mutator.patrons.GET({ params: { query } });
+
       if (!patrons.length) {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
+
         throw new SubmissionError({
           patron: {
             identifier: <FormattedMessage id="ui-checkout.userNotFoundError" values={{ identifier }} />,
@@ -168,8 +178,11 @@ class Scan extends React.Component {
           },
         });
       }
+
       return patrons;
-    }).finally(() => this.setState({ loading: false }));
+    } finally {
+      this.setState({ loading: false });
+    }
   }
 
   clearForm(formName) {
@@ -177,14 +190,18 @@ class Scan extends React.Component {
   }
 
   render() {
-    const { resources } = this.props;
-    const checkoutSettings = getCheckoutSettings((resources.checkoutSettings || {}).records || []);
-    const patrons = (resources.patrons || {}).records || [];
-    const settings = (resources.settings || {}).records || [];
-    const scannedItems = resources.scannedItems || [];
-    const selPatron = resources.selPatron;
-    const scannedTotal = scannedItems.length;
+    const {
+      resources,
+      mutator,
+      stripes,
+    } = this.props;
 
+    const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
+    const patrons = get(resources, ['patrons', 'records'], []);
+    const settings = get(resources, ['settings', 'records'], []);
+    const scannedTotal = get(resources, ['scannedItems', 'length'], []);
+    const selPatron = resources.selPatron;
+    const { loading } = this.state;
     let patron = patrons[0];
     let proxy = selPatron;
 
@@ -207,7 +224,12 @@ class Scan extends React.Component {
               forwardedRef={this.patronFormRef}
               {...this.props}
             />
-            {this.state.loading && <Icon icon="spinner-ellipsis" width="10px" />}
+            {loading &&
+              <Icon
+                icon="spinner-ellipsis"
+                width="10px"
+              />
+            }
             {patrons.length > 0 &&
               <ViewPatron
                 onSelectPatron={this.selectPatron}
@@ -225,12 +247,12 @@ class Scan extends React.Component {
           >
             <this.connectedScanItems
               {...this.props}
-              parentMutator={this.props.mutator}
-              parentResources={this.props.resources}
-              stripes={this.props.stripes}
+              parentMutator={mutator}
+              parentResources={resources}
+              stripes={stripes}
               patron={patron}
               proxy={proxy}
-              settings={checkoutSettings}
+              settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
             />
           </Pane>
@@ -240,7 +262,8 @@ class Scan extends React.Component {
             buttonId="clickable-done-footer"
             total={scannedTotal}
             onSessionEnd={() => this.onSessionEnd()}
-          />}
+          />
+        }
       </div>
     );
   }

@@ -2,7 +2,13 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Col, KeyValue, Row } from '@folio/stripes/components';
+
+import {
+  Col,
+  KeyValue,
+  Row,
+} from '@folio/stripes/components';
+
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { getFullName } from '../../util';
 import css from './UserDetail.css';
@@ -40,8 +46,13 @@ class UserDetail extends React.Component {
 
     return (
       <span>
-        <Link className={css.marginRight} to={path}>
-          <strong>{getFullName(user)}</strong>
+        <Link
+          className={css.marginRight}
+          to={path}
+        >
+          <strong>
+            {getFullName(user)}
+          </strong>
         </Link>
         <strong>
           <FormattedMessage id="ui-checkout.user.detail.barcode" />
@@ -53,9 +64,15 @@ class UserDetail extends React.Component {
   }
 
   renderLoans() {
-    if (!this.props.renderLoans) return null;
-    const openLoansCount = _.get(this.props.resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
-    const openLoansPath = `/users/view/${this.props.user.id}?layer=open-loans&query=`;
+    const {
+      renderLoans,
+      resources,
+      user,
+    } = this.props;
+
+    if (!renderLoans) return null;
+    const openLoansCount = _.get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
+    const openLoansPath = `/users/view/${user.id}?layer=open-loans&query=`;
     const openLoansLink = <Link to={openLoansPath}>{openLoansCount}</Link>;
 
     return (
@@ -73,7 +90,12 @@ class UserDetail extends React.Component {
   }
 
   render() {
-    const { user, resources, label, settings } = this.props;
+    const {
+      user,
+      resources,
+      label, settings,
+    } = this.props;
+
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
     const hasProfilePicture = !!(settings.length && settings[0].value === 'true');
@@ -85,12 +107,18 @@ class UserDetail extends React.Component {
           <Row>
             <Col xs={hasProfilePicture ? 10 : 12}>
               <div className={`${css.section} ${css.active}`}>
-                <KeyValue label={label} value={this.getUserValue(user)} />
+                <KeyValue
+                  label={label}
+                  value={this.getUserValue(user)}
+                />
               </div>
             </Col>
-            { hasProfilePicture &&
+            {hasProfilePicture &&
               <Col xs={2}>
-                <img src="http://placehold.it/60x60" alt="presentation" />
+                <img
+                  src="http://placehold.it/60x60"
+                  alt={<FormattedMessage id="ui-checkout.presentation" />}
+                />
               </Col>
             }
           </Row>
@@ -121,7 +149,7 @@ class UserDetail extends React.Component {
           </Row>
         </div>
 
-        { this.renderLoans() }
+        {this.renderLoans()}
       </div>
     );
   }

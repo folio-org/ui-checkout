@@ -48,6 +48,10 @@
   "scanOrEnterItemBarcode": "Scan or enter item barcode",
   "itemId": "Item ID",
   "close": "Close",
+  "presentation": "presentation",
+
+  "error.oops": "Uh-oh!",
+  "error.routing": "How did you get to {pathname}?",
 
   "user.name": "Name",
   "user.username": "Username",

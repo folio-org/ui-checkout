@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Modal, Row } from '@folio/stripes/components';
+
+import {
+  Button,
+  Col,
+  Modal,
+  Row,
+} from '@folio/stripes/components';
+
 import { FormattedMessage } from 'react-intl';
 
 class ErrorModal extends React.Component {
@@ -11,7 +18,11 @@ class ErrorModal extends React.Component {
   };
 
   render() {
-    const { open, message, onClose } = this.props;
+    const {
+      open,
+      message,
+      onClose,
+    } = this.props;
 
     return (
       <Modal
@@ -21,10 +32,15 @@ class ErrorModal extends React.Component {
         label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
         dismissible
       >
-        <p>{message}</p>
+        <p>
+          {message}
+        </p>
         <Col xs={12}>
           <Row end="xs">
-            <Button buttonStyle="primary" onClick={onClose}>
+            <Button
+              buttonStyle="primary"
+              onClick={onClose}
+            >
               <FormattedMessage id="ui-checkout.close" />
             </Button>
           </Row>
