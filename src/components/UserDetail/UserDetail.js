@@ -93,7 +93,8 @@ class UserDetail extends React.Component {
     const {
       user,
       resources,
-      label, settings,
+      label,
+      settings,
     } = this.props;
 
     const patronGroups = (resources.patronGroups || {}).records || [];

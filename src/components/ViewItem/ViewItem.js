@@ -24,6 +24,15 @@ const sortMap = {
 
 const visibleColumns = ['no', 'Barcode', 'title', 'loanPolicy', 'dueDate', 'Time', ' '];
 
+const columnWidths = {
+  'barcode': 140,
+  'title': 180,
+  'loanPolicy': 150,
+  'dueDate': 100,
+  'time': 70,
+  ' ': 40,
+};
+
 class ViewItem extends React.Component {
   static propTypes = {
     scannedItems: PropTypes.arrayOf(PropTypes.object),
@@ -255,15 +264,6 @@ class ViewItem extends React.Component {
     const items = scannedItems.map((it, index) => ({ ...it, no: size - index }));
     const contentData = _.orderBy(items,
       [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
-
-    const columnWidths = {
-      'barcode': 140,
-      'title': 180,
-      'loanPolicy': 150,
-      'dueDate': 100,
-      'time': 70,
-      ' ': 40,
-    };
 
     return (
       <React.Fragment>
