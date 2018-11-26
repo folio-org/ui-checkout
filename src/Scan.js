@@ -180,8 +180,6 @@ class Scan extends React.Component {
       }
 
       return patrons;
-    } catch (error) {
-      throw new Error(error.message);
     } finally {
       this.setState({ loading: false });
     }
