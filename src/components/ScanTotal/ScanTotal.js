@@ -13,13 +13,20 @@ class ScanTotal extends React.Component {
   };
 
   render() {
-    const { total, buttonId, onSessionEnd } = this.props;
+    const {
+      total,
+      buttonId,
+      onSessionEnd,
+    } = this.props;
 
     return (
       <div className={css.root}>
         {total > 0 &&
           <div className={css.label}>
-            <FormattedMessage id="ui-checkout.totalItemsScanned" values={{ total }} />
+            <FormattedMessage
+              id="ui-checkout.totalItemsScanned"
+              values={{ total }}
+            />
           </div>
         }
         <div>

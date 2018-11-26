@@ -2,7 +2,14 @@ import { find } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
-import { Button, Col, Row, TextField } from '@folio/stripes/components';
+
+import {
+  Button,
+  Col,
+  Row,
+  TextField,
+} from '@folio/stripes/components';
+
 import { Pluggable } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
 
@@ -36,11 +43,16 @@ class PatronForm extends React.Component {
   }
 
   componentDidUpdate() {
-    const { forwardedRef } = this.props;
+    const {
+      forwardedRef,
+      patron,
+      submitFailed,
+    } = this.props;
+
     const input = forwardedRef.current.getRenderedComponent().getInput();
 
     // Refocus on the patron barcode input if the submitted value fails
-    if (document.activeElement !== input && !this.props.patron.id && this.props.submitFailed) {
+    if (document.activeElement !== input && !patron.id && submitFailed) {
       setTimeout(() => this.focusInput());
     }
   }
@@ -51,31 +63,54 @@ class PatronForm extends React.Component {
   }
 
   selectUser(user) {
-    const { userIdentifiers, handleSubmit } = this.props;
+    const {
+      userIdentifiers,
+      handleSubmit,
+      change,
+    } = this.props;
+
     const ident = find(userIdentifiers, i => user[patronIdentifierMap[i]]);
 
     if (ident) {
-      this.props.change('patron.identifier', user[patronIdentifierMap[ident]]);
+      change('patron.identifier', user[patronIdentifierMap[ident]]);
       setTimeout(() => handleSubmit());
     } else {
       const { username } = user;
       const identifier = patronIdentifierMap[userIdentifiers[0]];
-      Object.assign(user, { error: <FormattedMessage id="ui-checkout.missingIdentifierError" values={{ username, identifier }} /> });
+      const missingIdErrorMessage = (
+        <FormattedMessage
+          id="ui-checkout.missingIdentifierError"
+          values={{ username, identifier }}
+        />
+      );
+
+      Object.assign(user, { error: missingIdErrorMessage });
     }
   }
 
   render() {
-    const { userIdentifiers, submitting, handleSubmit } = this.props;
+    const {
+      userIdentifiers,
+      submitting,
+      handleSubmit,
+      forwardedRef,
+    } = this.props;
+
     const validationEnabled = false;
     const disableRecordCreation = true;
     const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
-    const { forwardedRef } = this.props;
 
     return (
-      <form id="patron-form" onSubmit={handleSubmit}>
+      <form
+        id="patron-form"
+        onSubmit={handleSubmit}
+      >
         <Row id="section-patron">
           <Col xs={9}>
-            <FormattedMessage id="ui-checkout.scanOrEnterPatronId" values={{ identifier }}>
+            <FormattedMessage
+              id="ui-checkout.scanOrEnterPatronId"
+              values={{ identifier }}
+            >
               {placeholder => (
                 <FormattedMessage id="ui-checkout.patronIdentifier">
                   {ariaLabel => (
