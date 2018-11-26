@@ -53,5 +53,8 @@
     "isActingAs": "úgy viselkedik, mint",
     "enter": "Enter",
     "itemId": "Tételazonosító",
-    "user.detail.barcode": "Barcode:"
+    "user.detail.barcode": "Barcode:",
+    "presentation": "presentation",
+    "error.oops": "Uh-oh!",
+    "error.routing": "How did you get to {pathname}?"
 }

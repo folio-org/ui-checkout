@@ -53,5 +53,8 @@
     "isActingAs": "is acting as",
     "enter": "Enter",
     "itemId": "Item ID",
-    "user.detail.barcode": "Barcode:"
+    "user.detail.barcode": "Barcode:",
+    "presentation": "presentation",
+    "error.oops": "Uh-oh!",
+    "error.routing": "How did you get to {pathname}?"
 }

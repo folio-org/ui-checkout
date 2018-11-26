@@ -53,5 +53,8 @@
     "isActingAs": "está agindo como",
     "enter": "Entrar",
     "itemId": "ID do item",
-    "user.detail.barcode": "Código de barras:"
+    "user.detail.barcode": "Código de barras:",
+    "presentation": "apresentação",
+    "error.oops": "Ops!",
+    "error.routing": "Como você chegou ao {pathname}?"
 }
