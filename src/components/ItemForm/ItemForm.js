@@ -68,7 +68,7 @@ class ItemForm extends React.Component {
   }
 
   focusInput() {
-    this.barcodeEl.current.getRenderedComponent().focusInput();
+    this.barcodeEl.current.focus();
   }
 
   renderErrorModal() {
@@ -111,8 +111,7 @@ class ItemForm extends React.Component {
                       fullWidth
                       id="input-item-barcode"
                       component={TextField}
-                      ref={this.barcodeEl}
-                      withRef
+                      inputRef={this.barcodeEl}
                       validationEnabled={validationEnabled}
                     />
                   )}

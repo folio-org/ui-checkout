@@ -122,8 +122,7 @@ class Scan extends React.Component {
     const current = this.patronFormRef.current;
     // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
-      const patronFormInst = current.getRenderedComponent();
-      setTimeout(() => patronFormInst.focusInput());
+      setTimeout(() => current.focus());
     }
   }
 
