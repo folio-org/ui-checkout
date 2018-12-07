@@ -23,7 +23,7 @@ class PatronForm extends React.Component {
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
     patron: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
-    forwardedRef: PropTypes.instanceOf(Element)
+    forwardedRef: PropTypes.object,
   };
 
   constructor(props) {
@@ -49,7 +49,7 @@ class PatronForm extends React.Component {
       submitFailed,
     } = this.props;
 
-    const input = forwardedRef.current.getRenderedComponent().getInput();
+    const input = forwardedRef;
 
     // Refocus on the patron barcode input if the submitted value fails
     if (document.activeElement !== input && !patron.id && submitFailed) {
@@ -59,7 +59,9 @@ class PatronForm extends React.Component {
 
   focusInput() {
     const { forwardedRef } = this.props;
-    forwardedRef.current.getRenderedComponent().focusInput();
+    if (forwardedRef.current) {
+      forwardedRef.current.focus();
+    }
   }
 
   selectUser(user) {
@@ -121,8 +123,7 @@ class PatronForm extends React.Component {
                       fullWidth
                       id="input-patron-identifier"
                       component={TextField}
-                      withRef
-                      ref={forwardedRef}
+                      inputRef={forwardedRef}
                       validationEnabled={validationEnabled}
                     />
                   )}
