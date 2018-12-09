@@ -56,7 +56,7 @@ class PatronBlock extends React.Component {
           <Col xs>
             <KeyValue
               label={label}
-              value={patronBlocksCount> 0 ? viewUserLink : '-'}
+              value={patronBlocksCount > 0 ? viewUserLink : '-'}
             />
           </Col>
         </Row>
