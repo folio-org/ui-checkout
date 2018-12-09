@@ -11,6 +11,7 @@ import {
 
 import { ProxyManager } from '@folio/stripes/smart-components';
 import UserDetail from '../UserDetail';
+import PatronBlock from '../PatronBlock';
 import css from './ViewPatron.css';
 
 class ViewPatron extends React.Component {
@@ -86,6 +87,11 @@ class ViewPatron extends React.Component {
           proxy={proxy}
           onSelectPatron={onSelectPatron}
           onClose={onClearPatron}
+        />
+        <PatronBlock
+          patronBlocksCount={this.props.patronBlocks.length || 0}
+          openBlockedModal={this.props.openBlockedModal}
+          user={patron}
         />
       </div>
     );
