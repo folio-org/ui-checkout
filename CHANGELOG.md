@@ -6,6 +6,7 @@
 * Update due date on checkout after changed. Fixes UICHKOUT-470.
 * Fix hardcoded strings. Fixes UICHKOUT-458.
 * Simpler input focus due to better ref handling. Refs STCOM-394.
+* Add feature enforce manual patron blocks. Ref UIU-675.
 
 ## [1.3.1](https://github.com/folio-org/ui-checkout/tree/v1.3.1) (2018-10-09)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.3.0...v1.3.1)
