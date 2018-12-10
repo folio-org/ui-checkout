@@ -75,7 +75,9 @@ class ScanItems extends React.Component {
     const {
       stripes,
       mutator,
-      patron
+      patron,
+      patronBlocks,
+      openBlockedModal
     } = this.props;
 
     if (!data.item) {
@@ -92,6 +94,11 @@ class ScanItems extends React.Component {
           identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
         },
       });
+    }
+
+    if (patronBlocks.length > 0) {
+      openBlockedModal();
+      throw new SubmissionError({});
     }
 
     this.setState({ loading: true });

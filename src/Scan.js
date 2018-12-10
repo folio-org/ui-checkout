@@ -10,6 +10,7 @@ import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
 import ScanFooter from './components/ScanFooter';
 import ScanItems from './ScanItems';
+import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
 import { patronIdentifierMap, errorTypes } from './constants';
 import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from './util';
 import css from './Scan.css';
@@ -42,6 +43,12 @@ class Scan extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    patronBlocks: {
+      type: 'okapi',
+      records: 'manualblocks',
+      path: 'manualblocks?query=userId=%{activeRecord.patronId}',
+    },
+    activeRecord: {},
   });
 
   static propTypes = {
@@ -61,6 +68,9 @@ class Scan extends React.Component {
       checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      patronBlocks: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
     }),
     mutator: PropTypes.shape({
@@ -73,6 +83,9 @@ class Scan extends React.Component {
       }),
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
+      }),
+      activeRecord: PropTypes.shape({
+        update: PropTypes.func
       }),
       loans: PropTypes.shape({
         GET: PropTypes.func,
@@ -89,7 +102,7 @@ class Scan extends React.Component {
     this.findPatron = this.findPatron.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
-    this.state = { loading: false };
+    this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
   }
@@ -178,6 +191,9 @@ class Scan extends React.Component {
         });
       }
 
+      const selPatron = (patrons.length > 0) ? patrons[0] : {};
+      this.props.mutator.activeRecord.update({ patronId: selPatron.id });
+
       return patrons;
     } finally {
       this.setState({ loading: false });
@@ -186,6 +202,18 @@ class Scan extends React.Component {
 
   clearForm(formName) {
     this.store.dispatch(reset(formName));
+  }
+
+  onCloseBlockedModal = () => {
+    this.setState({
+      blocked: false,
+    });
+  }
+
+  openBlockedModal = () => {
+    this.setState({
+      blocked: true,
+    });
   }
 
   render() {
@@ -198,9 +226,11 @@ class Scan extends React.Component {
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
+    const selPatronBlocks = get(resources, ['patronBlocks', 'records'], []);
+    const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
-    const { loading } = this.state;
+    const { loading, blocked } = this.state;
     let patron = patrons[0];
     let proxy = selPatron;
 
@@ -234,6 +264,8 @@ class Scan extends React.Component {
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
+                openBlockedModal={this.openBlockedModal}
+                patronBlocks={patronBlocks}
                 proxy={proxy}
                 settings={settings}
                 {...this.props}
@@ -250,6 +282,8 @@ class Scan extends React.Component {
               parentResources={resources}
               stripes={stripes}
               patron={patron}
+              openBlockedModal={this.openBlockedModal}
+              patronBlocks={patronBlocks}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
@@ -263,6 +297,12 @@ class Scan extends React.Component {
             onSessionEnd={() => this.onSessionEnd()}
           />
         }
+        <PatronBlockModal
+          open={blocked}
+          onClose={this.onCloseBlockedModal}
+          viewUserPath={`/users/view/${(patron || {}).id}`}
+          patronBlocks={patronBlocks[0] || {}}
+        />
       </div>
     );
   }

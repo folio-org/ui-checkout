@@ -49,6 +49,11 @@
   "itemId": "Item ID",
   "close": "Close",
   "presentation": "presentation",
+  "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
+  "patronBlocks": "Patron blocks",
+  "blockModal": "Patron blocked from borrowing",
+  "detailsButton": "Block details",
+  "blockedLabel": "Reason for block:",
 
   "error.oops": "Uh-oh!",
   "error.routing": "How did you get to {pathname}?",
