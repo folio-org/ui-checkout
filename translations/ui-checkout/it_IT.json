@@ -54,7 +54,12 @@
     "enter": "Enter",
     "itemId": "Item ID",
     "user.detail.barcode": "Barcode:",
-    "presentation": "presentation",
-    "error.oops": "Uh-oh!",
-    "error.routing": "How did you get to {pathname}?"
+    "presentation": "presentazione",
+    "error.oops": "Ops!",
+    "error.routing": "Come sei arrivato a {pathname}?",
+    "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
+    "patronBlocks": "Patron blocks",
+    "blockModal": "Patron blocked from borrowing",
+    "detailsButton": "Block details",
+    "blockedLabel": "Reason for block:"
 }
