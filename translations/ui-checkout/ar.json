@@ -55,6 +55,11 @@
     "itemId": "معرّف المادة",
     "user.detail.barcode": "الباركود:",
     "presentation": "presentation",
-    "error.oops": "Uh-oh!",
-    "error.routing": "How did you get to {pathname}?"
+    "error.oops": "أوه!",
+    "error.routing": "كيف وصلت إلى {pathname} ؟",
+    "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
+    "patronBlocks": "Patron blocks",
+    "blockModal": "Patron blocked from borrowing",
+    "detailsButton": "Block details",
+    "blockedLabel": "Reason for block:"
 }

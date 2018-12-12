@@ -28,10 +28,10 @@
     "proxyExpired": "Relação de autorização expirada",
     "continue": "Continuar",
     "orActingAsProxy": "Ou atuando como autorizado de",
-    "scanOrEnterPatronId": "Scaneie ou insira o {identifier} do usuário",
+    "scanOrEnterPatronId": "Escaneie ou insira o {identifier} do usuário",
     "patronLookup": "Busca de usuário",
     "patronIdentifier": "Identificador de usuário",
-    "scanOrEnterItemBarcode": "Scaneie ou insira o código de barras do item",
+    "scanOrEnterItemBarcode": "Escaneie ou insira o código de barras do item",
     "okay": "OK",
     "user.name": "Nome",
     "user.username": "Nome de usuário",
@@ -56,5 +56,10 @@
     "user.detail.barcode": "Código de barras:",
     "presentation": "apresentação",
     "error.oops": "Ops!",
-    "error.routing": "Como você chegou ao {pathname}?"
+    "error.routing": "Como você chegou ao {pathname}?",
+    "patronBlocksCount": "{count, plural, one {suspensão ativa} other {suspensões ativas}}",
+    "patronBlocks": "Suspensões do usuário",
+    "blockModal": "Usuário suspenso de empréstimos",
+    "detailsButton": "Detalhes da suspensão",
+    "blockedLabel": "Razão para suspensão:"
 }
