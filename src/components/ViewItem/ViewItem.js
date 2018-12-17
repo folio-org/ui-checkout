@@ -25,12 +25,12 @@ const sortMap = {
 const visibleColumns = ['no', 'Barcode', 'title', 'loanPolicy', 'dueDate', 'Time', ' '];
 
 const columnWidths = {
-  'barcode': 140,
+  'Barcode': 140,
   'title': 180,
   'loanPolicy': 150,
-  'dueDate': 100,
-  'time': 70,
-  ' ': 40,
+  'dueDate': 90,
+  'Time': 75,
+  ' ': 55,
 };
 
 class ViewItem extends React.Component {
