@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -13,13 +14,14 @@ import css from './PatronBlock.css';
 class PatronBlock extends React.Component {
   static propTypes = {
     patronBlocksCount: PropTypes.number,
+    patronBlocks:  PropTypes.arrayOf(PropTypes.object),
     openBlockedModal: PropTypes.func,
     user: PropTypes.object,
   };
 
   componentDidUpdate(prevProps) {
-    const { patronBlocksCount, openBlockedModal } = this.props;
-    if (prevProps.patronBlocksCount !== patronBlocksCount && patronBlocksCount > 0) {
+    const { openBlockedModal, patronBlocks } = this.props;
+    if (!_.isEqual(prevProps.patronBlocks, patronBlocks) && patronBlocks.length > 0) {
       openBlockedModal();
     }
   }

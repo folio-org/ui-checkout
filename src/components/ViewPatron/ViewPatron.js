@@ -90,6 +90,7 @@ class ViewPatron extends React.Component {
         />
         <PatronBlock
           patronBlocksCount={this.props.patronBlocks.length || 0}
+          patronBlocks={this.props.patronBlocks}
           openBlockedModal={this.props.openBlockedModal}
           user={patron}
         />
