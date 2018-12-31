@@ -6,6 +6,7 @@ import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
 
+import moment from 'moment';
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
 import ScanFooter from './components/ScanFooter';
@@ -47,6 +48,14 @@ class Scan extends React.Component {
       type: 'okapi',
       records: 'manualblocks',
       path: 'manualblocks?query=userId=%{activeRecord.patronId}',
+      DELETE: {
+        path: 'manualblocks/%{activeRecord.blockId}',
+      },
+    },
+    patronGroups: {
+      type: 'okapi',
+      records: 'usergroups',
+      path: 'groups',
     },
     activeRecord: {},
   });
@@ -105,9 +114,30 @@ class Scan extends React.Component {
     this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
+    this.state = { submitting: false };
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
+    const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
+    const prevBlocks = get(prevProps.resources, ['patronBlocks', 'records'], []);
+    const { submitting } = this.state;
+    const prevExpirated = prevBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const expirated = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+
+    if (prevExpirated.length > 0 && expirated.length === 0) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ submitting: false });
+    }
+
+    if (expirated.length > 0 && !submitting) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ submitting: true });
+      expirated.forEach(p => {
+        this.props.mutator.activeRecord.update({ blockId: p.id });
+        this.props.mutator.patronBlocks.DELETE({ id: p.id });
+      });
+    }
+
     if (this.timer !== undefined) return;
 
     const settings = this.props.resources.checkoutSettings;
@@ -191,8 +221,13 @@ class Scan extends React.Component {
         });
       }
 
+      const selPatronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
+      const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true);
       const selPatron = (patrons.length > 0) ? patrons[0] : {};
       this.props.mutator.activeRecord.update({ patronId: selPatron.id });
+      if (patronBlocks.length > 0 && patronBlocks[0].userId === selPatron.id) {
+        this.openBlockedModal();
+      }
 
       return patrons;
     } finally {
@@ -214,6 +249,13 @@ class Scan extends React.Component {
     this.setState({
       blocked: true,
     });
+  }
+
+  onViewUserPath = (user) => {
+    const groups = get(this.props.resources, ['patronGroups', 'records'], []);
+    const patronGroup = (groups.find(g => g.id === user.patronGroup) || {}).group;
+    const viewUserPath = `/users/view/${(user || {}).id}?filters=pg.${patronGroup}`;
+    this.props.history.push(viewUserPath);
   }
 
   render() {
@@ -300,7 +342,7 @@ class Scan extends React.Component {
         <PatronBlockModal
           open={blocked}
           onClose={this.onCloseBlockedModal}
-          viewUserPath={`/users/view/${(patron || {}).id}`}
+          viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks[0] || {}}
         />
       </div>
