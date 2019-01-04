@@ -132,7 +132,6 @@ class Scan extends React.Component {
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
-    this.findPatron = this.findPatron.bind(this);
     this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
@@ -208,9 +207,9 @@ class Scan extends React.Component {
     const patron = await this.findPatron(data);
     if (!patron) return;
     const proxies = await this.findProxies(patron);
-    // give patron can act as a proxy
-    // so we need to wait to make sure
-    // the proxy is not chosen per UICHKOUT-475
+    // Patron can act as proxy
+    // so wait with with finding requests
+    // until proxy is selected. Part of UICHKOUT-475
     if (proxies.length) return;
     this.findRequests(patron);
   }
