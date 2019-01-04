@@ -12,7 +12,12 @@ import ScanFooter from './components/ScanFooter';
 import ScanItems from './ScanItems';
 import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
 import { patronIdentifierMap, errorTypes } from './constants';
-import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from './util';
+import {
+  getPatronIdentifiers,
+  buildIdentifierQuery,
+  getCheckoutSettings,
+  getRequestQuery,
+} from './util';
 import css from './Scan.css';
 
 class Scan extends React.Component {
@@ -48,6 +53,20 @@ class Scan extends React.Component {
       records: 'manualblocks',
       path: 'manualblocks?query=userId=%{activeRecord.patronId}',
     },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      accumulate: 'true',
+      path: 'circulation/requests',
+      fetch: false,
+    },
+    proxy: {
+      type: 'okapi',
+      records: 'proxiesFor',
+      path: 'proxiesfor',
+      accumulate: 'true',
+      fetch: false,
+    },
     activeRecord: {},
   });
 
@@ -71,6 +90,12 @@ class Scan extends React.Component {
       patronBlocks: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      requests: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      proxiesFor: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
     }),
     mutator: PropTypes.shape({
@@ -87,7 +112,15 @@ class Scan extends React.Component {
       activeRecord: PropTypes.shape({
         update: PropTypes.func
       }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       loans: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      proxy: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -100,6 +133,7 @@ class Scan extends React.Component {
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
     this.findPatron = this.findPatron.bind(this);
+    this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false, blocked: false };
@@ -158,10 +192,30 @@ class Scan extends React.Component {
   }
 
   selectPatron(patron) {
+    const { resources, mutator } = this.props;
+    const patrons = get(resources, ['patrons', 'records'], []);
     this.props.mutator.selPatron.replace(patron);
+    mutator.requests.reset();
+    // only find requests if patron acts as self
+    if (patrons[0].id === patron.id) {
+      this.findRequests(patron);
+    }
   }
 
-  findPatron = async (data) => {
+  async onPatronLookup(data) {
+    const { mutator } = this.props;
+    mutator.requests.reset();
+    const patron = await this.findPatron(data);
+    if (!patron) return;
+    const proxies = await this.findProxies(patron);
+    // give patron can act as a proxy
+    // so we need to wait to make sure
+    // the proxy is not chosen per UICHKOUT-475
+    if (proxies.length) return;
+    this.findRequests(patron);
+  }
+
+  async findPatron(data) {
     const patron = data.patron;
 
     if (!patron) {
@@ -191,13 +245,28 @@ class Scan extends React.Component {
         });
       }
 
-      const selPatron = (patrons.length > 0) ? patrons[0] : {};
-      this.props.mutator.activeRecord.update({ patronId: selPatron.id });
-
-      return patrons;
+      const selPatron = patrons[0];
+      this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
+      return selPatron;
     } finally {
       this.setState({ loading: false });
     }
+  }
+
+  async findProxies(patron) {
+    const { mutator } = this.props;
+    const query = `query=(proxyUserId==${patron.id})`;
+    mutator.proxy.reset();
+    const proxies = await mutator.proxy.GET({ params: { query } });
+    return proxies;
+  }
+
+  findRequests(patron) {
+    const { stripes, mutator } = this.props;
+    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
+    const query = getRequestQuery(patron.id, servicePointId);
+    mutator.requests.reset();
+    mutator.requests.GET({ params: { query } });
   }
 
   clearForm(formName) {
@@ -226,6 +295,7 @@ class Scan extends React.Component {
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
+
     const selPatronBlocks = get(resources, ['patronBlocks', 'records'], []);
     const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
@@ -247,7 +317,7 @@ class Scan extends React.Component {
             paneTitle={<FormattedMessage id="ui-checkout.scanPatronCard" />}
           >
             <PatronForm
-              onSubmit={this.findPatron}
+              onSubmit={this.onPatronLookup}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               forwardedRef={this.patronFormRef}
