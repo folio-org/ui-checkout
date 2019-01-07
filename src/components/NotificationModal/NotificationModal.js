@@ -4,16 +4,16 @@ import PropTypes from 'prop-types';
 import {
   Modal,
   ModalFooter,
+  Button,
 } from '@folio/stripes/components';
 
 const NotificationModal = (props) => {
   const footer = (
-    <ModalFooter
-      primaryButton={{
-        'label': <FormattedMessage id="ui-checkout.close" />,
-        'onClick': props.onClose,
-      }}
-    />
+    <ModalFooter>
+      <Button onClick={props.onClose}>
+        <FormattedMessage id="ui-checkout.close" />
+      </Button>
+    </ModalFooter>
   );
 
   return (
@@ -31,8 +31,8 @@ const NotificationModal = (props) => {
 NotificationModal.propTypes = {
   open: PropTypes.bool,
   onClose: PropTypes.func,
-  label: PropTypes.string,
-  message: PropTypes.string,
+  label: PropTypes.object,
+  message: PropTypes.object,
   id: PropTypes.string,
 };
 
