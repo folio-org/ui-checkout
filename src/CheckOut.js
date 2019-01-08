@@ -21,9 +21,9 @@ import {
   getCheckoutSettings,
   getRequestQuery,
 } from './util';
-import css from './Scan.css';
+import css from './Checkout.css';
 
-class Scan extends React.Component {
+class Checkout extends React.Component {
   static manifest = Object.freeze({
     selPatron: { initialValue: {} },
     query: { initialValue: {} },
@@ -317,7 +317,7 @@ class Scan extends React.Component {
     }
 
     return (
-      <div className={css.container}>
+      <div data-test-check-out-scan className={css.container}>
         <Paneset static>
           <Pane
             defaultWidth="35%"
@@ -381,6 +381,7 @@ class Scan extends React.Component {
           patronBlocks={patronBlocks[0] || {}}
         />
         <NotificationModal
+          id="awaiting-pickup-modal"
           open={!!requestsCount}
           onClose={this.onCloseAwaitingPickupModal}
           message={
@@ -398,4 +399,4 @@ class Scan extends React.Component {
   }
 }
 
-export default Scan;
+export default Checkout;

@@ -50,7 +50,7 @@ class UserDetail extends React.Component {
           className={css.marginRight}
           to={path}
         >
-          <strong>
+          <strong data-test-check-out-patron-full-name>
             {getFullName(user)}
           </strong>
         </Link>

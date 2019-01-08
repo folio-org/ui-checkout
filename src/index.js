@@ -5,7 +5,7 @@ import Switch from 'react-router-dom/Switch';
 import { hot } from 'react-hot-loader';
 import { FormattedMessage } from 'react-intl';
 
-import Scan from './Scan';
+import Checkout from './Checkout';
 
 class CheckOutRouting extends React.Component {
   static propTypes = {
@@ -18,7 +18,7 @@ class CheckOutRouting extends React.Component {
 
   constructor(props) {
     super(props);
-    this.connectedApp = props.stripes.connect(Scan);
+    this.connectedApp = props.stripes.connect(Checkout);
   }
 
   noMatch = () => {
