@@ -61,5 +61,7 @@
     "patronBlocks": "Suspensões do usuário",
     "blockModal": "Usuário suspenso de empréstimos",
     "detailsButton": "Detalhes da suspensão",
-    "blockedLabel": "Razão para suspensão:"
+    "blockedLabel": "Razão para suspensão:",
+    "awaitingPickupMessage": "O usuário tem <strong>{count}</strong> {count, plural, one {item} other {itens}} aguardando retirada neste ponto de serviço.",
+    "awaitingPickupLabel": "Itens aguardando retirada"
 }
