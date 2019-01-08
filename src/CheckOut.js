@@ -21,9 +21,9 @@ import {
   getCheckoutSettings,
   getRequestQuery,
 } from './util';
-import css from './Checkout.css';
+import css from './CheckOut.css';
 
-class Checkout extends React.Component {
+class CheckOut extends React.Component {
   static manifest = Object.freeze({
     selPatron: { initialValue: {} },
     query: { initialValue: {} },
@@ -399,4 +399,4 @@ class Checkout extends React.Component {
   }
 }
 
-export default Checkout;
+export default CheckOut;

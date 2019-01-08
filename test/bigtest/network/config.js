@@ -1,16 +1,7 @@
-import CQLParser, { CQLBoolean } from './cql';
+import CQLParser from './cql';
 
 // typical mirage config export
 export default function config() {
-
-  this.get('/_/version', () => '0.0.0');
-
-  this.get('_/proxy/tenants/:id/modules', []);
-
-  this.get('/saml/check', {
-    ssoEnabled: false
-  });
-
   this.get('/configurations/entries', {
     configs: []
   });
@@ -52,4 +43,3 @@ export default function config() {
     }
   });
 }
-

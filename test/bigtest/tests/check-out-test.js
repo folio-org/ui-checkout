@@ -1,7 +1,5 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
-import { Response } from '@bigtest/mirage';
-
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 

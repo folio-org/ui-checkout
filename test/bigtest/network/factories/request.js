@@ -5,6 +5,6 @@ export default Factory.extend({
   requestDate: () => faker.date.recent().toISOString(),
   requesterId: () => faker.random.uuid(),
   itemId: () => faker.random.uuid(),
-  status: () => "Closed - Pickup expired",
+  status: () => 'Closed - Pickup expired',
   position: () => 1
 });
