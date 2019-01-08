@@ -122,6 +122,7 @@ class PatronForm extends React.Component {
                       aria-label={ariaLabel}
                       fullWidth
                       id="input-patron-identifier"
+                      data-test-check-out-patron-identifier
                       component={TextField}
                       inputRef={forwardedRef}
                       validationEnabled={validationEnabled}

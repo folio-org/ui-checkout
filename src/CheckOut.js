@@ -5,17 +5,25 @@ import { SubmissionError, reset } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
 import ScanFooter from './components/ScanFooter';
 import ScanItems from './ScanItems';
 import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
-import { patronIdentifierMap, errorTypes } from './constants';
-import { getPatronIdentifiers, buildIdentifierQuery, getCheckoutSettings } from './util';
-import css from './Scan.css';
+import NotificationModal from './components/NotificationModal';
 
-class Scan extends React.Component {
+import { patronIdentifierMap, errorTypes } from './constants';
+import {
+  getPatronIdentifiers,
+  buildIdentifierQuery,
+  getCheckoutSettings,
+  getRequestQuery,
+} from './util';
+import css from './CheckOut.css';
+
+class CheckOut extends React.Component {
   static manifest = Object.freeze({
     selPatron: { initialValue: {} },
     query: { initialValue: {} },
@@ -48,6 +56,20 @@ class Scan extends React.Component {
       records: 'manualblocks',
       path: 'manualblocks?query=userId=%{activeRecord.patronId}',
     },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      accumulate: 'true',
+      path: 'circulation/requests',
+      fetch: false,
+    },
+    proxy: {
+      type: 'okapi',
+      records: 'proxiesFor',
+      path: 'proxiesfor',
+      accumulate: 'true',
+      fetch: false,
+    },
     activeRecord: {},
   });
 
@@ -71,6 +93,12 @@ class Scan extends React.Component {
       patronBlocks: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
+      requests: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      proxiesFor: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
       selPatron: PropTypes.object,
     }),
     mutator: PropTypes.shape({
@@ -87,7 +115,15 @@ class Scan extends React.Component {
       activeRecord: PropTypes.shape({
         update: PropTypes.func
       }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       loans: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      proxy: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -99,7 +135,7 @@ class Scan extends React.Component {
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
-    this.findPatron = this.findPatron.bind(this);
+    this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false, blocked: false };
@@ -141,7 +177,6 @@ class Scan extends React.Component {
 
   getPatronIdentifiers() {
     const checkoutSettings = get(this.props.resources, ['checkoutSettings', 'records'], []);
-
     return getPatronIdentifiers(checkoutSettings);
   }
 
@@ -158,10 +193,30 @@ class Scan extends React.Component {
   }
 
   selectPatron(patron) {
+    const { resources, mutator } = this.props;
+    const patrons = get(resources, ['patrons', 'records'], []);
     this.props.mutator.selPatron.replace(patron);
+    mutator.requests.reset();
+    // only find requests if patron acts as self
+    if (patrons[0].id === patron.id) {
+      this.findRequests(patron);
+    }
   }
 
-  findPatron = async (data) => {
+  async onPatronLookup(data) {
+    const { mutator } = this.props;
+    mutator.requests.reset();
+    const patron = await this.findPatron(data);
+    if (!patron) return;
+    const proxies = await this.findProxies(patron);
+    // patron can act as a proxy
+    // so wait with finding requests
+    // until proxy is selected. Part of UICHKOUT-475
+    if (proxies.length) return;
+    this.findRequests(patron);
+  }
+
+  async findPatron(data) {
     const patron = data.patron;
 
     if (!patron) {
@@ -191,13 +246,29 @@ class Scan extends React.Component {
         });
       }
 
-      const selPatron = (patrons.length > 0) ? patrons[0] : {};
-      this.props.mutator.activeRecord.update({ patronId: selPatron.id });
-
-      return patrons;
+      const selPatron = patrons[0];
+      this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
+      return selPatron;
     } finally {
       this.setState({ loading: false });
     }
+  }
+
+  async findProxies(patron) {
+    const { mutator } = this.props;
+    const query = `query=(proxyUserId==${patron.id})`;
+    mutator.proxy.reset();
+    const proxies = await mutator.proxy.GET({ params: { query } });
+    return proxies;
+  }
+
+  async findRequests(patron) {
+    const { stripes, mutator } = this.props;
+    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
+    const query = getRequestQuery(patron.id, servicePointId);
+    mutator.requests.reset();
+    const requests = await mutator.requests.GET({ params: { query } });
+    this.setState({ requestsCount: requests.length });
   }
 
   clearForm(formName) {
@@ -216,6 +287,12 @@ class Scan extends React.Component {
     });
   }
 
+  onCloseAwaitingPickupModal = () => {
+    this.setState({
+      requestsCount: 0,
+    });
+  }
+
   render() {
     const {
       resources,
@@ -230,7 +307,7 @@ class Scan extends React.Component {
     const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
-    const { loading, blocked } = this.state;
+    const { loading, blocked, requestsCount } = this.state;
     let patron = patrons[0];
     let proxy = selPatron;
 
@@ -240,14 +317,14 @@ class Scan extends React.Component {
     }
 
     return (
-      <div className={css.container}>
+      <div data-test-check-out-scan className={css.container}>
         <Paneset static>
           <Pane
             defaultWidth="35%"
             paneTitle={<FormattedMessage id="ui-checkout.scanPatronCard" />}
           >
             <PatronForm
-              onSubmit={this.findPatron}
+              onSubmit={this.onPatronLookup}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               forwardedRef={this.patronFormRef}
@@ -303,9 +380,23 @@ class Scan extends React.Component {
           viewUserPath={`/users/view/${(patron || {}).id}`}
           patronBlocks={patronBlocks[0] || {}}
         />
+        <NotificationModal
+          id="awaiting-pickup-modal"
+          open={!!requestsCount}
+          onClose={this.onCloseAwaitingPickupModal}
+          message={
+            <SafeHTMLMessage
+              id="ui-checkout.awaitingPickupMessage"
+              values={{ count: requestsCount }}
+            />}
+          label={
+            <FormattedMessage
+              id="ui-checkout.awaitingPickupLabel"
+            />}
+        />
       </div>
     );
   }
 }
 
-export default Scan;
+export default CheckOut;
