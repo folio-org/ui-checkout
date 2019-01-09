@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkout",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Item Check-out",
   "repository": "folio-org/ui-checkout",
   "publishConfig": {
