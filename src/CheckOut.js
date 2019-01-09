@@ -334,7 +334,7 @@ class CheckOut extends React.Component {
     const viewUserPath = `/users/view/${(user || {}).id}?filters=pg.${patronGroup}`;
     this.props.history.push(viewUserPath);
   }
-  
+
   render() {
     const {
       resources,
