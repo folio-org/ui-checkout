@@ -61,5 +61,7 @@
     "patronBlocks": "Patron blocks",
     "blockModal": "Patron blocked from borrowing",
     "detailsButton": "Block details",
-    "blockedLabel": "Reason for block:"
+    "blockedLabel": "Reason for block:",
+    "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
+    "awaitingPickupLabel": "Items awaiting pickup"
 }

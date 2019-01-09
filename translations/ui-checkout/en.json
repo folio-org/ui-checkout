@@ -62,5 +62,7 @@
   "user.username": "Username",
   "user.barcode": "Barcode",
   "user.detail.barcode": "Barcode:",
-  "user.patronGroup": "Patron group"
+  "user.patronGroup": "Patron group",
+  "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
+  "awaitingPickupLabel": "Items awaiting pickup"
 }

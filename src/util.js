@@ -38,3 +38,9 @@ export function buildIdentifierQuery(patron, idents) {
   const query = idents.map(ident => `${patronIdentifierMap[ident]}="${patron.identifier}"`);
   return `(${query.join(' OR ')})`;
 }
+
+export function getRequestQuery(requesterId, servicePointId) {
+  return `(requesterId==${requesterId} and
+    pickupServicePointId=${servicePointId} and
+    (status=="Closed - Pickup expired" or status=="Open - Awaiting pickup"))`;
+}
