@@ -25,7 +25,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => (
     <Row end="xs">
       <Col xs>
         <Button onClick={onClose}><FormattedMessage id="ui-checkout.close" /></Button>
-        <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" to={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
+        <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
       </Col>
     </Row>
   </Modal>
