@@ -54,7 +54,15 @@
   "blockModal": "Patron blocked from borrowing",
   "detailsButton": "Block details",
   "blockedLabel": "Reason for block:",
-
+  "multipieceModal.confirm": "Confirm",
+  "multipieceModal.back": "Back",
+  "multipieceModal.label": "Confirm multipiece check out",
+  "multipieceModal.item.numberOfPieces": "Number of pieces",
+  "multipieceModal.message": "<strong>{title}</strong> (Barcode: {barcode}) will be checked out.",
+  "multipieceModal.item.numberOfPieces": "Number of pieces",
+  "multipieceModal.item.descriptionOfPieces": "Description of pieces",
+  "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
+  "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
   "error.oops": "Uh-oh!",
   "error.routing": "How did you get to {pathname}?",
 
