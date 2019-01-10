@@ -9,9 +9,12 @@ import { FormattedMessage } from 'react-intl';
 
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
+import MultipieceModal from './components/MultipieceModal';
+import { to } from './util';
 
 import checkoutSuccessSound from '../sound/checkout_success.m4a';
 import checkoutErrorSound from '../sound/checkout_error.m4a';
+
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
@@ -28,10 +31,22 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
+    items: {
+      type: 'okapi',
+      path: 'inventory/items',
+      records: 'items',
+      accumulate: 'true',
+      fetch: false,
+    },
   });
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
+    resources: PropTypes.shape({
+      items: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
     mutator: PropTypes.shape({
       loanPolicies: PropTypes.shape({
         GET: PropTypes.func,
@@ -39,6 +54,10 @@ class ScanItems extends React.Component {
       }),
       checkout: PropTypes.shape({
         POST: PropTypes.func,
+      }),
+      items: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
       }),
     }),
     parentResources: PropTypes.shape({
@@ -53,6 +72,7 @@ class ScanItems extends React.Component {
         replace: PropTypes.func,
       }),
     }),
+
     patron: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
     settings: PropTypes.object,
@@ -66,15 +86,45 @@ class ScanItems extends React.Component {
     super(props);
     this.store = props.stripes.store;
     this.checkout = this.checkout.bind(this);
+    this.tryCheckout = this.tryCheckout.bind(this);
+    this.cancelCheckout = this.cancelCheckout.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
     this.itemInput = React.createRef();
   }
 
-  checkout(data) {
+  async getMultipieceItem(barcode) {
+    const { mutator } = this.props;
+    const query = `barcode==${barcode}`;
+    mutator.items.reset();
+    const [error, items] = await to(mutator.items.GET({ params: { query } }));
+
+    if (error || !items || !items.length) return null;
+
+    const item = items[0];
     const {
-      stripes,
-      mutator,
+      numberOfPieces,
+      descriptionOfPieces,
+      numberOfMissingPieces,
+      missingPieces,
+    } = item;
+
+    if ((!numberOfPieces || numberOfPieces <= 1) &&
+         !descriptionOfPieces &&
+         !numberOfMissingPieces &&
+         !missingPieces) {
+      return null;
+    }
+
+    return item;
+  }
+
+  closeMultipieceModal() {
+    this.setState({ multipieceItem: null });
+  }
+
+  async tryCheckout(data) {
+    const {
       patron,
       patronBlocks,
       openBlockedModal
@@ -101,23 +151,54 @@ class ScanItems extends React.Component {
       throw new SubmissionError({});
     }
 
+    const multipieceItem = await this.getMultipieceItem(data.item.barcode);
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+      if (multipieceItem) {
+        this.setState({ multipieceItem });
+        return;
+      }
+      this.checkout(data.item.barcode);
+    });
+  }
+
+  cancelCheckout() {
+    this.closeMultipieceModal();
+    this.clearField('itemForm', 'item.barcode');
+    this.reject(new SubmissionError({}));
+  }
+
+  confirmCheckout(item) {
+    this.closeMultipieceModal();
+    this.checkout(item.barcode);
+  }
+
+  checkout(barcode) {
+    const {
+      stripes,
+      mutator,
+      patron,
+    } = this.props;
+
     this.setState({ loading: true });
     this.clearError('itemForm');
 
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const loanData = {
-      itemBarcode: data.item.barcode,
+      itemBarcode: barcode,
       userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
       servicePointId,
     };
 
-    return mutator.checkout.POST(loanData)
+    mutator.checkout.POST(loanData)
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
+        this.resolve();
       })
       .catch(resp => {
         this.setState({ checkoutStatus: 'error' });
@@ -127,6 +208,7 @@ class ScanItems extends React.Component {
             this.handleErrors(error);
           });
         } else {
+          this.reject();
           return resp.text().then(error => {
             alert(error); // eslint-disable-line no-alert
           });
@@ -153,7 +235,7 @@ class ScanItems extends React.Component {
         _error: parameters[0].key,
       };
 
-    throw new SubmissionError({ item: itemError });
+    this.reject(new SubmissionError({ item: itemError }));
   }
 
   addScannedItem(loan) {
@@ -211,6 +293,7 @@ class ScanItems extends React.Component {
     const {
       checkoutStatus,
       loading,
+      multipieceItem,
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -221,7 +304,7 @@ class ScanItems extends React.Component {
       <div>
         <ItemForm
           ref={this.itemInput}
-          onSubmit={this.checkout}
+          onSubmit={this.tryCheckout}
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
@@ -241,6 +324,14 @@ class ScanItems extends React.Component {
             src={checkoutSound}
             autoPlay
             onEnded={this.onFinishedPlaying}
+          />
+        }
+        {multipieceItem &&
+          <MultipieceModal
+            open={!!multipieceItem}
+            item={multipieceItem}
+            onClose={this.cancelCheckout}
+            onConfirm={item => this.confirmCheckout(item)}
           />
         }
       </div>

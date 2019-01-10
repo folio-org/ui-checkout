@@ -42,4 +42,16 @@ export default function config() {
       return [];
     }
   });
+
+  this.get('/inventory/items', ({ items }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return items.where({
+        barcode: cqlParser.tree.term
+      });
+    } else {
+      return [];
+    }
+  });
 }

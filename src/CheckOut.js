@@ -19,8 +19,8 @@ import { patronIdentifierMap, errorTypes } from './constants';
 import {
   getPatronIdentifiers,
   buildIdentifierQuery,
+  buildRequestQuery,
   getCheckoutSettings,
-  getRequestQuery,
 } from './util';
 import css from './CheckOut.css';
 
@@ -300,7 +300,7 @@ class CheckOut extends React.Component {
   async findRequests(patron) {
     const { stripes, mutator } = this.props;
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
-    const query = getRequestQuery(patron.id, servicePointId);
+    const query = buildRequestQuery(patron.id, servicePointId);
     mutator.requests.reset();
     const requests = await mutator.requests.GET({ params: { query } });
     this.setState({ requestsCount: requests.length });
@@ -397,6 +397,7 @@ class CheckOut extends React.Component {
           >
             <this.connectedScanItems
               {...this.props}
+              data-test-scan-items
               parentMutator={mutator}
               parentResources={resources}
               stripes={stripes}

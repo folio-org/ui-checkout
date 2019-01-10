@@ -17,6 +17,10 @@ describe('CheckOut', () => {
     expect(checkOut.patronIdentifierPresent).to.be.true;
   });
 
+  it('has an item barcode field', () => {
+    expect(checkOut.itemBarcodePresent).to.be.true;
+  });
+
   it('has an enter button for patron lookup', () => {
     expect(checkOut.patronEnterBtnPresent).to.be.true;
   });
@@ -31,7 +35,9 @@ describe('CheckOut', () => {
         },
       });
 
-      await checkOut.fillPatronBarcode('123456').clickEnter();
+      await checkOut
+        .fillPatronBarcode('123456')
+        .clickPatronBtn();
     });
 
     it('displays patron information', () => {
@@ -47,6 +53,40 @@ describe('CheckOut', () => {
       });
 
       it('shows awaiting pickup modal', () => {
+        expect(checkOut.patronEnterBtnPresent).to.be.true;
+      });
+    });
+  });
+
+  describe('entering an item barcode', () => {
+    beforeEach(async function () {
+      this.server.create('user', {
+        barcode: '123456',
+        personal: {
+          firstName: 'Bob',
+          lastName: 'Brown',
+        },
+      });
+
+      await checkOut
+        .fillPatronBarcode('123456')
+        .clickPatronBtn();
+    });
+
+    describe('checking out multipiece item', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          numberOfPieces: 2,
+          descriptionOfPieces: 'book + dvd',
+        });
+
+        await checkOut
+          .fillItemBarcode('123')
+          .clickItemBtn();
+      });
+
+      it('shows multipiece modal', () => {
         expect(checkOut.patronEnterBtnPresent).to.be.true;
       });
     });
