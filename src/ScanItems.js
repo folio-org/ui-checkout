@@ -87,7 +87,7 @@ class ScanItems extends React.Component {
     this.store = props.stripes.store;
     this.checkout = this.checkout.bind(this);
     this.tryCheckout = this.tryCheckout.bind(this);
-    this.closeMultipieceModal = this.closeMultipieceModal.bind(this);
+    this.cancelCheckout = this.cancelCheckout.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
     this.itemInput = React.createRef();
@@ -161,6 +161,12 @@ class ScanItems extends React.Component {
       }
       this.checkout(data.item.barcode);
     });
+  }
+
+  cancelCheckout() {
+    this.closeMultipieceModal();
+    this.clearField('itemForm', 'item.barcode');
+    this.reject(new SubmissionError({}));
   }
 
   confirmCheckout(item) {
@@ -324,7 +330,7 @@ class ScanItems extends React.Component {
           <MultipieceModal
             open={!!multipieceItem}
             item={multipieceItem}
-            onClose={this.closeMultipieceModal}
+            onClose={this.cancelCheckout}
             onConfirm={item => this.confirmCheckout(item)}
           />
         }
