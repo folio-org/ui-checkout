@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 1.5.0 IN PROGRESS
+## [1.5.0](https://github.com/folio-org/ui-checkout/tree/v1.5.0) (2019-01-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.4.0...v1.5.0)
 
 * Adjust checkout columns width. Fixes UICHKOUT-457.
 * Add items awaiting pickup modal. Part of UICHKOUT-475.
