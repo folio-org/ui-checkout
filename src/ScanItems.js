@@ -152,12 +152,15 @@ class ScanItems extends React.Component {
     }
 
     const multipieceItem = await this.getMultipieceItem(data.item.barcode);
-    if (multipieceItem) {
-      this.setState({ multipieceItem });
-      throw new SubmissionError({});
-    }
-
-    return this.checkout(data.item.barcode);
+    return new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+      if (multipieceItem) {
+        this.setState({ multipieceItem });
+        return;
+      }
+      this.checkout(data.item.barcode);
+    });
   }
 
   confirmCheckout(item) {
@@ -165,7 +168,7 @@ class ScanItems extends React.Component {
     this.checkout(item.barcode);
   }
 
-  async checkout(barcode) {
+  checkout(barcode) {
     const {
       stripes,
       mutator,
@@ -183,12 +186,13 @@ class ScanItems extends React.Component {
       servicePointId,
     };
 
-    return mutator.checkout.POST(loanData)
+    mutator.checkout.POST(loanData)
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
         this.setState({ checkoutStatus: 'success' });
         this.clearField('itemForm', 'item.barcode');
+        this.resolve();
       })
       .catch(resp => {
         this.setState({ checkoutStatus: 'error' });
@@ -198,6 +202,7 @@ class ScanItems extends React.Component {
             this.handleErrors(error);
           });
         } else {
+          this.reject();
           return resp.text().then(error => {
             alert(error); // eslint-disable-line no-alert
           });
@@ -224,7 +229,7 @@ class ScanItems extends React.Component {
         _error: parameters[0].key,
       };
 
-    throw new SubmissionError({ item: itemError });
+    this.reject(new SubmissionError({ item: itemError }));
   }
 
   addScannedItem(loan) {
