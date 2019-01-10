@@ -14,7 +14,7 @@ import {
 
 const MultipieceModal = (props) => {
   const { item, onClose, onConfirm } = props;
-  const { title, barcode } = item;
+  const { title, barcode, materialType } = item;
 
   const footer = (
     <ModalFooter>
@@ -41,7 +41,7 @@ const MultipieceModal = (props) => {
       <p>
         <SafeHTMLMessage
           id="ui-checkout.multipieceModal.message"
-          values={{ title, barcode }}
+          values={{ title, barcode, materialType: materialType.name }}
         />
       </p>
       <Row>
