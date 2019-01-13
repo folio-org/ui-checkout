@@ -63,5 +63,13 @@
     "detailsButton": "Detalhes da suspensão",
     "blockedLabel": "Razão para suspensão:",
     "awaitingPickupMessage": "O usuário tem <strong>{count}</strong> {count, plural, one {item} other {itens}} aguardando retirada neste ponto de serviço.",
-    "awaitingPickupLabel": "Itens aguardando retirada"
+    "awaitingPickupLabel": "Itens aguardando retirada",
+    "multipieceModal.confirm": "Emprestar",
+    "multipieceModal.back": "Cancelar",
+    "multipieceModal.label": "Confirmar o empréstimo de obra com multiplas partes",
+    "multipieceModal.item.numberOfPieces": "Número de partes",
+    "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) será emprestado.",
+    "multipieceModal.item.descriptionOfPieces": "Descrição das partes",
+    "multipieceModal.item.numberOfMissingPieces": "Número de partes que faltam",
+    "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes faltantes"
 }
