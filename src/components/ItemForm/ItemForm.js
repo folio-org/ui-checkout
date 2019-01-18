@@ -39,7 +39,9 @@ class ItemForm extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.patron) this.focusInput();
+    if (this.props.patron) {
+      this.focusInput();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -48,17 +50,21 @@ class ItemForm extends React.Component {
       patron,
     } = this.props;
 
-    if (submitSucceeded) this.focusInput();
-    if (!patron || !patron.id) return;
+    if (document.activeElement === this.barcodeEl.current ||
+      !patron || !patron.id) {
+      return;
+    }
+
     // Focus on the item barcode input after the patron is entered
-    if (!prevProps.patron || prevProps.patron.id !== patron.id) {
+    if (submitSucceeded || !prevProps.patron ||
+      prevProps.patron.id !== patron.id) {
+      this.clearForm();
       this.focusInput();
     }
   }
 
   getFormErrors() {
     const { stripes: { store } } = this.props;
-
     return getFormSubmitErrors('itemForm')(store.getState());
   }
 
