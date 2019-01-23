@@ -60,6 +60,7 @@
     "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
     "patronBlocks": "Patron blocks",
     "blockModal": "Patron blocked from borrowing",
+    "openAccounts": "Fees/fines owed",
     "detailsButton": "Block details",
     "blockedLabel": "Reason for block:",
     "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",

@@ -277,7 +277,8 @@ class CheckOut extends React.Component {
       }
 
       const selPatronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
-      const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true);
+      let patronBlocks = selPatronBlocks.filter(p => p.borrowing === true);
+      patronBlocks = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
       const selPatron = patrons[0];
       this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
       if (patronBlocks.length > 0 && patronBlocks[0].userId === selPatron.id) {
@@ -346,7 +347,8 @@ class CheckOut extends React.Component {
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
     const selPatronBlocks = get(resources, ['patronBlocks', 'records'], []);
-    const patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
+    let patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
+    patronBlocks = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
     const { loading, blocked, requestsCount } = this.state;

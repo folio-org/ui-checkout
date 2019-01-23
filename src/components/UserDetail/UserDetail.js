@@ -24,6 +24,11 @@ class UserDetail extends React.Component {
       type: 'okapi',
       path: 'circulation/loans?query=(userId=!{user.id} and status.name<>Closed)&limit=1',
     },
+    openAccounts: {
+      type: 'okapi',
+      records: 'accounts',
+      path: 'accounts?query=(userId=!{user.id} and status.name<>Closed)&limit=100',
+    },
   });
 
   static propTypes = {
@@ -35,6 +40,9 @@ class UserDetail extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       openLoansCount: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      openAccounts: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
@@ -75,6 +83,17 @@ class UserDetail extends React.Component {
     const openLoansPath = `/users/view/${user.id}?layer=open-loans&query=`;
     const openLoansLink = <Link to={openLoansPath}>{openLoansCount}</Link>;
 
+    const patronGroups = _.get(resources, ['patronGroups', 'records', 0, 'group'], '');
+    const openAccounts = _.get(resources, ['openAccounts', 'records'], []);
+    const openAccountsPath = `/users/view/${user.id}?layer=open-accounts&filters=pg.${patronGroups}`;
+    const owedAmount = openAccounts.reduce((owed, { remaining }) => {
+      return owed + parseFloat(remaining);
+    }, 0);
+    let openAccountsLink = parseFloat(owedAmount).toFixed(2);
+    if (owedAmount) {
+      openAccountsLink = <Link to={openAccountsPath}>{openAccountsLink}</Link>;
+    }
+
     return (
       <div className={css.section}>
         <Row>
@@ -82,6 +101,12 @@ class UserDetail extends React.Component {
             <KeyValue
               label={<FormattedMessage id="ui-checkout.openLoans" />}
               value={openLoansLink}
+            />
+          </Col>
+          <Col xs={4}>
+            <KeyValue
+              label={<FormattedMessage id="ui-checkout.openAccounts" />}
+              value={openAccountsLink}
             />
           </Col>
         </Row>
