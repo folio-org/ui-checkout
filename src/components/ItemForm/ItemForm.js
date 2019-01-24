@@ -28,6 +28,7 @@ class ItemForm extends React.Component {
     submitting: PropTypes.bool,
     patron: PropTypes.object,
     stripes: PropTypes.object,
+    submitSucceeded: PropTypes.bool,
   };
 
   constructor() {

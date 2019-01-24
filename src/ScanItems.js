@@ -76,6 +76,8 @@ class ScanItems extends React.Component {
     patron: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
     settings: PropTypes.object,
+    openBlockedModal: PropTypes.func,
+    patronBlocks: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
