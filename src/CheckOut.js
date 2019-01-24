@@ -136,6 +136,12 @@ class CheckOut extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      patronBlocks: PropTypes.shape({
+        DELETE: PropTypes.func,
+      }),
+    }),
+    history: PropTypes.shape({
+      push: PropTypes.func,
     }),
   };
 

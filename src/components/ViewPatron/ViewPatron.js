@@ -21,6 +21,8 @@ class ViewPatron extends React.Component {
     proxy: PropTypes.object.isRequired,
     onSelectPatron: PropTypes.func.isRequired,
     onClearPatron: PropTypes.func.isRequired,
+    openBlockedModal: PropTypes.func,
+    patronBlocks: PropTypes.arrayOf(PropTypes.object),
   };
 
   constructor(props) {
