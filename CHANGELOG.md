@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 1.6.0 IN PROGRESS
+## [1.6.0](https://github.com/folio-org/ui-checkout/tree/v1.6.0) (2019-01-25)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.5.0...v1.6.0)
 
 * Adjust item form focus. Fixes UICHKOUT-482.
 * Add fees/fines owed. Ref UICHKOUT-33.
