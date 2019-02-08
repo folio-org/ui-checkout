@@ -2,18 +2,21 @@
 module.exports.test = function uiTest(uiTestCtx) {
   const { config, helpers: { login, openApp, logout, circSettingsCheckoutByBarcodeAndUsername }, meta: { testVersion } } = uiTestCtx;
 
-  describe('Module test: checkout:error_messages.', function checkout() {
+  describe('Module test: checkout ("error-messages").', function checkout() {
     const nightmare = new Nightmare(config.nightmare);
     this.timeout(Number(config.test_timeout));
 
     describe('Open app > Trigger error messages > Logout', () => {
-      const uselector = "#list-users div[role='listitem']:nth-of-type(4) > a > div:nth-of-type(3)";
+      const uselector = "#list-users div[role='row'][aria-rowindex='3'] > a > div:nth-of-type(3)";
+
       before((done) => {
         login(nightmare, config, done);
       });
+
       after((done) => {
         logout(nightmare, config, done);
       });
+
       it('should open app and find module version tag', (done) => {
         nightmare
           .use(openApp(nightmare, config, done, 'checkout', testVersion))
@@ -21,9 +24,9 @@ module.exports.test = function uiTest(uiTestCtx) {
       });
 
       /* Why on earth are we clicking into the settings app?!?
-       * Clicking out out to a different app and then back into checkin
+       * Clicking out to a different app and then back into checkin
        * restores checkin to its virgin state with all fields empty.
-       * We need empty fields so we can accurately test the error message
+       * We need empty fields so we can accurately test the error messages
        * that appear when bad data, or out of order data, is added to different
        * fields.
        */
