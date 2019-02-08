@@ -3,6 +3,7 @@
 ## 1.7.0 (IN PROGRESS)
 
 * Update integration tests to accommodate MCL aria changes. Fixes UICHKOUT-490.
+* Provide unique ID for find-user plugin. Refs UIU-884.
 
 ## [1.6.0](https://github.com/folio-org/ui-checkout/tree/v1.6.0) (2019-01-25)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.5.0...v1.6.0)
