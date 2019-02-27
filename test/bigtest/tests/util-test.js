@@ -2,6 +2,7 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import {
+  buildIdentifierQuery,
   getCheckoutSettings,
   getPatronIdentifiers,
   toParams,
@@ -33,6 +34,14 @@ describe('Utility functions', () => {
     it('returns the identifiers from a valid prefs object', () => {
       const settingsArray = [{ value:'{"prefPatronIdentifier":"BARCODE,FOLIO"}' }];
       expect(getPatronIdentifiers(settingsArray)).to.have.members(['BARCODE', 'FOLIO']);
+    });
+  });
+
+  describe('making a patron identifier query', () => {
+    it('converts a set of identifiers to a CQL query', () => {
+      const patron = { identifier: '12345678' };
+      const idents = ['BARCODE', 'FOLIO'];
+      expect(buildIdentifierQuery(patron, idents)).to.equal('(barcode="12345678" OR id="12345678")');
     });
   });
 });
