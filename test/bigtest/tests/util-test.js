@@ -30,6 +30,9 @@ describe('Utility functions', () => {
   });
 
   describe('getting patron identifiers', () => {
-    it('returns the ');
+    it('returns the identifiers from a valid prefs object', () => {
+      const settingsArray = [{ value:'{"prefPatronIdentifier":"BARCODE,FOLIO"}' }];
+      expect(getPatronIdentifiers(settingsArray)).to.have.members(['BARCODE', 'FOLIO']);
+    });
   });
 });
