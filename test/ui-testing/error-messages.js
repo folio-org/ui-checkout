@@ -7,7 +7,7 @@ module.exports.test = function uiTest(uiTestCtx) {
     this.timeout(Number(config.test_timeout));
 
     describe('Open app > Trigger error messages > Logout', () => {
-      const uselector = "#list-users div[role='row'][aria-rowindex='3'] > a > div:nth-of-type(3)";
+      const uselector = "#list-plugin-find-user div[role='row'][aria-rowindex='3'] > a > div:nth-of-type(3)";
 
       before((done) => {
         login(nightmare, config, done);
