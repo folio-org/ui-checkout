@@ -54,6 +54,7 @@
   "blockModal": "Patron blocked from borrowing",
   "detailsButton": "Block details",
   "blockedLabel": "Reason for block:",
+  "additionalReasons": "View block details to see additional reasons for block...",
   "multipieceModal.confirm": "Check out",
   "multipieceModal.back": "Cancel",
   "multipieceModal.label": "Confirm multipiece check out",
