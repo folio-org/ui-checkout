@@ -1,4 +1,4 @@
-import { take } from 'lodash';
+import { take, orderBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -10,7 +10,7 @@ import {
 } from '@folio/stripes/components';
 
 const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
-  const blocks = take(patronBlocks, 3);
+  const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
   const renderBlocks = blocks.map(block => {
     return (
       <Row>
@@ -29,7 +29,10 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
       dismissible
     >
       <Row>
-        <Col xs><FormattedMessage id="ui-checkout.blockedLabel" /></Col>
+        <Col xs>
+          <FormattedMessage id="ui-checkout.blockedLabel" />
+:
+        </Col>
       </Row>
       {renderBlocks}
       <br />
@@ -39,7 +42,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
           <Row end="xs">
             <Col>
               <Button onClick={onClose}><FormattedMessage id="ui-checkout.close" /></Button>
-              <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" to={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
+              <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
             </Col>
           </Row>
         </Col>
