@@ -1,10 +1,11 @@
 # Change history for ui-checkout
 
-## 1.7.0 (IN PROGRESS)
+## [1.7.0](https://github.com/folio-org/ui-checkout/tree/v1.7.0) (2019-03-16)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.6.0...v1.7.0)
 
+* Supports `circulation` interface 7.0. UICHKOUT-492
 * Update integration tests to accommodate MCL aria changes. Fixes UICHKOUT-490.
 * Provide unique ID for find-user plugin. Refs UIU-884.
-* Update circulation OKAPI interface to v7.0. Part of UICHKOUT-492.
 * Fix reasons when the patron has more than one block. Fix UIU-804.
 * Fix UX Consistency Fixes for Patron Blocks. Ref UIU-902.
 * Fix Fee/fine tag and icon missing from Checkout Borrower information. Fix UIU-888.
