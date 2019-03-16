@@ -46,7 +46,7 @@ class PatronBlock extends React.Component {
         <Row>
           <Col xs>
             <FormattedMessage id="ui-checkout.patronBlocks" />
-            {(patronBlocksCount > 0) ? <span style={{ 'marginLeft': '7px' }}><Icon size="medium" icon="validation-error" status="error" /></span> : ''}
+            {(patronBlocksCount > 0) ? <span style={{ 'marginLeft': '7px' }}><Icon size="medium" icon="exclamation-circle" status="error" /></span> : ''}
           </Col>
         </Row>
       </div>
