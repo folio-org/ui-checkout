@@ -71,5 +71,7 @@
     "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) verrà prestato",
     "multipieceModal.item.descriptionOfPieces": "Descrizione dei pezzi",
     "multipieceModal.item.numberOfMissingPieces": "Numero di pezzi mancanti",
-    "multipieceModal.item.descriptionOfmissingPieces": "Descrizione dei pezzi mancanti"
+    "multipieceModal.item.descriptionOfmissingPieces": "Descrizione dei pezzi mancanti",
+    "openAccounts": "Fees/fines owed",
+    "additionalReasons": "View block details to see additional reasons for block..."
 }

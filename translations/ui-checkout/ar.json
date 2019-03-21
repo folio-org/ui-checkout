@@ -71,5 +71,7 @@
     "multipieceModal.message": "<strong>{title} ({materialType})</strong>  سيتم إعارة (الباركود: {barcode}) ",
     "multipieceModal.item.descriptionOfPieces": "وصف القطع",
     "multipieceModal.item.numberOfMissingPieces": "عدد القطع المفقودة",
-    "multipieceModal.item.descriptionOfmissingPieces": "وصف القطع المفقودة"
+    "multipieceModal.item.descriptionOfmissingPieces": "وصف القطع المفقودة",
+    "openAccounts": "الرسوم/الغرامات المستحقة",
+    "additionalReasons": "عرض تفاصيل الحظر لمعرفة المزيد من أسباب الحظر"
 }
