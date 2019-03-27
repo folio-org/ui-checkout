@@ -90,5 +90,52 @@ describe('CheckOut', () => {
         expect(checkOut.patronEnterBtnPresent).to.be.true;
       });
     });
+
+    describe('checking out item with Checkout Notes', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          circulationNotes: [
+            {
+              note: 'test note',
+              noteType: 'Check out',
+              staffOnly: false,
+            }
+          ],
+        });
+
+        await checkOut
+          .fillItemBarcode('123')
+          .clickItemBtn();
+      });
+
+      it('shows checkoutNote modal', () => {
+        expect(checkOut.checkoutNoteModal.present).to.be.true;
+      });
+    });
+
+    describe('closes checkoutNote modal', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          circulationNotes: [
+            {
+              note: 'test note',
+              noteType: 'Check out',
+              staffOnly: false,
+            }
+          ],
+        });
+
+        await checkOut
+          .fillItemBarcode('123')
+          .clickItemBtn();
+        await checkOut.checkoutNoteModal.clickConfirm();
+      });
+
+      it('hides checkoutNote modal', () => {
+        expect(checkOut.checkoutNoteModal.present).to.be.false;
+      });
+    });
   });
 });
