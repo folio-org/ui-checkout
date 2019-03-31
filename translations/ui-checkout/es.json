@@ -60,8 +60,8 @@
     "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
     "patronBlocks": "Patron blocks",
     "blockModal": "Patron blocked from borrowing",
-    "detailsButton": "Block details",
-    "blockedLabel": "Reason for block:",
+    "detailsButton": "View block details",
+    "blockedLabel": "Reason for block",
     "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
     "awaitingPickupLabel": "Items awaiting pickup",
     "multipieceModal.confirm": "Check out",
@@ -71,5 +71,7 @@
     "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be checked out.",
     "multipieceModal.item.descriptionOfPieces": "Description of pieces",
     "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
-    "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces"
+    "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
+    "openAccounts": "Fees/fines owed",
+    "additionalReasons": "View block details to see additional reasons for block..."
 }

@@ -60,8 +60,8 @@
     "patronBlocksCount": " {count, plural, one {block in place} other {blocks in place}}",
     "patronBlocks": "Bloqueios ao utilizador",
     "blockModal": "Empréstimo bloqueado ao utilizador",
-    "detailsButton": "Block details",
-    "blockedLabel": "Reason for block:",
+    "detailsButton": "View block details",
+    "blockedLabel": "Reason for block",
     "awaitingPickupMessage": "O requerente tem <strong>{count}</strong> {count, plural, one {item} other {itens}} a aguardar recolha neste serviço.",
     "awaitingPickupLabel": "Itens aguardam recolha",
     "multipieceModal.confirm": "Saída",
@@ -71,5 +71,7 @@
     "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) será emprestado.",
     "multipieceModal.item.descriptionOfPieces": "Descrição das partes",
     "multipieceModal.item.numberOfMissingPieces": "Número de partes em falta",
-    "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes em falta"
+    "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes em falta",
+    "openAccounts": "Fees/fines owed",
+    "additionalReasons": "View block details to see additional reasons for block..."
 }

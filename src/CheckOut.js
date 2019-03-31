@@ -429,7 +429,7 @@ class CheckOut extends React.Component {
           open={blocked}
           onClose={this.onCloseBlockedModal}
           viewUserPath={() => { this.onViewUserPath(patron); }}
-          patronBlocks={patronBlocks[0] || {}}
+          patronBlocks={patronBlocks || []}
         />
         <NotificationModal
           id="awaiting-pickup-modal"
