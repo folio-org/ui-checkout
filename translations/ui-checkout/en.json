@@ -57,7 +57,7 @@
   "blockedLabel": "Reason for block",
   "additionalReasons": "View block details to see additional reasons for block...",
   "multipieceModal.confirm": "Check out",
-  "multipieceModal.back": "Cancel",
+  "multipieceModal.cancel": "Cancel",
   "multipieceModal.label": "Confirm multipiece check out",
   "multipieceModal.item.numberOfPieces": "Number of pieces",
   "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be checked out.",
@@ -65,6 +65,9 @@
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
+  "note": "Note",
+  "checkoutNoteModal.heading": "Confirm check out",
+  "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
   "error.oops": "Uh-oh!",
   "error.routing": "How did you get to {pathname}?",
 

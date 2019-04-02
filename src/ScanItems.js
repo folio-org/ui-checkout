@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, upperFirst } from 'lodash';
 import React from 'react';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
@@ -6,10 +6,12 @@ import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form
 import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import MultipieceModal from './components/MultipieceModal';
+import CheckoutNoteModal from './components/CheckoutNoteModal';
+
 import { to } from './util';
 
 import checkoutSuccessSound from '../sound/checkout_success.m4a';
@@ -90,12 +92,14 @@ class ScanItems extends React.Component {
     this.checkout = this.checkout.bind(this);
     this.tryCheckout = this.tryCheckout.bind(this);
     this.cancelCheckout = this.cancelCheckout.bind(this);
+    this.confirmCheckoutNoteModal = this.confirmCheckoutNoteModal.bind(this);
+    this.hideCheckoutNoteModal = this.hideCheckoutNoteModal.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = { loading: false, checkoutStatus: null };
     this.itemInput = React.createRef();
   }
 
-  async getMultipieceItem(barcode) {
+  async modalsToDisplay(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
     mutator.items.reset();
@@ -111,14 +115,19 @@ class ScanItems extends React.Component {
       missingPieces,
     } = item;
 
-    if ((!numberOfPieces || numberOfPieces <= 1) &&
-         !descriptionOfPieces &&
-         !numberOfMissingPieces &&
-         !missingPieces) {
-      return null;
+    const multipieceItem = item;
+    const isCheckOutNote = element => element.noteType === 'Check out';
+    const showCheckoutNoteModal = get(item, ['circulationNotes'], []).some(isCheckOutNote);
+
+    if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
+      if (showCheckoutNoteModal) {
+        return { item, showCheckoutNoteModal };
+      } else {
+        return { item };
+      }
     }
 
-    return item;
+    return { item, multipieceItem, showCheckoutNoteModal };
   }
 
   closeMultipieceModal() {
@@ -153,27 +162,42 @@ class ScanItems extends React.Component {
       throw new SubmissionError({});
     }
 
-    const multipieceItem = await this.getMultipieceItem(data.item.barcode);
+    const modalsToDisplay = await this.modalsToDisplay(data.item.barcode);
+
+    const { item, multipieceItem, showCheckoutNoteModal } = modalsToDisplay || {};
+
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
-      if (multipieceItem) {
-        this.setState({ multipieceItem });
-        return;
+      if (!multipieceItem) {
+        if (showCheckoutNoteModal) this.setState({ item, showCheckoutNoteModal });
+        else this.checkout(data.item.barcode);
+      } else {
+        this.setState({ item, multipieceItem, showCheckoutNoteModal });
       }
-      this.checkout(data.item.barcode);
     });
   }
 
   cancelCheckout() {
     this.closeMultipieceModal();
+    this.hideCheckoutNoteModal();
     this.clearField('itemForm', 'item.barcode');
     this.reject(new SubmissionError({}));
   }
 
   confirmCheckout(item) {
     this.closeMultipieceModal();
+    this.hideCheckoutNoteModal();
     this.checkout(item.barcode);
+  }
+
+  confirmCheckoutNoteModal() {
+    const { item } = this.state;
+    this.setState({ showCheckoutNoteModal: false }, () => this.checkout(item.barcode));
+  }
+
+  hideCheckoutNoteModal() {
+    this.setState({ showCheckoutNoteModal: false });
   }
 
   checkout(barcode) {
@@ -284,6 +308,53 @@ class ScanItems extends React.Component {
     this.setState({ checkoutStatus: null });
   }
 
+  renderCheckoutNoteModal() {
+    const { item, showCheckoutNoteModal } = this.state;
+    const { title, barcode } = item;
+
+    const checkoutNotesArray = get(item, ['circulationNotes'], [])
+      .filter(noteObject => noteObject.noteType === 'Check out');
+
+    const notes = checkoutNotesArray.map(checkoutNoteObject => {
+      const { note } = checkoutNoteObject;
+      return { note };
+    });
+    const formatter = { note: itemObj => `${itemObj.note}` };
+    const columnMapping = { note: <FormattedMessage id="ui-checkout.note" /> };
+    const visibleColumns = ['note'];
+    const columnWidths = { note : '100%' };
+
+    const message = (
+      <SafeHTMLMessage
+        id="ui-checkout.checkoutNoteModal.message"
+        values={{
+          title,
+          barcode,
+          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          count: notes.length
+        }}
+      />
+    );
+
+    return (
+      <CheckoutNoteModal
+        data-test-checkoutNote-modal
+        open={showCheckoutNoteModal}
+        heading={<FormattedMessage id="ui-checkout.checkoutNoteModal.heading" />}
+        onConfirm={this.confirmCheckoutNoteModal}
+        onCancel={this.hideCheckoutNoteModal}
+        cancelLabel={<FormattedMessage id="ui-checkout.multipieceModal.cancel" />}
+        confirmLabel={<FormattedMessage id="ui-checkout.multipieceModal.confirm" />}
+        notes={notes}
+        formatter={formatter}
+        message={message}
+        columnMapping={columnMapping}
+        visibleColumns={visibleColumns}
+        columnWidths={columnWidths}
+      />
+    );
+  }
+
   render() {
     const {
       parentResources,
@@ -296,6 +367,7 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       multipieceItem,
+      showCheckoutNoteModal,
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -328,6 +400,7 @@ class ScanItems extends React.Component {
             onEnded={this.onFinishedPlaying}
           />
         }
+        {showCheckoutNoteModal && this.renderCheckoutNoteModal()}
         {multipieceItem &&
           <MultipieceModal
             open={!!multipieceItem}
