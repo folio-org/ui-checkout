@@ -73,5 +73,9 @@
     "multipieceModal.item.numberOfMissingPieces": "عدد القطع المفقودة",
     "multipieceModal.item.descriptionOfmissingPieces": "وصف القطع المفقودة",
     "openAccounts": "الرسوم/الغرامات المستحقة",
-    "additionalReasons": "عرض تفاصيل الحظر لمعرفة المزيد من أسباب الحظر"
+    "additionalReasons": "عرض تفاصيل الحظر لمعرفة المزيد من أسباب الحظر",
+    "multipieceModal.cancel": "إلغاء",
+    "note": "ملاحظة",
+    "checkoutNoteModal.heading": "تأكيد الإعارة",
+    "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong> {count}, plural, {note} واحدة {notes} أخرى} سيتم <strong>إعارتها</strong>"
 }

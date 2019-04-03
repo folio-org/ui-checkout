@@ -73,5 +73,9 @@
     "multipieceModal.item.numberOfMissingPieces": "Número de partes que faltam",
     "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes faltantes",
     "openAccounts": "Taxas/multas devidas",
-    "additionalReasons": "Exibir detalhes da suspensão para ver as razões adicionais para a suspensão..."
+    "additionalReasons": "Exibir detalhes da suspensão para ver as razões adicionais para a suspensão...",
+    "multipieceModal.cancel": "Cancelar",
+    "note": "Nota",
+    "checkoutNoteModal.heading": "Confirmar o empréstimo",
+    "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>"
 }
