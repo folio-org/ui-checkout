@@ -93,6 +93,7 @@ class ScanItems extends React.Component {
     this.tryCheckout = this.tryCheckout.bind(this);
     this.cancelCheckout = this.cancelCheckout.bind(this);
     this.confirmCheckoutNoteModal = this.confirmCheckoutNoteModal.bind(this);
+    this.showCheckoutNotes = this.showCheckoutNotes.bind(this);
     this.hideCheckoutNoteModal = this.hideCheckoutNoteModal.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
     this.state = {
@@ -106,6 +107,7 @@ class ScanItems extends React.Component {
   async modalsToDisplay(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
+    this.setState({ item: null });
     mutator.items.reset();
     const [error, items] = await to(mutator.items.GET({ params: { query } }));
 
@@ -204,7 +206,12 @@ class ScanItems extends React.Component {
   }
 
   hideCheckoutNoteModal() {
-    this.setState({ showCheckoutNoteModal: false });
+    this.setState({ showCheckoutNoteModal: false, showCheckoutNote: false });
+  }
+
+  showCheckoutNotes(loan) {
+    const { item } = loan;
+    this.setState({ showCheckoutNote: true, itemWithNotes: item });
   }
 
   checkout(barcode) {
@@ -277,6 +284,8 @@ class ScanItems extends React.Component {
       parentMutator,
     } = this.props;
 
+    const { item } = this.state;
+    loan.item.circulationNotes = (item || {}).circulationNotes || [];
     const scannedItems = [loan].concat(parentResources.scannedItems);
 
     return parentMutator.scannedItems.replace(scannedItems);
@@ -315,10 +324,11 @@ class ScanItems extends React.Component {
   }
 
   renderCheckoutNoteModal() {
-    const { item, showCheckoutNoteModal } = this.state;
-    const { title, barcode } = item;
+    const { item, showCheckoutNoteModal, itemWithNotes, showCheckoutNote } = this.state;
+    const notesItem = itemWithNotes || item;
+    const { title, barcode } = notesItem;
 
-    const checkoutNotesArray = get(item, ['circulationNotes'], [])
+    const checkoutNotesArray = get(notesItem, ['circulationNotes'], [])
       .filter(noteObject => noteObject.noteType === 'Check out');
 
     const notes = checkoutNotesArray.map(checkoutNoteObject => {
@@ -330,13 +340,22 @@ class ScanItems extends React.Component {
     const visibleColumns = ['note'];
     const columnWidths = { note : '100%' };
 
+
+    const id = showCheckoutNote ? 'ui-checkout.checkoutNotes.message' : 'ui-checkout.checkoutNoteModal.message';
+    const heading = showCheckoutNote ?
+      <FormattedMessage id="ui-checkout.checkoutNotes.heading" /> :
+      <FormattedMessage id="ui-checkout.checkoutNoteModal.heading" />;
+    const cancelLabel = showCheckoutNote ?
+      <FormattedMessage id="ui-checkout.close" /> :
+      <FormattedMessage id="ui-checkout.multipieceModal.cancel" />;
+
     const message = (
       <SafeHTMLMessage
-        id="ui-checkout.checkoutNoteModal.message"
+        id={id}
         values={{
           title,
           barcode,
-          materialType: upperFirst(get(item, ['materialType', 'name'], '')),
+          materialType: upperFirst(get(notesItem, ['materialType', 'name'], '')),
           count: notes.length
         }}
       />
@@ -345,11 +364,12 @@ class ScanItems extends React.Component {
     return (
       <CheckoutNoteModal
         data-test-checkoutNote-modal
-        open={showCheckoutNoteModal}
-        heading={<FormattedMessage id="ui-checkout.checkoutNoteModal.heading" />}
+        open={showCheckoutNote || showCheckoutNoteModal}
+        heading={heading}
         onConfirm={this.confirmCheckoutNoteModal}
         onCancel={this.hideCheckoutNoteModal}
-        cancelLabel={<FormattedMessage id="ui-checkout.multipieceModal.cancel" />}
+        hideConfirm={showCheckoutNote}
+        cancelLabel={cancelLabel}
         confirmLabel={<FormattedMessage id="ui-checkout.multipieceModal.confirm" />}
         notes={notes}
         formatter={formatter}
@@ -377,6 +397,7 @@ class ScanItems extends React.Component {
       multipieceItem,
       showCheckoutNoteModal,
       item,
+      showCheckoutNote
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -404,6 +425,7 @@ class ScanItems extends React.Component {
         }
         <ViewItem
           scannedItems={scannedItems}
+          showCheckoutNotes={this.showCheckoutNotes}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus &&
@@ -413,7 +435,7 @@ class ScanItems extends React.Component {
             onEnded={this.onFinishedPlaying}
           />
         }
-        {showCheckoutNoteModal && this.renderCheckoutNoteModal()}
+        {(showCheckoutNote || showCheckoutNoteModal) && this.renderCheckoutNoteModal()}
         {multipieceItem &&
           <MultipieceModal
             open={!!multipieceItem}

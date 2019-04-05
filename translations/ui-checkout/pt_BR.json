@@ -77,5 +77,8 @@
     "multipieceModal.cancel": "Cancelar",
     "note": "Nota",
     "checkoutNoteModal.heading": "Confirmar o empréstimo",
-    "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>"
+    "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>",
+    "checkoutNotes": "Check out Notes",
+    "checkoutNotes.heading": "Check out notes",
+    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
 }
