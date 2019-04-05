@@ -95,30 +95,17 @@ class ScanItems extends React.Component {
     this.itemInput = React.createRef();
   }
 
-  async getMultipieceItem(barcode) {
+  async getItem(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
+
     mutator.items.reset();
+
     const [error, items] = await to(mutator.items.GET({ params: { query } }));
 
     if (error || !items || !items.length) return null;
 
-    const item = items[0];
-    const {
-      numberOfPieces,
-      descriptionOfPieces,
-      numberOfMissingPieces,
-      missingPieces,
-    } = item;
-
-    if ((!numberOfPieces || numberOfPieces <= 1) &&
-         !descriptionOfPieces &&
-         !numberOfMissingPieces &&
-         !missingPieces) {
-      return null;
-    }
-
-    return item;
+    return items[0];
   }
 
   closeMultipieceModal() {
@@ -153,16 +140,30 @@ class ScanItems extends React.Component {
       throw new SubmissionError({});
     }
 
-    const multipieceItem = await this.getMultipieceItem(data.item.barcode);
+    const item = await this.getItem(data.item.barcode);
+
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
-      if (multipieceItem) {
-        this.setState({ multipieceItem });
-        return;
+      if (item) {
+        this.setState({ item });
+        this.setMultiPieceItem(item);
       }
       this.checkout(data.item.barcode);
     });
+  }
+
+  setMultiPieceItem(item) {
+    const {
+      numberOfPieces,
+      descriptionOfPieces,
+      numberOfMissingPieces,
+      missingPieces,
+    } = item;
+
+    if ((numberOfPieces || numberOfPieces > 0) && descriptionOfPieces && numberOfMissingPieces && missingPieces) {
+      this.setState({ multipieceItem: item });
+    }
   }
 
   cancelCheckout() {
@@ -240,7 +241,7 @@ class ScanItems extends React.Component {
     this.reject(new SubmissionError({ item: itemError }));
   }
 
-  addScannedItem(loan) {
+  addScannedItem = (loan) => {
     const {
       parentResources,
       parentMutator,
@@ -249,7 +250,7 @@ class ScanItems extends React.Component {
     const scannedItems = [loan].concat(parentResources.scannedItems);
 
     return parentMutator.scannedItems.replace(scannedItems);
-  }
+  };
 
   fetchLoanPolicy = async (loan) => {
     const {
@@ -260,12 +261,10 @@ class ScanItems extends React.Component {
     loanPolicies.reset();
 
     const policies = await loanPolicies.GET({ params: { query } });
-    const loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-
-    loan.loanPolicy = loanPolicy;
+    loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
 
     return loan;
-  }
+  };
 
   clearField(formName, fieldName) {
     this.store.dispatch(change(formName, fieldName, ''));
@@ -284,23 +283,29 @@ class ScanItems extends React.Component {
     this.setState({ checkoutStatus: null });
   }
 
+  onConfirm = item => this.confirmCheckout(item);
+
   render() {
     const {
       parentResources,
       onSessionEnd,
       patron,
       settings: { audioAlertsEnabled },
+      parentMutator,
     } = this.props;
 
     const {
       checkoutStatus,
       loading,
       multipieceItem,
+      item,
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
-    const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
+    const checkoutSound = (checkoutStatus === 'success')
+      ? checkoutSuccessSound
+      : checkoutErrorSound;
 
     return (
       <div>
@@ -310,6 +315,10 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
+          item={item}
+          parentMutator={parentMutator}
+          parentResources={parentResources}
+          addScannedItem={this.addScannedItem}
         />
         {loading &&
           <Icon
@@ -333,7 +342,7 @@ class ScanItems extends React.Component {
             open={!!multipieceItem}
             item={multipieceItem}
             onClose={this.cancelCheckout}
-            onConfirm={item => this.confirmCheckout(item)}
+            onConfirm={this.onConfirm}
           />
         }
       </div>
