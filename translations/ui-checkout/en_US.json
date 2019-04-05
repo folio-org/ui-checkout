@@ -77,5 +77,8 @@
     "multipieceModal.cancel": "Cancel",
     "note": "Note",
     "checkoutNoteModal.heading": "Confirm check out",
-    "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> "
+    "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
+    "checkoutNotes": "Check out notes",
+    "checkoutNotes.heading": "Check out notes",
+    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
 }
