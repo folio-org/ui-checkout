@@ -137,5 +137,28 @@ describe('CheckOut', () => {
         expect(checkOut.checkoutNoteModal.present).to.be.false;
       });
     });
+
+    describe('showing checkout Notes option', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '245',
+          circulationNotes: [
+            {
+              note: 'test note',
+              noteType: 'Check out',
+              staffOnly: false,
+            }
+          ],
+        });
+
+        await checkOut.fillItemBarcode('245').clickItemBtn();
+        await checkOut.checkoutNoteModal.clickConfirm();
+        await checkOut.selectElipse();
+      });
+
+     it('shows checkout Notes option on the action menu', () => {
+       expect(checkOut.checkoutNotesPresent).to.be.true;
+    });
+  });
   });
 });
