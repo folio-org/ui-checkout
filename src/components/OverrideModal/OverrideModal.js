@@ -49,7 +49,8 @@ function OverrideModal(props) {
 
   const canBeSubmitted = additionalInfo && datetime !== INVALIDE_DATE_MESSAGE;
 
-  const onSubmit = async () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
     const {
       stripes: {
         user: {
@@ -90,6 +91,7 @@ function OverrideModal(props) {
 
   return (
     <Modal
+      data-test-override-modal
       onClose={closeOverrideModal}
       open={overrideModalOpen}
       enforceFocus={false}
@@ -109,7 +111,10 @@ function OverrideModal(props) {
             />
           </p>
         </Col>
-        <Col xs={12}>
+        <Col
+          xs={12}
+          data-test-override-modal-due-date-picker
+        >
           <DueDatePicker
             initialValues={datePickerDefaults}
             stripes={stripes}
@@ -127,7 +132,10 @@ function OverrideModal(props) {
             required
           />
         </Col>
-        <Col xs={12}>
+        <Col
+          data-test-override-modal-comment
+          xs={12}
+        >
           <TextArea
             label={<FormattedMessage id="ui-checkout.comment" />}
             required
@@ -136,18 +144,20 @@ function OverrideModal(props) {
         </Col>
         <Col xs={12}>
           <Row end="xs">
-            <Button
-              onClick={closeOverrideModal}
-            >
-              <FormattedMessage id="ui-checkout.cancel" />
-            </Button>
-            <Button
-              buttonStyle="primary"
-              type="submit"
-              disabled={!canBeSubmitted}
-            >
-              <FormattedMessage id="ui-checkout.saveAndClose" />
-            </Button>
+            <div data-test-override-modal-cancel>
+              <Button onClick={closeOverrideModal}>
+                <FormattedMessage id="ui-checkout.cancel" />
+              </Button>
+            </div>
+            <div data-test-override-modal-save-and-close>
+              <Button
+                buttonStyle="primary"
+                type="submit"
+                disabled={!canBeSubmitted}
+              >
+                <FormattedMessage id="ui-checkout.saveAndClose" />
+              </Button>
+            </div>
           </Row>
         </Col>
       </Form>

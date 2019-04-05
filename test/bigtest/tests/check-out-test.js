@@ -137,5 +137,103 @@ describe('CheckOut', () => {
         expect(checkOut.checkoutNoteModal.present).to.be.false;
       });
     });
+
+    describe.only('non loanable checkout', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          circulationNotes: [
+            {
+              note: 'test note',
+              noteType: 'Check out',
+              staffOnly: false,
+            }
+          ],
+        });
+
+        await checkOut
+          .fillItemBarcode('123')
+          .clickItemBtn();
+        await checkOut.checkoutNoteModal.clickConfirm();
+      });
+
+      describe('error modal', () => {
+        it('should be displayed', () => {
+          expect(checkOut.errorModal.isPresent).to.be.true;
+        });
+
+        describe('close button', () => {
+          it('should be displayed', () => {
+            expect(checkOut.errorModal.closeButton.isPresent).to.be.true;
+          });
+
+          describe('close button click', () => {
+            beforeEach(async function () {
+              await checkOut.errorModal.closeButton.click('button');
+            });
+
+            it('should not be displayed', () => {
+              expect(checkOut.errorModal.isPresent).to.be.false;
+            });
+          });
+        });
+
+        describe('override button', () => {
+          it('should be displayed', () => {
+            expect(checkOut.errorModal.overrideButton.isPresent).to.be.true;
+          });
+
+          describe('override button click', () => {
+            beforeEach(async function () {
+              await checkOut.errorModal.overrideButton.click('button');
+            });
+
+            it('should not be displayed', () => {
+              expect(checkOut.errorModal.isPresent).to.be.false;
+            });
+
+            describe('override modal', () => {
+              it('should be displayed', () => {
+                expect(checkOut.overrideModal.isPresent).to.be.true;
+              });
+
+              describe('due date picker', () => {
+                it('should be displayed', () => {
+                  expect(checkOut.overrideModal.dueDatePicker.isPresent).to.be.true;
+                });
+              });
+
+              describe('comment', () => {
+                it('should be displayed', () => {
+                  expect(checkOut.overrideModal.comment.isPresent).to.be.true;
+                });
+              });
+
+              describe('save and close button', () => {
+                it('should be displayed', () => {
+                  expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
+                });
+              });
+
+              describe('cancel button', () => {
+                it('should be displayed', () => {
+                  expect(checkOut.overrideModal.cancelButton.isPresent).to.be.true;
+                });
+
+                describe('cancel button click', () => {
+                  beforeEach(async function () {
+                    await checkOut.overrideModal.cancelButton.click('button');
+                  });
+
+                  it('should not be displayed', () => {
+                    expect(checkOut.overrideModal.isPresent).to.be.false;
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
   });
 });

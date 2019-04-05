@@ -37,6 +37,7 @@ function ErrorModal(props) {
   return (
     <Modal
       onClose={onClose}
+      data-test-error-modal
       open={open}
       size="small"
       label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
@@ -52,25 +53,29 @@ function ErrorModal(props) {
               />
             )
             : message
-
         }
       </p>
       <Col xs={12}>
         <Row end="xs">
           {
-            canBeOverridden &&
-            <Button
-              onClick={handleOverrideClick}
-            >
-              <FormattedMessage id="ui-checkout.override" />
-            </Button>
+          canBeOverridden &&
+            <div data-test-override-button>
+              <Button
+                onClick={handleOverrideClick}
+              >
+                <FormattedMessage id="ui-checkout.override" />
+              </Button>
+            </div>
           }
-          <Button
-            buttonStyle="primary"
-            onClick={onClose}
-          >
-            <FormattedMessage id="ui-checkout.close" />
-          </Button>
+          <div data-test-close-button>
+            <Button
+              data-test-close-button
+              buttonStyle="primary"
+              onClick={onClose}
+            >
+              <FormattedMessage id="ui-checkout.close" />
+            </Button>
+          </div>
         </Row>
       </Col>
     </Modal>
