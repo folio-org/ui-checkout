@@ -10,10 +10,16 @@ import {
   multipieceModalPresent = isPresent('#multipiece-modal');
 }
 
+@interactor class CheckoutNoteModalInteractor {
+  present = isPresent('[data-test-checkoutNoteModal-confirm-button]');
+  clickConfirm = clickable('[data-test-checkoutNoteModal-confirm-button]');
+}
+
+
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
   scanItems = new ScanItemsInteractor('[data-test-scan-items]')
-
+ checkoutNoteModal = new CheckoutNoteModalInteractor();
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
   fillPatronBarcode = fillable('#input-patron-identifier');

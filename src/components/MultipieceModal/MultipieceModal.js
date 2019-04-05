@@ -22,7 +22,7 @@ const MultipieceModal = (props) => {
         <FormattedMessage id="ui-checkout.multipieceModal.confirm" />
       </Button>
       <Button onClick={onClose}>
-        <FormattedMessage id="ui-checkout.multipieceModal.back" />
+        <FormattedMessage id="ui-checkout.multipieceModal.cancel" />
       </Button>
     </ModalFooter>
   );

@@ -123,14 +123,23 @@ class ViewItem extends React.Component {
       scannedItems,
       parentMutator,
     } = this.props;
-
     const ids = scannedItems.map(it => `id==${it.id}`).join(' or ');
     const query = `(${ids})`;
     parentMutator.loans.reset();
-
     const response = await parentMutator.loans.GET({ params: { query } });
+    const { loans } = response;
+    const loanMap = {};
 
-    parentMutator.scannedItems.replace(response.loans);
+    scannedItems.forEach(loan => {
+      loanMap[loan.id] = loan;
+    });
+
+    const newLoans = loans.map(loan => {
+      loan.loanPolicy = _.get(loanMap, `${loan.id}.loanPolicy`);
+      return loan;
+    });
+
+    parentMutator.scannedItems.replace(newLoans);
   }
 
   handleOptionsChange(itemMeta, e) {
