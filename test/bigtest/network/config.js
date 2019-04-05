@@ -43,7 +43,8 @@ export default function config() {
   this.post('/circulation/check-out-by-barcode', ({ loans, items }, request) => {
     const params = JSON.parse(request.requestBody);
     const item = items.findBy({ barcode: params.itemBarcode });
-    return item;
+    const loan = loans.findBy({ itemId: item.id });
+    return loan;
   });
 
   // users

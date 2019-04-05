@@ -1,7 +1,6 @@
-import { Factory, faker } from '@bigtest/mirage';
+import { Factory, faker, trait } from '@bigtest/mirage';
 
 export default Factory.extend({
-  id: faker.random.uuid(),
   status: () => ({ name: 'Checked out' }),
   title: () => faker.company.catchPhrase(),
   barcode: () => Math.floor(Math.random() * 9000000000000) + 1000000000000,
@@ -13,5 +12,13 @@ export default Factory.extend({
   numberOfMissingPieces: () => 0,
   descriptionOfPieces: () => '',
   missingPieces: () => '',
-  numberOfPieces: () => 1
+  numberOfPieces: () => 1,
+
+  withLoan: trait({
+    afterCreate(item, server) {
+      server.create('loan', {
+        item
+      });
+    }
+  })
 });
