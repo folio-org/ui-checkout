@@ -154,13 +154,12 @@ describe('CheckOut', () => {
         await checkOut
           .fillItemBarcode('245')
           .clickItemBtn();
-
         await checkOut.checkoutNoteModal.clickConfirm();
-        // await checkOut.selectElipse();
+        await checkOut.selectElipse();
       });
 
       it('shows checkout Notes option on the action menu', () => {
-        // expect(checkOut.checkoutNotesPresent).to.be.true;
+        expect(checkOut.checkoutNotesPresent).to.be.true;
       });
     });
   });
