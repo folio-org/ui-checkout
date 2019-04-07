@@ -41,6 +41,7 @@ class ViewItem extends React.Component {
       id: PropTypes.string,
     }),
     parentMutator: PropTypes.object.isRequired,
+    showCheckoutNotes: PropTypes.func,
   };
 
   constructor(props) {
@@ -177,59 +178,75 @@ class ViewItem extends React.Component {
     });
   }
 
+  showCheckoutNotes(loan) {
+    this.props.showCheckoutNotes(loan);
+  }
+
   renderActions(loan) {
     const { stripes } = this.props;
-
+    const isCheckOutNote = element => element.noteType === 'Check out';
+    const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
     return (
-      <UncontrolledDropdown
-        onSelectItem={this.handleOptionsChange}
-        onToggle={this.onMenuToggle}
-      >
-        <Button
-          data-role="toggle"
-          buttonStyle="hover dropdownActive"
+      <div data-test-elipse-select>
+        <UncontrolledDropdown
+          onSelectItem={this.handleOptionsChange}
+          onToggle={this.onMenuToggle}
         >
-          <strong>•••</strong>
-        </Button>
-        <DropdownMenu
-          data-role="menu"
-          pullRight
-          width="10em"
-        >
-          <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-            <Button
-              buttonStyle="dropdownItem"
-              href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
-            >
-              <FormattedMessage id="ui-checkout.itemDetails" />
-            </Button>
-          </MenuItem>
-          <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-            <Button
-              buttonStyle="dropdownItem"
-              href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
-            >
-              <FormattedMessage id="ui-checkout.loanDetails" />
-            </Button>
-          </MenuItem>
-          {
-            stripes.hasPerm('ui-circulation.settings.loan-policies') &&
-            <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
+          <Button
+            data-role="toggle"
+            buttonStyle="hover dropdownActive"
+          >
+            <strong>•••</strong>
+          </Button>
+          <DropdownMenu
+            data-role="menu"
+            pullRight
+            width="10em"
+          >
+            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
               <Button
                 buttonStyle="dropdownItem"
-                href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
+                href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
               >
-                <FormattedMessage id="ui-checkout.loanPolicy" />
+                <FormattedMessage id="ui-checkout.itemDetails" />
               </Button>
             </MenuItem>
-          }
-          <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
-            <Button buttonStyle="dropdownItem">
-              <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
-            </Button>
-          </MenuItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
+            <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
+              <Button
+                buttonStyle="dropdownItem"
+                href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
+              >
+                <FormattedMessage id="ui-checkout.loanDetails" />
+              </Button>
+            </MenuItem>
+            {
+              stripes.hasPerm('ui-circulation.settings.loan-policies') &&
+              <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
+                <Button
+                  buttonStyle="dropdownItem"
+                  href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
+                >
+                  <FormattedMessage id="ui-checkout.loanPolicy" />
+                </Button>
+              </MenuItem>
+            }
+            <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
+              <Button buttonStyle="dropdownItem">
+                <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
+              </Button>
+            </MenuItem>
+            { checkoutNotePresent &&
+              <MenuItem itemMeta={{ loan, action: 'showCheckoutNotes' }}>
+                <div data-test-checkout-notes>
+                  <Button buttonStyle="dropdownItem">
+                    <FormattedMessage id="ui-checkout.checkoutNotes" />
+                  </Button>
+                </div>
+              </MenuItem>
+            }
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </div>
     );
   }
 
