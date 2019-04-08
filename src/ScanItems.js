@@ -219,7 +219,7 @@ class ScanItems extends React.Component {
 
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const loanData = {
-      itemBarcode: barcode,
+      itemBarcode: barcode.trim(),
       userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
       servicePointId,
