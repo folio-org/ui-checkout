@@ -47,7 +47,7 @@ const CheckoutNoteModal = (props) => {
       {
         !hideConfirm &&
         <Button
-          data-test-checkoutNoteModal-confirm-button
+          data-test-checkoutnotemodal-confirm-button
           buttonStyle="primary"
           id={`clickable-${testId}-confirm`}
           onClick={props.onConfirm}
@@ -58,7 +58,7 @@ const CheckoutNoteModal = (props) => {
       {
         !hideCancel &&
         <Button
-          data-test-checkoutNoteModal-cancel-button
+          data-test-checkoutnotemodal-cancel-button
           buttonStyle="default"
           id={`clickable-${testId}-cancel`}
           onClick={props.onCancel}

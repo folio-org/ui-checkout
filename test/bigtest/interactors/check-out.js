@@ -11,20 +11,21 @@ import {
 }
 
 @interactor class CheckoutNoteModalInteractor {
-  present = isPresent('[data-test-checkoutNoteModal-confirm-button]');
-  clickConfirm = clickable('[data-test-checkoutNoteModal-confirm-button]');
+  present = isPresent('[data-test-checkoutnotemodal-confirm-button]');
+  clickConfirm = clickable('[data-test-checkoutnotemodal-confirm-button]');
 }
 
 
 export default interactor(class CheckOutInteractor {
-  static defaultScope = '[data-test-check-out-scan]';
   scanItems = new ScanItemsInteractor('[data-test-scan-items]')
- checkoutNoteModal = new CheckoutNoteModalInteractor();
+  checkoutNoteModal = new CheckoutNoteModalInteractor();
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
+  checkoutNotesPresent = isPresent('[data-test-checkout-notes]');
+  clickCheckoutNotesBtn = clickable('[data-test-checkout-notes]');
   fillPatronBarcode = fillable('#input-patron-identifier');
   clickPatronBtn = clickable('#clickable-find-patron');
-
+  selectElipse = clickable('[data-test-elipse-select] button');
   itemBarcodePresent = isPresent('#input-item-barcode');
   fillItemBarcode = fillable('#input-item-barcode');
   clickItemBtn = clickable('#clickable-add-item');
