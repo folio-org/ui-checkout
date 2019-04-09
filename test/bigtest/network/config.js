@@ -19,10 +19,10 @@ export default function config() {
   });
 
   this.get('/groups', { 'usergroups': [{
-    "group": "graduate",
-    "desc": "Graduate Student",
-    "id": "ad0bc554-d5bc-463c-85d1-5562127ae91b"
-  } ] });
+    'group': 'graduate',
+    'desc': 'Graduate Student',
+    'id': 'ad0bc554-d5bc-463c-85d1-5562127ae91b'
+  }] });
 
   // requests
   this.get('/circulation/requests', ({ requests }, request) => {
@@ -63,37 +63,39 @@ export default function config() {
 
   this.post('/circulation/check-out-by-barcode', () => {
     return {
-      "id": "cf23adf0-61ba-4887-bf82-956c4aae2260",
-      "userId": "df7f4993-8c14-4a0f-ab63-93975ab01c76",
-      "proxyUserId": "346ad017-dac1-417d-9ed8-0ac7eeb886aa",
-      "itemId": "cb20f34f-b773-462f-a091-b233cc96b9e6",
-      "item": {
-        "title": "The Long Way to a Small, Angry Planet",
-        "barcode": "036000291452",
-        "status": {
-          "name": "Checked Out"
+      'id': 'cf23adf0-61ba-4887-bf82-956c4aae2260',
+      'userId': 'df7f4993-8c14-4a0f-ab63-93975ab01c76',
+      'proxyUserId': '346ad017-dac1-417d-9ed8-0ac7eeb886aa',
+      'itemId': '123',
+      'item': {
+        'title': 'Book 1',
+        'barcode': '123',
+        'instanceId': 'instance1',
+        'holdingsRecordId': 'holdings1',
+        'status': {
+          'name': 'Checked Out'
         },
-        "location": {
-          "name": "Main Library"
+        'location': {
+          'name': 'Main Library'
         },
-        "materialType": {
-          "name": "Book"
+        'materialType': {
+          'name': 'Book'
         },
-        "contributors": [
+        'contributors': [
           {
-            "name": "Steve Jones"
+            'name': 'Steve Jones'
           }
         ]
       },
-      "loanDate": "2017-03-01T23:11:00.000Z",
-      "dueDate": "2017-04-01T23:11:00.000Z",
-      "checkoutServicePointId": "e9af4ba4-6801-4722-bf45-d7a49d54564d",
-      "checkinServicePointId": "e9af4ba4-6801-4722-bf45-d7a49d54564d",
-      "status": {
-        "name": "Open"
+      'loanDate': '2017-03-01T23:11:00.000Z',
+      'dueDate': '2017-04-01T23:11:00.000Z',
+      'checkoutServicePointId': 'e9af4ba4-6801-4722-bf45-d7a49d54564d',
+      'checkinServicePointId': 'e9af4ba4-6801-4722-bf45-d7a49d54564d',
+      'status': {
+        'name': 'Open'
       },
-      "action": "checkedout",
-      "renewalCount": 0
-    }
-  })
+      'action': 'checkedout',
+      'renewalCount': 0
+    };
+  });
 }
