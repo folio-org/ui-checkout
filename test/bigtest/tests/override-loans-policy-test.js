@@ -120,6 +120,27 @@ describe('override loan policy', () => {
                   });
                 });
               });
+
+              describe('override button', () => {
+                it('should be displayed', () => {
+                  expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
+                });
+
+                it('should be disabled', () => {
+                  expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.true;
+                });
+
+                describe('fill in date to make it clickable', () => {
+                  beforeEach(async function () {
+                    await checkOut.overrideModal.comment.fill('textarea', 'test');
+                    await checkOut.overrideModal.dueDatePicker.fill('input', '04/15/2019');
+                  });
+
+                  it('should be active', () => {
+                    expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.false;
+                  });
+                });
+              });
             });
           });
         });

@@ -6,6 +6,7 @@ import {
   text,
   scoped,
   Interactor,
+  property,
 } from '@bigtest/interactor';
 
 @interactor class ScanItemsInteractor {
@@ -30,6 +31,7 @@ import {
   dueDatePicker = scoped('[ data-test-override-modal-due-date-picker]');
   comment = scoped('[data-test-override-modal-comment]');
   saveAndCloseButton = scoped('[data-test-override-modal-save-and-close]');
+  saveAndCloseButtonDisabled = property('[data-test-override-modal-save-and-close] button', 'disabled');
   cancelButton = scoped('[data-test-override-modal-cancel]');
 }
 
