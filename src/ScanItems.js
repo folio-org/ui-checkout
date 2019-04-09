@@ -303,7 +303,7 @@ class ScanItems extends React.Component {
     const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
 
     return (
-      <div>
+      <div data-test-scan-items>
         <ItemForm
           ref={this.itemInput}
           onSubmit={this.tryCheckout}
