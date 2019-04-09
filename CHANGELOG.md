@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## 1.8.0 (IN PROGRESS)
+
+* Trim whitespace padding from item barcodes to avoid server errors. Fixes UICHKOUT-506.
+
 ## [1.7.0](https://github.com/folio-org/ui-checkout/tree/v1.7.0) (2019-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.6.0...v1.7.0)
 

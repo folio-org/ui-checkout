@@ -7,27 +7,23 @@ import {
   scoped,
 } from '@bigtest/interactor';
 
-@interactor
-class ScanItemsInteractor {
+@interactor class ScanItemsInteractor {
   multipieceModalPresent = isPresent('#multipiece-modal');
 }
 
-@interactor
-class CheckoutNoteModalInteractor {
-  present = isPresent('[data-test-checkoutNoteModal-confirm-button]');
-  clickConfirm = clickable('[data-test-checkoutNoteModal-confirm-button]');
+@interactor class CheckoutNoteModalInteractor {
+  present = isPresent('[data-test-checkoutnotemodal-confirm-button]');
+  clickConfirm = clickable('[data-test-checkoutnotemodal-confirm-button]');
 }
 
-@interactor
-class ErrorModal {
+@interactor class ErrorModal {
   static defaultScope = '[data-test-error-modal]';
 
   overrideButton = scoped('[data-test-override-button]');
   closeButton = scoped('[data-test-close-button]');
 }
 
-@interactor
-class OverrideModal {
+@interactor class OverrideModal {
   static defaultScope = '[data-test-override-modal]';
 
   dueDatePicker = scoped('[ data-test-override-modal-due-date-picker]');
@@ -43,9 +39,11 @@ export default interactor(class CheckOutInteractor {
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
+  checkoutNotesPresent = isPresent('[data-test-checkout-notes]');
+  clickCheckoutNotesBtn = clickable('[data-test-checkout-notes]');
   fillPatronBarcode = fillable('#input-patron-identifier');
   clickPatronBtn = clickable('#clickable-find-patron');
-
+  selectElipse = clickable('[data-test-elipse-select] button');
   itemBarcodePresent = isPresent('#input-item-barcode');
   fillItemBarcode = fillable('#input-item-barcode');
   clickItemBtn = clickable('#clickable-add-item');
