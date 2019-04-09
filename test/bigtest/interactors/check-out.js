@@ -8,11 +8,20 @@ import {
 
 @interactor class ScanItemsInteractor {
   multipieceModalPresent = isPresent('#multipiece-modal');
+  itemListPresent = isPresent('#list-items-checked-out');
+}
+
+@interactor class ItemMenuInteractor {
+  static defaultScope = 'body';
+  clickItemMenu = clickable('[data-test-item-menu] button');
+  selectItemDetails = clickable('[data-test-show-item-details]');
+  selectLoanDetails = clickable('[data-test-show-loan-details');
 }
 
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
-  scanItems = new ScanItemsInteractor('[data-test-scan-items]')
+  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
+  itemMenu = new ItemMenuInteractor();
 
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
