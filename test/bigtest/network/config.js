@@ -1,4 +1,3 @@
-import { Response } from '@bigtest/mirage';
 import CQLParser from './cql';
 
 // typical mirage config export
@@ -30,18 +29,6 @@ export default function config() {
   this.get('/manualblocks', {
     manualblocks: [],
     totalRecords: 0,
-  });
-
-  this.post('circulation/check-out-by-barcode', () => {
-    return new Response(422, { 'Content-Type': 'application/json' }, {
-      'errors' : [{
-        'message' : 'Item is not loanable',
-        'parameters' : [{
-          'key' : 'itemBarcode',
-          'value' : '5860825104574'
-        }]
-      }]
-    });
   });
 
   this.get('/groups', {
@@ -106,13 +93,6 @@ export default function config() {
     } else {
       return [];
     }
-  });
-
-  this.post('/circulation/check-out-by-barcode', ({ loans, items }, request) => {
-    const params = JSON.parse(request.requestBody);
-    const item = items.findBy({ barcode: params.itemBarcode });
-    const loan = loans.findBy({ itemId: item.id });
-    return loan;
   });
 
   // users

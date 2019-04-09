@@ -5,6 +5,7 @@ import {
   isPresent,
   text,
   scoped,
+  Interactor,
 } from '@bigtest/interactor';
 
 @interactor class ScanItemsInteractor {
@@ -35,11 +36,11 @@ import {
 
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
-  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
-  checkoutNoteModal = new CheckoutNoteModalInteractor();
+
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
   checkoutNotesPresent = isPresent('[data-test-checkout-notes]');
+  checkoutNotes = new Interactor('[data-test-checkout-notes]');
   clickCheckoutNotesBtn = clickable('[data-test-checkout-notes]');
   fillPatronBarcode = fillable('#input-patron-identifier');
   clickPatronBtn = clickable('#clickable-find-patron');
@@ -51,6 +52,8 @@ export default interactor(class CheckOutInteractor {
   patronFullName = text('[data-test-check-out-patron-full-name]');
   awaitPickupModalPresent = isPresent('#awaiting-pickup-modal');
 
-  overrideModal = new OverrideModal();
   errorModal = new ErrorModal();
+  overrideModal = new OverrideModal();
+  checkoutNoteModal = new CheckoutNoteModalInteractor();
+  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
 });
