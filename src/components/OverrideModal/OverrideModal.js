@@ -20,7 +20,10 @@ import {
 } from '@folio/stripes/core';
 import { DueDatePicker } from '@folio/stripes/smart-components';
 
-import { INVALIDE_DATE_MESSAGE } from '../../constants';
+import {
+  DATE_PICKER_DEFAULTS,
+  INVALIDE_DATE_MESSAGE,
+} from '../../constants';
 
 function OverrideModal(props) {
   const {
@@ -37,11 +40,6 @@ function OverrideModal(props) {
   } = props;
   const [additionalInfo, setAdditionalInfo] = useState('');
   const [datetime, setDatetime] = useState('');
-
-  const datePickerDefaults = {
-    date: '',
-    time: '11:59:00.000Z',
-  };
 
   const handleDateTimeChanged = (newDateTime) => {
     setDatetime(newDateTime);
@@ -74,15 +72,16 @@ function OverrideModal(props) {
     closeOverrideModal();
 
     try {
-      const loan = await POST(
-        {
-          userBarcode: patronBarcode,
-          comment: additionalInfo,
-          dueDate: datetime,
-          servicePointId,
-          itemBarcode,
-        }
-      );
+      const item = {
+        userBarcode: patronBarcode,
+        comment: additionalInfo,
+        dueDate: datetime,
+        servicePointId,
+        itemBarcode,
+      };
+
+      const loan = await POST(item);
+
       addScannedItem(loan);
     } catch (error) {
       setError({ barcode: error.statusText });
@@ -91,13 +90,13 @@ function OverrideModal(props) {
 
   return (
     <Modal
-      data-test-override-modal
-      onClose={closeOverrideModal}
-      open={overrideModalOpen}
-      enforceFocus={false}
       size="small"
-      label={<FormattedMessage id="ui-checkout.overrideLoanPolicy" />}
       dismissible
+      enforceFocus={false}
+      data-test-override-modal
+      open={overrideModalOpen}
+      label={<FormattedMessage id="ui-checkout.overrideLoanPolicy" />}
+      onClose={closeOverrideModal}
     >
       <Form
         id="override-form"
@@ -116,7 +115,8 @@ function OverrideModal(props) {
           data-test-override-modal-due-date-picker
         >
           <DueDatePicker
-            initialValues={datePickerDefaults}
+            required
+            initialValues={DATE_PICKER_DEFAULTS}
             stripes={stripes}
             dateProps={{ label: (
               <FormattedMessage id="ui-checkout.cddd.date">
@@ -129,7 +129,6 @@ function OverrideModal(props) {
               </FormattedMessage>
             ) }}
             onChange={handleDateTimeChanged}
-            required
           />
         </Col>
         <Col
@@ -137,27 +136,27 @@ function OverrideModal(props) {
           xs={12}
         >
           <TextArea
-            label={<FormattedMessage id="ui-checkout.comment" />}
             required
+            label={<FormattedMessage id="ui-checkout.comment" />}
             onChange={(e) => { setAdditionalInfo(e.target.value); }}
           />
         </Col>
         <Col xs={12}>
           <Row end="xs">
-            <div data-test-override-modal-cancel>
-              <Button onClick={closeOverrideModal}>
-                <FormattedMessage id="ui-checkout.cancel" />
-              </Button>
-            </div>
-            <div data-test-override-modal-save-and-close>
-              <Button
-                buttonStyle="primary"
-                type="submit"
-                disabled={!canBeSubmitted}
-              >
-                <FormattedMessage id="ui-checkout.saveAndClose" />
-              </Button>
-            </div>
+            <Button
+              onClick={closeOverrideModal}
+              data-test-override-modal-cancel
+            >
+              <FormattedMessage id="ui-checkout.cancel" />
+            </Button>
+            <Button
+              data-test-override-modal-save-and-close
+              buttonStyle="primary"
+              type="submit"
+              disabled={!canBeSubmitted}
+            >
+              <FormattedMessage id="ui-checkout.saveAndClose" />
+            </Button>
           </Row>
         </Col>
       </Form>

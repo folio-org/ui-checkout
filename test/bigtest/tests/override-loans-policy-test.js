@@ -43,8 +43,8 @@ describe('override loan policy', () => {
 
         await checkOut
           .fillItemBarcode('123')
-          .clickItemBtn();
-        await checkOut.checkoutNoteModal.clickConfirm();
+          .clickItemBtn()
+          .checkoutNoteModal.clickConfirm();
       });
 
       describe('error modal', () => {
@@ -59,7 +59,7 @@ describe('override loan policy', () => {
 
           describe('close button click', () => {
             beforeEach(async function () {
-              await checkOut.errorModal.closeButton.click('button');
+              await checkOut.errorModal.closeButton.click();
             });
 
             it('should not be displayed', () => {
@@ -75,7 +75,7 @@ describe('override loan policy', () => {
 
           describe('override button click', () => {
             beforeEach(async function () {
-              await checkOut.errorModal.overrideButton.click('button');
+              await checkOut.errorModal.overrideButton.click();
             });
 
             it('should not be displayed', () => {
@@ -112,7 +112,7 @@ describe('override loan policy', () => {
 
                 describe('cancel button click', () => {
                   beforeEach(async function () {
-                    await checkOut.overrideModal.cancelButton.click('button');
+                    await checkOut.overrideModal.cancelButton.click();
                   });
 
                   it('should not be displayed', () => {

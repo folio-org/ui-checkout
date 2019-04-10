@@ -31,7 +31,7 @@ import {
   dueDatePicker = scoped('[ data-test-override-modal-due-date-picker]');
   comment = scoped('[data-test-override-modal-comment]');
   saveAndCloseButton = scoped('[data-test-override-modal-save-and-close]');
-  saveAndCloseButtonDisabled = property('[data-test-override-modal-save-and-close] button', 'disabled');
+  saveAndCloseButtonDisabled = property('[data-test-override-modal-save-and-close]', 'disabled');
   cancelButton = scoped('[data-test-override-modal-cancel]');
 }
 

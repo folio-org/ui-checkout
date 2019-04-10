@@ -99,10 +99,10 @@ class ItemForm extends React.Component {
   }
 
   clearForm = () => {
-    const { stripes: { store } } = this.props;
+    const { resetForm } = this.props;
 
     this.setError({});
-    store.dispatch(reset('itemForm'));
+    resetForm();
   };
 
  handleSubmit = (data) => {
@@ -140,12 +140,12 @@ class ItemForm extends React.Component {
                  <FormattedMessage id="ui-checkout.itemId">
                    {ariaLabel => (
                      <Field
-                       name="item.barcode"
-                       placeholder={placeholder}
-                       aria-label={ariaLabel}
                        fullWidth
-                       id="input-item-barcode"
+                       name="item.barcode"
                        component={TextField}
+                       aria-label={ariaLabel}
+                       id="input-item-barcode"
+                       placeholder={placeholder}
                        inputRef={this.barcodeEl}
                        validationEnabled={validationEnabled}
                      />
@@ -180,6 +180,7 @@ class ItemForm extends React.Component {
        {
          !isEmpty(error) &&
          <ErrorModal
+           stripes={stripes}
            item={item}
            message={error.barcode}
            open={!isEmpty(error)}
@@ -193,9 +194,9 @@ class ItemForm extends React.Component {
            item={item}
            patron={patron}
            stripes={stripes}
+           addScannedItem={addScannedItem}
            overrideModalOpen={overrideModalOpen}
            setError={this.setError}
-           addScannedItem={addScannedItem}
            closeOverrideModal={this.closeOverrideModal}
          />
        }
@@ -207,6 +208,12 @@ const itemForm = reduxForm({
   form: 'itemForm',
 })(withStripes(ItemForm));
 
-export default connect(state => ({
+const mapDispatchToProps = dispatch => ({
+  resetForm: () => dispatch(reset('itemForm')),
+});
+
+const mapStateToProps = state => ({
   submitErrors: getFormSubmitErrors('itemForm')(state)
-}))(itemForm);
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(itemForm);

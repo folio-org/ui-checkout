@@ -19,6 +19,11 @@ export const patronLabelMap = {
   USER: 'username',
 };
 
+export const DATE_PICKER_DEFAULTS = {
+  date: '',
+  time: '11:59:00.000Z',
+};
+
 export const INVALIDE_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'BARCODE';

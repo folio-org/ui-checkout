@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { noop } from 'lodash';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-
+import { stripesShape } from '@folio/stripes/core';
 import {
   Button,
   Col,
@@ -20,6 +21,7 @@ function ErrorModal(props) {
     onClose,
     message,
     openOverrideModal,
+    stripes,
     item: {
       title,
       barcode,
@@ -32,7 +34,8 @@ function ErrorModal(props) {
     openOverrideModal();
   };
 
-  const canBeOverridden = OVERRIDABLE_ERROR_MESSAGES.includes(message);
+  const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
+    && OVERRIDABLE_ERROR_MESSAGES.includes(message);
 
   return (
     <Modal
@@ -59,23 +62,20 @@ function ErrorModal(props) {
         <Row end="xs">
           {
           canBeOverridden &&
-            <div data-test-override-button>
-              <Button
-                onClick={handleOverrideClick}
-              >
-                <FormattedMessage id="ui-checkout.override" />
-              </Button>
-            </div>
-          }
-          <div data-test-close-button>
             <Button
-              data-test-close-button
-              buttonStyle="primary"
-              onClick={onClose}
+              data-test-override-button
+              onClick={handleOverrideClick}
             >
-              <FormattedMessage id="ui-checkout.close" />
+              <FormattedMessage id="ui-checkout.override" />
             </Button>
-          </div>
+          }
+          <Button
+            data-test-close-button
+            buttonStyle="primary"
+            onClick={onClose}
+          >
+            <FormattedMessage id="ui-checkout.close" />
+          </Button>
         </Row>
       </Col>
     </Modal>
@@ -85,14 +85,15 @@ function ErrorModal(props) {
 ErrorModal.propTypes = {
   item: PropTypes.object,
   open: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
+  stripes: stripesShape.isRequired,
   onClose: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
   openOverrideModal: PropTypes.func,
 };
 
 ErrorModal.defaultProps = {
   item: {},
-  openOverrideModal: () => {},
+  openOverrideModal: noop,
 };
 
 export default ErrorModal;
