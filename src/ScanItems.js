@@ -206,7 +206,7 @@ class ScanItems extends React.Component {
   }
 
   hideCheckoutNoteModal() {
-    this.setState({ showCheckoutNoteModal: false, showCheckoutNote: false });
+    this.setState({ showCheckoutNoteModal: false, showCheckoutNote: false }, () => this.reject(new SubmissionError({})));
   }
 
   showCheckoutNotes(loan) {
@@ -370,7 +370,7 @@ class ScanItems extends React.Component {
         onCancel={this.hideCheckoutNoteModal}
         hideConfirm={showCheckoutNote}
         cancelLabel={cancelLabel}
-        confirmLabel={<FormattedMessage id="ui-checkout.multipieceModal.confirm" />}
+        confirmLabel={<FormattedMessage id="ui-checkout.confirm" />}
         notes={notes}
         formatter={formatter}
         message={message}
