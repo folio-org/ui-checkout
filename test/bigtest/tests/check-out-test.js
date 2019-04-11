@@ -4,7 +4,7 @@ import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 
 describe('CheckOut', () => {
-  setupApplication();
+  setupApplication({ scenarios: ['checkoutByBarcode'] });
   const checkOut = new CheckOutInteractor();
 
   beforeEach(function () {
@@ -156,10 +156,11 @@ describe('CheckOut', () => {
           .clickItemBtn();
         await checkOut.checkoutNoteModal.clickConfirm();
         await checkOut.selectElipse();
+        await checkOut.awaitDropdownPresent;
       });
 
       it('shows checkout Notes option on the action menu', () => {
-        expect(checkOut.checkoutNotesPresent).to.be.true;
+        expect(checkOut.checkoutNotes.isPresent).to.be.true;
       });
     });
   });

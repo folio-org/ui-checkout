@@ -61,7 +61,6 @@
   "multipieceModal.label": "Confirm multipiece check out",
   "multipieceModal.item.numberOfPieces": "Number of pieces",
   "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be checked out.",
-  "multipieceModal.item.numberOfPieces": "Number of pieces",
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
@@ -80,5 +79,13 @@
   "user.detail.barcode": "Barcode:",
   "user.patronGroup": "Patron group",
   "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
-  "awaitingPickupLabel": "Items awaiting pickup"
+  "awaitingPickupLabel": "Items awaiting pickup",
+
+  "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>Non-circulating</strong> loan policy.",
+  "cddd.date": "Date",
+  "cddd.time": "Time",
+  "comment": "Comment",
+  "override": "Override",
+  "saveAndClose": "Save & close",
+  "overrideLoanPolicy": "Override loan policy"
 }

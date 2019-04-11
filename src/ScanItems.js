@@ -96,7 +96,11 @@ class ScanItems extends React.Component {
     this.showCheckoutNotes = this.showCheckoutNotes.bind(this);
     this.hideCheckoutNoteModal = this.hideCheckoutNoteModal.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
-    this.state = { loading: false, checkoutStatus: null };
+    this.state = {
+      loading: false,
+      checkoutStatus: null,
+      item: {},
+    };
     this.itemInput = React.createRef();
   }
 
@@ -172,8 +176,11 @@ class ScanItems extends React.Component {
       this.resolve = resolve;
       this.reject = reject;
       if (!multipieceItem) {
-        if (showCheckoutNoteModal) this.setState({ item, showCheckoutNoteModal });
-        else this.checkout(data.item.barcode);
+        if (!showCheckoutNoteModal) {
+          this.checkout(data.item.barcode);
+        }
+
+        this.setState({ item, showCheckoutNoteModal });
       } else {
         this.setState({ item, multipieceItem, showCheckoutNoteModal });
       }
@@ -271,7 +278,7 @@ class ScanItems extends React.Component {
     this.reject(new SubmissionError({ item: itemError }));
   }
 
-  addScannedItem(loan) {
+  addScannedItem = (loan) => {
     const {
       parentResources,
       parentMutator,
@@ -282,7 +289,7 @@ class ScanItems extends React.Component {
     const scannedItems = [loan].concat(parentResources.scannedItems);
 
     return parentMutator.scannedItems.replace(scannedItems);
-  }
+  };
 
   fetchLoanPolicy = async (loan) => {
     const {
@@ -290,15 +297,14 @@ class ScanItems extends React.Component {
     } = this.props;
 
     const query = `(id=="${loan.loanPolicyId}")`;
+
     loanPolicies.reset();
 
     const policies = await loanPolicies.GET({ params: { query } });
-    const loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-
-    loan.loanPolicy = loanPolicy;
+    loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
 
     return loan;
-  }
+  };
 
   clearField(formName, fieldName) {
     this.store.dispatch(change(formName, fieldName, ''));
@@ -375,6 +381,8 @@ class ScanItems extends React.Component {
     );
   }
 
+  onConfirm = item => this.confirmCheckout(item);
+
   render() {
     const {
       parentResources,
@@ -388,12 +396,15 @@ class ScanItems extends React.Component {
       loading,
       multipieceItem,
       showCheckoutNoteModal,
+      item,
       showCheckoutNote
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
-    const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
+    const checkoutSound = (checkoutStatus === 'success')
+      ? checkoutSuccessSound
+      : checkoutErrorSound;
 
     return (
       <div>
@@ -403,6 +414,8 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
+          item={item}
+          addScannedItem={this.addScannedItem}
         />
         {loading &&
           <Icon
@@ -428,7 +441,7 @@ class ScanItems extends React.Component {
             open={!!multipieceItem}
             item={multipieceItem}
             onClose={this.cancelCheckout}
-            onConfirm={item => this.confirmCheckout(item)}
+            onConfirm={this.onConfirm}
           />
         }
       </div>
