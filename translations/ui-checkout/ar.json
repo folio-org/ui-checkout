@@ -78,7 +78,15 @@
     "note": "ملاحظة",
     "checkoutNoteModal.heading": "تأكيد الإعارة",
     "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong> {count}, plural, {note} واحدة {notes} أخرى} سيتم <strong>إعارتها</strong>",
-    "checkoutNotes": "Check out Notes",
-    "checkoutNotes.heading": "Check out notes",
-    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
+    "checkoutNotes": "ملاحظات الإعارة",
+    "checkoutNotes.heading": "ملاحظات الإعارة",
+    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لديه <strong>{count}</strong>  {count, plural, one {ملاحظة} other {ملاحظة}} ",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) لا <strong>يعار</strong> وفقًا لسياسة إعارة <strong>عدم الإعارة</strong> ",
+    "cddd.date": "التاريخ",
+    "cddd.time": "الوقت",
+    "comment": "تعليق",
+    "override": "تخطي",
+    "saveAndClose": "حفظ وإغلاق",
+    "overrideLoanPolicy": "تخطي سياسة الإعارة",
+    "confirm": "تأكيد"
 }
