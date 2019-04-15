@@ -78,7 +78,15 @@
     "note": "Nota",
     "checkoutNoteModal.heading": "Confirmar o empréstimo",
     "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>",
-    "checkoutNotes": "Check out Notes",
-    "checkoutNotes.heading": "Check out notes",
-    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}"
+    "checkoutNotes": "Notas de empréstimo",
+    "checkoutNotes.heading": "Notas de empréstimo",
+    "checkoutNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode} ) não é <strong>emprestável</strong> acordo com a política de empréstimo <strong>Não circulação</strong>.",
+    "cddd.date": "Data",
+    "cddd.time": "Horário",
+    "comment": "Comentário",
+    "override": "Sobrescrever",
+    "saveAndClose": "Salvar e fechar",
+    "overrideLoanPolicy": "Sobrescrever política de empréstimo",
+    "confirm": "Confirmar"
 }
