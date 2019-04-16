@@ -16,6 +16,7 @@ import {
   clickItemMenu = clickable('[data-test-item-menu] button');
   selectItemDetails = clickable('[data-test-show-item-details]');
   selectLoanDetails = clickable('[data-test-show-loan-details');
+  selectLoanPolicy = clickable('[data-test-show-loan-policy]');
 }
 
 export default interactor(class CheckOutInteractor {

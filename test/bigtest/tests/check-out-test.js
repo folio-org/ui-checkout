@@ -61,6 +61,7 @@ describe('CheckOut', () => {
   describe('entering an item barcode', () => {
     beforeEach(async function () {
       this.server.create('user', {
+        id: 'user1',
         barcode: '123456',
         personal: {
           firstName: 'Bob',
@@ -75,7 +76,7 @@ describe('CheckOut', () => {
 
     describe('checking out a single item', () => {
       beforeEach(async function () {
-        this.server.create('item', {
+        let item = this.server.create('item', {
           barcode: '123',
           title: 'Book 1',
         });
@@ -92,14 +93,30 @@ describe('CheckOut', () => {
     });
 
     describe('using the item menu', () => {
+      let loan;
       beforeEach(async function () {
-        this.server.create('item', {
+        let item = this.server.create('item', {
+          id: 'i1',
           barcode: '123',
-          title: 'Book 1',
+          title: 'A',
           instanceId: 'instance1',
-          holdingsRecordId: 'holdings1'
+          holdingsRecordId: 'holdings1',
         });
-        this.server.create('loan');
+        loan = this.server.create('loan', { itemId: 'i1' });
+        item = this.server.create('item', {
+          barcode: '456',
+          title: 'B',
+          instanceId: 'instance2',
+          holdingsRecordId: 'holdings2'
+        });
+        this.server.create('loan', { item: item.attsrs, itemId: item.id });
+        item = this.server.create('item', {
+          barcode: '789',
+          title: 'C',
+          instanceId: 'instance3',
+          holdingsRecordId: 'holdings3'
+        });
+        this.server.create('loan', { item: item.attrs, itemId: item.id });
 
         await checkOut
           .fillItemBarcode('123')
@@ -114,7 +131,7 @@ describe('CheckOut', () => {
 
         it('redirects to item details page', function () {
           const { search, pathname } = this.location;
-          expect(pathname + search).to.include('/inventory/view/instance1/holdings1/123');
+          expect(pathname + search).to.include('/inventory/view/instance1/holdings1/i1');
         });
       });
 
@@ -125,9 +142,25 @@ describe('CheckOut', () => {
 
         it('redirects to (user) loan details page', function () {
           const { search, pathname } = this.location;
-          expect(pathname + search).to.include('/users/view/df7f4993-8c14-4a0f-ab63-93975ab01c76');
-          expect(search).to.include('layer=loan');
-          expect(search).to.include('loan=cf23adf0-61ba-4887-bf82-956c4aae2260');
+          expect(pathname + search).to.include('/users/view/user1');
+          expect(search).to.include(`layer=loan&loan=${loan.id}`);
+        });
+      });
+
+      describe('choosing loan policy', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.selectLoanPolicy();
+        });
+
+        it('redirects to the loan policy page', function () {
+          const { search, pathname } = this.location;
+          expect(pathname + search).to.include('/settings/circulation/loan-policies/policy1');
+        });
+      });
+
+      describe('changing due date', () => {
+        beforeEach(async function () {
+
         });
       });
     });

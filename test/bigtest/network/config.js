@@ -58,44 +58,52 @@ export default function config() {
     }
   });
 
-  this.get('/accounts');
-  this.get('/loan-policy-storage/loan-policies');
+  this.get('/inventory/instances', ({ instances }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return instances.where({
+        barcode: cqlParser.tree.term
+      });
+    } else {
+      return [];
+    }
+  });
 
-  this.post('/circulation/check-out-by-barcode', () => {
-    return {
-      'id': 'cf23adf0-61ba-4887-bf82-956c4aae2260',
-      'userId': 'df7f4993-8c14-4a0f-ab63-93975ab01c76',
-      'proxyUserId': '346ad017-dac1-417d-9ed8-0ac7eeb886aa',
-      'itemId': '123',
-      'item': {
-        'title': 'Book 1',
-        'barcode': '123',
-        'instanceId': 'instance1',
-        'holdingsRecordId': 'holdings1',
+  this.get('/accounts');
+  this.get('/alternative-title-types');
+  this.get('/loan-policy-storage/loan-policies');
+  this.get('/classification-types');
+  this.get('/contributor-types');
+  this.get('/contributor-name-types');
+  this.get('/statistical-codes');
+  this.get('/statistical-code-types');
+  this.get('/instance-formats');
+  this.get('/instance-types');
+  this.get('/instance-relationship-types');
+  this.get('/instance-statuses');
+  this.get('/locations');
+
+
+  this.post('/circulation/check-out-by-barcode', (schema, request) => {
+    const parsedRequest = JSON.parse(request.requestBody);
+    const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
+    const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+    return (
+      {
+        'id': '1',
+        'userId': patron.id,
+        'itemId': item.id,
         'status': {
-          'name': 'Checked Out'
+          'name': 'Open'
         },
-        'location': {
-          'name': 'Main Library'
-        },
-        'materialType': {
-          'name': 'Book'
-        },
-        'contributors': [
-          {
-            'name': 'Steve Jones'
-          }
-        ]
-      },
-      'loanDate': '2017-03-01T23:11:00.000Z',
-      'dueDate': '2017-04-01T23:11:00.000Z',
-      'checkoutServicePointId': 'e9af4ba4-6801-4722-bf45-d7a49d54564d',
-      'checkinServicePointId': 'e9af4ba4-6801-4722-bf45-d7a49d54564d',
-      'status': {
-        'name': 'Open'
-      },
-      'action': 'checkedout',
-      'renewalCount': 0
-    };
+        'loanDate': '2017-03-05T18:32:31Z',
+        'dueDate': '2017-03-19T18:32:31.000+0000',
+        'action': 'checkedout',
+        'renewalCount': 0,
+        item,
+        'loanPolicyId': 'policy1',
+      }
+    );
   });
 }
