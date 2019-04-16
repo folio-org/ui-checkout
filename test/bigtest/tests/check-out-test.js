@@ -58,6 +58,23 @@ describe('CheckOut', () => {
     });
   });
 
+  describe('entering a blocked patron barcode', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user', {
+        barcode: '123456',
+        personal: {
+          firstName: 'Bob',
+          lastName: 'Brown',
+        },
+      });
+      this.server.create('manualblock', { userId: user.id });
+    });
+
+    it('shows the patron block modal', () => {
+      expect(checkOut.blockModal.modalPresent).to.be.true;
+    });
+  });
+
   describe('entering an item barcode', () => {
     beforeEach(async function () {
       this.server.create('user', {

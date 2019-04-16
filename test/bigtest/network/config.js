@@ -13,9 +13,16 @@ export default function config() {
     totalRecords: 0,
   });
 
-  this.get('/manualblocks', {
-    manualblocks: [],
-    totalRecords: 0,
+  this.get('/manualblocks', ({ manualblocks }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return manualblocks.where({
+        userId: cqlParser.tree.term
+      });
+    } else {
+      return [];
+    }
   });
 
   this.get('/groups', { 'usergroups': [{
@@ -76,14 +83,34 @@ export default function config() {
   this.get('/classification-types');
   this.get('/contributor-types');
   this.get('/contributor-name-types');
+  this.get('/electronic-access-relationships');
+  this.get('/modes-of-issuance');
   this.get('/statistical-codes');
-  this.get('/statistical-code-types');
-  this.get('/instance-formats');
-  this.get('/instance-types');
-  this.get('/instance-relationship-types');
-  this.get('/instance-statuses');
+  this.get('/statistical-code-types', {
+    statisticalCodeTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/identifier-types', {
+    identifierTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-formats', {
+    instanceFormats: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-types', {
+    instanceTpyes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-relationship-types', {
+    instanceRelationshipTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-statuses', {
+    instanceStatuses: [],
+    totalRecords: 0,
+  });
   this.get('/locations');
-
 
   this.post('/circulation/check-out-by-barcode', (schema, request) => {
     const parsedRequest = JSON.parse(request.requestBody);

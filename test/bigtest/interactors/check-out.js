@@ -19,10 +19,16 @@ import {
   selectLoanPolicy = clickable('[data-test-show-loan-policy]');
 }
 
+@interactor class BlockModalInteractor {
+  static defaultScope = 'body';
+  modalPresent = isPresent('[data-test-block-modal]');
+}
+
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   itemMenu = new ItemMenuInteractor();
+  blockModal = new BlockModalInteractor();
 
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
