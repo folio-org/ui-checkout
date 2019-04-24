@@ -36,6 +36,8 @@ class ItemForm extends React.Component {
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     addScannedItem: PropTypes.func.isRequired,
+    fetchLoanPolicy: PropTypes.func.isRequired,
+    successfulCheckout: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -120,6 +122,8 @@ class ItemForm extends React.Component {
      stripes,
      item,
      addScannedItem,
+     fetchLoanPolicy,
+     successfulCheckout,
    } = this.props;
 
    const { error } = this.state;
@@ -195,6 +199,8 @@ class ItemForm extends React.Component {
            patron={patron}
            stripes={stripes}
            addScannedItem={addScannedItem}
+           fetchLoanPolicy={fetchLoanPolicy}
+           successfulCheckout={successfulCheckout}
            overrideModalOpen={overrideModalOpen}
            setError={this.setError}
            closeOverrideModal={this.closeOverrideModal}

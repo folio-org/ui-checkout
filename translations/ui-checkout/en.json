@@ -83,6 +83,7 @@
   "awaitingPickupLabel": "Items awaiting pickup",
 
   "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>Non-circulating</strong> loan policy.",
+  "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
   "cddd.date": "Date",
   "cddd.time": "Time",
   "comment": "Comment",

@@ -28,14 +28,33 @@ import {
 function OverrideModal(props) {
   const {
     stripes,
+    stripes: {
+      user: {
+        user: {
+          curServicePoint: {
+            id: servicePointId
+          }
+        }
+      }
+    },
+    mutator: {
+      overrideCheckout: {
+        POST,
+      }
+    },
     overrideModalOpen,
     closeOverrideModal,
     setError,
     addScannedItem,
+    fetchLoanPolicy,
+    successfulCheckout,
     item: {
       title,
       barcode: itemBarcode,
       materialType: { name: materialType },
+    },
+    patron: {
+      barcode: patronBarcode
     },
   } = props;
   const [additionalInfo, setAdditionalInfo] = useState('');
@@ -49,26 +68,6 @@ function OverrideModal(props) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    const {
-      stripes: {
-        user: {
-          user: {
-            curServicePoint: {
-              id: servicePointId
-            }
-          }
-        }
-      },
-      mutator: {
-        overrideCheckout: {
-          POST,
-        }
-      },
-      patron: {
-        barcode: patronBarcode
-      },
-    } = props;
-
     closeOverrideModal();
 
     try {
@@ -80,9 +79,11 @@ function OverrideModal(props) {
         itemBarcode,
       };
 
-      const loan = await POST(item);
+      let loan = await POST(item);
 
-      addScannedItem(loan);
+      loan = await fetchLoanPolicy(loan);
+      await addScannedItem(loan);
+      successfulCheckout();
     } catch (error) {
       setError({ barcode: error.statusText });
     }
@@ -105,7 +106,7 @@ function OverrideModal(props) {
         <Col xs={12}>
           <p>
             <SafeHTMLMessage
-              id="ui-checkout.multipieceModal.message"
+              id="ui-checkout.messages.itemWillBeCheckedOut"
               values={{ title, barcode: itemBarcode, materialType }}
             />
           </p>
@@ -171,6 +172,8 @@ OverrideModal.propTypes = {
   overrideModalOpen: PropTypes.bool.isRequired,
   setError: PropTypes.func.isRequired,
   addScannedItem: PropTypes.func.isRequired,
+  fetchLoanPolicy: PropTypes.func.isRequired,
+  successfulCheckout: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
   mutator: PropTypes.shape({
     overrideCheckout: PropTypes.shape({

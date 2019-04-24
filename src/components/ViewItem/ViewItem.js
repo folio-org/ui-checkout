@@ -95,12 +95,12 @@ class ViewItem extends React.Component {
 
   getItemFormatter() {
     return {
-      'title': loan => _.get(loan, ['item', 'title']),
-      'loanPolicy': loan => _.get(loan, ['loanPolicy', 'name']),
-      'Barcode': loan => _.get(loan, ['item', 'barcode']),
-      'dueDate': loan => (<FormattedDate value={loan.dueDate} />),
-      'Time': loan => (<FormattedTime value={loan.dueDate} />),
-      ' ': loan => this.renderActions(loan),
+      'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
+      'loanPolicy': loan => (<div data-test-item-loan-policy>{_.get(loan, ['loanPolicy', 'name'])}</div>),
+      'Barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
+      'dueDate': loan => (<div data-test-item-due-date><FormattedDate value={loan.dueDate} /></div>),
+      'Time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
+      ' ': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }
 
@@ -141,7 +141,7 @@ class ViewItem extends React.Component {
     });
 
     parentMutator.scannedItems.replace(newLoans);
-  }
+  };
 
   handleOptionsChange(itemMeta, e) {
     e.preventDefault();
