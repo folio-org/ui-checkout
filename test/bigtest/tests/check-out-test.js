@@ -164,4 +164,37 @@ describe('CheckOut', () => {
       });
     });
   });
+
+  describe('checkout multiple items', () => {
+    let items;
+    let user;
+    const itemsAmount = 2;
+
+    beforeEach(async function () {
+      user = this.server.create('user');
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      items = this.server.createList('item', 2, 'withLoan');
+
+      for (const [index, item] of items.entries()) {
+        // eslint-disable-next-line no-await-in-loop
+        await checkOut
+          .fillItemBarcode(item.barcode)
+          .clickItemBtn()
+          .items(index).whenLoaded();
+      }
+    });
+
+    it(`should be proper amount of items - ${itemsAmount}`, () => {
+      expect(checkOut.items().length).to.equal(itemsAmount);
+    });
+
+    it('newest item should be on top', () => {
+      expect(checkOut.items(0).barcode.text).to.equal(items[1].barcode.toString());
+    });
+  });
 });
