@@ -88,5 +88,6 @@
     "override": "Override",
     "saveAndClose": "Save & close",
     "overrideLoanPolicy": "Override loan policy",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>."
 }

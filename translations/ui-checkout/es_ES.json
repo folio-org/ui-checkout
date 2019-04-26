@@ -88,5 +88,6 @@
     "override": "Sobrepasar",
     "saveAndClose": "Guardar y cerrar",
     "overrideLoanPolicy": "Sobrepasar la norma de préstamo",
-    "confirm": "Confirmar"
+    "confirm": "Confirmar",
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>."
 }
