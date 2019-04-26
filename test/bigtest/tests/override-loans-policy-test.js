@@ -1,11 +1,36 @@
-import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+
+import {
+  beforeEach,
+  describe,
+  it
+} from '@bigtest/mocha';
+
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
+import { loanPolicyName } from '../constants';
+
+const itemBarcode = '123';
+const userBarcode = '123456';
+const checkOut = new CheckOutInteractor();
+let item;
 
 describe('override loan policy', () => {
-  setupApplication({ scenarios: ['itemIsNotLoanable'] });
-  const checkOut = new CheckOutInteractor();
+  const servicePoint = {
+    id: 'servicepointId2',
+    name: 'Circ Desk 2',
+    code: 'cd2',
+    discoveryDisplayName: 'Circulation Desk -- Back Entrance',
+    pickupLocation: true,
+  };
+
+  setupApplication({
+    scenarios: ['itemIsNotLoanable'],
+    currentUser: {
+      servicePoints: [servicePoint],
+      curServicePoint: servicePoint,
+    },
+  });
 
   beforeEach(function () {
     return this.visit('/checkout', () => {
@@ -16,7 +41,7 @@ describe('override loan policy', () => {
   describe('entering an item barcode', () => {
     beforeEach(async function () {
       this.server.create('user', {
-        barcode: '123456',
+        barcode: userBarcode,
         personal: {
           firstName: 'Bob',
           lastName: 'Brown',
@@ -24,27 +49,17 @@ describe('override loan policy', () => {
       });
 
       await checkOut
-        .fillPatronBarcode('123456')
+        .fillPatronBarcode(userBarcode)
         .clickPatronBtn();
     });
 
     describe('non loanable checkout', () => {
       beforeEach(async function () {
-        this.server.create('item', {
-          barcode: '123',
-          circulationNotes: [
-            {
-              note: 'test note',
-              noteType: 'Check out',
-              staffOnly: false,
-            }
-          ],
-        });
+        item = this.server.create('item', { barcode: itemBarcode });
 
         await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn()
-          .checkoutNoteModal.clickConfirm();
+          .fillItemBarcode(itemBarcode)
+          .clickItemBtn();
       });
 
       describe('error modal', () => {
@@ -138,6 +153,34 @@ describe('override loan policy', () => {
 
                   it('should be active', () => {
                     expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.false;
+                  });
+
+                  describe('click on save and close button', () => {
+                    beforeEach(async function () {
+                      await checkOut.overrideModal.saveAndCloseButton.click();
+                    });
+
+                    it('override modal should not be displayed', () => {
+                      expect(checkOut.overrideModal.isPresent).to.be.false;
+                    });
+
+                    it('item should be checked out', () => {
+                      expect(checkOut.items().length).to.equal(1);
+                    });
+
+                    describe('checked out item', () => {
+                      it('should have proper title', () => {
+                        expect(checkOut.items(0).title.text).to.equal(item.title);
+                      });
+
+                      it('should have proper loan policy', () => {
+                        expect(checkOut.items(0).loanPolicy.text).to.equal(loanPolicyName);
+                      });
+
+                      it('should have proper barcode', () => {
+                        expect(checkOut.items(0).barcode.text).to.equal(item.barcode);
+                      });
+                    });
                   });
                 });
               });

@@ -1,4 +1,8 @@
 import CQLParser from './cql';
+import {
+  loanPolicyId,
+  loanPolicyName,
+} from '../constants';
 
 // typical mirage config export
 export default function config() {
@@ -119,8 +123,35 @@ export default function config() {
   });
 
   this.get('/loan-policy-storage/loan-policies', {
-    loanPolicies: [],
-    totalRecords: 0
+    'loanPolicies' : [{
+      'id' : loanPolicyId,
+      'name' : loanPolicyName,
+      'description' : 'An example loan policy',
+      'loanable' : true,
+      'loansPolicy' : {
+        'profileId' : 'Rolling',
+        'period' : {
+          'duration' : 1,
+          'intervalId' : 'Months'
+        },
+        'closedLibraryDueDateManagementId' : 'CURRENT_DUE_DATE',
+        'gracePeriod' : {
+          'duration' : 7,
+          'intervalId' : 'Days'
+        }
+      },
+      'renewable' : true,
+      'renewalsPolicy' : {
+        'unlimited' : true,
+        'renewFromId' : 'CURRENT_DUE_DATE',
+        'differentPeriod' : true,
+        'period' : {
+          'duration' : 30,
+          'intervalId' : 'Days'
+        }
+      }
+    }],
+    'totalRecords' : 1
   });
 
   this.get('/inventory/items', ({ items }, request) => {
@@ -133,5 +164,27 @@ export default function config() {
     } else {
       return [];
     }
+  });
+
+  this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
+    const { itemBarcode } = JSON.parse(request.requestBody);
+
+    return items.findBy({ barcode: itemBarcode });
+  });
+
+  this.post('/circulation/override-check-out-by-barcode', ({ items }, request) => {
+    const {
+      itemBarcode,
+      dueDate,
+      comment,
+    } = JSON.parse(request.requestBody);
+    const { attrs: item } = items.findBy({ barcode: itemBarcode });
+
+    return {
+      loanPolicyId,
+      comment,
+      dueDate,
+      item,
+    };
   });
 }

@@ -214,6 +214,10 @@ class ScanItems extends React.Component {
     this.setState({ showCheckoutNote: true, itemWithNotes: item });
   }
 
+  successfulCheckout = () => {
+    this.setState({ checkoutStatus: 'success' });
+  };
+
   checkout(barcode) {
     const {
       stripes,
@@ -236,7 +240,7 @@ class ScanItems extends React.Component {
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
-        this.setState({ checkoutStatus: 'success' });
+        this.successfulCheckout();
         this.clearField('itemForm', 'item.barcode');
         this.resolve();
       })
@@ -416,6 +420,8 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           addScannedItem={this.addScannedItem}
+          fetchLoanPolicy={this.fetchLoanPolicy}
+          successfulCheckout={this.successfulCheckout}
         />
         {loading &&
           <Icon
