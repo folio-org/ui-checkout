@@ -7,7 +7,7 @@ module.exports.test = function uiTest(uiTestCtx) {
     this.timeout(Number(config.test_timeout));
 
     describe('Open app > Trigger error messages > Logout', () => {
-      const uselector = "#list-plugin-find-user div[role='row'][aria-rowindex='3'] > a > div:nth-of-type(3)";
+      const uselector = "#list-plugin-find-user div[role='row'][aria-rowindex='3'] > div:nth-of-type(3)";
 
       before((done) => {
         login(nightmare, config, done);
@@ -87,8 +87,8 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('#input-patron-identifier', null)
           .wait('#clickable-find-user')
           .click('#clickable-find-user')
-          .wait('#clickable-filter-pg-faculty')
-          .click('#clickable-filter-pg-faculty')
+          .wait('#clickable-filter-active-active')
+          .click('#clickable-filter-active-active')
           .wait(uselector)
           .click(uselector)
           .wait('#patron-form ~ div a > strong')
