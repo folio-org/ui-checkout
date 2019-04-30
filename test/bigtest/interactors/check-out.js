@@ -43,6 +43,9 @@ import {
   dueDate = scoped('[data-test-item-due-date]');
   time = scoped('[data-test-item-time]');
   actions = scoped('[data-test-item-actions]');
+  whenLoaded() {
+    return this.when(() => this.isPresent);
+  }
 }
 
 export default interactor(class CheckOutInteractor {
@@ -68,4 +71,8 @@ export default interactor(class CheckOutInteractor {
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+
+  whenUserIsLoaded() {
+    return this.when(() => this.patronFullName.isPresent);
+  }
 });
