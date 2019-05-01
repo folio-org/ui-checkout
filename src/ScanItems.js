@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, upperFirst } from 'lodash';
 import React from 'react';
 import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
@@ -6,10 +6,12 @@ import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form
 import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-
+import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import MultipieceModal from './components/MultipieceModal';
+import CheckoutNoteModal from './components/CheckoutNoteModal';
+
 import { to } from './util';
 
 import checkoutSuccessSound from '../sound/checkout_success.m4a';
@@ -90,14 +92,22 @@ class ScanItems extends React.Component {
     this.checkout = this.checkout.bind(this);
     this.tryCheckout = this.tryCheckout.bind(this);
     this.cancelCheckout = this.cancelCheckout.bind(this);
+    this.confirmCheckoutNoteModal = this.confirmCheckoutNoteModal.bind(this);
+    this.showCheckoutNotes = this.showCheckoutNotes.bind(this);
+    this.hideCheckoutNoteModal = this.hideCheckoutNoteModal.bind(this);
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
-    this.state = { loading: false, checkoutStatus: null };
+    this.state = {
+      loading: false,
+      checkoutStatus: null,
+      item: {},
+    };
     this.itemInput = React.createRef();
   }
 
-  async getMultipieceItem(barcode) {
+  async modalsToDisplay(barcode) {
     const { mutator } = this.props;
     const query = `barcode==${barcode}`;
+    this.setState({ item: null });
     mutator.items.reset();
     const [error, items] = await to(mutator.items.GET({ params: { query } }));
 
@@ -111,14 +121,19 @@ class ScanItems extends React.Component {
       missingPieces,
     } = item;
 
-    if ((!numberOfPieces || numberOfPieces <= 1) &&
-         !descriptionOfPieces &&
-         !numberOfMissingPieces &&
-         !missingPieces) {
-      return null;
+    const multipieceItem = item;
+    const isCheckOutNote = element => element.noteType === 'Check out';
+    const showCheckoutNoteModal = get(item, ['circulationNotes'], []).some(isCheckOutNote);
+
+    if ((!numberOfPieces || numberOfPieces <= 1) && !descriptionOfPieces && !numberOfMissingPieces && !missingPieces) {
+      if (showCheckoutNoteModal) {
+        return { item, showCheckoutNoteModal };
+      } else {
+        return { item };
+      }
     }
 
-    return item;
+    return { item, multipieceItem, showCheckoutNoteModal };
   }
 
   closeMultipieceModal() {
@@ -153,28 +168,55 @@ class ScanItems extends React.Component {
       throw new SubmissionError({});
     }
 
-    const multipieceItem = await this.getMultipieceItem(data.item.barcode);
+    const modalsToDisplay = await this.modalsToDisplay(data.item.barcode);
+
+    const { item, multipieceItem, showCheckoutNoteModal } = modalsToDisplay || {};
+
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
-      if (multipieceItem) {
-        this.setState({ multipieceItem });
-        return;
+      if (!multipieceItem) {
+        if (!showCheckoutNoteModal) {
+          this.checkout(data.item.barcode);
+        }
+
+        this.setState({ item, showCheckoutNoteModal });
+      } else {
+        this.setState({ item, multipieceItem, showCheckoutNoteModal });
       }
-      this.checkout(data.item.barcode);
     });
   }
 
   cancelCheckout() {
     this.closeMultipieceModal();
+    this.hideCheckoutNoteModal();
     this.clearField('itemForm', 'item.barcode');
     this.reject(new SubmissionError({}));
   }
 
   confirmCheckout(item) {
     this.closeMultipieceModal();
+    this.hideCheckoutNoteModal();
     this.checkout(item.barcode);
   }
+
+  confirmCheckoutNoteModal() {
+    const { item } = this.state;
+    this.setState({ showCheckoutNoteModal: false }, () => this.checkout(item.barcode));
+  }
+
+  hideCheckoutNoteModal() {
+    this.setState({ showCheckoutNoteModal: false, showCheckoutNote: false }, () => this.reject(new SubmissionError({})));
+  }
+
+  showCheckoutNotes(loan) {
+    const { item } = loan;
+    this.setState({ showCheckoutNote: true, itemWithNotes: item });
+  }
+
+  successfulCheckout = () => {
+    this.setState({ checkoutStatus: 'success' });
+  };
 
   checkout(barcode) {
     const {
@@ -188,7 +230,7 @@ class ScanItems extends React.Component {
 
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const loanData = {
-      itemBarcode: barcode,
+      itemBarcode: barcode.trim(),
       userBarcode: patron.barcode,
       loanDate: moment().utc().format(),
       servicePointId,
@@ -198,7 +240,7 @@ class ScanItems extends React.Component {
       .then(loan => this.fetchLoanPolicy(loan))
       .then(loan => this.addScannedItem(loan))
       .then(() => {
-        this.setState({ checkoutStatus: 'success' });
+        this.successfulCheckout();
         this.clearField('itemForm', 'item.barcode');
         this.resolve();
       })
@@ -240,16 +282,18 @@ class ScanItems extends React.Component {
     this.reject(new SubmissionError({ item: itemError }));
   }
 
-  addScannedItem(loan) {
+  addScannedItem = (loan) => {
     const {
       parentResources,
       parentMutator,
     } = this.props;
 
+    const { item } = this.state;
+    loan.item.circulationNotes = (item || {}).circulationNotes || [];
     const scannedItems = [loan].concat(parentResources.scannedItems);
 
     return parentMutator.scannedItems.replace(scannedItems);
-  }
+  };
 
   fetchLoanPolicy = async (loan) => {
     const {
@@ -257,15 +301,14 @@ class ScanItems extends React.Component {
     } = this.props;
 
     const query = `(id=="${loan.loanPolicyId}")`;
+
     loanPolicies.reset();
 
     const policies = await loanPolicies.GET({ params: { query } });
-    const loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-
-    loan.loanPolicy = loanPolicy;
+    loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
 
     return loan;
-  }
+  };
 
   clearField(formName, fieldName) {
     this.store.dispatch(change(formName, fieldName, ''));
@@ -284,6 +327,66 @@ class ScanItems extends React.Component {
     this.setState({ checkoutStatus: null });
   }
 
+  renderCheckoutNoteModal() {
+    const { item, showCheckoutNoteModal, itemWithNotes, showCheckoutNote } = this.state;
+    const notesItem = itemWithNotes || item;
+    const { title, barcode } = notesItem;
+
+    const checkoutNotesArray = get(notesItem, ['circulationNotes'], [])
+      .filter(noteObject => noteObject.noteType === 'Check out');
+
+    const notes = checkoutNotesArray.map(checkoutNoteObject => {
+      const { note } = checkoutNoteObject;
+      return { note };
+    });
+    const formatter = { note: itemObj => `${itemObj.note}` };
+    const columnMapping = { note: <FormattedMessage id="ui-checkout.note" /> };
+    const visibleColumns = ['note'];
+    const columnWidths = { note : '100%' };
+
+
+    const id = showCheckoutNote ? 'ui-checkout.checkoutNotes.message' : 'ui-checkout.checkoutNoteModal.message';
+    const heading = showCheckoutNote ?
+      <FormattedMessage id="ui-checkout.checkoutNotes.heading" /> :
+      <FormattedMessage id="ui-checkout.checkoutNoteModal.heading" />;
+    const cancelLabel = showCheckoutNote ?
+      <FormattedMessage id="ui-checkout.close" /> :
+      <FormattedMessage id="ui-checkout.multipieceModal.cancel" />;
+
+    const message = (
+      <SafeHTMLMessage
+        id={id}
+        values={{
+          title,
+          barcode,
+          materialType: upperFirst(get(notesItem, ['materialType', 'name'], '')),
+          count: notes.length
+        }}
+      />
+    );
+
+    return (
+      <CheckoutNoteModal
+        data-test-checkoutNote-modal
+        open={showCheckoutNote || showCheckoutNoteModal}
+        heading={heading}
+        onConfirm={this.confirmCheckoutNoteModal}
+        onCancel={this.hideCheckoutNoteModal}
+        hideConfirm={showCheckoutNote}
+        cancelLabel={cancelLabel}
+        confirmLabel={<FormattedMessage id="ui-checkout.confirm" />}
+        notes={notes}
+        formatter={formatter}
+        message={message}
+        columnMapping={columnMapping}
+        visibleColumns={visibleColumns}
+        columnWidths={columnWidths}
+      />
+    );
+  }
+
+  onConfirm = item => this.confirmCheckout(item);
+
   render() {
     const {
       parentResources,
@@ -296,11 +399,16 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       multipieceItem,
+      showCheckoutNoteModal,
+      item,
+      showCheckoutNote
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
-    const checkoutSound = (checkoutStatus === 'success') ? checkoutSuccessSound : checkoutErrorSound;
+    const checkoutSound = (checkoutStatus === 'success')
+      ? checkoutSuccessSound
+      : checkoutErrorSound;
 
     return (
       <div data-test-scan-items>
@@ -310,6 +418,10 @@ class ScanItems extends React.Component {
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
+          item={item}
+          addScannedItem={this.addScannedItem}
+          fetchLoanPolicy={this.fetchLoanPolicy}
+          successfulCheckout={this.successfulCheckout}
         />
         {loading &&
           <Icon
@@ -319,6 +431,7 @@ class ScanItems extends React.Component {
         }
         <ViewItem
           scannedItems={scannedItems}
+          showCheckoutNotes={this.showCheckoutNotes}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus &&
@@ -328,12 +441,13 @@ class ScanItems extends React.Component {
             onEnded={this.onFinishedPlaying}
           />
         }
+        {(showCheckoutNote || showCheckoutNoteModal) && this.renderCheckoutNoteModal()}
         {multipieceItem &&
           <MultipieceModal
             open={!!multipieceItem}
             item={multipieceItem}
             onClose={this.cancelCheckout}
-            onConfirm={item => this.confirmCheckout(item)}
+            onConfirm={this.onConfirm}
           />
         }
       </div>

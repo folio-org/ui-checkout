@@ -73,5 +73,21 @@
     "multipieceModal.item.numberOfMissingPieces": "Numero di pezzi mancanti",
     "multipieceModal.item.descriptionOfmissingPieces": "Descrizione dei pezzi mancanti",
     "openAccounts": "Fees/fines owed",
-    "additionalReasons": "View block details to see additional reasons for block..."
+    "additionalReasons": "View block details to see additional reasons for block...",
+    "multipieceModal.cancel": "Cancel",
+    "note": "Note",
+    "checkoutNoteModal.heading": "Confirm check out",
+    "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
+    "checkoutNotes": "Check out Notes",
+    "checkoutNotes.heading": "Check out notes",
+    "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>Non-circulating</strong> loan policy.",
+    "cddd.date": "Date",
+    "cddd.time": "Time",
+    "comment": "Comment",
+    "override": "Override",
+    "saveAndClose": "Save & close",
+    "overrideLoanPolicy": "Override loan policy",
+    "confirm": "Confirm",
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>."
 }

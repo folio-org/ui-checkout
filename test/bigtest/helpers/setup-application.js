@@ -3,11 +3,13 @@ import mirageOptions from '../network';
 
 export default function setupApplication({
   scenarios,
-  hasAllPerms = true
+  hasAllPerms = true,
+  currentUser = {},
 } = {}) {
   setupStripesCore({
     mirageOptions,
     scenarios,
+    currentUser,
     stripesConfig: {
       hasAllPerms
     }

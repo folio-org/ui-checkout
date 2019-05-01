@@ -73,5 +73,21 @@
     "multipieceModal.item.numberOfMissingPieces": "Número de partes que faltam",
     "multipieceModal.item.descriptionOfmissingPieces": "Descrição das partes faltantes",
     "openAccounts": "Taxas/multas devidas",
-    "additionalReasons": "Exibir detalhes da suspensão para ver as razões adicionais para a suspensão..."
+    "additionalReasons": "Exibir detalhes da suspensão para ver as razões adicionais para a suspensão...",
+    "multipieceModal.cancel": "Cancelar",
+    "note": "Nota",
+    "checkoutNoteModal.heading": "Confirmar o empréstimo",
+    "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>",
+    "checkoutNotes": "Notas de empréstimo",
+    "checkoutNotes.heading": "Notas de empréstimo",
+    "checkoutNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode} ) não é <strong>emprestável</strong> acordo com a política de empréstimo <strong>Não circulação</strong>.",
+    "cddd.date": "Data",
+    "cddd.time": "Horário",
+    "comment": "Comentário",
+    "override": "Sobrescrever",
+    "saveAndClose": "Salvar e fechar",
+    "overrideLoanPolicy": "Sobrescrever política de empréstimo",
+    "confirm": "Confirmar",
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) será <strong>emprestado</strong>."
 }

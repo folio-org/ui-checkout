@@ -1,6 +1,8 @@
-import { isEmpty } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
+import { FormattedMessage } from 'react-intl';
 
 import {
   Field,
@@ -16,27 +18,45 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-import { withStripes } from '@folio/stripes/core';
-import { FormattedMessage } from 'react-intl';
+import {
+  withStripes,
+  stripesShape,
+} from '@folio/stripes/core';
 
 import ScanTotal from '../ScanTotal';
 import ErrorModal from '../ErrorModal';
+import OverrideModal from '../OverrideModal';
 
 class ItemForm extends React.Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    submitting: PropTypes.bool,
+    stripes: stripesShape.isRequired,
+    submitting: PropTypes.bool.isRequired,
+    submitSucceeded: PropTypes.bool.isRequired,
+    item: PropTypes.object,
     patron: PropTypes.object,
-    stripes: PropTypes.object,
-    submitSucceeded: PropTypes.bool,
+    handleSubmit: PropTypes.func.isRequired,
+    addScannedItem: PropTypes.func.isRequired,
+    fetchLoanPolicy: PropTypes.func.isRequired,
+    successfulCheckout: PropTypes.func.isRequired,
   };
 
-  constructor() {
-    super();
+  static defaultProps = {
+    patron: {},
+    item: {},
+  };
 
-    this.clearForm = this.clearForm.bind(this);
-    this.renderErrorModal = this.renderErrorModal.bind(this);
+  static getDerivedStateFromProps(props, { error }) {
+    return { error: props.submitErrors.item || error || {} };
+  }
+
+  constructor(props) {
+    super(props);
+
     this.barcodeEl = React.createRef();
+    this.state = {
+      overrideModalOpen: false,
+      error: {},
+    };
   }
 
   componentDidMount() {
@@ -64,79 +84,91 @@ class ItemForm extends React.Component {
     }
   }
 
-  getFormErrors() {
-    const { stripes: { store } } = this.props;
-    return getFormSubmitErrors('itemForm')(store.getState());
-  }
+  setError = (error) => {
+    this.setState({ error });
+  };
 
-  clearForm() {
-    const { stripes: { store } } = this.props;
-    store.dispatch(reset('itemForm'));
-  }
+  openOverrideModal = () => {
+    this.setState({ overrideModalOpen: true });
+  };
+
+  closeOverrideModal = () => {
+    this.setState({ overrideModalOpen: false });
+  };
 
   focusInput() {
     this.barcodeEl.current.focus();
   }
 
-  renderErrorModal() {
-    const errors = this.getFormErrors();
-    const error = errors.item || {};
+  clearForm = () => {
+    const { resetForm } = this.props;
 
-    return (
-      <ErrorModal
-        open={!isEmpty(error)}
-        onClose={this.clearForm}
-        message={error.barcode}
-      />
-    );
-  }
+    this.setError({});
+    resetForm();
+  };
 
-  render() {
-    const {
-      submitting,
-      handleSubmit,
-      patron,
-    } = this.props;
+ handleSubmit = (data) => {
+   const {
+     handleSubmit,
+   } = this.props;
 
-    const validationEnabled = false;
+   handleSubmit(data);
+ };
 
-    return (
-      <form
-        id="item-form"
-        onSubmit={handleSubmit}
-      >
-        <Row id="section-item">
-          <Col xs={4}>
-            <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
-              {placeholder => (
-                <FormattedMessage id="ui-checkout.itemId">
-                  {ariaLabel => (
-                    <Field
-                      name="item.barcode"
-                      placeholder={placeholder}
-                      aria-label={ariaLabel}
-                      fullWidth
-                      id="input-item-barcode"
-                      component={TextField}
-                      inputRef={this.barcodeEl}
-                      validationEnabled={validationEnabled}
-                    />
-                  )}
-                </FormattedMessage>
-              )}
-            </FormattedMessage>
-          </Col>
-          <Col xs={2}>
-            <Button
-              id="clickable-add-item"
-              type="submit"
-              buttonStyle="primary"
-              disabled={submitting}
-            >
-              <FormattedMessage id="ui-checkout.enter" />
-            </Button>
-          </Col>
-          {
+ render() {
+   const {
+     submitting,
+     patron,
+     stripes,
+     item,
+     addScannedItem,
+     fetchLoanPolicy,
+     successfulCheckout,
+   } = this.props;
+
+   const { error } = this.state;
+
+   const { overrideModalOpen } = this.state;
+   const validationEnabled = false;
+
+   return (
+     <React.Fragment>
+       <form
+         id="item-form"
+         onSubmit={this.handleSubmit}
+       >
+         <Row id="section-item">
+           <Col xs={4}>
+             <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
+               {placeholder => (
+                 <FormattedMessage id="ui-checkout.itemId">
+                   {ariaLabel => (
+                     <Field
+                       fullWidth
+                       name="item.barcode"
+                       component={TextField}
+                       aria-label={ariaLabel}
+                       id="input-item-barcode"
+                       placeholder={placeholder}
+                       inputRef={this.barcodeEl}
+                       validationEnabled={validationEnabled}
+                     />
+                   )}
+                 </FormattedMessage>
+               )}
+             </FormattedMessage>
+           </Col>
+           <Col xs={2}>
+             <Button
+               id="clickable-add-item"
+               type="submit"
+               buttonStyle="primary"
+               disabled={submitting}
+             >
+               <FormattedMessage id="ui-checkout.enter" />
+             </Button>
+           </Col>
+           {
             !isEmpty(patron) &&
             <Col xs={6}>
               <Row end="xs">
@@ -147,13 +179,47 @@ class ItemForm extends React.Component {
               </Row>
             </Col>
           }
-        </Row>
-        {this.renderErrorModal()}
-      </form>
-    );
-  }
+         </Row>
+       </form>
+       {
+         !isEmpty(error) &&
+         <ErrorModal
+           stripes={stripes}
+           item={item}
+           message={error.barcode}
+           open={!isEmpty(error)}
+           openOverrideModal={this.openOverrideModal}
+           onClose={this.clearForm}
+         />
+       }
+       {
+         overrideModalOpen &&
+         <OverrideModal
+           item={item}
+           patron={patron}
+           stripes={stripes}
+           addScannedItem={addScannedItem}
+           fetchLoanPolicy={fetchLoanPolicy}
+           successfulCheckout={successfulCheckout}
+           overrideModalOpen={overrideModalOpen}
+           setError={this.setError}
+           closeOverrideModal={this.closeOverrideModal}
+         />
+       }
+     </React.Fragment>
+   );
+ }
 }
-
-export default reduxForm({
+const itemForm = reduxForm({
   form: 'itemForm',
 })(withStripes(ItemForm));
+
+const mapDispatchToProps = dispatch => ({
+  resetForm: () => dispatch(reset('itemForm')),
+});
+
+const mapStateToProps = state => ({
+  submitErrors: getFormSubmitErrors('itemForm')(state)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(itemForm);
