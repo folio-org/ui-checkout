@@ -2,9 +2,10 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
+import { loanPolicyId } from '../constants';
 
 describe('CheckOut', () => {
-  setupApplication({ scenarios: ['checkoutByBarcode'] });
+  setupApplication()//{ scenarios: ['checkoutByBarcode'] });
   const checkOut = new CheckOutInteractor();
 
   beforeEach(function () {
@@ -56,23 +57,23 @@ describe('CheckOut', () => {
         expect(checkOut.patronEnterBtnPresent).to.be.true;
       });
     });
-  });
+  // });
 
-  describe('entering a blocked patron barcode', () => {
-    beforeEach(async function () {
-      const user = this.server.create('user', {
-        barcode: '123456',
-        personal: {
-          firstName: 'Bob',
-          lastName: 'Brown',
-        },
-      });
-      this.server.create('manualblock', { userId: user.id });
-    });
+  // describe('entering a blocked patron barcode', () => {
+  //   beforeEach(async function () {
+  //     const user = this.server.create('user', {
+  //       barcode: '123456',
+  //       personal: {
+  //         firstName: 'Bob',
+  //         lastName: 'Brown',
+  //       },
+  //     });
+  //     this.server.create('manualblock', { userId: user.id });
+  //   });
 
-    it('shows the patron block modal', () => {
-      expect(checkOut.blockModal.modalPresent).to.be.true;
-    });
+  //   it('shows the patron block modal', () => {
+  //     expect(checkOut.blockModal.modalPresent).to.be.true;
+  //   });
   });
 
   describe('entering an item barcode', () => {
@@ -93,11 +94,10 @@ describe('CheckOut', () => {
 
     describe('checking out a single item', () => {
       beforeEach(async function () {
-        let item = this.server.create('item', {
+        this.server.create('item', {
           barcode: '123',
           title: 'Book 1',
         });
-        this.server.create('loan');
 
         await checkOut
           .fillItemBarcode('123')
@@ -106,6 +106,7 @@ describe('CheckOut', () => {
 
       it('shows a list of checked out items', () => {
         expect(checkOut.scanItems.itemListPresent).to.be.true;
+        expect(checkOut.items().length).to.equal(1);
       });
     });
 
@@ -120,20 +121,20 @@ describe('CheckOut', () => {
           holdingsRecordId: 'holdings1',
         });
         loan = this.server.create('loan', { itemId: 'i1' });
-        item = this.server.create('item', {
-          barcode: '456',
-          title: 'B',
-          instanceId: 'instance2',
-          holdingsRecordId: 'holdings2'
-        });
-        this.server.create('loan', { item: item.attsrs, itemId: item.id });
-        item = this.server.create('item', {
-          barcode: '789',
-          title: 'C',
-          instanceId: 'instance3',
-          holdingsRecordId: 'holdings3'
-        });
-        this.server.create('loan', { item: item.attrs, itemId: item.id });
+    //     item = this.server.create('item', {
+    //       barcode: '456',
+    //       title: 'B',
+    //       instanceId: 'instance2',
+    //       holdingsRecordId: 'holdings2'
+    //     });
+    //     this.server.create('loan', { item: item.attsrs, itemId: item.id });
+    //     item = this.server.create('item', {
+    //       barcode: '789',
+    //       title: 'C',
+    //       instanceId: 'instance3',
+    //       holdingsRecordId: 'holdings3'
+    //     });
+    //     this.server.create('loan', { item: item.attrs, itemId: item.id });
 
         await checkOut
           .fillItemBarcode('123')
@@ -171,15 +172,15 @@ describe('CheckOut', () => {
 
         it('redirects to the loan policy page', function () {
           const { search, pathname } = this.location;
-          expect(pathname + search).to.include('/settings/circulation/loan-policies/policy1');
+          expect(pathname + search).to.include(`/settings/circulation/loan-policies/${loanPolicyId}`);
         });
       });
 
-      describe('changing due date', () => {
-        beforeEach(async function () {
+    //   describe('changing due date', () => {
+    //     beforeEach(async function () {
 
-        });
-      });
+    //     });
+    //   });
     });
 
     describe('checking out multipiece item', () => {

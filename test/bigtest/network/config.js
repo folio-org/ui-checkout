@@ -187,7 +187,7 @@ export default function config() {
     totalRecords: 0,
   });
   this.get('/instance-types', {
-    instanceTpyes: [],
+    instanceTypes: [],
     totalRecords: 0,
   });
   this.get('/instance-relationship-types', {
