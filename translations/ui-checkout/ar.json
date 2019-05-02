@@ -61,7 +61,7 @@
     "patronBlocks": "حظر المستفيدين",
     "blockModal": "تم حظرالمستفيد من الإعارة",
     "detailsButton": "تفاصيل الحظر",
-    "blockedLabel": "سبب الحظر:",
+    "blockedLabel": "سبب الحظر",
     "awaitingPickupMessage": "لدى المستعير <strong>{count}</strong>{count, plural, one {مادة} other {مواد}} في انتظار الالتقاط في نقطة الخدمة تلك.",
     "awaitingPickupLabel": "مواد في انتظار الالتقاط",
     "multipieceModal.confirm": "إعارة",
