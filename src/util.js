@@ -35,7 +35,7 @@ export function getPatronIdentifiers(checkoutSettings) {
 }
 
 export function buildIdentifierQuery(patron, idents) {
-  const query = idents.map(ident => `${patronIdentifierMap[ident]}="${patron.identifier}"`);
+  const query = idents.map(ident => `${patronIdentifierMap[ident]}=="${patron.identifier}"`);
   return `(${query.join(' OR ')})`;
 }
 
