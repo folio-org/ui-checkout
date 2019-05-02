@@ -34,9 +34,8 @@ function ErrorModal(props) {
     openOverrideModal();
   };
 
-  const canBeOverridden = // stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
-    // &&
-    OVERRIDABLE_ERROR_MESSAGES.includes(message);
+  const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
+    && OVERRIDABLE_ERROR_MESSAGES.includes(message);
 
   return (
     <Modal

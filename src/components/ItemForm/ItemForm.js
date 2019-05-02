@@ -36,9 +36,6 @@ class ItemForm extends React.Component {
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onScan: PropTypes.func.isRequired,
-    // addScannedItem: PropTypes.func.isRequired,
-    // fetchLoanPolicy: PropTypes.func.isRequired,
-    // successfulCheckout: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
