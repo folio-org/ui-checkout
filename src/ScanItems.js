@@ -17,7 +17,6 @@ import { to } from './util';
 import checkoutSuccessSound from '../sound/checkout_success.m4a';
 import checkoutErrorSound from '../sound/checkout_error.m4a';
 
-
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
     loanPolicies: {
@@ -30,6 +29,12 @@ class ScanItems extends React.Component {
     checkout: {
       type: 'okapi',
       path: 'circulation/check-out-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
+    overrideCheckout: {
+      type: 'okapi',
+      path: 'circulation/override-check-out-by-barcode',
       fetch: false,
       throwErrors: false,
     },
@@ -55,6 +60,9 @@ class ScanItems extends React.Component {
         reset: PropTypes.func,
       }),
       checkout: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      overrideCheckout: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
@@ -100,6 +108,7 @@ class ScanItems extends React.Component {
       loading: false,
       checkoutStatus: null,
       item: {},
+      data: {},
     };
     this.itemInput = React.createRef();
   }
@@ -168,8 +177,9 @@ class ScanItems extends React.Component {
       throw new SubmissionError({});
     }
 
-    const modalsToDisplay = await this.modalsToDisplay(data.item.barcode);
+    this.setState({ data });
 
+    const modalsToDisplay = await this.modalsToDisplay(data.item.barcode);
     const { item, multipieceItem, showCheckoutNoteModal } = modalsToDisplay || {};
 
     return new Promise((resolve, reject) => {
@@ -202,11 +212,18 @@ class ScanItems extends React.Component {
 
   confirmCheckoutNoteModal() {
     const { item } = this.state;
-    this.setState({ showCheckoutNoteModal: false }, () => this.checkout(item.barcode));
+    this.setState({ showCheckoutNoteModal: false }, () => {
+      this.checkout(item.barcode);
+    });
   }
 
   hideCheckoutNoteModal() {
-    this.setState({ showCheckoutNoteModal: false, showCheckoutNote: false }, () => this.reject(new SubmissionError({})));
+    this.setState({
+      showCheckoutNoteModal: false,
+      showCheckoutNote: false,
+    }, () => {
+      this.reject(new SubmissionError({}));
+    });
   }
 
   showCheckoutNotes(loan) {
@@ -215,50 +232,74 @@ class ScanItems extends React.Component {
   }
 
   successfulCheckout = () => {
-    this.setState({ checkoutStatus: 'success' });
+    this.setState({ checkoutStatus: 'success', data: null });
   };
 
   checkout(barcode) {
-    const {
-      stripes,
-      mutator,
-      patron,
-    } = this.props;
+    const { stripes, patron } = this.props;
+    const { data: { action } } = this.state;
+    const servicePointId = get(stripes, 'user.user.curServicePoint.id', '');
 
     this.setState({ loading: true });
     this.clearError('itemForm');
 
-    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
-    const loanData = {
+    const baseData = {
       itemBarcode: barcode.trim(),
       userBarcode: patron.barcode,
-      loanDate: moment().utc().format(),
       servicePointId,
     };
 
-    mutator.checkout.POST(loanData)
-      .then(loan => this.fetchLoanPolicy(loan))
-      .then(loan => this.addScannedItem(loan))
+    const performAction = (action === 'override')
+      ? this.performOverride
+      : this.performCheckout;
+
+    performAction(baseData)
+      .then(this.fetchLoanPolicy)
+      .then(this.addScannedItem)
       .then(() => {
         this.successfulCheckout();
         this.clearField('itemForm', 'item.barcode');
         this.resolve();
       })
-      .catch(resp => {
-        this.setState({ checkoutStatus: 'error' });
-        const contentType = resp.headers.get('Content-Type');
-        if (contentType && contentType.startsWith('application/json')) {
-          return resp.json().then(error => {
-            this.handleErrors(error);
-          });
-        } else {
-          this.reject();
-          return resp.text().then(error => {
-            alert(error); // eslint-disable-line no-alert
-          });
-        }
-      })
+      .catch(this.catchErrors)
       .finally(() => this.setState({ loading: false }));
+  }
+
+  performCheckout = (baseData) => {
+    const { mutator: { checkout } } = this.props;
+    const checkoutData = {
+      ...baseData,
+      loanDate: moment().utc().format(),
+    };
+
+    return checkout.POST(checkoutData);
+  }
+
+  performOverride = (baseData) => {
+    const { mutator: { overrideCheckout } } = this.props;
+    const { data: { comment, dueDate } } = this.state;
+    const overrideData = {
+      ...baseData,
+      comment,
+      dueDate,
+    };
+
+    return overrideCheckout.POST(overrideData);
+  }
+
+  catchErrors = (resp) => {
+    this.setState({ checkoutStatus: 'error' });
+    const contentType = resp.headers.get('Content-Type');
+    if (contentType && contentType.startsWith('application/json')) {
+      return resp.json().then(error => {
+        this.handleErrors(error);
+      });
+    } else {
+      this.reject();
+      return resp.text().then(error => {
+        alert(error); // eslint-disable-line no-alert
+      });
+    }
   }
 
   handleErrors({
@@ -414,14 +455,11 @@ class ScanItems extends React.Component {
       <div>
         <ItemForm
           ref={this.itemInput}
-          onSubmit={this.tryCheckout}
+          onScan={this.tryCheckout}
           patron={patron}
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
           item={item}
-          addScannedItem={this.addScannedItem}
-          fetchLoanPolicy={this.fetchLoanPolicy}
-          successfulCheckout={this.successfulCheckout}
         />
         {loading &&
           <Icon
