@@ -120,9 +120,7 @@ class ItemForm extends React.Component {
       handleSubmit,
     } = this.props;
 
-    const { error } = this.state;
-
-    const { overrideModalOpen } = this.state;
+    const { error, overrideModalOpen } = this.state;
     const validationEnabled = false;
 
     return (
@@ -163,39 +161,39 @@ class ItemForm extends React.Component {
               </Button>
             </Col>
             {
-            !isEmpty(patron) &&
-            <Col xs={6}>
-              <Row end="xs">
-                <ScanTotal
-                  buttonId="clickable-done"
-                  {...this.props}
-                />
-              </Row>
-            </Col>
-          }
+              !isEmpty(patron) &&
+              <Col xs={6}>
+                <Row end="xs">
+                  <ScanTotal
+                    buttonId="clickable-done"
+                    {...this.props}
+                  />
+                </Row>
+              </Col>
+            }
           </Row>
         </form>
         {
-         !isEmpty(error) &&
-         <ErrorModal
-           stripes={stripes}
-           item={item}
-           message={error.barcode}
-           open={!isEmpty(error)}
-           openOverrideModal={this.openOverrideModal}
-           onClose={this.clearForm}
-         />
-       }
+          !isEmpty(error) &&
+          <ErrorModal
+            stripes={stripes}
+            item={item}
+            message={error.barcode}
+            open={!isEmpty(error)}
+            openOverrideModal={this.openOverrideModal}
+            onClose={this.clearForm}
+          />
+        }
         {
-         overrideModalOpen &&
-         <OverrideModal
-           item={item}
-           stripes={stripes}
-           onOverride={this.scan}
-           overrideModalOpen={overrideModalOpen}
-           closeOverrideModal={this.closeOverrideModal}
-         />
-       }
+          overrideModalOpen &&
+          <OverrideModal
+            item={item}
+            stripes={stripes}
+            onOverride={this.scan}
+            overrideModalOpen={overrideModalOpen}
+            closeOverrideModal={this.closeOverrideModal}
+          />
+        }
       </React.Fragment>
     );
   }
