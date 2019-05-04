@@ -109,17 +109,18 @@ class ScanItems extends React.Component {
     this.setState({ item: null });
     mutator.items.reset();
     const itemsResp = await mutator.items.GET({ params: { query } });
+
     return get(itemsResp, '[0]');
   }
 
-  validate(item) {
+  validate(barcode) {
     const {
       patron,
       patronBlocks,
       openBlockedModal
     } = this.props;
 
-    if (!item) {
+    if (!barcode) {
       throw new SubmissionError({
         item: {
           barcode: <FormattedMessage id="ui-checkout.missingDataError" />,
@@ -144,20 +145,18 @@ class ScanItems extends React.Component {
   }
 
   tryCheckout = async (data) => {
-    this.validate(data);
-
-    const { item: { barcode } } = data;
+    const barcode = get(data, 'item.barcode');
+    this.validate(barcode);
     const item = await this.fetchItem(barcode);
 
     return new Promise((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
-
       if (!item) {
         this.checkout(barcode);
+      } else {
+        this.setState({ item });
       }
-
-      this.setState({ item });
     });
   }
 
@@ -186,9 +185,8 @@ class ScanItems extends React.Component {
     };
   }
 
-  checkout = () => {
+  checkout = (barcode) => {
     const { mutator: { checkout } } = this.props;
-    const barcode = get(this.state, 'item.barcode', '');
     const checkoutData = {
       ...this.getRequestData(barcode),
       loanDate: moment().utc().format(),
@@ -303,6 +301,11 @@ class ScanItems extends React.Component {
     this.reject(new SubmissionError({}));
   }
 
+  onDone = () => {
+    const barcode = get(this.state, 'item.barcode', '');
+    this.checkout(barcode);
+  }
+
   render() {
     const {
       parentResources,
@@ -331,7 +334,7 @@ class ScanItems extends React.Component {
           <ModalManager
             checkedoutItem={item}
             checkoutNotesMode={checkoutNotesMode}
-            onDone={this.checkout}
+            onDone={this.onDone}
             onCancel={this.onCancel}
           />
         }

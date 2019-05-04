@@ -179,7 +179,7 @@ class ItemForm extends React.Component {
           !isEmpty(error) &&
           <ErrorModal
             stripes={stripes}
-            item={item}
+            item={item || {}}
             message={error.barcode}
             open={!isEmpty(error)}
             openOverrideModal={this.openOverrideModal}
