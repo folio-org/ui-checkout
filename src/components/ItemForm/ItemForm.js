@@ -119,6 +119,7 @@ class ItemForm extends React.Component {
       patron,
       stripes,
       item,
+      onOverride,
     } = this.props;
 
     const { error, overrideModalOpen } = this.state;
@@ -190,7 +191,7 @@ class ItemForm extends React.Component {
           <OverrideModal
             item={item}
             stripes={stripes}
-            onOverride={this.props.onOverride}
+            onOverride={onOverride}
             overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
           />
