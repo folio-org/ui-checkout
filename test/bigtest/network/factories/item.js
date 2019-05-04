@@ -3,7 +3,7 @@ import { Factory, faker, trait } from '@bigtest/mirage';
 export default Factory.extend({
   status: () => ({ name: 'Checked out' }),
   title: () => faker.company.catchPhrase(),
-  barcode: () => Math.floor(Math.random() * 9000000000000) + 1000000000000,
+  barcode: () => '' + Math.floor(Math.random() * 9000000000000) + 1000000000000,
   instanceId: () => faker.random.uuid(),
   callNumber: () => Math.floor(Math.random() * 90000000) + 10000000,
   holdingsRecordId: () => faker.random.uuid(),
