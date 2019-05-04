@@ -22,13 +22,12 @@ function ErrorModal(props) {
     message,
     openOverrideModal,
     stripes,
-    item,
+    item: {
+      title,
+      barcode,
+      materialType: { name: materialType } = {},
+    } = {},
   } = props;
-  const {
-    title,
-    barcode,
-    materialType: { name: materialType } = {},
-  } = (item || {});
 
   const handleOverrideClick = () => {
     onClose();
