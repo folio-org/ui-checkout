@@ -35,7 +35,7 @@ class ItemForm extends React.Component {
     item: PropTypes.object,
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    onScan: PropTypes.func.isRequired,
+    onOverride: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -105,11 +105,13 @@ class ItemForm extends React.Component {
     resetForm();
   };
 
+  handleSubmit = (data) => {
+    const {
+      handleSubmit,
+    } = this.props;
 
-  scan = (data) => {
-    this.closeOverrideModal();
-    return this.props.onScan(data);
-  }
+    handleSubmit(data);
+  };
 
   render() {
     const {
@@ -117,7 +119,7 @@ class ItemForm extends React.Component {
       patron,
       stripes,
       item,
-      handleSubmit,
+      onOverride,
     } = this.props;
 
     const { error, overrideModalOpen } = this.state;
@@ -127,7 +129,7 @@ class ItemForm extends React.Component {
       <React.Fragment>
         <form
           id="item-form"
-          onSubmit={handleSubmit(this.scan)}
+          onSubmit={this.handleSubmit}
         >
           <Row id="section-item">
             <Col xs={4}>
@@ -189,7 +191,7 @@ class ItemForm extends React.Component {
           <OverrideModal
             item={item}
             stripes={stripes}
-            onOverride={this.scan}
+            onOverride={onOverride}
             overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
           />

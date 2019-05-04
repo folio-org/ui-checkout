@@ -18,7 +18,7 @@ const MultipieceModal = (props) => {
 
   const footer = (
     <ModalFooter>
-      <Button buttonStyle="primary" onClick={() => onConfirm(item)}>
+      <Button data-test-multipiece-modal-confirm-btn buttonStyle="primary" onClick={() => onConfirm(item)}>
         <FormattedMessage id="ui-checkout.multipieceModal.confirm" />
       </Button>
       <Button onClick={onClose}>

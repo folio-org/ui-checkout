@@ -28,6 +28,10 @@ export const INVALIDE_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'BARCODE';
 
-export default '';
-
 export const OVERRIDABLE_ERROR_MESSAGES = ['Item is not loanable'];
+
+export const statuses = {
+  CHECK_OUT: 'Check out',
+};
+
+export default '';

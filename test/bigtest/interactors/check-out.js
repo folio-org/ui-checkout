@@ -14,6 +14,11 @@ import {
   multipieceModalPresent = isPresent('#multipiece-modal');
 }
 
+@interactor class MultipieceModalInteractor {
+  present = isPresent('[data-test-multipiece-modal-confirm-btn]');
+  clickConfirm = clickable('[data-test-multipiece-modal-confirm-btn]');
+}
+
 @interactor class CheckoutNoteModalInteractor {
   present = isPresent('[data-test-checkoutnotemodal-confirm-button]');
   clickConfirm = clickable('[data-test-checkoutnotemodal-confirm-button]');
@@ -69,6 +74,7 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
+  multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
 

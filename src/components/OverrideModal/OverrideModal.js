@@ -37,29 +37,23 @@ function OverrideModal(props) {
     },
 
   } = props;
-  const [additionalInfo, setAdditionalInfo] = useState('');
-  const [datetime, setDatetime] = useState('');
+  const [comment, setAdditionalInfo] = useState('');
+  const [dueDate, setDatetime] = useState('');
 
   const handleDateTimeChanged = (newDateTime) => {
     setDatetime(newDateTime);
   };
 
-  const canBeSubmitted = additionalInfo && datetime !== INVALIDE_DATE_MESSAGE;
+  const canBeSubmitted = comment && dueDate !== INVALIDE_DATE_MESSAGE;
 
   const onSubmit = async (event) => {
     event.preventDefault();
     closeOverrideModal();
-
-    const data = {
-      action: 'override',
-      comment: additionalInfo,
-      dueDate: datetime,
-      item: {
-        barcode,
-      }
-    };
-
-    onOverride(data);
+    onOverride({
+      comment,
+      dueDate,
+      barcode,
+    });
   };
 
   return (
