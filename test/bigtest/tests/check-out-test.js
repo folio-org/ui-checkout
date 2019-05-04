@@ -87,7 +87,7 @@ describe('CheckOut', () => {
       });
 
       it('shows multipiece modal', () => {
-        expect(checkOut.patronEnterBtnPresent).to.be.true;
+        expect(checkOut.multipieceModal.present).to.be.true;
       });
     });
 
@@ -195,6 +195,41 @@ describe('CheckOut', () => {
 
     it('newest item should be on top', () => {
       expect(checkOut.items(0).barcode.text).to.equal(items[1].barcode.toString());
+    });
+  });
+
+  describe('shows and hides all pre checkout modals one after another', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user');
+      this.server.create('item', 'withLoan', {
+        barcode: '123',
+        numberOfPieces: 2,
+        descriptionOfPieces: 'book + dvd',
+        circulationNotes: [
+          {
+            note: 'test note',
+            noteType: 'Check out',
+            staffOnly: false,
+          }
+        ],
+      });
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      await checkOut
+        .fillItemBarcode('123')
+        .clickItemBtn();
+
+      await checkOut.multipieceModal.clickConfirm();
+      await checkOut.checkoutNoteModal.clickConfirm();
+    });
+
+    it('hides all pre checkout modals', () => {
+      expect(checkOut.multipieceModal.present).to.be.false;
+      expect(checkOut.checkoutNoteModal.present).to.be.false;
     });
   });
 });
