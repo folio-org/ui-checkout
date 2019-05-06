@@ -57,7 +57,7 @@ describe('CheckOut', () => {
         expect(checkOut.patronEnterBtnPresent).to.be.true;
       });
     });
-  // });
+  });
 
   // describe('entering a blocked patron barcode', () => {
   //   beforeEach(async function () {
@@ -74,7 +74,7 @@ describe('CheckOut', () => {
   //   it('shows the patron block modal', () => {
   //     expect(checkOut.blockModal.modalPresent).to.be.true;
   //   });
-  });
+  // });
 
   describe('entering an item barcode', () => {
     beforeEach(async function () {
@@ -176,11 +176,25 @@ describe('CheckOut', () => {
         });
       });
 
-    //   describe('changing due date', () => {
-    //     beforeEach(async function () {
+      describe('changing due date', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.changeDueDate();
+        });
 
-    //     });
-    //   });
+        it('shows the change date dialog', () => {
+          expect(checkOut.itemMenu.changeDueDateDialogPresent).to.be.true;
+        });
+
+        describe('closing change date dialog', () => {
+          beforeEach(async function () {
+            await checkOut.itemMenu.clickCloseDueDate();
+          });
+
+          it('closes the change date dialog', () => {
+            expect(checkOut.itemMenu.changeDueDateDialogPresent).to.be.false;
+          });
+        });
+      });
     });
 
     describe('checking out multipiece item', () => {
