@@ -235,7 +235,7 @@ class ViewItem extends React.Component {
               </MenuItem>
             }
             <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
-              <Button buttonStyle="dropdownItem">
+              <Button data-test-date-picker buttonStyle="dropdownItem">
                 <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
               </Button>
             </MenuItem>
