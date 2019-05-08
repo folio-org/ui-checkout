@@ -61,7 +61,7 @@
     "patronBlocks": "Blocchi dell'utente",
     "blockModal": "Utente bloccato sui prestiti",
     "detailsButton": "Dettagli del blocco",
-    "blockedLabel": "Motivo del blocco:",
+    "blockedLabel": "Motivo del blocco",
     "awaitingPickupMessage": "L'utente ha <strong> {count} </strong> {count, plural, una {item} diverse {items}} in attesa di ritiro in questo punto di servizio.",
     "awaitingPickupLabel": "Copie in attesa di ritiro",
     "multipieceModal.confirm": "Presta",

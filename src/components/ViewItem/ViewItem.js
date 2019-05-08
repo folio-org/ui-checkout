@@ -54,7 +54,7 @@ class ViewItem extends React.Component {
 
     this.state = {
       sortOrder: ['no', 'title'],
-      sortDirection: ['asc', 'asc'],
+      sortDirection: ['desc', 'asc'],
       activeLoan: {},
       changeDueDateDialogOpen: false,
     };

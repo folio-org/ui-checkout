@@ -16,7 +16,6 @@ import {
 } from '@folio/stripes/components';
 import {
   stripesShape,
-  stripesConnect,
 } from '@folio/stripes/core';
 import { DueDatePicker } from '@folio/stripes/smart-components';
 
@@ -28,65 +27,33 @@ import {
 function OverrideModal(props) {
   const {
     stripes,
-    stripes: {
-      user: {
-        user: {
-          curServicePoint: {
-            id: servicePointId
-          }
-        }
-      }
-    },
-    mutator: {
-      overrideCheckout: {
-        POST,
-      }
-    },
     overrideModalOpen,
     closeOverrideModal,
-    setError,
-    addScannedItem,
-    fetchLoanPolicy,
-    successfulCheckout,
+    onOverride,
     item: {
       title,
-      barcode: itemBarcode,
+      barcode,
       materialType: { name: materialType },
     },
-    patron: {
-      barcode: patronBarcode
-    },
+
   } = props;
-  const [additionalInfo, setAdditionalInfo] = useState('');
-  const [datetime, setDatetime] = useState('');
+  const [comment, setAdditionalInfo] = useState('');
+  const [dueDate, setDatetime] = useState('');
 
   const handleDateTimeChanged = (newDateTime) => {
     setDatetime(newDateTime);
   };
 
-  const canBeSubmitted = additionalInfo && datetime !== INVALIDE_DATE_MESSAGE;
+  const canBeSubmitted = comment && dueDate !== INVALIDE_DATE_MESSAGE;
 
   const onSubmit = async (event) => {
     event.preventDefault();
     closeOverrideModal();
-
-    try {
-      const item = {
-        userBarcode: patronBarcode,
-        comment: additionalInfo,
-        dueDate: datetime,
-        servicePointId,
-        itemBarcode,
-      };
-
-      let loan = await POST(item);
-
-      loan = await fetchLoanPolicy(loan);
-      await addScannedItem(loan);
-      successfulCheckout();
-    } catch (error) {
-      setError({ barcode: error.statusText });
-    }
+    onOverride({
+      comment,
+      dueDate,
+      barcode,
+    });
   };
 
   return (
@@ -107,7 +74,7 @@ function OverrideModal(props) {
           <p>
             <SafeHTMLMessage
               id="ui-checkout.messages.itemWillBeCheckedOut"
-              values={{ title, barcode: itemBarcode, materialType }}
+              values={{ title, barcode, materialType }}
             />
           </p>
         </Col>
@@ -168,30 +135,11 @@ function OverrideModal(props) {
 OverrideModal.propTypes = {
   stripes: stripesShape.isRequired,
   item: PropTypes.object.isRequired,
-  patron: PropTypes.object.isRequired,
   overrideModalOpen: PropTypes.bool.isRequired,
-  setError: PropTypes.func.isRequired,
-  addScannedItem: PropTypes.func.isRequired,
-  fetchLoanPolicy: PropTypes.func.isRequired,
-  successfulCheckout: PropTypes.func.isRequired,
+  onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
-  mutator: PropTypes.shape({
-    overrideCheckout: PropTypes.shape({
-      POST: PropTypes.func,
-    }),
-  }),
 };
-
-OverrideModal.manifest = Object.freeze({
-  overrideCheckout: {
-    type: 'okapi',
-    path: 'circulation/override-check-out-by-barcode',
-    fetch: false,
-    throwErrors: false,
-  }
-});
-
 
 export default reduxForm({
   form: 'overrideForm',
-})(stripesConnect(OverrideModal));
+})(OverrideModal);

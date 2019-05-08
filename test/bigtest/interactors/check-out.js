@@ -31,6 +31,11 @@ import {
   modalPresent = isPresent('[data-test-block-modal]');
 }
 
+@interactor class MultipieceModalInteractor {
+  present = isPresent('[data-test-multipiece-modal-confirm-btn]');
+  clickConfirm = clickable('[data-test-multipiece-modal-confirm-btn]');
+}
+
 @interactor class CheckoutNoteModalInteractor {
   present = isPresent('[data-test-checkoutnotemodal-confirm-button]');
   clickConfirm = clickable('[data-test-checkoutnotemodal-confirm-button]');
@@ -60,6 +65,9 @@ import {
   dueDate = scoped('[data-test-item-due-date]');
   time = scoped('[data-test-item-time]');
   actions = scoped('[data-test-item-actions]');
+  whenLoaded() {
+    return this.when(() => this.isPresent);
+  }
 }
 
 export default interactor(class CheckOutInteractor {
@@ -86,7 +94,6 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
-  //scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
 
   checkoutItem(barcode) {
@@ -94,5 +101,13 @@ export default interactor(class CheckOutInteractor {
     return this
       .fillItemBarcode(barcode)
       .clickItemBtn();
+  }
+
+  multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
+  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
+  items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+
+  whenUserIsLoaded() {
+    return this.when(() => this.patronFullName.isPresent);
   }
 });

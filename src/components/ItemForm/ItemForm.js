@@ -35,9 +35,7 @@ class ItemForm extends React.Component {
     item: PropTypes.object,
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
-    addScannedItem: PropTypes.func.isRequired,
-    fetchLoanPolicy: PropTypes.func.isRequired,
-    successfulCheckout: PropTypes.func.isRequired,
+    onOverride: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -107,108 +105,100 @@ class ItemForm extends React.Component {
     resetForm();
   };
 
- handleSubmit = (data) => {
-   const {
-     handleSubmit,
-   } = this.props;
+  handleSubmit = (data) => {
+    const {
+      handleSubmit,
+    } = this.props;
 
-   handleSubmit(data);
- };
+    handleSubmit(data);
+  };
 
- render() {
-   const {
-     submitting,
-     patron,
-     stripes,
-     item,
-     addScannedItem,
-     fetchLoanPolicy,
-     successfulCheckout,
-   } = this.props;
+  render() {
+    const {
+      submitting,
+      patron,
+      stripes,
+      item,
+      onOverride,
+    } = this.props;
 
-   const { error } = this.state;
+    const { error, overrideModalOpen } = this.state;
+    const validationEnabled = false;
 
-   const { overrideModalOpen } = this.state;
-   const validationEnabled = false;
-
-   return (
-     <React.Fragment>
-       <form
-         id="item-form"
-         onSubmit={this.handleSubmit}
-       >
-         <Row id="section-item">
-           <Col xs={4}>
-             <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
-               {placeholder => (
-                 <FormattedMessage id="ui-checkout.itemId">
-                   {ariaLabel => (
-                     <Field
-                       fullWidth
-                       name="item.barcode"
-                       component={TextField}
-                       aria-label={ariaLabel}
-                       id="input-item-barcode"
-                       placeholder={placeholder}
-                       inputRef={this.barcodeEl}
-                       validationEnabled={validationEnabled}
-                     />
-                   )}
-                 </FormattedMessage>
-               )}
-             </FormattedMessage>
-           </Col>
-           <Col xs={2}>
-             <Button
-               id="clickable-add-item"
-               type="submit"
-               buttonStyle="primary"
-               disabled={submitting}
-             >
-               <FormattedMessage id="ui-checkout.enter" />
-             </Button>
-           </Col>
-           {
-            !isEmpty(patron) &&
-            <Col xs={6}>
-              <Row end="xs">
-                <ScanTotal
-                  buttonId="clickable-done"
-                  {...this.props}
-                />
-              </Row>
+    return (
+      <React.Fragment>
+        <form
+          id="item-form"
+          onSubmit={this.handleSubmit}
+        >
+          <Row id="section-item">
+            <Col xs={4}>
+              <FormattedMessage id="ui-checkout.scanOrEnterItemBarcode">
+                {placeholder => (
+                  <FormattedMessage id="ui-checkout.itemId">
+                    {ariaLabel => (
+                      <Field
+                        fullWidth
+                        name="item.barcode"
+                        component={TextField}
+                        aria-label={ariaLabel}
+                        id="input-item-barcode"
+                        placeholder={placeholder}
+                        inputRef={this.barcodeEl}
+                        validationEnabled={validationEnabled}
+                      />
+                    )}
+                  </FormattedMessage>
+                )}
+              </FormattedMessage>
             </Col>
-          }
-         </Row>
-       </form>
-       {
-         !isEmpty(error) &&
-         <ErrorModal
-           stripes={stripes}
-           item={item}
-           message={error.barcode}
-           open={!isEmpty(error)}
-           openOverrideModal={this.openOverrideModal}
-           onClose={this.clearForm}
-         />
-       }
-       {
-         overrideModalOpen &&
-         <OverrideModal
-           item={item}
-           patron={patron}
-           stripes={stripes}
-           addScannedItem={addScannedItem}
-           fetchLoanPolicy={fetchLoanPolicy}
-           successfulCheckout={successfulCheckout}
-           overrideModalOpen={overrideModalOpen}
-           setError={this.setError}
-           closeOverrideModal={this.closeOverrideModal}
-         />
-       }
-     </React.Fragment>
-   );
- }
+            <Col xs={2}>
+              <Button
+                id="clickable-add-item"
+                type="submit"
+                buttonStyle="primary"
+                disabled={submitting}
+              >
+                <FormattedMessage id="ui-checkout.enter" />
+              </Button>
+            </Col>
+            {
+              !isEmpty(patron) &&
+              <Col xs={6}>
+                <Row end="xs">
+                  <ScanTotal
+                    buttonId="clickable-done"
+                    {...this.props}
+                  />
+                </Row>
+              </Col>
+            }
+          </Row>
+        </form>
+        {
+          !isEmpty(error) &&
+          <ErrorModal
+            stripes={stripes}
+            item={item || {}}
+            message={error.barcode}
+            open={!isEmpty(error)}
+            openOverrideModal={this.openOverrideModal}
+            onClose={this.clearForm}
+          />
+        }
+        {
+          overrideModalOpen &&
+          <OverrideModal
+            item={item}
+            stripes={stripes}
+            onOverride={onOverride}
+            overrideModalOpen={overrideModalOpen}
+            closeOverrideModal={this.closeOverrideModal}
+          />
+        }
+      </React.Fragment>
+    );
+  }
 }
 const itemForm = reduxForm({
   form: 'itemForm',
