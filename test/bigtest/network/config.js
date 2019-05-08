@@ -99,6 +99,8 @@ export default function config() {
     }
   });
 
+  this.get('/users/:id', (schema, request) => schema.users.find(request.params.id));
+
   this.get('/groups', {
     usergroups: [],
     totalRecords: 0
@@ -206,7 +208,7 @@ export default function config() {
     const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
     return (
       {
-        'id': '1',
+        'id': item.id,
         'userId': patron.id,
         'itemId': item.id,
         'status': {

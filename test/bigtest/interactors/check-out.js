@@ -88,4 +88,11 @@ export default interactor(class CheckOutInteractor {
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   //scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+
+  checkoutItem(barcode) {
+    console.log("test fn called with", barcode)
+    return this
+      .fillItemBarcode(barcode)
+      .clickItemBtn();
+  }
 });

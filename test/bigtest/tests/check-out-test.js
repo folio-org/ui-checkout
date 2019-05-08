@@ -99,9 +99,7 @@ describe('CheckOut', () => {
           title: 'Book 1',
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
       });
 
       it('shows a list of checked out items', () => {
@@ -113,32 +111,16 @@ describe('CheckOut', () => {
     describe('using the item menu', () => {
       let loan;
       beforeEach(async function () {
-        let item = this.server.create('item', {
-          id: 'i1',
+        this.server.create('item', {
           barcode: '123',
           title: 'A',
           instanceId: 'instance1',
           holdingsRecordId: 'holdings1',
         });
-        loan = this.server.create('loan', { itemId: 'i1' });
-    //     item = this.server.create('item', {
-    //       barcode: '456',
-    //       title: 'B',
-    //       instanceId: 'instance2',
-    //       holdingsRecordId: 'holdings2'
-    //     });
-    //     this.server.create('loan', { item: item.attsrs, itemId: item.id });
-    //     item = this.server.create('item', {
-    //       barcode: '789',
-    //       title: 'C',
-    //       instanceId: 'instance3',
-    //       holdingsRecordId: 'holdings3'
-    //     });
-    //     this.server.create('loan', { item: item.attrs, itemId: item.id });
+        loan = this.server.create('loan', { itemId: '1' });
 
         await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn()
+          .checkoutItem('123')
           .itemMenu.clickItemMenu();
       });
 
@@ -149,7 +131,7 @@ describe('CheckOut', () => {
 
         it('redirects to item details page', function () {
           const { search, pathname } = this.location;
-          expect(pathname + search).to.include('/inventory/view/instance1/holdings1/i1');
+          expect(pathname + search).to.include('/inventory/view/instance1/holdings1/1');
         });
       });
 
@@ -197,6 +179,34 @@ describe('CheckOut', () => {
       });
     });
 
+    describe('sorting items', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          title: 'A',
+        });
+        this.server.create('item', {
+          barcode: '456',
+          title: 'C',
+        });
+        this.server.create('item', {
+          barcode: '789',
+          title: 'B',
+        });
+
+        await checkOut
+        //  .checkoutItem('123')
+          .checkoutItem('456').timeout(10000)
+          .checkoutItem('789').timeout(10000);
+          console.log("done with checkouts")
+      });
+
+      it('shows the list of checked-out items', () => {
+        console.log("items",checkOut.items(0))
+        expect(checkOut.items().length).to.equal(3);
+      });
+    });
+
     describe('checking out multipiece item', () => {
       beforeEach(async function () {
         this.server.create('item', {
@@ -205,9 +215,7 @@ describe('CheckOut', () => {
           descriptionOfPieces: 'book + dvd',
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
       });
 
       it('shows multipiece modal', () => {
@@ -228,9 +236,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
       });
 
       it('shows checkoutNote modal', () => {
@@ -251,9 +257,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
         await checkOut.checkoutNoteModal.clickConfirm();
       });
 
@@ -275,9 +279,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('245')
-          .clickItemBtn();
+        await checkOut.checkoutItem('245');
         await checkOut.checkoutNoteModal.clickConfirm();
         await checkOut.selectElipse();
         await checkOut.awaitDropdownPresent;
