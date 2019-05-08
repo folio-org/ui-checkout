@@ -97,7 +97,6 @@ export default interactor(class CheckOutInteractor {
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
 
   checkoutItem(barcode) {
-    console.log("test fn called with", barcode)
     return this
       .fillItemBarcode(barcode)
       .clickItemBtn();

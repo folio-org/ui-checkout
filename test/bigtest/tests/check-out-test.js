@@ -179,34 +179,6 @@ describe('CheckOut', () => {
       });
     });
 
-    describe('sorting items', () => {
-      beforeEach(async function () {
-        this.server.create('item', {
-          barcode: '123',
-          title: 'A',
-        });
-        this.server.create('item', {
-          barcode: '456',
-          title: 'C',
-        });
-        this.server.create('item', {
-          barcode: '789',
-          title: 'B',
-        });
-
-        await checkOut
-        //  .checkoutItem('123')
-          .checkoutItem('456').timeout(10000)
-          .checkoutItem('789').timeout(10000);
-          console.log("done with checkouts")
-      });
-
-      it('shows the list of checked-out items', () => {
-        console.log("items",checkOut.items(0))
-        expect(checkOut.items().length).to.equal(3);
-      });
-    });
-
     describe('checking out multipiece item', () => {
       beforeEach(async function () {
         this.server.create('item', {
@@ -321,6 +293,42 @@ describe('CheckOut', () => {
 
     it('newest item should be on top', () => {
       expect(checkOut.items(0).barcode.text).to.equal(items[1].barcode.toString());
+    });
+  });
+
+  describe('sorting items', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user');
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      this.server.create('item', {
+        barcode: '123',
+        title: 'A',
+      });
+      this.server.create('item', {
+        barcode: '456',
+        title: 'C',
+      });
+      this.server.create('item', {
+        barcode: '789',
+        title: 'B',
+      });
+
+      await checkOut
+        .checkoutItem('123')
+        .items(0).whenLoaded()
+        .checkoutItem('456')
+        .items(1).whenLoaded()
+        .checkoutItem('789')
+        .items(2).whenLoaded();
+    });
+
+    it('shows the list of checked-out items', () => {
+      expect(checkOut.items().length).to.equal(3);
     });
   });
 

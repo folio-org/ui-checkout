@@ -41,7 +41,7 @@ describe('Utility functions', () => {
     it('converts a set of identifiers to a CQL query', () => {
       const patron = { identifier: '12345678' };
       const idents = ['BARCODE', 'FOLIO'];
-      expect(buildIdentifierQuery(patron, idents)).to.equal('(barcode="12345678" OR id="12345678")');
+      expect(buildIdentifierQuery(patron, idents)).to.equal('(barcode=="12345678" OR id=="12345678")');
     });
   });
 });
