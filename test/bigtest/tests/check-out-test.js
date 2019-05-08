@@ -307,7 +307,7 @@ describe('CheckOut', () => {
 
       this.server.create('item', {
         barcode: '123',
-        title: 'A',
+        title: 'B',
       });
       this.server.create('item', {
         barcode: '456',
@@ -329,6 +329,21 @@ describe('CheckOut', () => {
 
     it('shows the list of checked-out items', () => {
       expect(checkOut.items().length).to.equal(3);
+    });
+
+    it('shows the first item first before sort', () => {
+      expect(checkOut.items(0).title.text).to.equal('B');
+    });
+
+    describe('clicking a header to sort', () => {
+      beforeEach(async function () {
+        await checkOut.scanItems.clickTitleSort();
+      });
+
+      it('sorts the list of items alphabetically', () => {
+        expect(checkOut.items(0).title.text).to.equal('A');
+        expect(checkOut.items(2).title.text).to.equal('C');
+      });
     });
   });
 

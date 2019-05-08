@@ -13,6 +13,7 @@ import {
 @interactor class ScanItemsInteractor {
   multipieceModalPresent = isPresent('#multipiece-modal');
   itemListPresent = isPresent('#list-items-checked-out');
+  clickTitleSort = clickable("#clickable-list-column-title");
 }
 
 @interactor class ItemMenuInteractor {
