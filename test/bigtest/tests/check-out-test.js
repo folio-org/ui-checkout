@@ -297,6 +297,7 @@ describe('CheckOut', () => {
   });
 
   describe('sorting items', () => {
+    const titleColumnIndex = 2;
     beforeEach(async function () {
       const user = this.server.create('user');
 
@@ -307,7 +308,7 @@ describe('CheckOut', () => {
 
       this.server.create('item', {
         barcode: '123',
-        title: 'B',
+        title: 'A',
       });
       this.server.create('item', {
         barcode: '456',
@@ -318,6 +319,11 @@ describe('CheckOut', () => {
         title: 'B',
       });
 
+      // The checkout list places new items on top, so checking out in this order will
+      // result in a list as follows:
+      // No 3 => 'B' (first in list)
+      // No 2 => 'C'
+      // No 1 => 'A' (last in list)
       await checkOut
         .checkoutItem('123')
         .items(0).whenLoaded()
@@ -328,21 +334,23 @@ describe('CheckOut', () => {
     });
 
     it('shows the list of checked-out items', () => {
-      expect(checkOut.items().length).to.equal(3);
+      expect(checkOut.itemList.rowCount).to.equal(3);
     });
 
     it('shows the first item first before sort', () => {
-      expect(checkOut.items(0).title.text).to.equal('B');
+      expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('B');
     });
 
     describe('clicking a header to sort', () => {
       beforeEach(async function () {
-        await checkOut.scanItems.clickTitleSort();
+        const titleHeader = checkOut.itemList.headers(titleColumnIndex);
+        await titleHeader.click().whenListIsSorted(titleColumnIndex);
       });
 
       it('sorts the list of items alphabetically', () => {
-        expect(checkOut.items(0).title.text).to.equal('A');
-        expect(checkOut.items(2).title.text).to.equal('C');
+        expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
+        expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
+        expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
       });
     });
   });

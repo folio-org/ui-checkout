@@ -8,12 +8,14 @@ import {
   Interactor,
   property,
   collection,
+  hasClass,
 } from '@bigtest/interactor';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 @interactor class ScanItemsInteractor {
   multipieceModalPresent = isPresent('#multipiece-modal');
   itemListPresent = isPresent('#list-items-checked-out');
-  clickTitleSort = clickable("#clickable-list-column-title");
 }
 
 @interactor class ItemMenuInteractor {
@@ -106,8 +108,13 @@ export default interactor(class CheckOutInteractor {
   multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+  itemList = scoped('#list-items-checked-out', MultiColumnListInteractor);
 
   whenUserIsLoaded() {
     return this.when(() => this.patronFullName.isPresent);
+  }
+
+  whenListIsSorted(column) {
+    return this.when(() => this.itemList.headers(column).isSortHeader);
   }
 });
