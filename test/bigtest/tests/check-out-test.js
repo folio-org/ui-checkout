@@ -5,7 +5,7 @@ import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
 
 describe('CheckOut', () => {
-  setupApplication()//{ scenarios: ['checkoutByBarcode'] });
+  setupApplication(); // { scenarios: ['checkoutByBarcode'] });
   const checkOut = new CheckOutInteractor();
 
   beforeEach(function () {
