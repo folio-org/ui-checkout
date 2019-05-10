@@ -1,9 +1,19 @@
 # Change history for ui-checkout
 
-## 1.8.0 (IN PROGRESS)
+## [1.8.0](https://github.com/folio-org/ui-checkout/tree/v1.8.0) (2019-05-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.7.0...v1.8.0)
 
+* Display multiple messages at check out. UICHKOUT-493.
+* Order checkouts first to last by default. UICHKOUT-498.
+* Link to checkout notes from action menu. UICHKOUT-489.
 * Trim whitespace padding from item barcodes to avoid server errors. Fixes UICHKOUT-506.
 * Use exact matching for user identifiers. Fixes UICHKOUT-510.
+* Implement override loan policy modal. UIU-879.
+* Keep loan policy visible after due date change. UICIRC-197.
+* Implement checkout notes modal. UICHKOUT-488.
+* Requires stripes 2.3.0, stripes-core 3.3.0
+
+
 
 ## [1.7.0](https://github.com/folio-org/ui-checkout/tree/v1.7.0) (2019-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.6.0...v1.7.0)
