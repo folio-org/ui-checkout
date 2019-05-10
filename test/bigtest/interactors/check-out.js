@@ -3,6 +3,7 @@ import {
   fillable,
   interactor,
   isPresent,
+  isVisible,
   text,
   scoped,
   Interactor,
@@ -27,8 +28,10 @@ import {
 @interactor class ErrorModal {
   static defaultScope = '[data-test-error-modal]';
 
-  overrideButton = scoped('[data-test-override-button]');
-  closeButton = scoped('[data-test-close-button]');
+  closeBtnIsVisible = isVisible('[data-test-close-button]');
+  overrideBtnIsVisible = isVisible('[data-test-override-button]');
+  clickOverrideBtn = clickable('[data-test-override-button]');
+  clickCloseBtn = clickable('[data-test-close-button]');
 }
 
 @interactor class OverrideModal {
@@ -36,9 +39,13 @@ import {
 
   dueDatePicker = scoped('[data-test-override-modal-due-date-picker]');
   comment = scoped('[data-test-override-modal-comment]');
-  saveAndCloseButton = scoped('[data-test-override-modal-save-and-close]');
-  saveAndCloseButtonDisabled = property('[data-test-override-modal-save-and-close]', 'disabled');
-  cancelButton = scoped('[data-test-override-modal-cancel]');
+
+  saveAndCloseBtnDisabled = property('[data-test-override-modal-save-and-close]', 'disabled');
+  saveAndCloseBtnIsVisible = isVisible('[data-test-override-modal-save-and-close]');
+  cancelBtnIsVisible = isVisible('[data-test-override-modal-cancel]');
+
+  clickSaveAndCloseBtn = clickable('[data-test-override-modal-save-and-close]');
+  clickCancelBtn = clickable('[data-test-override-modal-cancel]');
 }
 
 @interactor class Item {

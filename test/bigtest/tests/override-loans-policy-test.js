@@ -15,7 +15,7 @@ const userBarcode = '123456';
 const checkOut = new CheckOutInteractor();
 let item;
 
-describe('override loan policy', () => {
+describe.only('override loan policy', () => {
   const servicePoint = {
     id: 'servicepointId2',
     name: 'Circ Desk 2',
@@ -69,12 +69,12 @@ describe('override loan policy', () => {
 
         describe('close button', () => {
           it('should be displayed', () => {
-            expect(checkOut.errorModal.closeButton.isPresent).to.be.true;
+            expect(checkOut.errorModal.closeBtnIsVisible).to.be.true;
           });
 
           describe('close button click', () => {
             beforeEach(async function () {
-              await checkOut.errorModal.closeButton.click();
+              await checkOut.errorModal.clickCloseBtn();
             });
 
             it('should not be displayed', () => {
@@ -85,12 +85,12 @@ describe('override loan policy', () => {
 
         describe('override button', () => {
           it('should be displayed', () => {
-            expect(checkOut.errorModal.overrideButton.isPresent).to.be.true;
+            expect(checkOut.errorModal.overrideBtnIsVisible).to.be.true;
           });
 
           describe('override button click', () => {
             beforeEach(async function () {
-              await checkOut.errorModal.overrideButton.click();
+              await checkOut.errorModal.clickOverrideBtn();
             });
 
             it('should not be displayed', () => {
@@ -116,18 +116,18 @@ describe('override loan policy', () => {
 
               describe('save and close button', () => {
                 it('should be displayed', () => {
-                  expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
+                  expect(checkOut.overrideModal.saveAndCloseBtnIsVisible).to.be.true;
                 });
               });
 
               describe('cancel button', () => {
                 it('should be displayed', () => {
-                  expect(checkOut.overrideModal.cancelButton.isPresent).to.be.true;
+                  expect(checkOut.overrideModal.cancelBtnIsVisible).to.be.true;
                 });
 
                 describe('cancel button click', () => {
                   beforeEach(async function () {
-                    await checkOut.overrideModal.cancelButton.click();
+                    await checkOut.overrideModal.clickCancelBtn();
                   });
 
                   it('should not be displayed', () => {
@@ -138,11 +138,11 @@ describe('override loan policy', () => {
 
               describe('override button', () => {
                 it('should be displayed', () => {
-                  expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
+                  expect(checkOut.overrideModal.saveAndCloseBtnIsVisible).to.be.true;
                 });
 
                 it('should be disabled', () => {
-                  expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.true;
+                  expect(checkOut.overrideModal.saveAndCloseBtnDisabled).to.be.true;
                 });
 
                 describe('fill in date to make it clickable', () => {
@@ -152,12 +152,12 @@ describe('override loan policy', () => {
                   });
 
                   it('should be active', () => {
-                    expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.false;
+                    expect(checkOut.overrideModal.saveAndCloseBtnDisabled).to.be.false;
                   });
 
                   describe('click on save and close button', () => {
                     beforeEach(async function () {
-                      await checkOut.overrideModal.saveAndCloseButton.click();
+                      await checkOut.overrideModal.clickSaveAndCloseBtn();
                     });
 
                     it('override modal should not be displayed', () => {
