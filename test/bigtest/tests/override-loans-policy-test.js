@@ -15,7 +15,7 @@ const userBarcode = '123456';
 const checkOut = new CheckOutInteractor();
 let item;
 
-describe.only('override loan policy', () => {
+describe('override loan policy', () => {
   const servicePoint = {
     id: 'servicepointId2',
     name: 'Circ Desk 2',
