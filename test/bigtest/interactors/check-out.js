@@ -32,6 +32,9 @@ import {
   overrideBtnIsVisible = isVisible('[data-test-override-button]');
   clickOverrideBtn = clickable('[data-test-override-button]');
   clickCloseBtn = clickable('[data-test-close-button]');
+
+  overrideButton = scoped('[data-test-override-button]');
+  closeButton = scoped('[data-test-close-button]');
 }
 
 @interactor class OverrideModal {
