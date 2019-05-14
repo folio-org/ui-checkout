@@ -1,6 +1,6 @@
 /* global it describe Nightmare before after  */
 module.exports.test = function uiTest(uiTestCtx) {
-  const { config, helpers: { login, openApp, logout, circSettingsCheckoutByBarcodeAndUsername }, meta: { testVersion } } = uiTestCtx;
+  const { config, helpers: { login, openApp, clickApp, clickSettings, logout, circSettingsCheckoutByBarcodeAndUsername }, meta: { testVersion } } = uiTestCtx;
 
   describe('Module test: checkout ("error-messages").', function checkout() {
     const nightmare = new Nightmare(config.nightmare);
@@ -30,13 +30,16 @@ module.exports.test = function uiTest(uiTestCtx) {
        * that appear when bad data, or out of order data, is added to different
        * fields.
        */
+      it('should navigate to settings', (done) => {
+        clickSettings(nightmare, done);
+      });
+
+      it('should navigate to checkout', (done) => {
+        clickApp(nightmare, done, 'checkout');
+      });
+
       it('should show error when scanning item before patron card', (done) => {
         nightmare
-          .wait(config.select.settings)
-          .click(config.select.settings)
-          .wait('#clickable-checkout-module')
-          .click('#clickable-checkout-module')
-          .wait('#checkout-module-display')
           .wait('#input-item-barcode')
           .click('#input-item-barcode')
           .insert('#input-item-barcode', 'item-before-patron')
@@ -52,13 +55,16 @@ module.exports.test = function uiTest(uiTestCtx) {
           .catch(done);
       });
 
+      it('should navigate to settings', (done) => {
+        clickSettings(nightmare, done);
+      });
+
+      it('should navigate to checkout', (done) => {
+        clickApp(nightmare, done, 'checkout');
+      });
+
       it('should show error when entering wrong patron ID', (done) => {
         nightmare
-          .wait(config.select.settings)
-          .click(config.select.settings)
-          .wait('#clickable-checkout-module')
-          .click('#clickable-checkout-module')
-          .wait('#checkout-module-display')
           .wait('#input-patron-identifier')
           .insert('#input-patron-identifier', 'wrong-patron-id')
           .wait('#clickable-find-patron')
@@ -78,10 +84,12 @@ module.exports.test = function uiTest(uiTestCtx) {
         circSettingsCheckoutByBarcodeAndUsername(nightmare, config, done);
       });
 
+      it('should navigate to checkout', (done) => {
+        clickApp(nightmare, done, 'checkout');
+      });
+
       it('should find existing patron', (done) => {
         nightmare
-          .wait('#clickable-checkout-module')
-          .click('#clickable-checkout-module')
           .wait('#input-item-barcode')
           .insert('#input-item-barcode', null)
           .insert('#input-patron-identifier', null)
