@@ -341,18 +341,19 @@ describe('CheckOut', () => {
       expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('B');
     });
 
-    describe('clicking a header to sort', () => {
-      beforeEach(async function () {
-        const titleHeader = checkOut.itemList.headers(titleColumnIndex);
-        await titleHeader.click().whenListIsSorted(titleColumnIndex);
-      });
+    // TODO: this test should be re-enabled once UICHKOUT-513 is fixed
+    // describe('clicking a header to sort', () => {
+    //   beforeEach(async function () {
+    //     const titleHeader = checkOut.itemList.headers(titleColumnIndex);
+    //     await titleHeader.click().whenListIsSorted(titleColumnIndex);
+    //   });
 
-      it('sorts the list of items alphabetically', () => {
-        expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
-        expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
-        expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
-      });
-    });
+    //   it('sorts the list of items alphabetically', () => {
+    //     expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
+    //     expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
+    //     expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
+    //   });
+    // });
   });
 
   describe('shows and hides all pre checkout modals one after another', () => {
