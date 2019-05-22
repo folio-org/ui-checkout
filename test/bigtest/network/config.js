@@ -224,6 +224,28 @@ export default function config() {
     );
   });
 
+  this.post('/circulation/override-check-out-by-barcode', (schema, request) => {
+    const parsedRequest = JSON.parse(request.requestBody);
+    const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
+    const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+    return (
+      {
+        'id': item.id,
+        'userId': patron.id,
+        'itemId': item.id,
+        'status': {
+          'name': 'Open'
+        },
+        'loanDate': '2017-03-05T18:32:31Z',
+        'dueDate': '2017-03-19T18:32:31.000+0000',
+        'action': 'checkedout',
+        'renewalCount': 0,
+        item,
+        'loanPolicyId': loanPolicyId,
+      }
+    );
+  });
+
   // this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
   //   const { itemBarcode } = JSON.parse(request.requestBody);
 
