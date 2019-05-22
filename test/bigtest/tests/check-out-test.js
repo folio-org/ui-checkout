@@ -328,9 +328,11 @@ describe('CheckOut', () => {
         .checkoutItem('123')
         .items(0).whenLoaded()
         .checkoutItem('456')
-        .items(1).whenLoaded()
+        .items(1)
+        .whenLoaded()
         .checkoutItem('789')
-        .items(2).whenLoaded();
+        .items(2)
+        .whenLoaded();
     });
 
     it('shows the list of checked-out items', () => {

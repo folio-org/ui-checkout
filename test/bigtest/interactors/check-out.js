@@ -8,7 +8,6 @@ import {
   Interactor,
   property,
   collection,
-  hasClass,
 } from '@bigtest/interactor';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
