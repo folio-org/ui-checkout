@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## 1.9.0 (IN PROGRESS)
+
+* Remove spurious, do-nothing settings permission.
+
 ## [1.8.0](https://github.com/folio-org/ui-checkout/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.7.0...v1.8.0)
 
