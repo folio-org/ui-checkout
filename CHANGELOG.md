@@ -1,6 +1,8 @@
 # Change history for ui-checkout
 
-## In progress
+## 1.9.0 (IN PROGRESS)
+
+* Remove spurious, do-nothing settings permission.
 * Add BigTest tests for increased code coverage. Completes UICHKOUT-481.
 
 ## [1.8.0](https://github.com/folio-org/ui-checkout/tree/v1.8.0) (2019-05-10)
