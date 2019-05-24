@@ -9,9 +9,28 @@ import {
   property,
   collection,
 } from '@bigtest/interactor';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 
 @interactor class ScanItemsInteractor {
   multipieceModalPresent = isPresent('#multipiece-modal');
+  itemListPresent = isPresent('#list-items-checked-out');
+}
+
+@interactor class ItemMenuInteractor {
+  static defaultScope = 'body';
+  clickItemMenu = clickable('[data-test-item-menu] button');
+  selectItemDetails = clickable('[data-test-show-item-details]');
+  selectLoanDetails = clickable('[data-test-show-loan-details');
+  selectLoanPolicy = clickable('[data-test-show-loan-policy]');
+  changeDueDate = clickable('[data-test-date-picker]');
+  changeDueDateDialogPresent = isPresent('div[class^="modalControls---"]');
+  clickCloseDueDate = clickable('div[class^="modalControls---"] button[class^="iconButton---"]');
+}
+
+@interactor class BlockModalInteractor {
+  static defaultScope = 'body';
+  modalPresent = isPresent('[data-test-block-modal]');
 }
 
 @interactor class MultipieceModalInteractor {
@@ -55,6 +74,9 @@ import {
 
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
+  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
+  itemMenu = new ItemMenuInteractor();
+  blockModal = new BlockModalInteractor();
 
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
@@ -74,11 +96,24 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
+  items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+
+  checkoutItem(barcode) {
+    return this
+      .fillItemBarcode(barcode)
+      .clickItemBtn();
+  }
+
   multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+  itemList = scoped('#list-items-checked-out', MultiColumnListInteractor);
 
   whenUserIsLoaded() {
     return this.when(() => this.patronFullName.isPresent);
+  }
+
+  whenListIsSorted(column) {
+    return this.when(() => this.itemList.headers(column).isSortHeader);
   }
 });

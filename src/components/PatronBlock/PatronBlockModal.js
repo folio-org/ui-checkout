@@ -23,6 +23,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
 
   return (
     <Modal
+      data-test-block-modal
       open={open}
       onClose={onClose}
       label={<b><FormattedMessage id="ui-checkout.blockModal" /></b>}

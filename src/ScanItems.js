@@ -328,7 +328,7 @@ class ScanItems extends React.Component {
       : checkoutErrorSound;
 
     return (
-      <React.Fragment>
+      <div data-test-scan-items>
         { /* manages pre checkout modals */}
         {item &&
           <ModalManager
@@ -365,7 +365,7 @@ class ScanItems extends React.Component {
             onEnded={this.onFinishedPlaying}
           />
         }
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -189,6 +189,7 @@ class ViewItem extends React.Component {
     return (
       <div data-test-elipse-select>
         <UncontrolledDropdown
+          data-test-item-menu
           onSelectItem={this.handleOptionsChange}
           onToggle={this.onMenuToggle}
         >
@@ -205,6 +206,7 @@ class ViewItem extends React.Component {
           >
             <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
               <Button
+                data-test-show-item-details
                 buttonStyle="dropdownItem"
                 href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
               >
@@ -213,6 +215,7 @@ class ViewItem extends React.Component {
             </MenuItem>
             <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
               <Button
+                data-test-show-loan-details
                 buttonStyle="dropdownItem"
                 href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
               >
@@ -223,6 +226,7 @@ class ViewItem extends React.Component {
               stripes.hasPerm('ui-circulation.settings.loan-policies') &&
               <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
                 <Button
+                  data-test-show-loan-policy
                   buttonStyle="dropdownItem"
                   href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
                 >
@@ -231,7 +235,7 @@ class ViewItem extends React.Component {
               </MenuItem>
             }
             <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
-              <Button buttonStyle="dropdownItem">
+              <Button data-test-date-picker buttonStyle="dropdownItem">
                 <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
               </Button>
             </MenuItem>

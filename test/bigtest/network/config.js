@@ -10,10 +10,7 @@ export default function config() {
     configs: []
   });
 
-  this.get('/circulation/loans', {
-    loans: [],
-    totalRecords: 0,
-  });
+  this.get('/circulation/loans');
 
   this.get('/proxiesfor', {
     proxiesFor: [],
@@ -80,16 +77,6 @@ export default function config() {
     'totalRecords' : 4
   });
 
-  this.get('/accounts', {
-    'accounts' : [],
-    'totalRecords' : 0,
-    'resultInfo' : {
-      'totalRecords' : 0,
-      'facets' : [],
-      'diagnostics' : []
-    }
-  });
-
   // requests
   this.get('/circulation/requests', ({ requests }, request) => {
     if (request.queryParams.query) {
@@ -111,6 +98,8 @@ export default function config() {
       return [];
     }
   });
+
+  this.get('/users/:id', (schema, request) => schema.users.find(request.params.id));
 
   this.get('/groups', {
     usergroups: [],
@@ -166,25 +155,116 @@ export default function config() {
     }
   });
 
-  this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
-    const { itemBarcode } = JSON.parse(request.requestBody);
-
-    return items.findBy({ barcode: itemBarcode });
+  this.get('/inventory/instances', ({ instances }, request) => {
+    if (request.queryParams.query) {
+      const cqlParser = new CQLParser();
+      cqlParser.parse(request.queryParams.query);
+      return instances.where({
+        barcode: cqlParser.tree.term
+      });
+    } else {
+      return [];
+    }
   });
 
-  this.post('/circulation/override-check-out-by-barcode', ({ items }, request) => {
-    const {
-      itemBarcode,
-      dueDate,
-      comment,
-    } = JSON.parse(request.requestBody);
-    const { attrs: item } = items.findBy({ barcode: itemBarcode });
-
-    return {
-      loanPolicyId,
-      comment,
-      dueDate,
-      item,
-    };
+  this.get('/accounts');
+  this.get('/alternative-title-types');
+  // this.get('/loan-policy-storage/loan-policies');
+  this.get('/classification-types');
+  this.get('/contributor-types');
+  this.get('/contributor-name-types');
+  this.get('/electronic-access-relationships');
+  this.get('/modes-of-issuance');
+  this.get('/statistical-codes');
+  this.get('/statistical-code-types', {
+    statisticalCodeTypes: [],
+    totalRecords: 0,
   });
+  this.get('/identifier-types', {
+    identifierTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-formats', {
+    instanceFormats: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-types', {
+    instanceTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-relationship-types', {
+    instanceRelationshipTypes: [],
+    totalRecords: 0,
+  });
+  this.get('/instance-statuses', {
+    instanceStatuses: [],
+    totalRecords: 0,
+  });
+  this.get('/locations');
+
+  this.post('/circulation/check-out-by-barcode', (schema, request) => {
+    const parsedRequest = JSON.parse(request.requestBody);
+    const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
+    const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+    return (
+      {
+        'id': item.id,
+        'userId': patron.id,
+        'itemId': item.id,
+        'status': {
+          'name': 'Open'
+        },
+        'loanDate': '2017-03-05T18:32:31Z',
+        'dueDate': '2017-03-19T18:32:31.000+0000',
+        'action': 'checkedout',
+        'renewalCount': 0,
+        item,
+        'loanPolicyId': loanPolicyId,
+      }
+    );
+  });
+
+  this.post('/circulation/override-check-out-by-barcode', (schema, request) => {
+    const parsedRequest = JSON.parse(request.requestBody);
+    const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
+    const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+    return (
+      {
+        'id': item.id,
+        'userId': patron.id,
+        'itemId': item.id,
+        'status': {
+          'name': 'Open'
+        },
+        'loanDate': '2017-03-05T18:32:31Z',
+        'dueDate': '2017-03-19T18:32:31.000+0000',
+        'action': 'checkedout',
+        'renewalCount': 0,
+        item,
+        'loanPolicyId': loanPolicyId,
+      }
+    );
+  });
+
+  // this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
+  //   const { itemBarcode } = JSON.parse(request.requestBody);
+
+  //   return items.findBy({ barcode: itemBarcode });
+  // });
+
+  // this.post('/circulation/override-check-out-by-barcode', ({ items }, request) => {
+  //   const {
+  //     itemBarcode,
+  //     dueDate,
+  //     comment,
+  //   } = JSON.parse(request.requestBody);
+  //   const { attrs: item } = items.findBy({ barcode: itemBarcode });
+
+  //   return {
+  //     loanPolicyId,
+  //     comment,
+  //     dueDate,
+  //     item,
+  //   };
+  // });
 }

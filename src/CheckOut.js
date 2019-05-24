@@ -405,7 +405,6 @@ class CheckOut extends React.Component {
           >
             <this.connectedScanItems
               {...this.props}
-              data-test-scan-items
               parentMutator={mutator}
               parentResources={resources}
               stripes={stripes}

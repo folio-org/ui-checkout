@@ -2,9 +2,10 @@ import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
+import { loanPolicyId } from '../constants';
 
 describe('CheckOut', () => {
-  setupApplication({ scenarios: ['checkoutByBarcode'] });
+  setupApplication(); // { scenarios: ['checkoutByBarcode'] });
   const checkOut = new CheckOutInteractor();
 
   beforeEach(function () {
@@ -58,9 +59,27 @@ describe('CheckOut', () => {
     });
   });
 
+  // describe('entering a blocked patron barcode', () => {
+  //   beforeEach(async function () {
+  //     const user = this.server.create('user', {
+  //       barcode: '123456',
+  //       personal: {
+  //         firstName: 'Bob',
+  //         lastName: 'Brown',
+  //       },
+  //     });
+  //     this.server.create('manualblock', { userId: user.id });
+  //   });
+
+  //   it('shows the patron block modal', () => {
+  //     expect(checkOut.blockModal.modalPresent).to.be.true;
+  //   });
+  // });
+
   describe('entering an item barcode', () => {
     beforeEach(async function () {
       this.server.create('user', {
+        id: 'user1',
         barcode: '123456',
         personal: {
           firstName: 'Bob',
@@ -73,6 +92,93 @@ describe('CheckOut', () => {
         .clickPatronBtn();
     });
 
+    describe('checking out a single item', () => {
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          title: 'Book 1',
+        });
+
+        await checkOut.checkoutItem('123');
+      });
+
+      it('shows a list of checked out items', () => {
+        expect(checkOut.scanItems.itemListPresent).to.be.true;
+        expect(checkOut.items().length).to.equal(1);
+      });
+    });
+
+    describe('using the item menu', () => {
+      let loan;
+      beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          title: 'A',
+          instanceId: 'instance1',
+          holdingsRecordId: 'holdings1',
+        });
+        loan = this.server.create('loan', { itemId: '1' });
+
+        await checkOut
+          .checkoutItem('123')
+          .itemMenu.clickItemMenu();
+      });
+
+      describe('choosing item details', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.selectItemDetails();
+        });
+
+        it('redirects to item details page', function () {
+          const { search, pathname } = this.location;
+          expect(pathname + search).to.include('/inventory/view/instance1/holdings1/1');
+        });
+      });
+
+      describe('choosing loan details', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.selectLoanDetails();
+        });
+
+        it('redirects to (user) loan details page', function () {
+          const { search, pathname } = this.location;
+          expect(pathname + search).to.include('/users/view/user1');
+          expect(search).to.include(`layer=loan&loan=${loan.id}`);
+        });
+      });
+
+      describe('choosing loan policy', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.selectLoanPolicy();
+        });
+
+        it('redirects to the loan policy page', function () {
+          const { search, pathname } = this.location;
+          expect(pathname + search).to.include(`/settings/circulation/loan-policies/${loanPolicyId}`);
+        });
+      });
+
+      describe('changing due date', () => {
+        beforeEach(async function () {
+          await checkOut.itemMenu.changeDueDate();
+        });
+
+        it('shows the change date dialog', () => {
+          expect(checkOut.itemMenu.changeDueDateDialogPresent).to.be.true;
+        });
+
+        describe('closing change date dialog', () => {
+          beforeEach(async function () {
+            await checkOut.itemMenu.clickCloseDueDate();
+          });
+
+          it('closes the change date dialog', () => {
+            expect(checkOut.itemMenu.changeDueDateDialogPresent).to.be.false;
+          });
+        });
+      });
+    });
+
     describe('checking out multipiece item', () => {
       beforeEach(async function () {
         this.server.create('item', {
@@ -81,9 +187,7 @@ describe('CheckOut', () => {
           descriptionOfPieces: 'book + dvd',
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
       });
 
       it('shows multipiece modal', () => {
@@ -104,9 +208,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
       });
 
       it('shows checkoutNote modal', () => {
@@ -127,9 +229,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('123')
-          .clickItemBtn();
+        await checkOut.checkoutItem('123');
         await checkOut.checkoutNoteModal.clickConfirm();
       });
 
@@ -151,9 +251,7 @@ describe('CheckOut', () => {
           ],
         });
 
-        await checkOut
-          .fillItemBarcode('245')
-          .clickItemBtn();
+        await checkOut.checkoutItem('245');
         await checkOut.checkoutNoteModal.clickConfirm();
         await checkOut.selectElipse();
         await checkOut.awaitDropdownPresent;
@@ -196,6 +294,68 @@ describe('CheckOut', () => {
     it('newest item should be on top', () => {
       expect(checkOut.items(0).barcode.text).to.equal(items[1].barcode.toString());
     });
+  });
+
+  describe('sorting items', () => {
+    const titleColumnIndex = 2;
+    beforeEach(async function () {
+      const user = this.server.create('user');
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      this.server.create('item', {
+        barcode: '123',
+        title: 'A',
+      });
+      this.server.create('item', {
+        barcode: '456',
+        title: 'C',
+      });
+      this.server.create('item', {
+        barcode: '789',
+        title: 'B',
+      });
+
+      // The checkout list places new items on top, so checking out in this order will
+      // result in a list as follows:
+      // No 3 => 'B' (first in list)
+      // No 2 => 'C'
+      // No 1 => 'A' (last in list)
+      await checkOut
+        .checkoutItem('123')
+        .items(0).whenLoaded()
+        .checkoutItem('456')
+        .items(1)
+        .whenLoaded()
+        .checkoutItem('789')
+        .items(2)
+        .whenLoaded();
+    });
+
+    it('shows the list of checked-out items', () => {
+      expect(checkOut.itemList.rowCount).to.equal(3);
+    });
+
+    it('shows the first item first before sort', () => {
+      expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('B');
+    });
+
+    // TODO: this test should be re-enabled once UICHKOUT-513 is fixed
+    // describe('clicking a header to sort', () => {
+    //   beforeEach(async function () {
+    //     const titleHeader = checkOut.itemList.headers(titleColumnIndex);
+    //     await titleHeader.click().whenListIsSorted(titleColumnIndex);
+    //   });
+
+    //   it('sorts the list of items alphabetically', () => {
+    //     expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
+    //     expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
+    //     expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
+    //   });
+    // });
   });
 
   describe('shows and hides all pre checkout modals one after another', () => {
