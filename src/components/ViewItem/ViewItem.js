@@ -275,7 +275,6 @@ class ViewItem extends React.Component {
         loanIds={loanIds}
         onClose={this.hideChangeDueDateDialog}
         open={changeDueDateDialogOpen}
-        user={patron}
       />
     );
   }
