@@ -58,7 +58,7 @@
     "error.oops": "عذرّا!",
     "error.routing": "كيف وصلت إلى {pathname} ؟",
     "patronBlocksCount": " {count, plural, one {حظر} other {حظر}}",
-    "patronBlocks": "حظر المستفيدين",
+    "patronBlocks": "حظورات المستفيد",
     "blockModal": "تم حظرالمستفيد من الإعارة",
     "detailsButton": "تفاصيل الحظر",
     "blockedLabel": "سبب الحظر",
