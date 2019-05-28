@@ -37,9 +37,6 @@ class ViewItem extends React.Component {
   static propTypes = {
     scannedItems: PropTypes.arrayOf(PropTypes.object),
     stripes: PropTypes.object,
-    patron: PropTypes.shape({
-      id: PropTypes.string,
-    }),
     parentMutator: PropTypes.object.isRequired,
     showCheckoutNotes: PropTypes.func,
   };
@@ -258,7 +255,6 @@ class ViewItem extends React.Component {
     const {
       scannedItems,
       stripes,
-      patron,
     } = this.props;
 
     const {
