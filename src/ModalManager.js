@@ -23,13 +23,13 @@ class ModalManager extends React.Component {
     this.state = { checkedoutItem, checkoutNotesMode };
     this.steps = [
       {
-        validate: this.shouldMultipieceModalBeShown,
-        exec: () => this.setState({ showMultipieceModal: true }),
-      },
-      {
         validate: this.shouldCheckoutNoteModalBeShown,
         exec: () => this.setState({ showCheckoutNoteModal: true }),
       },
+      {
+        validate: this.shouldMultipieceModalBeShown,
+        exec: () => this.setState({ showMultipieceModal: true }),
+      }
     ];
   }
 
@@ -76,11 +76,11 @@ class ModalManager extends React.Component {
   }
 
   confirmMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false }, () => this.execSteps(1));
+    this.setState({ showMultipieceModal: false }, () => this.props.onDone());
   }
 
   confirmCheckoutNoteModal = () => {
-    this.setState({ showCheckoutNoteModal: false }, () => this.props.onDone());
+    this.setState({ showCheckoutNoteModal: false }, () => this.execSteps(1));
   }
 
   onCancel = () => {
