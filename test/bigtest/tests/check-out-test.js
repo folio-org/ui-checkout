@@ -383,8 +383,8 @@ describe('CheckOut', () => {
         .fillItemBarcode('123')
         .clickItemBtn();
 
-      await checkOut.multipieceModal.clickConfirm();
       await checkOut.checkoutNoteModal.clickConfirm();
+      await checkOut.multipieceModal.clickConfirm();
     });
 
     it('hides all pre checkout modals', () => {
