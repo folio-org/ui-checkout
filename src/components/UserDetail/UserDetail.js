@@ -33,7 +33,7 @@ class UserDetail extends React.Component {
       records: 'accounts',
       path: 'accounts?query=(userId=!{user.id} and status.name<>Closed)&limit=100',
     },
-    openRequestsCount: {
+    openRequests: {
       type: 'okapi',
       path: 'circulation/requests?query=(requesterId=!{user.id} and status=Open)&limit=100',
     },
@@ -53,7 +53,7 @@ class UserDetail extends React.Component {
       openAccounts: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      openRequestsCount: PropTypes.shape({
+      openRequests: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
     }),
@@ -142,15 +142,20 @@ class UserDetail extends React.Component {
       user,
     } = this.props;
 
-    const openRequestsCount = get(resources.openRequestsCount, ['records', '0', 'totalRecords'], 0);
+    const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
 
-    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) {
-      return openRequestsCount;
-    }
+    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return openRequestsCount;
 
     const openRequestsPath = `/requests?query=${user.barcode}&filters=requestStatus.Open%20-%20Not%20yet%20filled%2CrequestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit&sort=Request%20Date`;
 
-    return <Link to={openRequestsPath}>{openRequestsCount}</Link>;
+    return (
+      <Link
+        data-test-open-requests-count
+        to={openRequestsPath}
+      >
+        {openRequestsCount}
+      </Link>
+    );
   }
 
   render() {

@@ -78,6 +78,7 @@ export default interactor(class CheckOutInteractor {
   itemMenu = new ItemMenuInteractor();
   blockModal = new BlockModalInteractor();
 
+  openRequestsCount = new Interactor('[data-test-open-requests-count]');
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
   checkoutNotesPresent = isPresent('[data-test-checkout-notes]');
@@ -105,8 +106,6 @@ export default interactor(class CheckOutInteractor {
   }
 
   multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
-  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
-  items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
   itemList = scoped('#list-items-checked-out', MultiColumnListInteractor);
 
   whenUserIsLoaded() {

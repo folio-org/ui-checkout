@@ -106,11 +106,6 @@ export default function config() {
     totalRecords: 0
   });
 
-  this.get('/groups', {
-    usergroups: [],
-    totalRecords: 0
-  });
-
   this.get('/loan-policy-storage/loan-policies', {
     'loanPolicies' : [{
       'id' : loanPolicyId,
@@ -169,7 +164,6 @@ export default function config() {
 
   this.get('/accounts');
   this.get('/alternative-title-types');
-  // this.get('/loan-policy-storage/loan-policies');
   this.get('/classification-types');
   this.get('/contributor-types');
   this.get('/contributor-name-types');
