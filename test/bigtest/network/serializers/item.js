@@ -1,10 +1,9 @@
-import ApplicationSerializer from './application';
+import { RestSerializer } from '@bigtest/mirage';
 
-export default ApplicationSerializer.extend({
+export default RestSerializer.extend({
   embed: true,
 
   serialize(...args) {
-    const json = ApplicationSerializer.prototype.serialize.apply(this, args);
-    return json;
+    return RestSerializer.prototype.serialize.apply(this, args);
   }
 });

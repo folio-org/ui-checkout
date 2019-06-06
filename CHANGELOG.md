@@ -4,6 +4,7 @@
 
 * Remove spurious, do-nothing settings permission.
 * Add BigTest tests for increased code coverage. Completes UICHKOUT-481.
+* Add open requests info for patron after lookup on Checkout screen. UICHKOUT-519.
 
 ## [1.8.0](https://github.com/folio-org/ui-checkout/tree/v1.8.0) (2019-05-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.7.0...v1.8.0)
@@ -17,8 +18,6 @@
 * Keep loan policy visible after due date change. UICIRC-197.
 * Implement checkout notes modal. UICHKOUT-488.
 * Requires stripes 2.3.0, stripes-core 3.3.0
-
-
 
 ## [1.7.0](https://github.com/folio-org/ui-checkout/tree/v1.7.0) (2019-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.6.0...v1.7.0)

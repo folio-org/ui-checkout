@@ -1,5 +1,6 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
@@ -36,6 +37,11 @@ describe('CheckOut', () => {
         },
       });
 
+      this.server.create('request', {
+        pickupServicePointId: '1',
+        status: 'Open - Awaiting pickup'
+      });
+
       await checkOut
         .fillPatronBarcode('123456')
         .clickPatronBtn();
@@ -45,17 +51,13 @@ describe('CheckOut', () => {
       expect(checkOut.patronFullName).to.equal('Brown, Bob');
     });
 
-    describe('showing awaiting pickup modal', () => {
-      beforeEach(function () {
-        this.server.create('request', {
-          requesterId: '1',
-          pickupServicePointId: '1'
-        });
-      });
+    it('showing awaiting pickup modal', () => {
+      expect(checkOut.patronEnterBtnPresent).to.be.true;
+    });
 
-      it('shows awaiting pickup modal', () => {
-        expect(checkOut.patronEnterBtnPresent).to.be.true;
-      });
+    it('shows correct amount of open requests', () => {
+      expect(checkOut.openRequestsCount.text).to.equal('1');
+      expect(checkOut.openRequestsCount.$root.attributes.href).to.exist;
     });
   });
 
