@@ -90,6 +90,8 @@ export default interactor(class CheckOutInteractor {
   itemBarcodePresent = isPresent('#input-item-barcode');
   fillItemBarcode = fillable('#input-item-barcode');
   clickItemBtn = clickable('#clickable-add-item');
+  clickEndSessionBtn = clickable('#clickable-done');
+  endSessionBtnPresent = isPresent('#clickable-done');
 
   patronFullName = text('[data-test-check-out-patron-full-name]');
   awaitPickupModalPresent = isPresent('#awaiting-pickup-modal');
@@ -118,5 +120,9 @@ export default interactor(class CheckOutInteractor {
 
   whenListIsSorted(column) {
     return this.when(() => this.itemList.headers(column).isSortHeader);
+  }
+
+  whenItemListIsPresent() {
+    return this.when(() => this.itemList.rowCount > 0);
   }
 });

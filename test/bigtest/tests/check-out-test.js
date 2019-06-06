@@ -416,4 +416,28 @@ describe('CheckOut', () => {
       expect(checkOut.checkoutNoteModal.present).to.be.false;
     });
   });
+
+  describe('ending a session', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user');
+      this.server.create('item', {
+        barcode: '123'
+      });
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      await checkOut
+        .checkoutItem('123')
+        .whenItemListIsPresent()
+        .clickEndSessionBtn();
+    });
+
+    it('resets the checkout session', () => {
+      expect(checkOut.scanItems.itemListPresent).to.be.false;
+      expect(checkOut.endSessionBtnPresent).to.be.false;
+    });
+  });
 });
