@@ -146,7 +146,15 @@ class UserDetail extends React.Component {
 
     if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return openRequestsCount;
 
-    const openRequestsPath = `/requests?query=${user.barcode}&filters=requestStatus.Open%20-%20Not%20yet%20filled%2CrequestStatus.Open%20-%20Awaiting%20pickup%2CrequestStatus.Open%20-%20In%20transit&sort=Request%20Date`;
+    const openRequestStatuses = [
+      'Open - Not yet filled',
+      'Open - Awaiting pickup',
+      'Open - In transit'
+    ]
+      .map(status => `requestStatus.${status}`)
+      .join('&');
+
+    const openRequestsPath = `/requests?query=${user.barcode}&filters=${openRequestStatuses}&sort=Request date`;
 
     return (
       <Link
