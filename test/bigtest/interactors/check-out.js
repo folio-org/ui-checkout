@@ -99,6 +99,10 @@ export default interactor(class CheckOutInteractor {
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
 
+  patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
+  itemErrorPresent = isPresent('#section-item [class*=feedbackError---]');
+
+
   checkoutItem(barcode) {
     return this
       .fillItemBarcode(barcode)

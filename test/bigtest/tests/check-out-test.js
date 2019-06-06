@@ -61,6 +61,28 @@ describe('CheckOut', () => {
     });
   });
 
+  describe('entering no patron data', () => {
+    beforeEach(async function () {
+      await checkOut.clickPatronBtn();
+    });
+
+    it('returns an error', () => {
+      expect(checkOut.patronErrorPresent).to.be.true;
+    });
+  });
+
+  describe('entering bad patron data', () => {
+    beforeEach(async function () {
+      await checkOut
+        .fillPatronBarcode('zvbxrpl')
+        .clickPatronBtn();
+    });
+
+    it('returns an error', () => {
+      expect(checkOut.patronErrorPresent).to.be.true;
+    });
+  });
+
   // describe('entering a blocked patron barcode', () => {
   //   beforeEach(async function () {
   //     const user = this.server.create('user', {
