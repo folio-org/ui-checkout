@@ -159,6 +159,10 @@ class CheckOut extends React.Component {
     this.state = { submitting: false };
   }
 
+  componentDidMount() {
+    this.patronFormRef.current.focus();
+  }
+
   componentDidUpdate(prevProps) {
     const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
     const prevBlocks = get(prevProps.resources, ['patronBlocks', 'records'], []);
