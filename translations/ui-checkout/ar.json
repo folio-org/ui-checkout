@@ -89,5 +89,6 @@
     "saveAndClose": "حفظ وإغلاق",
     "overrideLoanPolicy": "تخطي سياسة الإعارة",
     "confirm": "تأكيد",
-    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) سيتم <strong> إعارته</strong>. "
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) سيتم <strong> إعارته</strong>. ",
+    "openRequests": "فتح الطلبات"
 }
