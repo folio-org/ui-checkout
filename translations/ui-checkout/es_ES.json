@@ -89,5 +89,6 @@
     "saveAndClose": "Guardar y cerrar",
     "overrideLoanPolicy": "Sobrepasar la norma de préstamo",
     "confirm": "Confirmar",
-    "messages.itemWillBeCheckedOut": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} )será <strong>  prestado</strong> "
+    "messages.itemWillBeCheckedOut": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} )será <strong>  prestado</strong> ",
+    "openRequests": "Solicitudes abiertas"
 }
