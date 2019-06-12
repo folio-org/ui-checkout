@@ -38,10 +38,6 @@ class PatronForm extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.focusInput();
-  }
-
   componentDidUpdate() {
     const {
       forwardedRef,
