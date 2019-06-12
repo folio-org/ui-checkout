@@ -127,7 +127,20 @@ class PatronForm extends React.Component {
                 </FormattedMessage>
               )}
             </FormattedMessage>
-
+          </Col>
+          <Col xs={3}>
+            <Button
+              id="clickable-find-patron"
+              type="submit"
+              buttonStyle="primary"
+              disabled={submitting}
+            >
+              <FormattedMessage id="ui-checkout.enter" />
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
             <Pluggable
               aria-haspopup="true"
               type="find-user"
@@ -142,16 +155,6 @@ class PatronForm extends React.Component {
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
             />
-          </Col>
-          <Col xs={3}>
-            <Button
-              id="clickable-find-patron"
-              type="submit"
-              buttonStyle="primary"
-              disabled={submitting}
-            >
-              <FormattedMessage id="ui-checkout.enter" />
-            </Button>
           </Col>
         </Row>
       </form>
