@@ -53,6 +53,7 @@
           "configuration.all",
           "users.collection.get",
           "usergroups.collection.get",
+          "proxiesfor.collection.get",
           "module.checkout.enabled",
           "ui-checkout.overrideCheckOutByBarcode"
         ]
