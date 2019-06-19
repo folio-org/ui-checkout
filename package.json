@@ -54,6 +54,8 @@
           "users.collection.get",
           "usergroups.collection.get",
           "proxiesfor.collection.get",
+          "accounts.collection.get",
+          "manualblocks.collection.get",
           "module.checkout.enabled",
           "ui-checkout.overrideCheckOutByBarcode"
         ]
