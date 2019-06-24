@@ -57,7 +57,8 @@
           "accounts.collection.get",
           "manualblocks.collection.get",
           "module.checkout.enabled",
-          "ui-checkout.overrideCheckOutByBarcode"
+          "ui-checkout.overrideCheckOutByBarcode",
+          "inventory.items.collection.get"
         ]
       }
     ]
