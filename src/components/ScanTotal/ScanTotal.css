@@ -6,7 +6,7 @@
 .label {
   line-height: 28px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: var(--font-size-medium);
   text-align: right;
   margin-right: 20px;
 }
