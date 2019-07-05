@@ -69,7 +69,7 @@ const MultipieceModal = (props) => {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.multipieceModal.item.descriptionOfmissingPieces" />}
-                value={get(item, 'descriptionOfmissingPieces', '-')}
+                value={get(item, 'missingPieces', '-')}
               />
             </Col>
           </Fragment>
