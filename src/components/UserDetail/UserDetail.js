@@ -35,6 +35,7 @@ class UserDetail extends React.Component {
     },
     openRequests: {
       type: 'okapi',
+      throwErrors: false,
       path: 'circulation/requests?query=(requesterId=!{user.id} and status=Open)&limit=100',
     },
   });
@@ -142,9 +143,9 @@ class UserDetail extends React.Component {
       user,
     } = this.props;
 
-    const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
+    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return '-';
 
-    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return openRequestsCount;
+    const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
 
     const openRequestStatuses = [
       'Open - Not yet filled',

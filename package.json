@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkout",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Item Check-out",
   "repository": "folio-org/ui-checkout",
   "publishConfig": {
@@ -52,8 +52,13 @@
           "circulation-storage.all",
           "configuration.all",
           "users.collection.get",
+          "usergroups.collection.get",
+          "proxiesfor.collection.get",
+          "accounts.collection.get",
+          "manualblocks.collection.get",
           "module.checkout.enabled",
-          "ui-checkout.overrideCheckOutByBarcode"
+          "ui-checkout.overrideCheckOutByBarcode",
+          "inventory.items.collection.get"
         ]
       }
     ]

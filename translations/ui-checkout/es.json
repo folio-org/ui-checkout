@@ -89,5 +89,6 @@
     "saveAndClose": "Save & close",
     "overrideLoanPolicy": "Override loan policy",
     "confirm": "Confirm",
-    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>."
+    "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
+    "openRequests": "Solicitudes abiertas"
 }

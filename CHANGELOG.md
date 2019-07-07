@@ -1,6 +1,11 @@
 # Change history for ui-checkout
 
-## 1.9.0 (IN PROGRESS)
+## 1.10.0 (IN PROGRESS)
+
+* Add missing permissions to "Check out: All permissions" permissions set. Fixes UIU-1078.
+
+## [1.9.0](https://github.com/folio-org/ui-checkout/tree/v1.9.0) (2019-06-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.8.0...v1.9.0)
 
 * Remove spurious, do-nothing settings permission.
 * Add BigTest tests for increased code coverage. Completes UICHKOUT-481.
