@@ -92,7 +92,11 @@ describe('CheckOut', () => {
   //         lastName: 'Brown',
   //       },
   //     });
-  //     this.server.create('manualblock', { userId: user.id });
+  //     this.server.create('manualblock', { userId: user.id, id: '46399627-08a9-414f-b91c-a8a7ec850d03' });
+
+  //     await checkOut
+  //       .fillPatronBarcode('123456')
+  //       .clickPatronBtn();
   //   });
 
   //   it('shows the patron block modal', () => {
