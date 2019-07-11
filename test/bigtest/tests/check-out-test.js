@@ -61,6 +61,28 @@ describe('CheckOut', () => {
     });
   });
 
+  describe('entering no patron data', () => {
+    beforeEach(async function () {
+      await checkOut.clickPatronBtn();
+    });
+
+    it('returns an error', () => {
+      expect(checkOut.patronErrorPresent).to.be.true;
+    });
+  });
+
+  describe('entering bad patron data', () => {
+    beforeEach(async function () {
+      await checkOut
+        .fillPatronBarcode('zvbxrpl')
+        .clickPatronBtn();
+    });
+
+    it('returns an error', () => {
+      expect(checkOut.patronErrorPresent).to.be.true;
+    });
+  });
+
   // describe('entering a blocked patron barcode', () => {
   //   beforeEach(async function () {
   //     const user = this.server.create('user', {
@@ -70,7 +92,11 @@ describe('CheckOut', () => {
   //         lastName: 'Brown',
   //       },
   //     });
-  //     this.server.create('manualblock', { userId: user.id });
+  //     this.server.create('manualblock', { userId: user.id, id: '46399627-08a9-414f-b91c-a8a7ec850d03' });
+
+  //     await checkOut
+  //       .fillPatronBarcode('123456')
+  //       .clickPatronBtn();
   //   });
 
   //   it('shows the patron block modal', () => {
@@ -392,6 +418,30 @@ describe('CheckOut', () => {
     it('hides all pre checkout modals', () => {
       expect(checkOut.multipieceModal.present).to.be.false;
       expect(checkOut.checkoutNoteModal.present).to.be.false;
+    });
+  });
+
+  describe('ending a session', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user');
+      this.server.create('item', {
+        barcode: '123'
+      });
+
+      await checkOut
+        .fillPatronBarcode(user.barcode.toString())
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+
+      await checkOut
+        .checkoutItem('123')
+        .whenItemListIsPresent()
+        .clickEndSessionBtn();
+    });
+
+    it('resets the checkout session', () => {
+      expect(checkOut.scanItems.itemListPresent).to.be.false;
+      expect(checkOut.endSessionBtnPresent).to.be.false;
     });
   });
 });
