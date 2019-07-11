@@ -169,7 +169,7 @@ export default function config() {
     }],
     'totalRecords': 1
   });
-  
+
   this.get('/alternative-title-types');
   this.get('/classification-types');
   this.get('/contributor-types');
