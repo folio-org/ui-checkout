@@ -162,7 +162,14 @@ export default function config() {
     }
   });
 
-  this.get('/accounts');
+  this.get('/accounts', {
+    'accounts': [{
+      'id': '11111',
+      'remaining': 15.31,
+    }],
+    'totalRecords': 1
+  });
+  
   this.get('/alternative-title-types');
   this.get('/classification-types');
   this.get('/contributor-types');
