@@ -27,7 +27,7 @@
     "sponsorExpired": "Sponsor user record expired",
     "proxyExpired": "Proxy relationship expired",
     "continue": "Continue",
-    "orActingAsProxy": "Or acting as proxy for",
+    "orActingAsProxy": "Oder hat Vollmacht für",
     "scanOrEnterPatronId": "Scan or enter patron {identifier}",
     "patronLookup": "Patron look-up",
     "patronIdentifier": "Patron Identifier",
