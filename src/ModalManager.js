@@ -2,7 +2,12 @@ import { get, upperFirst } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedDate,
+  FormattedTime,
+  injectIntl,
+} from 'react-intl';
 
 import CheckoutNoteModal from './components/CheckoutNoteModal';
 import MultipieceModal from './components/MultipieceModal';
@@ -114,17 +119,50 @@ class ModalManager extends React.Component {
     } = this.state;
     const { title, barcode } = checkedoutItem;
     const checkoutNotesArray = get(checkedoutItem, 'circulationNotes', [])
-      .filter(noteObject => noteObject.noteType === 'Check out');
+      .filter(noteObject => noteObject.noteType === 'Check out')
+      .sort((prev, next) => new Date(next.date) - new Date(prev.date));
 
     const notes = checkoutNotesArray.map(checkoutNoteObject => {
-      const { note } = checkoutNoteObject;
-      return { note };
+      const {
+        note,
+        date,
+        source: {
+          personal: {
+            firstName,
+            lastName,
+          },
+        },
+      } = checkoutNoteObject;
+
+      return {
+        note,
+        date,
+        source: `${lastName}, ${firstName}`,
+      };
     });
 
-    const formatter = { note: checkoutItem => `${checkoutItem.note}` };
-    const columnMapping = { note: <FormattedMessage id="ui-checkout.note" /> };
-    const visibleColumns = ['note'];
-    const columnWidths = { note : '100%' };
+    const formatter = {
+      date: checkoutItem => (
+        <div data-test-check-out-date>
+          <FormattedDate value={checkoutItem.date} />
+          <br />
+          <FormattedTime value={checkoutItem.date} />
+        </div>
+      ),
+      note: checkoutItem => <div data-test-check-out-note-message>{checkoutItem.note}</div>,
+      source: checkoutItem => <div data-test-check-in-note-source>{checkoutItem.source}</div>,
+    };
+    const columnMapping = {
+      date: <FormattedMessage id="ui-checkout.date" />,
+      note: <FormattedMessage id="ui-checkout.note" />,
+      source: <FormattedMessage id="ui-checkout.source" />,
+    };
+    const visibleColumns = ['date', 'note', 'source'];
+    const columnWidths = {
+      date: '30%',
+      note : '40%',
+      source: '30%',
+    };
     const id = checkoutNotesMode ?
       'ui-checkout.checkoutNotes.message' :
       'ui-checkout.checkoutNoteModal.message';
