@@ -90,5 +90,7 @@
     "overrideLoanPolicy": "覆盖借阅政策",
     "confirm": "确认",
     "messages.itemWillBeCheckedOut": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将<strong>借出</strong> 。",
-    "openRequests": "打开请求"
+    "openRequests": "打开请求",
+    "date": "Date",
+    "source": "Source"
 }

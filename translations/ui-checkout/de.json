@@ -90,5 +90,7 @@
     "overrideLoanPolicy": "Override loan policy",
     "confirm": "Confirm",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
-    "openRequests": "Open requests"
+    "openRequests": "Open requests",
+    "date": "Date",
+    "source": "Source"
 }
