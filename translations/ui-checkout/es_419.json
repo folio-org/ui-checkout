@@ -90,5 +90,7 @@
     "overrideLoanPolicy": "Omitir la política de préstamo",
     "confirm": "Confirmar",
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} )  <strong> Préstado </strong> .",
-    "openRequests": "Solicitudes abiertas"
+    "openRequests": "Solicitudes abiertas",
+    "date": "Date",
+    "source": "Source"
 }
