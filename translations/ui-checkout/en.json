@@ -67,6 +67,8 @@
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
   "note": "Note",
+  "date": "Date",
+  "source": "Source",
   "checkoutNotes": "Check out Notes",
   "checkoutNotes.heading": "Check out notes",
   "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",

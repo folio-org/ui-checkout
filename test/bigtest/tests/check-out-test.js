@@ -211,6 +211,13 @@ describe('CheckOut', () => {
               note: 'test note',
               noteType: 'Check out',
               staffOnly: false,
+              source: {
+                personal: {
+                  firstName: 'John',
+                  lastName: 'Doe',
+                }
+              },
+              date: '2019-08-06T08:06:48.551+0000',
             }
           ],
         });
@@ -232,6 +239,13 @@ describe('CheckOut', () => {
               note: 'test note',
               noteType: 'Check out',
               staffOnly: false,
+              source: {
+                personal: {
+                  firstName: 'John',
+                  lastName: 'Doe',
+                }
+              },
+              date: '2019-08-06T08:06:48.551+0000',
             }
           ],
         });
@@ -254,6 +268,13 @@ describe('CheckOut', () => {
               note: 'test note',
               noteType: 'Check out',
               staffOnly: false,
+              source: {
+                personal: {
+                  firstName: 'John',
+                  lastName: 'Doe',
+                }
+              },
+              date: '2019-08-06T08:06:48.551+0000',
             }
           ],
         });
@@ -377,6 +398,13 @@ describe('CheckOut', () => {
             note: 'test note',
             noteType: 'Check out',
             staffOnly: false,
+            source: {
+              personal: {
+                firstName: 'John',
+                lastName: 'Doe',
+              }
+            },
+            date: '2019-08-06T08:06:48.551+0000',
           }
         ],
       });
@@ -404,7 +432,7 @@ describe('CheckOut', () => {
     beforeEach(async function () {
       const user = this.server.create('user');
       this.server.create('item', {
-        barcode: '123'
+        barcode: '123',
       });
 
       await checkOut
