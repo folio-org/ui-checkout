@@ -91,6 +91,6 @@
     "confirm": "تأكيد",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) سيتم <strong> إعارته</strong>. ",
     "openRequests": "فتح الطلبات",
-    "date": "Date",
-    "source": "Source"
+    "date": "التاريخ",
+    "source": "المصدر"
 }
