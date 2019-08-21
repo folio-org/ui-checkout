@@ -261,6 +261,12 @@ class ViewItem extends React.Component {
       patron,
     } = this.props;
 
+    // no sense rendering if we don't have a patron whose loans
+    // we are updating.
+    if (!patron) {
+      return null;
+    }
+
     const {
       changeDueDateDialogOpen,
       activeLoan,
