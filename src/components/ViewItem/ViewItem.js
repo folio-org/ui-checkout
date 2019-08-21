@@ -315,6 +315,7 @@ class ViewItem extends React.Component {
           onHeaderClick={this.onSort}
           sortOrder={sortOrder[0]}
           sortDirection={`${sortDirection[0]}ending`}
+          interactive={false}
         />
         {this.renderChangeDueDateDialog()}
       </React.Fragment>
