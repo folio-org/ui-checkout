@@ -6,6 +6,7 @@
 * Add missing permissions to "Check out: All permissions" permissions set. Fixes UIU-1078.
 * Improve test coverage
 * Bug fixes. UICHKOUT-478, UICHKOUT-502, UICHKOUT-508, UICHKOUT-509, UICHKOUT-526, UICHKOUT-527.
+* Handle broken tests. Fixes UICHKOUT-538.
 
 ## [1.9.0](https://github.com/folio-org/ui-checkout/tree/v1.9.0) (2019-06-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.8.0...v1.9.0)

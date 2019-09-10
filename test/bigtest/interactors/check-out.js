@@ -19,6 +19,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
 @interactor class ItemMenuInteractor {
   static defaultScope = 'body';
+
   clickItemMenu = clickable('[data-test-item-menu] button');
   selectItemDetails = clickable('[data-test-show-item-details]');
   selectLoanDetails = clickable('[data-test-show-loan-details');
@@ -30,6 +31,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
 @interactor class BlockModalInteractor {
   static defaultScope = 'body';
+
   modalPresent = isPresent('[data-test-block-modal]');
 }
 
@@ -67,6 +69,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
   dueDate = scoped('[data-test-item-due-date]');
   time = scoped('[data-test-item-time]');
   actions = scoped('[data-test-item-actions]');
+
   whenLoaded() {
     return this.when(() => this.isPresent);
   }
@@ -74,6 +77,7 @@ import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumn
 
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
+
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   itemMenu = new ItemMenuInteractor();
   blockModal = new BlockModalInteractor();
@@ -99,11 +103,10 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
-  items = collection('#list-items-checked-out div[class^="mclScrollable--"] > div[class^="mclRow--"]', Item);
+  items = collection('#list-items-checked-out [class*=mclRowContainer---] div[class^="mclRow--"]', Item);
 
   patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
   itemErrorPresent = isPresent('#section-item [class*=feedbackError---]');
-
 
   checkoutItem(barcode) {
     return this
@@ -112,7 +115,7 @@ export default interactor(class CheckOutInteractor {
   }
 
   multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
-  itemList = scoped('#list-items-checked-out', MultiColumnListInteractor);
+  itemList = new MultiColumnListInteractor('#list-items-checked-out');
 
   whenUserIsLoaded() {
     return this.when(() => this.patronFullName.isPresent);
