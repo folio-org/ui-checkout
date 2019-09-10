@@ -1,12 +1,18 @@
 # Change history for ui-checkout
 
+## [1.12.0] (IN PROGRESS)
+
+## [1.11.0](https://github.com/folio-org/ui-checkout/tree/v1.11.0) (2019-09-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.10.0...v1.11.0)
+* Add date and source fields to checkout note. Refs UICHKOUT-496.
+* Handle broken tests. Fixes UICHKOUT-538.
+
 ## [1.10.0](https://github.com/folio-org/ui-checkout/tree/v1.10.0) (2019-07-25)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.9.0...v1.10.0)
 
 * Add missing permissions to "Check out: All permissions" permissions set. Fixes UIU-1078.
 * Improve test coverage
 * Bug fixes. UICHKOUT-478, UICHKOUT-502, UICHKOUT-508, UICHKOUT-509, UICHKOUT-526, UICHKOUT-527.
-* Handle broken tests. Fixes UICHKOUT-538.
 
 ## [1.9.0](https://github.com/folio-org/ui-checkout/tree/v1.9.0) (2019-06-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.8.0...v1.9.0)
