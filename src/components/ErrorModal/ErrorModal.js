@@ -20,6 +20,7 @@ function ErrorModal(props) {
     open,
     onClose,
     message,
+    loanPolicy,
     openOverrideModal,
     stripes,
     item: {
@@ -52,7 +53,7 @@ function ErrorModal(props) {
             ? (
               <SafeHTMLMessage
                 id="ui-checkout.messages.itemIsNotLoanable"
-                values={{ title, barcode, materialType }}
+                values={{ title, barcode, materialType, loanPolicy }}
               />
             )
             : message
@@ -88,6 +89,7 @@ ErrorModal.propTypes = {
   stripes: stripesShape.isRequired,
   onClose: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
+  loanPolicy: PropTypes.string.isRequired,
   openOverrideModal: PropTypes.func,
 };
 

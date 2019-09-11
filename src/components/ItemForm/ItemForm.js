@@ -181,6 +181,7 @@ class ItemForm extends React.Component {
             stripes={stripes}
             item={item || {}}
             message={error.barcode}
+            loanPolicy={error.loanPolicy}
             open={!isEmpty(error)}
             openOverrideModal={this.openOverrideModal}
             onClose={this.clearForm}
