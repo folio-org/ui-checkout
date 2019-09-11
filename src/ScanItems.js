@@ -246,6 +246,7 @@ class ScanItems extends React.Component {
       : {
         barcode: message,
         _error: parameters[0].key,
+        loanPolicy: parameters[0].value,
       };
 
     this.reject(new SubmissionError({ item: itemError }));
