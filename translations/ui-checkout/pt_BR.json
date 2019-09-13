@@ -81,7 +81,7 @@
     "checkoutNotes": "Notas de empréstimo",
     "checkoutNotes.heading": "Notas de empréstimo",
     "checkoutNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}",
-    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode} ) não é <strong>emprestável</strong> acordo com a política de empréstimo <strong>Não circulação</strong>.",
+    "messages.itemIsNotLoanable": "<strong> {title} ({materialType})</strong> (Código de barras: {barcode}) não é <strong>emprestável</strong> de acordo com a política de empréstimo <strong>{loanPolicy}</strong> .",
     "cddd.date": "Data",
     "cddd.time": "Horário",
     "comment": "Comentário",
