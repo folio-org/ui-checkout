@@ -81,7 +81,7 @@
     "checkoutNotes": "Check out notes",
     "checkoutNotes.heading": "Check out notes",
     "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
-    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>Non-circulating</strong> loan policy.",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy.",
     "cddd.date": "Date",
     "cddd.time": "Time",
     "comment": "Comment",
