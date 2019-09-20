@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
 ## [1.12.0] (IN PROGRESS)
+* Handle tests in accordance with the fact that now MCL rows are not always a `div`
 
 ## [1.11.0](https://github.com/folio-org/ui-checkout/tree/v1.11.0) (2019-09-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.10.0...v1.11.0)
