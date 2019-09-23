@@ -103,7 +103,7 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
-  items = collection('#list-items-checked-out [class*=mclRowContainer---] div[class^="mclRow--"]', Item);
+  items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
   patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
   itemErrorPresent = isPresent('#section-item [class*=feedbackError---]');
