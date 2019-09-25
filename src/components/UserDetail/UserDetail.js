@@ -153,7 +153,7 @@ class UserDetail extends React.Component {
       'Open - In transit'
     ]
       .map(status => `requestStatus.${status}`)
-      .join('&');
+      .join(',');
 
     const openRequestsPath = `/requests?query=${user.barcode}&filters=${openRequestStatuses}&sort=Request date`;
 
