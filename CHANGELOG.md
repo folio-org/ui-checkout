@@ -1,8 +1,11 @@
 # Change history for ui-checkout
 
-## [1.12.0] (IN PROGRESS)
-* Handle tests in accordance with the fact that now MCL rows are not always a `div`
-* Handle issue regarding request link is not showing requests awaiting pickup on checkout page. Fixes UIREQ-325.
+## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
+
+* Correctly report loan policy name, instead of "noncirculation loan policy", for non-loanable items. Fixes UICHKOUT-534.
+* Be more semantic, less markupy, in tests with MCLs; not all rows are wrapped with `<div>`
+* Correctly format query when retrieving requests by multiple statuses. Fixes UIREQ-325.
 
 ## [1.11.0](https://github.com/folio-org/ui-checkout/tree/v1.11.0) (2019-09-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.10.0...v1.11.0)
