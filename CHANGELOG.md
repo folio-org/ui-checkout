@@ -1,5 +1,8 @@
 # Change history for ui-checkout
 
+## 1.12.0 (IN PROGRESS)
+
+
 ## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
 
