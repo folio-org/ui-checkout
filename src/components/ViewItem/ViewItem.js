@@ -3,8 +3,9 @@ import moment from 'moment';
 import React from 'react';
 import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import PropTypes from 'prop-types';
-import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 
+import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
+import { IfPermission } from '@folio/stripes/core';
 import {
   Button,
   DropdownMenu,
@@ -234,11 +235,17 @@ class ViewItem extends React.Component {
                 </Button>
               </MenuItem>
             }
-            <MenuItem itemMeta={{ loan, action: 'changeDueDate' }}>
-              <Button data-test-date-picker buttonStyle="dropdownItem">
-                <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
-              </Button>
-            </MenuItem>
+            {
+              stripes.hasPerm('ui-users.loans.edit') &&
+              <MenuItem
+                itemMeta={{ loan, action: 'changeDueDate' }}
+                onSelectItem={this.handleOptionsChange}
+              >
+                <Button data-test-date-picker buttonStyle="dropdownItem">
+                  <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
+                </Button>
+              </MenuItem>
+            }
             { checkoutNotePresent &&
               <MenuItem itemMeta={{ loan, action: 'showCheckoutNotes' }}>
                 <div data-test-checkout-notes>
