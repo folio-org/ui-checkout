@@ -13,7 +13,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
   const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
   const renderBlocks = blocks.map(block => {
     return (
-      <Row>
+      <Row key={block.id}>
         <Col xs>
           <b>{block.desc || ''}</b>
         </Col>

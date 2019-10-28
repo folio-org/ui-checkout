@@ -13,7 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 const MultipieceModal = (props) => {
-  const { item, onClose, onConfirm } = props;
+  const { item, open, onClose, onConfirm } = props;
   const { title, barcode, materialType } = item;
 
   const footer = (
@@ -36,7 +36,8 @@ const MultipieceModal = (props) => {
       label={
         <FormattedMessage id="ui-checkout.multipieceModal.label" />
       }
-      {...props}
+      onClose={onClose}
+      open={open}
     >
       <p>
         <SafeHTMLMessage
