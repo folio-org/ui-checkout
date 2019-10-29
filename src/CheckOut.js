@@ -1,7 +1,8 @@
-import { isEmpty, get } from 'lodash';
+import { isEmpty, get, hasIn } from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SubmissionError, reset } from 'redux-form';
+import { SubmissionError, reset, change, submit } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
@@ -23,6 +24,8 @@ import {
   getCheckoutSettings,
 } from './util';
 import css from './CheckOut.css';
+
+const wait = (time = 200) => new Promise(resolve => { setTimeout(resolve, time); });
 
 class CheckOut extends React.Component {
   static manifest = Object.freeze({
@@ -152,6 +155,7 @@ class CheckOut extends React.Component {
 
   constructor(props) {
     super(props);
+    const { location } = this.props;
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
@@ -161,11 +165,26 @@ class CheckOut extends React.Component {
     this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
+    this.shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = { submitting: false };
   }
 
-  componentDidMount() {
-    this.patronFormRef.current.focus();
+  async componentDidMount() {
+    const {
+      setFieldValue,
+      submitForm,
+      location,
+    } = this.props;
+
+
+    if (this.shouldSubmitOnMount) {
+      setFieldValue('patronForm', 'patron.identifier', location.state.patronBarcode);
+      setFieldValue('itemForm', 'item.barcode', location.state.itemBarcode);
+      // await wait();
+      submitForm('patronForm');
+    } else {
+      this.patronFormRef.current.focus();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -263,6 +282,8 @@ class CheckOut extends React.Component {
     const {
       resources: { activeRecord },
       mutator,
+      submitForm,
+      history,
     } = this.props;
 
     if (!isEmpty(activeRecord)) {
@@ -271,6 +292,11 @@ class CheckOut extends React.Component {
 
     mutator.requests.reset();
     const patron = await this.findPatron(data);
+
+    if (this.shouldSubmitOnMount) {
+      submitForm('itemForm');
+      history.push({ state: {} });
+    }
 
     if (!patron) return;
 
@@ -335,7 +361,11 @@ class CheckOut extends React.Component {
   }
 
   async findRequests(patron) {
-    const { stripes, mutator } = this.props;
+    const {
+      stripes,
+      mutator,
+    } = this.props;
+
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const query = buildRequestQuery(patron.id, servicePointId);
     mutator.requests.reset();
@@ -408,6 +438,7 @@ class CheckOut extends React.Component {
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               forwardedRef={this.patronFormRef}
+              patronBarcode={get(this.props, 'location.state.patronBarcode', '')}
               {...this.props}
             />
             {loading &&
@@ -479,4 +510,10 @@ class CheckOut extends React.Component {
   }
 }
 
-export default CheckOut;
+export default connect(
+  null,
+  dispatch => ({
+    setFieldValue(formName, fieldName, fieldValue) { dispatch(change(formName, fieldName, fieldValue)); },
+    submitForm(formName) { dispatch(submit(formName)); },
+  })
+)(CheckOut);
