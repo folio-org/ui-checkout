@@ -2,7 +2,7 @@ import { isEmpty, get, hasIn } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SubmissionError, reset, change, submit } from 'redux-form';
+import { SubmissionError, reset, change, submit, formValueSelector } from 'redux-form';
 import createInactivityTimer from 'inactivity-timer';
 import { Icon, Pane, Paneset } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
@@ -24,8 +24,6 @@ import {
   getCheckoutSettings,
 } from './util';
 import css from './CheckOut.css';
-
-const wait = (time = 200) => new Promise(resolve => { setTimeout(resolve, time); });
 
 class CheckOut extends React.Component {
   static manifest = Object.freeze({
@@ -155,7 +153,6 @@ class CheckOut extends React.Component {
 
   constructor(props) {
     super(props);
-    const { location } = this.props;
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
@@ -165,29 +162,33 @@ class CheckOut extends React.Component {
     this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
-    this.shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = { submitting: false };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const {
       setFieldValue,
-      submitForm,
       location,
     } = this.props;
 
+    const shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
 
-    if (this.shouldSubmitOnMount) {
+    if (shouldSubmitOnMount) {
       setFieldValue('patronForm', 'patron.identifier', location.state.patronBarcode);
       setFieldValue('itemForm', 'item.barcode', location.state.itemBarcode);
-      // await wait();
-      submitForm('patronForm');
     } else {
       this.patronFormRef.current.focus();
     }
   }
 
   componentDidUpdate(prevProps) {
+    const { submitForm } = this.props;
+    const patronFormFilled = !prevProps.patronBarcodeFieldValue && this.props.patronBarcodeFieldValue;
+
+    if (patronFormFilled && this.shouldSubmitOnMount) {
+      submitForm('patronForm');
+    }
+
     const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
     const prevBlocks = get(prevProps.resources, ['patronBlocks', 'records'], []);
     const { submitting } = this.state;
@@ -510,8 +511,14 @@ class CheckOut extends React.Component {
   }
 }
 
+const patronFormValueSelector = formValueSelector('patronForm');
+const itemFormValueSelector = formValueSelector('itemForm');
+
 export default connect(
-  null,
+  store => ({
+    patronBarcodeFieldValue: patronFormValueSelector(store, 'patron.identifier'),
+    itemBarcodeFieldValue: itemFormValueSelector(store, 'item.barcode'),
+  }),
   dispatch => ({
     setFieldValue(formName, fieldName, fieldValue) { dispatch(change(formName, fieldName, fieldValue)); },
     submitForm(formName) { dispatch(submit(formName)); },
