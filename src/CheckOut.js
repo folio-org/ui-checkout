@@ -79,6 +79,11 @@ class CheckOut extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    endSession: {
+      type: 'okapi',
+      path: 'circulation/end-patron-action-session',
+      fetch: false,
+    },
     activeRecord: {},
   });
 
@@ -204,15 +209,26 @@ class CheckOut extends React.Component {
     });
   }
 
-  onSessionEnd() {
+  async onSessionEnd() {
+    const {
+      resources: { activeRecord: { patronId } },
+      mutator: { endSession: { POST: endSession } },
+    } = this.props;
+
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
+
     const current = this.patronFormRef.current;
     // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
       setTimeout(() => current.focus());
     }
+
+    await endSession({
+      actionType: 'Check-out',
+      patronId,
+    });
   }
 
   getPatronIdentifiers() {
