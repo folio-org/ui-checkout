@@ -1,7 +1,9 @@
 # Change history for ui-checkout
 
-## 1.11.2 (IN PROGRESS)
-* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553. 
+## [1.11.2](https://github.com/folio-org/ui-checkout/tree/v1.11.2) (2019-11-02)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.1...v1.11.2)
+
+* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553.
 
 ## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
