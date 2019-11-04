@@ -451,4 +451,37 @@ describe('CheckOut', () => {
       expect(checkOut.endSessionBtnPresent).to.be.false;
     });
   });
+
+  describe('when the app is visited with after checking in an item', () => {
+    beforeEach(async function () {
+      const user = this.server.create('user', {
+        barcode: '123456',
+        personal: {
+          firstName: 'Bob',
+          lastName: 'Brown',
+        },
+      });
+      this.server.create('item', {
+        barcode: '123',
+      });
+      this.visit({
+        pathname: '/checkout',
+        state: {
+          itemBarcode: '123',
+          patronBarcode: user.barcode.toString(),
+        }
+      });
+
+      await new Promise(resolve => { setTimeout(resolve, 200); });
+    });
+
+    it('should display patron information', () => {
+      expect(checkOut.patronFullName).to.equal('Brown, Bob');
+    });
+
+    it('should show a list of checked out items', () => {
+      expect(checkOut.scanItems.itemListPresent).to.be.true;
+      expect(checkOut.items().length).to.equal(1);
+    });
+  });
 });

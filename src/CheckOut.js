@@ -153,6 +153,7 @@ class CheckOut extends React.Component {
 
   constructor(props) {
     super(props);
+    const { location } = this.props;
     this.store = props.stripes.store;
     this.connectedScanItems = props.stripes.connect(ScanItems);
 
@@ -162,6 +163,7 @@ class CheckOut extends React.Component {
     this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
+    this.shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = { submitting: false };
   }
 
@@ -171,9 +173,7 @@ class CheckOut extends React.Component {
       location,
     } = this.props;
 
-    const shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
-
-    if (shouldSubmitOnMount) {
+    if (this.shouldSubmitOnMount) {
       setFieldValue('patronForm', 'patron.identifier', location.state.patronBarcode);
       setFieldValue('itemForm', 'item.barcode', location.state.itemBarcode);
     } else {
