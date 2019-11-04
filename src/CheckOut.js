@@ -260,10 +260,20 @@ class CheckOut extends React.Component {
   }
 
   async onPatronLookup(data) {
-    const { mutator } = this.props;
+    const {
+      resources: { activeRecord },
+      mutator,
+    } = this.props;
+
+    if (!isEmpty(activeRecord)) {
+      this.onSessionEnd();
+    }
+
     mutator.requests.reset();
     const patron = await this.findPatron(data);
+
     if (!patron) return;
+
     const proxies = await this.findProxies(patron);
     // patron can act as a proxy
     // so wait with finding requests
