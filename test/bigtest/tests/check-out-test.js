@@ -471,7 +471,7 @@ describe('CheckOut', () => {
         }
       });
 
-      await new Promise(resolve => { setTimeout(resolve, 200); });
+      await new Promise(resolve => { setTimeout(resolve, 300); });
     });
 
     it('should display patron information', () => {

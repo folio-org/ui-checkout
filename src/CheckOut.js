@@ -1,11 +1,28 @@
-import { isEmpty, get, hasIn } from 'lodash';
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SubmissionError, reset, change, submit, formValueSelector } from 'redux-form';
-import createInactivityTimer from 'inactivity-timer';
-import { Icon, Pane, Paneset } from '@folio/stripes/components';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import {
+  SubmissionError,
+  reset,
+  change,
+  submit,
+  formValueSelector,
+} from 'redux-form';
+
+import createInactivityTimer from 'inactivity-timer';
+import {
+  isEmpty,
+  get,
+  hasIn,
+} from 'lodash';
+
+import {
+  Icon,
+  Pane,
+  Paneset,
+} from '@folio/stripes/components';
+
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import moment from 'moment';
@@ -146,6 +163,10 @@ class CheckOut extends React.Component {
         DELETE: PropTypes.func,
       }),
     }),
+    setFieldValue: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
+    itemBarcodeFieldValue: PropTypes.string,
+    patronBarcodeFieldValue: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
@@ -163,7 +184,7 @@ class CheckOut extends React.Component {
     this.state = { loading: false, blocked: false };
     this.patronFormRef = React.createRef();
     this.timer = undefined;
-    this.shouldSubmitOnMount = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
+    this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = { submitting: false };
   }
 
@@ -173,7 +194,7 @@ class CheckOut extends React.Component {
       location,
     } = this.props;
 
-    if (this.shouldSubmitOnMount) {
+    if (this.shouldSubmitAutomatically) {
       setFieldValue('patronForm', 'patron.identifier', location.state.patronBarcode);
       setFieldValue('itemForm', 'item.barcode', location.state.itemBarcode);
     } else {
@@ -182,16 +203,28 @@ class CheckOut extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { submitForm } = this.props;
-    const patronFormFilled = !prevProps.patronBarcodeFieldValue && this.props.patronBarcodeFieldValue;
+    const {
+      submitForm,
+      patronBarcodeFieldValue,
+      mutator,
+      resources,
+    } = this.props;
 
-    if (patronFormFilled && this.shouldSubmitOnMount) {
+    const {
+      resources: prevResources,
+      patronBarcodeFieldValue: prevPatronBarcodeFieldValue,
+    } = prevProps;
+
+    const { submitting } = this.state;
+
+    const patronFormFilled = !prevPatronBarcodeFieldValue && patronBarcodeFieldValue;
+
+    if (patronFormFilled && this.shouldSubmitAutomatically) {
       submitForm('patronForm');
     }
 
-    const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
-    const prevBlocks = get(prevProps.resources, ['patronBlocks', 'records'], []);
-    const { submitting } = this.state;
+    const patronBlocks = get(resources, ['patronBlocks', 'records'], []);
+    const prevBlocks = get(prevResources, ['patronBlocks', 'records'], []);
     const prevExpirated = prevBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
     const expirated = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
@@ -204,14 +237,14 @@ class CheckOut extends React.Component {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ submitting: true });
       expirated.forEach(p => {
-        this.props.mutator.activeRecord.update({ blockId: p.id });
-        this.props.mutator.patronBlocks.DELETE({ id: p.id });
+        mutator.activeRecord.update({ blockId: p.id });
+        mutator.patronBlocks.DELETE({ id: p.id });
       });
     }
 
     if (this.timer !== undefined) return;
 
-    const settings = this.props.resources.checkoutSettings;
+    const settings = resources.checkoutSettings;
     if (!settings || !settings.records || settings.records.length === 0) return;
 
     const parsed = getCheckoutSettings(settings.records);
@@ -294,7 +327,7 @@ class CheckOut extends React.Component {
     mutator.requests.reset();
     const patron = await this.findPatron(data);
 
-    if (this.shouldSubmitOnMount) {
+    if (this.shouldSubmitAutomatically) {
       submitForm('itemForm');
       history.push({ state: {} });
     }
@@ -439,7 +472,6 @@ class CheckOut extends React.Component {
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               forwardedRef={this.patronFormRef}
-              patronBarcode={get(this.props, 'location.state.patronBarcode', '')}
               {...this.props}
             />
             {loading &&
@@ -520,7 +552,11 @@ export default connect(
     itemBarcodeFieldValue: itemFormValueSelector(store, 'item.barcode'),
   }),
   dispatch => ({
-    setFieldValue(formName, fieldName, fieldValue) { dispatch(change(formName, fieldName, fieldValue)); },
-    submitForm(formName) { dispatch(submit(formName)); },
+    setFieldValue(formName, fieldName, fieldValue) {
+      dispatch(change(formName, fieldName, fieldValue));
+    },
+    submitForm(formName) {
+      dispatch(submit(formName));
+    },
   })
 )(CheckOut);
