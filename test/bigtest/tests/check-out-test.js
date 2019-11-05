@@ -452,23 +452,22 @@ describe('CheckOut', () => {
     });
   });
 
-  describe('when the app is visited with after checking in an item', () => {
+  describe('when the app is visited after checking in an item', () => {
     beforeEach(async function () {
       const user = this.server.create('user', {
-        barcode: '123456',
         personal: {
           firstName: 'Bob',
           lastName: 'Brown',
         },
       });
-      this.server.create('item', {
-        barcode: '123',
-      });
+
+      const item = this.server.create('item');
+
       this.visit({
         pathname: '/checkout',
         state: {
-          itemBarcode: '123',
-          patronBarcode: user.barcode.toString(),
+          itemBarcode: item.barcode,
+          patronBarcode: user.barcode,
         }
       });
 
