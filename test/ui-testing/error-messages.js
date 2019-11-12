@@ -98,6 +98,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#clickable-filter-active-active')
           .click('#clickable-filter-active-active')
           .wait(uselector)
+          .wait(15000)
           .click(uselector)
           .wait('#patron-form ~ div a > strong')
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
