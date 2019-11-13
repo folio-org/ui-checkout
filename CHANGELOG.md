@@ -2,7 +2,8 @@
 
 ## 1.12.0 (IN PROGRESS)
 * Make change due date button available on checked out loans when user has loan edit permission. Part of UIU-1177.
-* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553. 
+* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553.
+* Implement check out circulating items permission. Refs UICHKOUT-535. 
 
 ## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
