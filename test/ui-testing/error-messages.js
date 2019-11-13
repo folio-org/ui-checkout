@@ -72,10 +72,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#section-patron div[class*="Error"]')
           .evaluate(() => {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
-            if (!errorText.startsWith('User with this')) {
-              throw new Error(`Error message not found for invalid user input: ${errorText}`);
-            }
-            if (!errorText.endsWith('does not exist')) {
+            if (!(errorText.startsWith('User with this') && errorText.endsWith('does not exist'))) {
               throw new Error(`Error message not found for invalid user input: ${errorText}`);
             }
           })
