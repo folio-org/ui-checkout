@@ -72,8 +72,8 @@ module.exports.test = function uiTest(uiTestCtx) {
           .wait('#section-patron div[class*="Error"]')
           .evaluate(() => {
             const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
-            if (!errorText.startsWith('User')) {
-              throw new Error('Error message not found for invalid user input');
+            if (!(errorText.startsWith('User with this') && errorText.endsWith('does not exist'))) {
+              throw new Error(`Error message not found for invalid user input: ${errorText}`);
             }
           })
           .then(done)
@@ -95,8 +95,12 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('#input-patron-identifier', null)
           .wait('#clickable-find-user')
           .click('#clickable-find-user')
+          .wait('#clickable-filter-pg-faculty')
+          .click('#clickable-filter-pg-faculty')
           .wait('#clickable-filter-active-active')
           .click('#clickable-filter-active-active')
+          .wait(() => !document.querySelectorAll('#OverlayContainer [class^="noResultsMessage"]').length)
+          .wait('#list-plugin-find-user [role="row"][aria-rowindex="2"]')
           .wait(uselector)
           .click(uselector)
           .wait('#patron-form ~ div a > strong')
@@ -113,7 +117,7 @@ module.exports.test = function uiTest(uiTestCtx) {
           .evaluate(() => {
             const errorText = document.querySelector('#section-item div[class*="Error"]').innerText;
             if (!errorText.startsWith('No item with barcode')) {
-              throw new Error('Error message not found for wrong item barcode');
+              throw new Error(`Error message not found for wrong item barcode: ${errorText}`);
             }
           })
           .then(done)
