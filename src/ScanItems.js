@@ -238,20 +238,24 @@ class ScanItems extends React.Component {
       } = {},
     ] = [],
   }) => {
-    const itemError = (!parameters || !parameters.length)
-      ? (parameters.length === 0)
-        ?
-        {
-          barcode: message,
-          loanPolicy: ''
-        } : {
-          barcode: <FormattedMessage id="ui-checkout.unknownError" />,
-          _error: 'unknownError',
-        } : {
+    let itemError;
+    if (!parameters) {
+      itemError = {
+        barcode: <FormattedMessage id="ui-checkout.unknownError" />,
+        _error: 'unknownError',
+      };
+    } else if (parameters.length === 0) {
+      itemError = {
+        barcode: message,
+        loanPolicy: ''
+      };
+    } else {
+      itemError = {
         barcode: message,
         _error: parameters[0].key,
         loanPolicy: parameters[0].value,
       };
+    }
 
     this.reject(new SubmissionError({ item: itemError }));
   }
