@@ -326,9 +326,19 @@ class CheckOut extends React.Component {
 
     mutator.requests.reset();
     const patron = await this.findPatron(data);
+    const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
+
+    const hasBorrowingBlocks = patronBlocks.reduce((_hasBorrowingBlocks, patronBlock) => {
+      const isExpired = patronBlock.expirationDate && moment(moment(patronBlock.expirationDate).format()).isSameOrBefore(moment().format());
+
+      return !isExpired && patronBlock.borrowing;
+    }, false);
 
     if (this.shouldSubmitAutomatically) {
-      submitForm('itemForm');
+      if (!hasBorrowingBlocks) {
+        submitForm('itemForm');
+      }
+
       history.push({ state: {} });
     }
 
