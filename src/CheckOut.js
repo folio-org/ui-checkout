@@ -174,9 +174,14 @@ class CheckOut extends React.Component {
 
   constructor(props) {
     super(props);
-    const { location } = this.props;
-    this.store = props.stripes.store;
-    this.connectedScanItems = props.stripes.connect(ScanItems);
+
+    const {
+      location,
+      stripes,
+    } = props;
+
+    this.store = stripes.store;
+    this.connectedScanItems = stripes.connect(ScanItems);
 
     this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
@@ -328,11 +333,13 @@ class CheckOut extends React.Component {
     const patron = await this.findPatron(data);
     const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
 
-    const hasBorrowingBlocks = patronBlocks.reduce((_hasBorrowingBlocks, patronBlock) => {
-      const isExpired = patronBlock.expirationDate && moment(moment(patronBlock.expirationDate).format()).isSameOrBefore(moment().format());
+    const hasBorrowingBlocks = patronBlocks.some((patronBlock) => {
+      const currentDate = moment().format();
+      const formattedExpirationDate = moment(patronBlock.expirationDate).format();
+      const isExpired = patronBlock.expirationDate && moment(formattedExpirationDate).isSameOrBefore(currentDate);
 
       return !isExpired && patronBlock.borrowing;
-    }, false);
+    });
 
     if (this.shouldSubmitAutomatically) {
       if (!hasBorrowingBlocks) {
