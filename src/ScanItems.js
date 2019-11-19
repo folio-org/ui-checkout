@@ -238,7 +238,10 @@ class ScanItems extends React.Component {
       } = {},
     ] = [],
   }) => {
+    // TODO make error message internationalized
+    // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
     let itemError;
+
     if (!parameters) {
       itemError = {
         barcode: <FormattedMessage id="ui-checkout.unknownError" />,
