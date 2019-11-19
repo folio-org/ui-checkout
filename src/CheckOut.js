@@ -321,8 +321,6 @@ class CheckOut extends React.Component {
     const {
       resources: { activeRecord },
       mutator,
-      submitForm,
-      history,
     } = this.props;
 
     if (!isEmpty(activeRecord)) {
@@ -331,23 +329,6 @@ class CheckOut extends React.Component {
 
     mutator.requests.reset();
     const patron = await this.findPatron(data);
-    const patronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
-
-    const hasBorrowingBlocks = patronBlocks.some((patronBlock) => {
-      const currentDate = moment().format();
-      const formattedExpirationDate = moment(patronBlock.expirationDate).format();
-      const isExpired = patronBlock.expirationDate && moment(formattedExpirationDate).isSameOrBefore(currentDate);
-
-      return !isExpired && patronBlock.borrowing;
-    });
-
-    if (this.shouldSubmitAutomatically) {
-      if (!hasBorrowingBlocks) {
-        submitForm('itemForm');
-      }
-
-      history.push({ state: {} });
-    }
 
     if (!patron) return;
 
@@ -394,9 +375,20 @@ class CheckOut extends React.Component {
       patronBlocks = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
       const selPatron = patrons[0];
       this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
-      if (patronBlocks.length > 0 && patronBlocks[0].userId === selPatron.id) {
+      const showBlockModal = patronBlocks.length > 0 && patronBlocks[0].userId === selPatron.id;
+
+      if (showBlockModal) {
         this.openBlockedModal();
       }
+
+      if (!showBlockModal && this.shouldSubmitAutomatically) {
+        this.props.submitForm('itemForm');
+      }
+
+      if (this.shouldSubmitAutomatically) {
+        this.props.history.push({ state: {} });
+      }
+
       return selPatron;
     } finally {
       this.setState({ loading: false });
