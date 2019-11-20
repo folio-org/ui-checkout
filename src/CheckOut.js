@@ -267,7 +267,7 @@ class CheckOut extends React.Component {
     });
   }
 
-  async onSessionEnd() {
+  async onSessionEnd(manualEndSession = false) {
     const {
       resources: { activeRecord: { patronId } },
       mutator: { endSession: { POST: endSession } },
@@ -283,10 +283,12 @@ class CheckOut extends React.Component {
       setTimeout(() => current.focus());
     }
 
-    await endSession({
-      actionType: 'Check-out',
-      patronId,
-    });
+    if (manualEndSession) {
+      await endSession({
+        actionType: 'Check-out',
+        patronId,
+      });
+    }
   }
 
   getPatronIdentifiers() {
@@ -516,7 +518,7 @@ class CheckOut extends React.Component {
               patronBlocks={patronBlocks}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
-              onSessionEnd={() => this.onSessionEnd()}
+              onSessionEnd={() => this.onSessionEnd(true)}
             />
           </Pane>
         </Paneset>
