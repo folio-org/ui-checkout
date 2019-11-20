@@ -526,7 +526,7 @@ class CheckOut extends React.Component {
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
-            onSessionEnd={() => this.onSessionEnd()}
+            onSessionEnd={() => this.onSessionEnd(true)}
           />
         }
         <PatronBlockModal
