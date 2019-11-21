@@ -267,7 +267,7 @@ class CheckOut extends React.Component {
     });
   }
 
-  async onSessionEnd(manualEndSession = false) {
+  async onSessionEnd() {
     const {
       resources: { activeRecord: { patronId } },
       mutator: { endSession: { POST: endSession } },
@@ -283,7 +283,7 @@ class CheckOut extends React.Component {
       setTimeout(() => current.focus());
     }
 
-    if (manualEndSession) {
+    if (patronId) {
       await endSession({
         actionType: 'Check-out',
         patronId,
@@ -518,7 +518,7 @@ class CheckOut extends React.Component {
               patronBlocks={patronBlocks}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
-              onSessionEnd={() => this.onSessionEnd(true)}
+              onSessionEnd={() => this.onSessionEnd()}
             />
           </Pane>
         </Paneset>
@@ -526,7 +526,7 @@ class CheckOut extends React.Component {
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
-            onSessionEnd={() => this.onSessionEnd(true)}
+            onSessionEnd={() => this.onSessionEnd()}
           />
         }
         <PatronBlockModal
