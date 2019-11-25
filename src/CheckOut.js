@@ -269,15 +269,19 @@ class CheckOut extends React.Component {
 
   async onSessionEnd() {
     const {
-      resources: { activeRecord: { patronId } },
+      resources: { activeRecord: patronId },
       mutator: { endSession: { POST: endSession } },
     } = this.props;
+
+    console.log('endSession this.props', this.props);
 
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
 
     const current = this.patronFormRef.current;
+    console.log('this.props.mutator ', this.props.mutator);
+    console.log('endSession ', endSession);
     // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
       setTimeout(() => current.focus());
@@ -285,8 +289,12 @@ class CheckOut extends React.Component {
 
     if (patronId) {
       await endSession({
-        actionType: 'Check-out',
-        patronId,
+        endSessions : [
+          {
+            actionType: 'Check-out',
+            ...patronId
+          }
+        ]
       });
     }
   }
