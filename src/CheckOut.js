@@ -273,15 +273,11 @@ class CheckOut extends React.Component {
       mutator: { endSession: { POST: endSession } },
     } = this.props;
 
-    console.log('endSession this.props', this.props);
-
     this.clearResources();
     this.clearForm('itemForm');
     this.clearForm('patronForm');
 
     const current = this.patronFormRef.current;
-    console.log('this.props.mutator ', this.props.mutator);
-    console.log('endSession ', endSession);
     // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
       setTimeout(() => current.focus());
