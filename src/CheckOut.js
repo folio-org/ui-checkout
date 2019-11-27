@@ -269,7 +269,7 @@ class CheckOut extends React.Component {
 
   async onSessionEnd() {
     const {
-      resources: { activeRecord: patronId },
+      resources: { activeRecord: { patronId } },
       mutator: { endSession: { POST: endSession } },
     } = this.props;
 
@@ -283,16 +283,14 @@ class CheckOut extends React.Component {
       setTimeout(() => current.focus());
     }
 
-    if (patronId) {
-      await endSession({
-        endSessions : [
-          {
-            actionType: 'Check-out',
-            ...patronId
-          }
-        ]
-      });
-    }
+    await endSession({
+      endSessions : [
+        {
+          actionType: 'Check-out',
+          patronId
+        }
+      ]
+    });
   }
 
   getPatronIdentifiers() {
