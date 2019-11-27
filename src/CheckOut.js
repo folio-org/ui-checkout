@@ -283,14 +283,16 @@ class CheckOut extends React.Component {
       setTimeout(() => current.focus());
     }
 
-    await endSession({
-      endSessions : [
-        {
-          actionType: 'Check-out',
-          patronId
-        }
-      ]
-    });
+    if (patronId) {
+      await endSession({
+        endSessions : [
+          {
+            actionType: 'Check-out',
+            patronId
+          }
+        ]
+      });
+    }
   }
 
   getPatronIdentifiers() {
