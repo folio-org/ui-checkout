@@ -5,7 +5,6 @@ import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
-import { IfPermission } from '@folio/stripes/core';
 import {
   Button,
   DropdownMenu,
@@ -42,6 +41,7 @@ class ViewItem extends React.Component {
       id: PropTypes.string,
     }),
     parentMutator: PropTypes.object.isRequired,
+    loading: PropTypes.bool.isRequired,
     showCheckoutNotes: PropTypes.func,
   };
 
@@ -296,6 +296,7 @@ class ViewItem extends React.Component {
   render() {
     const {
       scannedItems,
+      loading,
     } = this.props;
 
     const {
@@ -307,6 +308,7 @@ class ViewItem extends React.Component {
     const items = scannedItems.map((it, index) => ({ ...it, no: size - index }));
     const contentData = _.orderBy(items,
       [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
+    const emptyMessage = !loading ? <FormattedMessage id="ui-checkout.noItemsEntered" /> : null;
 
     return (
       <React.Fragment>
@@ -318,11 +320,11 @@ class ViewItem extends React.Component {
           rowMetadata={['id']}
           formatter={this.getItemFormatter()}
           columnWidths={columnWidths}
-          isEmptyMessage={<FormattedMessage id="ui-checkout.noItemsEntered" />}
-          onHeaderClick={this.onSort}
+          isEmptyMessage={emptyMessage}
           sortOrder={sortOrder[0]}
           sortDirection={`${sortDirection[0]}ending`}
           interactive={false}
+          onHeaderClick={this.onSort}
         />
         {this.renderChangeDueDateDialog()}
       </React.Fragment>
