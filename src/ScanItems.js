@@ -1,11 +1,12 @@
 import { get } from 'lodash';
 import React from 'react';
-import moment from 'moment'; // eslint-disable-line import/no-extraneous-dependencies
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
-import { Icon } from '@folio/stripes/components';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
+
+import { Icon } from '@folio/stripes/components';
 
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
@@ -367,6 +368,7 @@ class ScanItems extends React.Component {
         }
         <ViewItem
           scannedItems={scannedItems}
+          loading={loading}
           showCheckoutNotes={this.showCheckoutNotes}
           {...this.props}
         />

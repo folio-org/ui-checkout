@@ -99,7 +99,7 @@ describe('CheckOut', () => {
         .clickPatronBtn();
     });
 
-    describe('checking out a single item', () => {
+    describe('checking out a single item successfully', () => {
       beforeEach(async function () {
         this.server.create('item', {
           barcode: '123',
@@ -112,6 +112,21 @@ describe('CheckOut', () => {
       it('shows a list of checked out items', () => {
         expect(checkOut.scanItems.itemListPresent).to.be.true;
         expect(checkOut.items().length).to.equal(1);
+      });
+
+      it('should hide item list empty message during checkout', () => {
+        expect(checkOut.itemListEmptyMessage).to.equal('');
+      });
+    });
+
+    describe('checking out a single item unsuccessfully', () => {
+      beforeEach(async function () {
+        this.server.post('/circulation/check-out-by-barcode', {}, 500);
+        await checkOut.checkoutItem('123');
+      });
+
+      it('should hide item list empty message during checkout', () => {
+        expect(checkOut.itemListEmptyMessage).to.equal('');
       });
     });
 
