@@ -48,16 +48,10 @@ function ErrorModal(props) {
       dismissible
     >
       <p>
-        {
-          canBeOverridden
-            ? (
-              <SafeHTMLMessage
-                id="ui-checkout.messages.itemIsNotLoanable"
-                values={{ title, barcode, materialType, loanPolicy }}
-              />
-            )
-            : message
-        }
+        <SafeHTMLMessage
+          id="ui-checkout.messages.itemIsNotLoanable"
+          values={{ title, barcode, materialType, loanPolicy }}
+        />
       </p>
       <Col xs={12}>
         <Row end="xs">
