@@ -58,7 +58,8 @@
           "accounts.collection.get",
           "manualblocks.collection.get",
           "module.checkout.enabled",
-          "inventory.items.collection.get"
+          "inventory.items.collection.get",
+          "circulation.end-patron-action-session.post"
         ]
       },
       {
@@ -117,8 +118,5 @@
   },
   "optionalDependencies": {
     "@folio/plugin-find-user": "^1.1.0"
-  },
-  "resolutions": {
-    "fake-xml-http-request": "2.0.0"
   }
 }
