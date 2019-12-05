@@ -6,6 +6,7 @@
 * Implement check out circulating items permission. Refs UICHKOUT-535.
 * Extend "okapiInterfaces" with "inventory" in order to handle permissions error. Refs UICHKOUT-562.
 * Hide the empty checkout items list message during the checkout of the new item. Refs UICHKOUT-557.
+* Include New 'Open - Awaiting delivery' status when accessing Request Queue from Check Out App. Refs UICHCKOUT-563.
 
 ## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
