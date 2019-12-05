@@ -1,19 +1,30 @@
 # Change history for ui-checkout
 
-## 1.12.0 (IN PROGRESS)
+## 2.1.0 (IN PROGRESS)
+
+## [2.0.0](https://github.com/folio-org/ui-checkout/tree/v2.0.0) (2019-12-04)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.2...v2.0.0)
+
 * Make change due date button available on checked out loans when user has loan edit permission. Part of UIU-1177.
-* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553.
+* Implement end session for check-out. Refs UICHKOUT-556.
 * Implement check out circulating items permission. Refs UICHKOUT-535.
+* Improve error messages upon checking item out at service point with no opening hours and loan policy that uses closed library due date management. Refs UICHKOUT-545.
+* Handle end session API endpoint is called multiple times issue. Fixes UICHKOUT-560.
 * Extend "okapiInterfaces" with "inventory" in order to handle permissions error. Refs UICHKOUT-562.
 * Hide the empty checkout items list message during the checkout of the new item. Refs UICHKOUT-557.
 * Include New 'Open - Awaiting delivery' status when accessing Request Queue from Check Out App. Refs UICHCKOUT-563.
+
+## [1.11.2](https://github.com/folio-org/ui-checkout/tree/v1.11.2) (2019-11-02)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.1...v1.11.2)
+
+* Ignore 'Closed - pickup expired' items in request queries. Refs UICHKOUT-553.
 
 ## [1.11.1](https://github.com/folio-org/ui-checkout/tree/v1.11.1) (2019-09-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.0...v1.11.1)
 
 * Correctly report loan policy name, instead of "noncirculation loan policy", for non-loanable items. Fixes UICHKOUT-534.
 * Be more semantic, less markupy, in tests with MCLs; not all rows are wrapped with `<div>`
-* Correctly format query when retrieving requests by multiple statuses. Fixes UIREQ-325.
+* Correctly format query when retrieving requests by multiple statuses. Fixes UICHKOUT-572.
 
 ## [1.11.0](https://github.com/folio-org/ui-checkout/tree/v1.11.0) (2019-09-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.10.0...v1.11.0)
