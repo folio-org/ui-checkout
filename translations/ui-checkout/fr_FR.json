@@ -90,7 +90,7 @@
     "overrideLoanPolicy": "Remplacer la politique de prêt",
     "confirm": "Confirmer",
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (Le code-barres: {barcode} ) sera <strong> emprunté </strong> .",
-    "openRequests": "Demandes en cours",
+    "openRequests": "Demandes-réservations en cours",
     "date": "Date",
     "source": "Source"
 }
