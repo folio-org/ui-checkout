@@ -285,8 +285,12 @@ class CheckOut extends React.Component {
 
     if (patronId) {
       await endSession({
-        actionType: 'Check-out',
-        patronId,
+        endSessions : [
+          {
+            actionType: 'Check-out',
+            patronId
+          }
+        ]
       });
     }
   }
