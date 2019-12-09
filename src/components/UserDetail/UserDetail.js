@@ -150,7 +150,8 @@ class UserDetail extends React.Component {
     const openRequestStatuses = [
       'Open - Not yet filled',
       'Open - Awaiting pickup',
-      'Open - In transit'
+      'Open - In transit',
+      'Open - Awaiting delivery',
     ]
       .map(status => `requestStatus.${status}`)
       .join(',');

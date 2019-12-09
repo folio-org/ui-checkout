@@ -116,6 +116,7 @@ export default interactor(class CheckOutInteractor {
 
   multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
   itemList = new MultiColumnListInteractor('#list-items-checked-out');
+  itemListEmptyMessage = text('[data-test-scan-items] [class*=mclEmptyMessage---]');
 
   whenUserIsLoaded() {
     return this.when(() => this.patronFullName.isPresent);
