@@ -97,7 +97,7 @@ class UserDetail extends React.Component {
     if (!renderLoans) return null;
 
     const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
-    const openLoansPath = `/users/view/${user.id}?layer=open-loans&query=`;
+    const openLoansPath = `/users/${user.id}/loans/open`;
     const openLoansLink = <Link to={openLoansPath}>{openLoansCount}</Link>;
     const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
     const openAccounts = get(resources, ['openAccounts', 'records'], []);
