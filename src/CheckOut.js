@@ -274,7 +274,10 @@ class CheckOut extends React.Component {
     } = this.props;
 
     this.clearResources();
-    this.clearForm('itemForm');
+
+    if (!this.shouldSubmitAutomatically) {
+      this.clearForm('itemForm');
+    }
     this.clearForm('patronForm');
 
     const current = this.patronFormRef.current;
@@ -386,13 +389,9 @@ class CheckOut extends React.Component {
       if (!showBlockModal && this.shouldSubmitAutomatically) {
         this.props.submitForm('itemForm');
       }
-
-      if (this.shouldSubmitAutomatically) {
-        this.props.history.push({ state: {} });
-      }
-
       return selPatron;
     } finally {
+      this.shouldSubmitAutomatically = false;
       this.setState({ loading: false });
     }
   }
@@ -519,6 +518,7 @@ class CheckOut extends React.Component {
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
+              shouldSubmitAutomatically={this.shouldSubmitAutomatically}
             />
           </Pane>
         </Paneset>

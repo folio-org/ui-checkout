@@ -47,6 +47,7 @@ class ScanItems extends React.Component {
 
   static propTypes = {
     stripes: PropTypes.object.isRequired,
+    shouldSubmitAutomatically: PropTypes.bool.isRequired,
     resources: PropTypes.shape({
       items: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -325,6 +326,7 @@ class ScanItems extends React.Component {
       onSessionEnd,
       patron,
       settings: { audioAlertsEnabled },
+      shouldSubmitAutomatically,
     } = this.props;
 
     const {
@@ -359,6 +361,7 @@ class ScanItems extends React.Component {
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
           item={item}
+          shouldSubmitAutomatically={shouldSubmitAutomatically}
         />
         {loading &&
           <Icon
