@@ -30,6 +30,7 @@ import OverrideModal from '../OverrideModal';
 class ItemForm extends React.Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
+    shouldSubmitAutomatically: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
     submitSucceeded: PropTypes.bool.isRequired,
     item: PropTypes.object,
@@ -66,6 +67,7 @@ class ItemForm extends React.Component {
   componentDidUpdate(prevProps) {
     const {
       submitSucceeded,
+      shouldSubmitAutomatically,
       patron,
     } = this.props;
 
@@ -75,8 +77,8 @@ class ItemForm extends React.Component {
     }
 
     // Focus on the item barcode input after the patron is entered
-    if (submitSucceeded || !prevProps.patron ||
-      prevProps.patron.id !== patron.id) {
+    if (!shouldSubmitAutomatically && (submitSucceeded || !prevProps.patron ||
+      prevProps.patron.id !== patron.id)) {
       this.clearForm();
       this.focusInput();
     }
