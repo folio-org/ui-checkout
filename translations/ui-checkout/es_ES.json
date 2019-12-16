@@ -91,6 +91,6 @@
     "confirm": "Confirmar",
     "messages.itemWillBeCheckedOut": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} )será <strong>  prestado</strong> ",
     "openRequests": "Solicitudes abiertas",
-    "date": "Date",
-    "source": "Source"
+    "date": "Fecha",
+    "source": "Fuente"
 }
