@@ -1,6 +1,9 @@
 # Change history for ui-checkout
 
-## 2.1.0 (IN PROGRESS)
+## [2.0.1](https://github.com/folio-org/ui-checkout/tree/v2.0.1) (2019-12-19)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v2.0.0...v2.0.1)
+
+* Accept `shouldSubmitAutomatically`. Refs UICHKOUT-584.
 
 ## [2.0.0](https://github.com/folio-org/ui-checkout/tree/v2.0.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.2...v2.0.0)
