@@ -24,7 +24,7 @@ export const DATE_PICKER_DEFAULTS = {
   time: '23:59:00.000Z',
 };
 
-export const INVALIDE_DATE_MESSAGE = 'Invalid date';
+export const INVALID_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'BARCODE';
 
