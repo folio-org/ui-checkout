@@ -3,6 +3,7 @@
 ## 2.1.0 (IN PROGRESS)
 
 * Fix link path to loans list in user details information. Fixes UICHKOUT-554.
+* Handle the wrong error message when checking out requested items to non-requester. Fixes UICHKOUT-580.
 
 ## [2.0.0](https://github.com/folio-org/ui-checkout/tree/v2.0.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.2...v2.0.0)
