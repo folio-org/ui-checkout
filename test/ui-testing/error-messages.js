@@ -113,9 +113,9 @@ module.exports.test = function uiTest(uiTestCtx) {
         nightmare
           .insert('#input-item-barcode', 'wrong-item-barcode')
           .click('#clickable-add-item')
-          .wait('#section-item div[class*="Error"]')
+          .wait('#OverlayContainer [class^="modalContent--"]')
           .evaluate(() => {
-            const errorText = document.querySelector('#section-item div[class*="Error"]').innerText;
+            const errorText = document.querySelector('#OverlayContainer [class^="modalContent--"]').innerText;
             if (!errorText.startsWith('No item with barcode')) {
               throw new Error(`Error message not found for wrong item barcode: ${errorText}`);
             }

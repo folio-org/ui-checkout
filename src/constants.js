@@ -24,11 +24,12 @@ export const DATE_PICKER_DEFAULTS = {
   time: '23:59:00.000Z',
 };
 
-export const INVALIDE_DATE_MESSAGE = 'Invalid date';
+export const INVALID_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'BARCODE';
 
-export const OVERRIDABLE_ERROR_MESSAGES = ['Item is not loanable'];
+export const ITEM_NOT_LOANABLE = 'Item is not loanable';
+export const OVERRIDABLE_ERROR_MESSAGES = [ITEM_NOT_LOANABLE];
 
 export const statuses = {
   CHECK_OUT: 'Check out',

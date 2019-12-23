@@ -12,7 +12,10 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import { OVERRIDABLE_ERROR_MESSAGES } from '../../constants';
+import {
+  ITEM_NOT_LOANABLE,
+  OVERRIDABLE_ERROR_MESSAGES,
+} from '../../constants';
 
 
 function ErrorModal(props) {
@@ -37,6 +40,7 @@ function ErrorModal(props) {
 
   const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
     && OVERRIDABLE_ERROR_MESSAGES.includes(message);
+  const isItemNotLoanable = message === ITEM_NOT_LOANABLE;
 
   return (
     <Modal
@@ -48,10 +52,16 @@ function ErrorModal(props) {
       dismissible
     >
       <p>
-        <SafeHTMLMessage
-          id="ui-checkout.messages.itemIsNotLoanable"
-          values={{ title, barcode, materialType, loanPolicy }}
-        />
+        {
+          isItemNotLoanable
+            ? (
+              <SafeHTMLMessage
+                id="ui-checkout.messages.itemIsNotLoanable"
+                values={{ title, barcode, materialType, loanPolicy }}
+              />
+            )
+            : message
+        }
       </p>
       <Col xs={12}>
         <Row end="xs">

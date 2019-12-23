@@ -21,7 +21,7 @@ import { DueDatePicker } from '@folio/stripes/smart-components';
 
 import {
   DATE_PICKER_DEFAULTS,
-  INVALIDE_DATE_MESSAGE,
+  INVALID_DATE_MESSAGE,
 } from '../../constants';
 
 function OverrideModal(props) {
@@ -44,7 +44,7 @@ function OverrideModal(props) {
     setDatetime(newDateTime);
   };
 
-  const canBeSubmitted = comment && dueDate !== INVALIDE_DATE_MESSAGE;
+  const canBeSubmitted = comment && dueDate !== INVALID_DATE_MESSAGE;
 
   const onSubmit = async (event) => {
     event.preventDefault();
