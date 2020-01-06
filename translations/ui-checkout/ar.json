@@ -6,7 +6,7 @@
     "itemNotFoundError": "لا توجد مادة بهذا الباركود",
     "itemNotAvailableError": "المادة غير متاحة للإعارة",
     "itemNotCheckedOut": "لم تتم إعارة المادة",
-    "userNotFoundError": "لا يوجد مستخدم بهذا {identifier} ",
+    "userNotFoundError": "لا يوجد مستخدم بهذا {identifier}",
     "missingIdentifierError": "لا يملك المستخدم  {identifier} {username} ",
     "unknownError": "حدث خطأ غير معروف",
     "scanPatronCard": "مسح بطاقة المستفيد ضوئيًا",
