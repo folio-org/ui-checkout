@@ -92,5 +92,6 @@
   "comment": "Comment",
   "override": "Override",
   "saveAndClose": "Save & close",
-  "overrideLoanPolicy": "Override loan policy"
+  "overrideLoanPolicy": "Override loan policy",
+  "actions.moreDetails": "Get more details about this item"
 }
