@@ -7,10 +7,11 @@ import PropTypes from 'prop-types';
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import {
   Button,
+  Dropdown,
   DropdownMenu,
-  MenuItem,
+  Icon,
   MultiColumnList,
-  UncontrolledDropdown,
+  Tooltip,
 } from '@folio/stripes/components';
 
 const sortMap = {
@@ -30,7 +31,7 @@ const columnWidths = {
   'loanPolicy': 150,
   'dueDate': 90,
   'Time': 75,
-  ' ': 55,
+  ' ': 75,
 };
 
 class ViewItem extends React.Component {
@@ -49,7 +50,6 @@ class ViewItem extends React.Component {
     super(props);
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.connectedChangeDueDateDialog = props.stripes.connect(ChangeDueDateDialog);
-    this.onMenuToggle = this.onMenuToggle.bind(this);
     this.onSort = this.onSort.bind(this);
     this.hideChangeDueDateDialog = this.hideChangeDueDateDialog.bind(this);
 
@@ -86,12 +86,6 @@ class ViewItem extends React.Component {
     }
 
     this.setState({ sortOrder, sortDirection });
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  onMenuToggle(e) {
-    e.stopPropagation();
-    e.preventDefault();
   }
 
   getItemFormatter() {
@@ -187,76 +181,89 @@ class ViewItem extends React.Component {
     const { stripes } = this.props;
     const isCheckOutNote = element => element.noteType === 'Check out';
     const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
-    return (
-      <div data-test-elipse-select>
-        <UncontrolledDropdown
-          data-test-item-menu
-          onSelectItem={this.handleOptionsChange}
-          onToggle={this.onMenuToggle}
+
+    const trigger = ({ getTriggerProps, triggerRef }) => {
+      return (
+        <React.Fragment>
+          <Button
+            {...getTriggerProps()}
+            buttonStyle="hover dropdownActive"
+            aria-labelledby="checkout-actions-tooltip-text"
+            id="available-item-actions-button"
+          >
+            <Icon icon="ellipsis" size="large" />
+          </Button>
+          <Tooltip
+            id="checkout-actions-tooltip"
+            text={<FormattedMessage id="ui-checkout.actions.moreDetails" />}
+            triggerRef={triggerRef}
+          />
+        </React.Fragment>
+      );
+    };
+
+    const menu = ({ onToggle }) => {
+      return (
+        <DropdownMenu
+          role="menu"
+          aria-label="available actions"
+          onToggle={onToggle}
         >
           <Button
-            data-role="toggle"
-            buttonStyle="hover dropdownActive"
+            data-test-show-item-details
+            buttonStyle="dropdownItem"
+            href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
+            onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
           >
-            <strong>•••</strong>
+            <FormattedMessage id="ui-checkout.itemDetails" />
           </Button>
-          <DropdownMenu
-            data-role="menu"
-            pullRight
-            width="10em"
+          <Button
+            data-test-show-loan-details
+            buttonStyle="dropdownItem"
+            href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
+            onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
           >
-            <MenuItem itemMeta={{ loan, action: 'showItemDetails' }}>
-              <Button
-                data-test-show-item-details
-                buttonStyle="dropdownItem"
-                href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
-              >
-                <FormattedMessage id="ui-checkout.itemDetails" />
-              </Button>
-            </MenuItem>
-            <MenuItem itemMeta={{ loan, action: 'showLoanDetails' }}>
-              <Button
-                data-test-show-loan-details
-                buttonStyle="dropdownItem"
-                href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
-              >
-                <FormattedMessage id="ui-checkout.loanDetails" />
-              </Button>
-            </MenuItem>
-            {
-              stripes.hasPerm('ui-circulation.settings.loan-policies') &&
-              <MenuItem itemMeta={{ loan, action: 'showLoanPolicy' }}>
-                <Button
-                  data-test-show-loan-policy
-                  buttonStyle="dropdownItem"
-                  href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
-                >
-                  <FormattedMessage id="ui-checkout.loanPolicy" />
-                </Button>
-              </MenuItem>
-            }
-            {
-              stripes.hasPerm('ui-users.loans.edit') &&
-              <MenuItem
-                itemMeta={{ loan, action: 'changeDueDate' }}
-                onSelectItem={this.handleOptionsChange}
-              >
-                <Button data-test-date-picker buttonStyle="dropdownItem">
-                  <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
-                </Button>
-              </MenuItem>
-            }
-            { checkoutNotePresent &&
-              <MenuItem itemMeta={{ loan, action: 'showCheckoutNotes' }}>
-                <div data-test-checkout-notes>
-                  <Button buttonStyle="dropdownItem">
-                    <FormattedMessage id="ui-checkout.checkoutNotes" />
-                  </Button>
-                </div>
-              </MenuItem>
-            }
-          </DropdownMenu>
-        </UncontrolledDropdown>
+            <FormattedMessage id="ui-checkout.loanDetails" />
+          </Button>
+          { stripes.hasPerm('ui-circulation.settings.loan-policies') &&
+            <Button
+              data-test-show-loan-policy
+              buttonStyle="dropdownItem"
+              href={`/settings/circulation/loan-policies/${loan.loanPolicyId}`}
+              onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanPolicy' }, e)}
+            >
+              <FormattedMessage id="ui-checkout.loanPolicy" />
+            </Button>
+          }
+          { stripes.hasPerm('ui-users.loans.edit') &&
+            <Button
+              data-test-date-picker
+              buttonStyle="dropdownItem"
+              onClick={(e) => this.handleOptionsChange({ loan, action: 'changeDueDate' }, e)}
+            >
+              <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
+            </Button>
+          }
+          { checkoutNotePresent &&
+            <Button
+              data-test-checkout-notes
+              buttonStyle="dropdownItem"
+              onClick={(e) => this.handleOptionsChange({ loan, action: 'showCheckoutNotes' }, e)}
+            >
+              <FormattedMessage id="ui-checkout.checkoutNotes" />
+            </Button>
+          }
+        </DropdownMenu>
+      );
+    };
+
+    return (
+      <div data-test-elipse-select>
+        <Dropdown
+          data-test-item-menu
+          renderTrigger={trigger}
+          renderMenu={menu}
+        />
       </div>
     );
   }
