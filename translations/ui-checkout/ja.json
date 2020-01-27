@@ -23,7 +23,7 @@
     "active": "アクティブ",
     "inactive": "非アクティブ",
     "userExpiration": "User Expiration",
-    "totalItemsScanned": "Total items scanned: {total}",
+    "totalItemsScanned": "スキャンされたアイテム合計： {total}",
     "sponsorExpired": "Sponsor user record expired",
     "proxyExpired": "Proxy relationship expired",
     "continue": "続行",
