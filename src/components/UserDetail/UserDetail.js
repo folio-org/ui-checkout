@@ -199,8 +199,7 @@ class UserDetail extends React.Component {
                   src="http://placehold.it/60x60"
                   alt={<FormattedMessage id="ui-checkout.presentation" />}
                 />
-              </Col>
-            }
+              </Col> }
           </Row>
         </div>
 

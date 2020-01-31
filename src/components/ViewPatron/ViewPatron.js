@@ -39,6 +39,8 @@ class ViewPatron extends React.Component {
       proxy,
       onSelectPatron,
       onClearPatron,
+      patronBlocks,
+      openBlockedModal,
     } = this.props;
 
     const patronDetail = (
@@ -65,7 +67,6 @@ class ViewPatron extends React.Component {
           id="proxy-detail"
           label={<FormattedMessage id="ui-checkout.borrowerProxy" />}
           user={proxy}
-          {...this.props}
         />
         <div className={css.section}>
           <Row>
@@ -91,9 +92,9 @@ class ViewPatron extends React.Component {
           onClose={onClearPatron}
         />
         <PatronBlock
-          patronBlocksCount={this.props.patronBlocks.length || 0}
-          patronBlocks={this.props.patronBlocks}
-          openBlockedModal={this.props.openBlockedModal}
+          patronBlocksCount={patronBlocks.length || 0}
+          patronBlocks={patronBlocks}
+          openBlockedModal={openBlockedModal}
           user={patron}
         />
       </div>
