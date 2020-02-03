@@ -12,7 +12,9 @@
   },
   "main": "src/index.js",
   "stripes": {
-    "type": "app",
+    "actsAs": [
+      "app"
+    ],
     "displayName": "ui-checkout.meta.title",
     "route": "/checkout",
     "queryResource": "query",
@@ -86,9 +88,9 @@
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.1.0",
-    "@folio/stripes": "^2.3.0",
+    "@folio/stripes": "^2.13.0",
     "@folio/stripes-cli": "^1.11.0",
-    "@folio/stripes-core": "^3.3.0",
+    "@folio/stripes-core": "^3.12.0",
     "babel-eslint": "^10.0.3",
     "babel-polyfill": "^6.26.0",
     "chai": "^4.2.0",
@@ -113,7 +115,7 @@
     "redux-form": "^7.0.3"
   },
   "peerDependencies": {
-    "@folio/stripes": "^2.3.0",
+    "@folio/stripes": "^2.13.0",
     "react": "*"
   },
   "optionalDependencies": {

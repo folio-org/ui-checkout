@@ -1,5 +1,3 @@
-import { Response } from '@bigtest/mirage';
-
 export default (server) => {
   server.get('/configurations/entries', {
     'configs': [

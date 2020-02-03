@@ -496,6 +496,7 @@ class CheckOut extends React.Component {
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
               forwardedRef={this.patronFormRef}
+              {...this.props}
             />
             {loading &&
               <Icon
@@ -519,6 +520,7 @@ class CheckOut extends React.Component {
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
           >
             <this.connectedScanItems
+              {...this.props}
               parentMutator={mutator}
               parentResources={resources}
               stripes={stripes}
