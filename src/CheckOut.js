@@ -108,7 +108,7 @@ class CheckOut extends React.Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
-      activeRecord: PropTypes.object.isRequired,
+      activeRecord: PropTypes.object,
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
