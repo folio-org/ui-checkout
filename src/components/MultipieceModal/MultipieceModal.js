@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -60,7 +60,7 @@ const MultipieceModal = (props) => {
         </Col>
         {
           (item.numberOfMissingPieces || item.descriptionOfmissingPieces) &&
-          <Fragment>
+          <>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.multipieceModal.item.numberOfMissingPieces" />}
@@ -73,7 +73,7 @@ const MultipieceModal = (props) => {
                 value={get(item, 'missingPieces', '-')}
               />
             </Col>
-          </Fragment>
+          </>
         }
       </Row>
     </Modal>

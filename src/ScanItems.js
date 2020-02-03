@@ -351,8 +351,7 @@ class ScanItems extends React.Component {
             checkoutNotesMode={checkoutNotesMode}
             onDone={this.onDone}
             onCancel={this.onCancel}
-          />
-        }
+          />}
         <ItemForm
           ref={this.itemInput}
           onSubmit={this.tryCheckout}
@@ -367,8 +366,7 @@ class ScanItems extends React.Component {
           <Icon
             icon="spinner-ellipsis"
             width="10px"
-          />
-        }
+          />}
         <ViewItem
           scannedItems={scannedItems}
           loading={loading}
@@ -380,8 +378,7 @@ class ScanItems extends React.Component {
             src={checkoutSound}
             autoPlay
             onEnded={this.onFinishedPlaying}
-          />
-        }
+          />}
       </div>
     );
   }

@@ -43,6 +43,145 @@ import {
 import css from './CheckOut.css';
 
 class CheckOut extends React.Component {
+  static manifest = Object.freeze({
+    selPatron: { initialValue: {} },
+    query: { initialValue: {} },
+    scannedItems: { initialValue: [] },
+    checkoutSettings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
+    },
+    patrons: {
+      type: 'okapi',
+      records: 'users',
+      path: 'users',
+      accumulate: 'true',
+      fetch: false,
+    },
+    settings: {
+      type: 'okapi',
+      records: 'configs',
+      path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
+    },
+    loans: {
+      type: 'okapi',
+      path: 'circulation/loans',
+      accumulate: 'true',
+      fetch: false,
+    },
+    patronBlocks: {
+      type: 'okapi',
+      records: 'manualblocks',
+      path: 'manualblocks?query=userId=%{activeRecord.patronId}',
+      DELETE: {
+        path: 'manualblocks/%{activeRecord.blockId}',
+      },
+    },
+    patronGroups: {
+      type: 'okapi',
+      records: 'usergroups',
+      path: 'groups',
+    },
+    requests: {
+      type: 'okapi',
+      records: 'requests',
+      accumulate: 'true',
+      path: 'circulation/requests',
+      fetch: false,
+    },
+    proxy: {
+      type: 'okapi',
+      records: 'proxiesFor',
+      path: 'proxiesfor',
+      accumulate: 'true',
+      fetch: false,
+    },
+    endSession: {
+      type: 'okapi',
+      path: 'circulation/end-patron-action-session',
+      fetch: false,
+    },
+    activeRecord: {},
+  });
+
+  static propTypes = {
+    stripes: PropTypes.object.isRequired,
+    resources: PropTypes.shape({
+      activeRecord: PropTypes.object.isRequired,
+      scannedItems: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+        }),
+      ),
+      patrons: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      settings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      checkoutSettings: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      patronBlocks: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      requests: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      proxiesFor: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      selPatron: PropTypes.object,
+    }),
+    mutator: PropTypes.shape({
+      patrons: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      selPatron: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      scannedItems: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      activeRecord: PropTypes.shape({
+        update: PropTypes.func
+      }),
+      requests: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      proxy: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      patronBlocks: PropTypes.shape({
+        DELETE: PropTypes.func,
+      }),
+      endSession: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+    }),
+    setFieldValue: PropTypes.func.isRequired,
+    submitForm: PropTypes.func.isRequired,
+    itemBarcodeFieldValue: PropTypes.string,
+    patronBarcodeFieldValue: PropTypes.string,
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }),
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        patronBarcode: PropTypes.string.isRequired,
+        itemBarcode: PropTypes.string.isRequired,
+      })
+    }),
+  };
+
   constructor(props) {
     super(props);
 
@@ -425,145 +564,6 @@ class CheckOut extends React.Component {
     );
   }
 }
-
-CheckOut.manifest = Object.freeze({
-  selPatron: { initialValue: {} },
-  query: { initialValue: {} },
-  scannedItems: { initialValue: [] },
-  checkoutSettings: {
-    type: 'okapi',
-    records: 'configs',
-    path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
-  },
-  patrons: {
-    type: 'okapi',
-    records: 'users',
-    path: 'users',
-    accumulate: 'true',
-    fetch: false,
-  },
-  settings: {
-    type: 'okapi',
-    records: 'configs',
-    path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
-  },
-  loans: {
-    type: 'okapi',
-    path: 'circulation/loans',
-    accumulate: 'true',
-    fetch: false,
-  },
-  patronBlocks: {
-    type: 'okapi',
-    records: 'manualblocks',
-    path: 'manualblocks?query=userId=%{activeRecord.patronId}',
-    DELETE: {
-      path: 'manualblocks/%{activeRecord.blockId}',
-    },
-  },
-  patronGroups: {
-    type: 'okapi',
-    records: 'usergroups',
-    path: 'groups',
-  },
-  requests: {
-    type: 'okapi',
-    records: 'requests',
-    accumulate: 'true',
-    path: 'circulation/requests',
-    fetch: false,
-  },
-  proxy: {
-    type: 'okapi',
-    records: 'proxiesFor',
-    path: 'proxiesfor',
-    accumulate: 'true',
-    fetch: false,
-  },
-  endSession: {
-    type: 'okapi',
-    path: 'circulation/end-patron-action-session',
-    fetch: false,
-  },
-  activeRecord: {},
-});
-
-CheckOut.propTypes = {
-  stripes: PropTypes.object.isRequired,
-  resources: PropTypes.shape({
-    activeRecord: PropTypes.object.isRequired,
-    scannedItems: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
-      }),
-    ),
-    patrons: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    settings: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    checkoutSettings: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    patronBlocks: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    requests: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    proxiesFor: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-    selPatron: PropTypes.object,
-  }),
-  mutator: PropTypes.shape({
-    patrons: PropTypes.shape({
-      GET: PropTypes.func,
-      reset: PropTypes.func,
-    }),
-    selPatron: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
-    scannedItems: PropTypes.shape({
-      replace: PropTypes.func,
-    }),
-    activeRecord: PropTypes.shape({
-      update: PropTypes.func
-    }),
-    requests: PropTypes.shape({
-      GET: PropTypes.func,
-      reset: PropTypes.func,
-    }),
-    loans: PropTypes.shape({
-      GET: PropTypes.func,
-      reset: PropTypes.func,
-    }),
-    proxy: PropTypes.shape({
-      GET: PropTypes.func,
-      reset: PropTypes.func,
-    }),
-    patronBlocks: PropTypes.shape({
-      DELETE: PropTypes.func,
-    }),
-    endSession: PropTypes.shape({
-      POST: PropTypes.func,
-    }),
-  }),
-  setFieldValue: PropTypes.func.isRequired,
-  submitForm: PropTypes.func.isRequired,
-  itemBarcodeFieldValue: PropTypes.string,
-  patronBarcodeFieldValue: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
-  location: PropTypes.shape({
-    state: PropTypes.shape({
-      patronBarcode: PropTypes.string.isRequired,
-      itemBarcode: PropTypes.string.isRequired,
-    })
-  }),
-};
 
 const patronFormValueSelector = formValueSelector('patronForm');
 const itemFormValueSelector = formValueSelector('itemForm');

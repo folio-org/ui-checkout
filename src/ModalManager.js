@@ -212,10 +212,10 @@ class ModalManager extends React.Component {
     } = this.state;
 
     return (
-      <React.Fragment>
+      <>
         {showCheckoutNoteModal && this.renderCheckoutNoteModal()}
         {showMultipieceModal && this.renderMultipieceModal()}
-      </React.Fragment>
+      </>
     );
   }
 }

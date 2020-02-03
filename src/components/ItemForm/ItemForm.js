@@ -31,6 +31,10 @@ class ItemForm extends React.Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     shouldSubmitAutomatically: PropTypes.bool.isRequired,
+    submitErrors: PropTypes.shape({
+      item: PropTypes.object,
+    }),
+    resetForm: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
     submitSucceeded: PropTypes.bool.isRequired,
     item: PropTypes.object,
@@ -128,7 +132,7 @@ class ItemForm extends React.Component {
     const validationEnabled = false;
 
     return (
-      <React.Fragment>
+      <>
         <form
           id="item-form"
           onSubmit={this.handleSubmit}
@@ -199,7 +203,7 @@ class ItemForm extends React.Component {
             closeOverrideModal={this.closeOverrideModal}
           />
         }
-      </React.Fragment>
+      </>
     );
   }
 }

@@ -27,8 +27,7 @@ class ScanTotal extends React.Component {
               id="ui-checkout.totalItemsScanned"
               values={{ total }}
             />
-          </div>
-        }
+          </div>}
         <div>
           <Button
             id={buttonId}
