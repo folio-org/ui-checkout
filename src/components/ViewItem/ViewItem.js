@@ -184,7 +184,7 @@ class ViewItem extends React.Component {
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
-        <React.Fragment>
+        <>
           <Button
             {...getTriggerProps()}
             buttonStyle="hover dropdownActive"
@@ -198,7 +198,7 @@ class ViewItem extends React.Component {
             text={<FormattedMessage id="ui-checkout.actions.moreDetails" />}
             triggerRef={triggerRef}
           />
-        </React.Fragment>
+        </>
       );
     };
 
@@ -233,8 +233,7 @@ class ViewItem extends React.Component {
               onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanPolicy' }, e)}
             >
               <FormattedMessage id="ui-checkout.loanPolicy" />
-            </Button>
-          }
+            </Button>}
           { stripes.hasPerm('ui-users.loans.edit') &&
             <Button
               data-test-date-picker
@@ -242,8 +241,7 @@ class ViewItem extends React.Component {
               onClick={(e) => this.handleOptionsChange({ loan, action: 'changeDueDate' }, e)}
             >
               <FormattedMessage id="stripes-smart-components.cddd.changeDueDate" />
-            </Button>
-          }
+            </Button>}
           { checkoutNotePresent &&
             <Button
               data-test-checkout-notes
@@ -251,8 +249,7 @@ class ViewItem extends React.Component {
               onClick={(e) => this.handleOptionsChange({ loan, action: 'showCheckoutNotes' }, e)}
             >
               <FormattedMessage id="ui-checkout.checkoutNotes" />
-            </Button>
-          }
+            </Button>}
         </DropdownMenu>
       );
     };
@@ -318,7 +315,7 @@ class ViewItem extends React.Component {
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkout.noItemsEntered" /> : null;
 
     return (
-      <React.Fragment>
+      <>
         <MultiColumnList
           id="list-items-checked-out"
           visibleColumns={visibleColumns}
@@ -334,7 +331,7 @@ class ViewItem extends React.Component {
           onHeaderClick={this.onSort}
         />
         {this.renderChangeDueDateDialog()}
-      </React.Fragment>
+      </>
     );
   }
 }

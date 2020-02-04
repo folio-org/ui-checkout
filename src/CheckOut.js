@@ -108,6 +108,7 @@ class CheckOut extends React.Component {
   static propTypes = {
     stripes: PropTypes.object.isRequired,
     resources: PropTypes.shape({
+      activeRecord: PropTypes.object,
       scannedItems: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.string,
@@ -162,6 +163,9 @@ class CheckOut extends React.Component {
       patronBlocks: PropTypes.shape({
         DELETE: PropTypes.func,
       }),
+      endSession: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
     }),
     setFieldValue: PropTypes.func.isRequired,
     submitForm: PropTypes.func.isRequired,
@@ -169,6 +173,12 @@ class CheckOut extends React.Component {
     patronBarcodeFieldValue: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func,
+    }),
+    location: PropTypes.shape({
+      state: PropTypes.shape({
+        patronBarcode: PropTypes.string.isRequired,
+        itemBarcode: PropTypes.string.isRequired,
+      })
     }),
   };
 
@@ -492,8 +502,7 @@ class CheckOut extends React.Component {
               <Icon
                 icon="spinner-ellipsis"
                 width="10px"
-              />
-            }
+              /> }
             {patrons.length > 0 &&
               <ViewPatron
                 onSelectPatron={this.selectPatron}
@@ -504,8 +513,7 @@ class CheckOut extends React.Component {
                 proxy={proxy}
                 settings={settings}
                 {...this.props}
-              />
-            }
+              /> }
           </Pane>
           <Pane
             defaultWidth="65%"
@@ -531,8 +539,7 @@ class CheckOut extends React.Component {
             buttonId="clickable-done-footer"
             total={scannedTotal}
             onSessionEnd={() => this.onSessionEnd()}
-          />
-        }
+          /> }
         <PatronBlockModal
           open={blocked}
           onClose={this.onCloseBlockedModal}
@@ -547,11 +554,13 @@ class CheckOut extends React.Component {
             <SafeHTMLMessage
               id="ui-checkout.awaitingPickupMessage"
               values={{ count: requestsCount }}
-            />}
+            />
+          }
           label={
             <FormattedMessage
               id="ui-checkout.awaitingPickupLabel"
-            />}
+            />
+          }
         />
       </div>
     );

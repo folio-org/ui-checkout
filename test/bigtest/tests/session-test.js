@@ -1,4 +1,4 @@
-import { beforeEach, describe, it } from '@bigtest/mocha';
+import { beforeEach, describe } from '@bigtest/mocha';
 import { always } from '@bigtest/convergence';
 import { expect } from 'chai';
 
