@@ -1,12 +1,13 @@
 # Change history for ui-checkout
 
-## 2.1.0 (IN PROGRESS)
+## 3.0.0 (IN PROGRESS)
 
 * Fix link path to loans list in user details information. Fixes UICHKOUT-554.
 * Handle the wrong error message when checking out requested items to non-requester. Fixes UICHKOUT-580.
 * Make the Check out ellipsis accessible. Refs UICHKOUT-558.
 * Update okapiInterfaces: `item-storage:8.0`, `inventory:10.0`, `circulation:9.0`. Part of UICHKOUT-585.
 * Security update eslint to v6.2.1. Refs UICHKOUT-586.
+* Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 
 ## [2.0.0](https://github.com/folio-org/ui-checkout/tree/v2.0.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.2...v2.0.0)
