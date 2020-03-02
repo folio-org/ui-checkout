@@ -68,7 +68,7 @@
     "multipieceModal.back": "Annuler",
     "multipieceModal.label": "Confirmer l'emprunt de plusieurs articles",
     "multipieceModal.item.numberOfPieces": "Nombre de pièces",
-    "multipieceModal.message": "<strong> {title} ( {materialType} ) </strong> (Le code- barres: {barcode} ) sera emprunté",
+    "multipieceModal.message": "<strong> {title} ( {materialType} ) </strong> (Le code-barres: {barcode} ) sera emprunté",
     "multipieceModal.item.descriptionOfPieces": "Description des pièces",
     "multipieceModal.item.numberOfMissingPieces": "Nombre de pièces manquantes",
     "multipieceModal.item.descriptionOfmissingPieces": "Description des pièces manquantes",
