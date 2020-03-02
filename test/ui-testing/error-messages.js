@@ -1,13 +1,13 @@
 /* global it describe Nightmare before after  */
 module.exports.test = function uiTest(uiTestCtx) {
-  const { config, helpers: { login, openApp, clickApp, clickSettings, logout, circSettingsCheckoutByBarcodeAndUsername }, meta: { testVersion } } = uiTestCtx;
+  const { config, helpers: { login, openApp, clickApp, clickSettings, logout, circSettingsCheckoutByBarcodeAndUsername, findActiveUserBarcode }, meta: { testVersion } } = uiTestCtx;
 
   describe('Module test: checkout ("error-messages").', function checkout() {
     const nightmare = new Nightmare(config.nightmare);
     this.timeout(Number(config.test_timeout));
 
     describe('Open app > Trigger error messages > Logout', () => {
-      const uselector = "#list-plugin-find-user [role='row'][aria-rowindex='3'] > div:nth-of-type(3)";
+      let activeUserBarcode = null;
 
       before((done) => {
         login(nightmare, config, done);
@@ -84,6 +84,19 @@ module.exports.test = function uiTest(uiTestCtx) {
         circSettingsCheckoutByBarcodeAndUsername(nightmare, config, done);
       });
 
+      it('should navigate to users', (done) => {
+        clickApp(nightmare, done, 'users');
+      });
+
+      it('should find an active user barcode', (done) => {
+        findActiveUserBarcode(nightmare, 'faculty')
+          .then(bc => {
+            done();
+            activeUserBarcode = bc;
+          })
+          .catch(done);
+      });
+
       it('should navigate to checkout', (done) => {
         clickApp(nightmare, done, 'checkout');
       });
@@ -92,17 +105,10 @@ module.exports.test = function uiTest(uiTestCtx) {
         nightmare
           .wait('#input-item-barcode')
           .insert('#input-item-barcode', null)
-          .insert('#input-patron-identifier', null)
-          .wait('#clickable-find-user')
-          .click('#clickable-find-user')
-          .wait('#clickable-filter-active-active')
-          .click('#clickable-filter-active-active')
-          .wait(() => !document.querySelectorAll('#OverlayContainer [class^="noResultsMessage"]').length)
-          .wait('#clickable-filter-pg-faculty')
-          .click('#clickable-filter-pg-faculty')
-          .wait('#list-plugin-find-user [role="row"][aria-rowindex="2"]')
-          .wait(uselector)
-          .click(uselector)
+          .wait('#input-patron-identifier')
+          .insert('#input-patron-identifier', activeUserBarcode)
+          .wait('#clickable-find-patron')
+          .click('#clickable-find-patron')
           .wait('#patron-form ~ div a > strong')
           .wait(parseInt(process.env.FOLIO_UI_DEBUG, 10) ? parseInt(config.debug_sleep, 10) : 555) // debugging
           .then(() => { done(); })
