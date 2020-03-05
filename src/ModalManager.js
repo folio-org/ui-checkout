@@ -24,7 +24,15 @@ class ModalManager extends React.Component {
   constructor(props) {
     super(props);
 
+    // Props: checkoutNotesMode is set in ScanItems (showCheckoutNotes())
+    // as a result of the 'Show checkout notes' item menu option being selected
+    // in ViewItem
     const { checkedoutItem, checkoutNotesMode } = props;
+    // State vars: checkoutNotesMode simply reflects the prop of the same name.
+    // showCheckoutNotesModal determines whether the checkout notes modal is shown --
+    // which happens either when an item is first checked out
+    // (see shouldCheckoutNoteModalBeShown) or if checkoutNotesMode is true
+    // when component mounts.
     this.state = { checkedoutItem, checkoutNotesMode };
     this.steps = [
       {
@@ -43,6 +51,15 @@ class ModalManager extends React.Component {
       this.setState({ showCheckoutNoteModal: true });
     } else {
       this.execSteps(0);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Handle post-checkout viewing of item checkout notes;
+    // without this, notes can only be viewed once (when component mounts)
+    if (this.props.checkoutNotesMode && prevProps.checkoutNotesMode !== this.props.checkoutNotesMode) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ checkoutNotesMode: true, showCheckoutNoteModal: true });
     }
   }
 
