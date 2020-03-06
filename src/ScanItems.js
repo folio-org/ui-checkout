@@ -162,6 +162,10 @@ class ScanItems extends React.Component {
     });
   }
 
+  // Called from ViewItem when the 'show checkout notes' item
+  // menu option is clicked. This is distinct from whether notes
+  // should be shown as part of the checkout workflow (which is
+  // determined in ModalManager.)
   showCheckoutNotes = (loan) => {
     const { item } = loan;
     this.setState({
@@ -311,8 +315,16 @@ class ScanItems extends React.Component {
   }
 
   onCancel = () => {
-    this.clearField('itemForm', 'item.barcode');
-    this.reject(new SubmissionError({}));
+    // if checkoutNotesMode == true, then this is a post-checkout,
+    // user-triggered review of the notes modal. We shouldn't try
+    // to clear the form or deal with errors in this case -- only
+    // when the mode is false, meaning that notes were shown as
+    // part of the item checkout workflow.
+    if (this.state.checkoutNotesMode) {
+      this.clearField('itemForm', 'item.barcode');
+      this.reject(new SubmissionError({}));
+    }
+    this.setState({ checkoutNotesMode: false });
   }
 
   onDone = () => {

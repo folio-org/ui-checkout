@@ -110,8 +110,6 @@ class ViewItem extends React.Component {
     this.setState({
       changeDueDateDialogOpen: false,
     });
-
-    this.refreshLoans();
   }
 
   refreshLoans = async () => {
