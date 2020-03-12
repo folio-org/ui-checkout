@@ -24,7 +24,7 @@
     "inactive": "Неактивные",
     "userExpiration": "Истечение срока действия",
     "totalItemsScanned": "Всего отсканированных: {total}",
-    "sponsorExpired": "Sponsor user record expired",
+    "sponsorExpired": "Срок действия полномочий спонсора истёк",
     "proxyExpired": "Proxy relationship expired",
     "continue": "Продолжить",
     "orActingAsProxy": "Or acting as proxy for",
