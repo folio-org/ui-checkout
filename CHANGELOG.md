@@ -9,6 +9,7 @@
 * Security update eslint to v6.2.1. Refs UICHKOUT-586.
 * Migrate to `stripes` `v3.0.0` and move `react-intl` and `react-router` to peerDependencies.
 * Fix bug in viewing of item checkout notes & change due date dialog. Fixes UICHKOUT-597.
+* Update to `plugin-find-user` `v2.0.0`.
 
 ## [2.0.0](https://github.com/folio-org/ui-checkout/tree/v2.0.0) (2019-12-04)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v1.11.2...v2.0.0)
