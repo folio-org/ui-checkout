@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 3.0.0 (IN PROGRESS)
+## [3.0.0](https://github.com/folio-org/ui-checkout/tree/v3.0.0) (2020-03-16)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v2.0.0...v3.0.0)
 
 * Fix link path to loans list in user details information. Fixes UICHKOUT-554.
 * Handle the wrong error message when checking out requested items to non-requester. Fixes UICHKOUT-580.
