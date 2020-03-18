@@ -6,6 +6,7 @@ import {
   text,
   Interactor,
   collection,
+  count,
 } from '@bigtest/interactor';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
@@ -45,6 +46,7 @@ export default interactor(class CheckOutInteractor {
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
+  itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
   patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
 
