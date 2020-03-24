@@ -280,7 +280,10 @@ class CheckOut extends React.Component {
   async onSessionEnd() {
     const {
       resources: { activeRecord: { patronId } },
-      mutator: { endSession: { POST: endSession } },
+      mutator: {
+        endSession: { POST: endSession },
+        activeRecord: { update: updateParonId }
+      },
     } = this.props;
 
     this.clearResources();
@@ -297,14 +300,8 @@ class CheckOut extends React.Component {
     }
 
     if (patronId) {
-      await endSession({
-        endSessions : [
-          {
-            actionType: 'Check-out',
-            patronId
-          }
-        ]
-      });
+      await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
+      updateParonId({});
     }
   }
 
