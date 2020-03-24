@@ -282,7 +282,7 @@ class CheckOut extends React.Component {
       resources: { activeRecord: { patronId } },
       mutator: {
         endSession: { POST: endSession },
-        activeRecord: { update: updateParonId }
+        activeRecord: { update }
       },
     } = this.props;
 
@@ -301,7 +301,7 @@ class CheckOut extends React.Component {
 
     if (patronId) {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
-      updateParonId({});
+      update({});
     }
   }
 
