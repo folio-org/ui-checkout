@@ -7,6 +7,7 @@ import {
 @interactor class MultipieceModalInteractor {
   present = isPresent('[data-test-multipiece-modal-confirm-btn]');
   clickConfirm = clickable('[data-test-multipiece-modal-confirm-btn]');
+  clickCancel = clickable('[data-test-multipiece-modal-cancel-btn]');
 }
 
 export default MultipieceModalInteractor;

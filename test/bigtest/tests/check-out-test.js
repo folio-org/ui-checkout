@@ -215,6 +215,16 @@ describe('CheckOut', () => {
       it('shows multipiece modal', () => {
         expect(checkOut.multipieceModal.present).to.be.true;
       });
+
+      describe('cancelling the multipiece modal', () => {
+        beforeEach(async function () {
+          await checkOut.multipieceModal.clickCancel();
+        });
+
+        it('clears the barcode field', () => {
+          expect(checkOut.itemBarcode).to.equal('');
+        });
+      });
     });
 
     describe('checking out item with Checkout Notes', () => {
@@ -242,6 +252,16 @@ describe('CheckOut', () => {
 
       it('shows checkoutNote modal', () => {
         expect(checkOut.checkoutNoteModal.present).to.be.true;
+      });
+
+      describe('cancelling the checkout note modal', () => {
+        beforeEach(async function () {
+          await checkOut.checkoutNoteModal.clickCancel();
+        });
+
+        it('clears the barcode field', () => {
+          expect(checkOut.itemBarcode).to.equal('');
+        });
       });
     });
 
