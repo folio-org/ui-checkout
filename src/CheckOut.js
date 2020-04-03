@@ -257,7 +257,9 @@ class CheckOut extends React.Component {
       });
     }
 
-    if (this.timer !== undefined) return;
+    if (this.timer) {
+      return;
+    }
 
     const settings = resources.checkoutSettings;
     if (!settings || !settings.records || settings.records.length === 0) return;
@@ -302,6 +304,7 @@ class CheckOut extends React.Component {
     if (patronId) {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
       update({});
+      this.timer = null;
     }
   }
 
