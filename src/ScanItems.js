@@ -320,7 +320,7 @@ class ScanItems extends React.Component {
     // to clear the form or deal with errors in this case -- only
     // when the mode is false, meaning that notes were shown as
     // part of the item checkout workflow.
-    if (this.state.checkoutNotesMode) {
+    if (!this.state.checkoutNotesMode) {
       this.clearField('itemForm', 'item.barcode');
       this.reject(new SubmissionError({}));
     }

@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## [3.1.0] (IN PROGRESS)
+
+* Fix bug preventing continuation after cancelling checkout notes or multipiece modal. Fixes UICHKOUT-610, UICHKOUT-611.
+
 ## [3.0.0](https://github.com/folio-org/ui-checkout/tree/v3.0.0) (2020-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v2.0.0...v3.0.0)
 
