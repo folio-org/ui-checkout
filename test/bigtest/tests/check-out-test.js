@@ -340,7 +340,6 @@ describe('CheckOut', () => {
   });
 
   describe('sorting items', () => {
-    const titleColumnIndex = 2;
     beforeEach(async function () {
       const user = this.server.create('user');
 
@@ -379,11 +378,11 @@ describe('CheckOut', () => {
     });
 
     it('shows the list of checked-out items', () => {
-      expect(checkOut.itemList.rowCount).to.equal(3);
+      expect(checkOut.itemsCount).to.equal(3);
     });
 
     it('shows the first item first before sort', () => {
-      expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('B');
+      expect(checkOut.items(0).title.text).to.equal('B');
     });
 
     // TODO: this test should be re-enabled once UICHKOUT-513 is fixed
@@ -441,29 +440,16 @@ describe('CheckOut', () => {
       expect(checkOut.multipieceModal.present).to.be.false;
       expect(checkOut.checkoutNoteModal.present).to.be.false;
     });
-  });
 
-  describe('ending a session', () => {
-    beforeEach(async function () {
-      const user = this.server.create('user');
-      this.server.create('item', {
-        barcode: '123',
+    describe('ending a session', () => {
+      beforeEach(async function () {
+        await checkOut.clickEndSessionBtn();
       });
 
-      await checkOut
-        .fillPatronBarcode(user.barcode.toString())
-        .clickPatronBtn()
-        .whenUserIsLoaded();
-
-      await checkOut
-        .checkoutItem('123')
-        .whenItemListIsPresent()
-        .clickEndSessionBtn();
-    });
-
-    it('resets the checkout session', () => {
-      expect(checkOut.scanItems.itemListPresent).to.be.false;
-      expect(checkOut.endSessionBtnPresent).to.be.false;
+      it('resets the checkout session', () => {
+        expect(checkOut.scanItems.itemListPresent).to.be.false;
+        expect(checkOut.endSessionBtnPresent).to.be.false;
+      });
     });
   });
 
