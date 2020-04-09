@@ -25,7 +25,7 @@
     "userExpiration": "User Expiration",
     "totalItemsScanned": "スキャンされたアイテム合計： {total}",
     "sponsorExpired": "Sponsor user record expired",
-    "proxyExpired": "Proxy relationship expired",
+    "proxyExpired": "代理関係の期限切れ",
     "continue": "続行",
     "orActingAsProxy": "または、次の代理として機能します。",
     "scanOrEnterPatronId": "利用者{identifier}をスキャンまたは入力",
