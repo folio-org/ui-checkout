@@ -70,7 +70,7 @@
     "multipieceModal.item.numberOfPieces": "件数",
     "multipieceModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将借出。",
     "multipieceModal.item.descriptionOfPieces": "件的描述",
-    "multipieceModal.item.numberOfMissingPieces": "遗失件数量",
+    "multipieceModal.item.numberOfMissingPieces": "遗失件数",
     "multipieceModal.item.descriptionOfmissingPieces": "遗失件的描述",
     "openAccounts": "欠缴的费用/罚款",
     "additionalReasons": "查看冻结详情以了解冻结的其他原因...",
