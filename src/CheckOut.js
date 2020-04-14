@@ -270,13 +270,15 @@ class CheckOut extends React.Component {
       this.timer = null; // so we don't keep trying
       return;
     }
-
-    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
-      this.onSessionEnd();
-    });
-    ['keydown', 'mousedown'].forEach((event) => {
-      document.addEventListener(event, () => this.timer.signal());
-    });
+    if (!resources.activeRecord.hasTimer) {
+      mutator.activeRecord.update({ hasTimer: true });
+      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        this.onSessionEnd();
+      });
+      ['keydown', 'mousedown'].forEach((event) => {
+        document.addEventListener(event, () => this.timer.signal());
+      });
+    }
   }
 
   async onSessionEnd() {
@@ -303,8 +305,7 @@ class CheckOut extends React.Component {
 
     if (patronId) {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
-      update({});
-      this.timer = null;
+      update({ patronId: null, hasTimer: false });
     }
   }
 
