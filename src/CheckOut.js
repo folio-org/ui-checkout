@@ -270,13 +270,17 @@ class CheckOut extends React.Component {
       this.timer = null; // so we don't keep trying
       return;
     }
-    if (!resources.activeRecord.hasTimer) {
+    if (!resources.activeRecord.hasTimer && resources.activeRecord.patronId) {
       mutator.activeRecord.update({ hasTimer: true });
       this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
         this.onSessionEnd();
       });
       ['keydown', 'mousedown'].forEach((event) => {
-        document.addEventListener(event, () => this.timer.signal());
+        document.addEventListener(event, () => {
+          if (this.timer) {
+            this.timer.signal();
+          }
+        });
       });
     }
   }
@@ -306,6 +310,7 @@ class CheckOut extends React.Component {
     if (patronId) {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
       update({ patronId: null, hasTimer: false });
+      this.timer = null;
     }
   }
 
