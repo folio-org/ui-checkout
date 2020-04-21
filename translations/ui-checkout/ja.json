@@ -75,7 +75,7 @@
     "openAccounts": "Fees/fines owed",
     "additionalReasons": "View block details to see additional reasons for block...",
     "multipieceModal.cancel": "キャンセル",
-    "note": "Note",
+    "note": "ノート",
     "checkoutNoteModal.heading": "貸出を確定",
     "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
     "checkoutNotes": "貸出ノート",
@@ -92,5 +92,5 @@
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
     "openRequests": "Open requests",
     "date": "Date",
-    "source": "Source"
+    "source": "ソース"
 }
