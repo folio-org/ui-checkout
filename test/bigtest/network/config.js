@@ -32,6 +32,8 @@ export default function config() {
     totalRecords: 0,
   });
 
+  this.post('/circulation/end-patron-action-session', {});
+
   this.get('/groups', {
     'usergroups' : [{
       'group' : 'faculty',

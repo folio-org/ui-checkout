@@ -427,6 +427,7 @@ describe('CheckOut', () => {
         barcode: '123',
         numberOfPieces: 2,
         descriptionOfPieces: 'book + dvd',
+        status: { name: 'Withdrawn' },
         circulationNotes: [
           {
             note: 'test note',
@@ -452,11 +453,13 @@ describe('CheckOut', () => {
         .fillItemBarcode('123')
         .clickItemBtn();
 
+      await checkOut.confirmWithdrawnModal.confirmButton.click();
       await checkOut.checkoutNoteModal.clickConfirm();
       await checkOut.multipieceModal.clickConfirm();
     });
 
     it('hides all pre checkout modals', () => {
+      expect(checkOut.confirmWithdrawnModalPresent).to.be.false;
       expect(checkOut.multipieceModal.present).to.be.false;
       expect(checkOut.checkoutNoteModal.present).to.be.false;
     });

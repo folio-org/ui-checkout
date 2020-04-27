@@ -8,6 +8,7 @@ import {
   FormattedTime,
   injectIntl,
 } from 'react-intl';
+import { ConfirmationModal } from '@folio/stripes/components';
 
 import CheckoutNoteModal from './components/CheckoutNoteModal';
 import MultipieceModal from './components/MultipieceModal';
@@ -35,6 +36,10 @@ class ModalManager extends React.Component {
     // when component mounts.
     this.state = { checkedoutItem, checkoutNotesMode };
     this.steps = [
+      {
+        validate: this.shouldWithdrawnModalBeShown,
+        exec: () => this.setState({ showWithdrawnModal: true }),
+      },
       {
         validate: this.shouldCheckoutNoteModalBeShown,
         exec: () => this.setState({ showCheckoutNoteModal: true }),
@@ -74,6 +79,12 @@ class ModalManager extends React.Component {
     return this.props.onDone();
   }
 
+  shouldWithdrawnModalBeShown = () => {
+    const { checkedoutItem } = this.state;
+
+    return checkedoutItem?.status?.name === statuses.WITHDRAWN;
+  }
+
   shouldCheckoutNoteModalBeShown = () => {
     const { checkedoutItem } = this.state;
     return get(checkedoutItem, 'circulationNotes', [])
@@ -97,12 +108,16 @@ class ModalManager extends React.Component {
     );
   }
 
-  confirmMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false }, () => this.props.onDone());
+  confirmWithdrawnModal = () => {
+    this.setState({ showWithdrawnModal: false }, () => this.execSteps(1));
   }
 
   confirmCheckoutNoteModal = () => {
-    this.setState({ showCheckoutNoteModal: false }, () => this.execSteps(1));
+    this.setState({ showCheckoutNoteModal: false }, () => this.execSteps(2));
+  }
+
+  confirmMultipieceModal = () => {
+    this.setState({ showMultipieceModal: false }, () => this.props.onDone());
   }
 
   onCancel = () => {
@@ -110,6 +125,7 @@ class ModalManager extends React.Component {
       showCheckoutNoteModal: false,
       checkoutNotesMode: false,
       showMultipieceModal: false,
+      showWithdrawnModal: false,
     });
 
     this.props.onCancel();
@@ -222,14 +238,53 @@ class ModalManager extends React.Component {
     );
   }
 
+  renderConfirmWithdrawnModal() {
+    const {
+      checkedoutItem,
+      showWithdrawnModal,
+    } = this.state;
+    const {
+      barcode,
+      title,
+      materialType,
+    } = checkedoutItem;
+    const values = {
+      title,
+      barcode,
+      materialType: upperFirst(materialType?.name ?? ''),
+    };
+    const messageId = checkedoutItem.discoverySuppress ?
+      'ui-checkout.confirmWithdrawnModal.suppressedMessage' :
+      'ui-checkout.confirmWithdrawnModal.notSuppressedMessage';
+
+    return (
+      <ConfirmationModal
+        id="test-confirm-withdrawn-modal"
+        open={showWithdrawnModal}
+        item={checkedoutItem}
+        heading={<FormattedMessage id="ui-checkout.confirmWithdrawnModal.heading" />}
+        message={<SafeHTMLMessage
+          id={messageId}
+          values={values}
+        />
+      }
+        onConfirm={this.confirmWithdrawnModal}
+        onCancel={this.onCancel}
+        confirmLabel={<FormattedMessage id="ui-checkout.confirm" />}
+      />
+    );
+  }
+
   render() {
     const {
       showCheckoutNoteModal,
       showMultipieceModal,
+      showWithdrawnModal,
     } = this.state;
 
     return (
       <>
+        {showWithdrawnModal && this.renderConfirmWithdrawnModal()}
         {showCheckoutNoteModal && this.renderCheckoutNoteModal()}
         {showMultipieceModal && this.renderMultipieceModal()}
       </>
