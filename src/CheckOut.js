@@ -257,7 +257,9 @@ class CheckOut extends React.Component {
       });
     }
 
-    if (this.timer !== undefined) return;
+    if (this.timer) {
+      return;
+    }
 
     const settings = resources.checkoutSettings;
     if (!settings || !settings.records || settings.records.length === 0) return;
@@ -268,19 +270,28 @@ class CheckOut extends React.Component {
       this.timer = null; // so we don't keep trying
       return;
     }
-
-    this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
-      this.onSessionEnd();
-    });
-    ['keydown', 'mousedown'].forEach((event) => {
-      document.addEventListener(event, () => this.timer.signal());
-    });
+    if (!resources.activeRecord.hasTimer && resources.activeRecord.patronId) {
+      mutator.activeRecord.update({ hasTimer: true });
+      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        this.onSessionEnd();
+      });
+      ['keydown', 'mousedown'].forEach((event) => {
+        document.addEventListener(event, () => {
+          if (this.timer) {
+            this.timer.signal();
+          }
+        });
+      });
+    }
   }
 
   async onSessionEnd() {
     const {
       resources: { activeRecord: { patronId } },
-      mutator: { endSession: { POST: endSession } },
+      mutator: {
+        endSession: { POST: endSession },
+        activeRecord: { update }
+      },
     } = this.props;
 
     this.clearResources();
@@ -297,14 +308,9 @@ class CheckOut extends React.Component {
     }
 
     if (patronId) {
-      await endSession({
-        endSessions : [
-          {
-            actionType: 'Check-out',
-            patronId
-          }
-        ]
-      });
+      await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
+      update({ patronId: null, hasTimer: false });
+      this.timer = null;
     }
   }
 
