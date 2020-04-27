@@ -1,5 +1,10 @@
 # Change history for ui-checkout
 
+## [3.0.2](https://github.com/folio-org/ui-checkout/tree/v3.0.2) (2020-04-27)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v3.0.1...v3.0.2)
+
+* Do not send multiple notices for a single checkout. Fixes UICHKOUT-607.
+
 ## [3.0.1](https://github.com/folio-org/ui-checkout/tree/v3.0.1) (2020-04-09)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v3.0.0...v3.0.1)
 
