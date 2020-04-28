@@ -11,6 +11,8 @@ import {
 } from '@bigtest/interactor';
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
+import ConfirmModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
+
 
 import ScanItemsInteractor from './scan-items';
 import ItemMenuInteractor from './item-menu';
@@ -47,10 +49,12 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
+  confirmWithdrawnModal = new ConfirmModalInteractor('#test-confirm-withdrawn-modal');
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
   itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
   patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
+  confirmWithdrawnModalPresent = isPresent('#test-confirm-withdrawn-modal');
 
   checkoutItem(barcode) {
     return this
