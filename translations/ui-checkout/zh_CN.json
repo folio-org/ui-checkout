@@ -92,5 +92,8 @@
     "messages.itemWillBeCheckedOut": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将<strong>借出</strong> 。",
     "openRequests": "打开请求",
     "date": "日期",
-    "source": "来源"
+    "source": "来源",
+    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
 }

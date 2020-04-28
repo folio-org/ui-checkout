@@ -92,5 +92,8 @@
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (codice a barre: {barcode} ) verrà <strong> prestato </strong> .",
     "openRequests": "Richieste aperte",
     "date": "Data",
-    "source": "Fonte"
+    "source": "Fonte",
+    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
 }

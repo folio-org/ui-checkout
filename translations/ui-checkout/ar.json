@@ -92,5 +92,8 @@
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) سيتم <strong> إعارته</strong>. ",
     "openRequests": "فتح الطلبات",
     "date": "التاريخ",
-    "source": "المصدر"
+    "source": "المصدر",
+    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
 }
