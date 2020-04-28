@@ -92,5 +92,8 @@
     "messages.itemWillBeCheckedOut": "<strong> {title} ({materialType} ) </strong> (Código de barras: {barcode} )será <strong>  prestado</strong> ",
     "openRequests": "Solicitudes abiertas",
     "date": "Fecha",
-    "source": "Fuente"
+    "source": "Fuente",
+    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
 }

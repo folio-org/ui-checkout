@@ -92,5 +92,8 @@
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (Le code-barres: {barcode} ) sera <strong> emprunté </strong> .",
     "openRequests": "Demandes-réservations en cours",
     "date": "Date",
-    "source": "Source"
+    "source": "Source",
+    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
 }
