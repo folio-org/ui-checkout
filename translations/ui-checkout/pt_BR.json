@@ -93,7 +93,7 @@
     "openRequests": "Requisições abertas",
     "date": "Data",
     "source": "Fonte",
-    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
-    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
+    "confirmWithdrawnModal.heading": "Emprestar item descartado?",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> .",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> e é ocultado na descoberta."
 }

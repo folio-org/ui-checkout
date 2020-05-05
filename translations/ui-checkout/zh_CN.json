@@ -93,7 +93,7 @@
     "openRequests": "打开请求",
     "date": "日期",
     "source": "来源",
-    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
-    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery."
+    "confirmWithdrawnModal.heading": "借出撤回单件？",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>撤回</strong> 。",
+    "confirmWithdrawnModal.suppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>撤回</strong>并且在发现中被隐藏。"
 }
