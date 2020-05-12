@@ -5,6 +5,7 @@
 * Change selected parton background color to increase color contrast. Refs UICHKOUT-603.
 * Fix bug preventing continuation after cancelling checkout notes or multipiece modal. Fixes UICHKOUT-610, UICHKOUT-611.
 * Show confirmation modal when item with withdrawn status is scanned. Refs UICHKOUT-605.
+* Show confirmation modal when item with Missing status is scanned. Refs UICHKOUT-582.
 * Pin `moment` at `~2.24.0`. Refs STRIPES-678.
 
 ## [3.0.0](https://github.com/folio-org/ui-checkout/tree/v3.0.0) (2020-03-16)

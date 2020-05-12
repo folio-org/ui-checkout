@@ -81,7 +81,7 @@ class ModalManager extends React.Component {
 
   shouldStatusModalBeShown = () => {
     const { checkedoutItem } = this.state;
-    const status = checkedoutItem?.status?.name; 
+    const status = checkedoutItem?.status?.name;
 
     return status === statuses.MISSING || status === statuses.WITHDRAWN;
   }
@@ -239,6 +239,8 @@ class ModalManager extends React.Component {
     );
   }
 
+  // This modal handles confirmation (check out? Don't check out?)
+  // for various special item statuses, e.g. Missing, Withdrawn.
   renderConfirmStatusModal() {
     const {
       checkedoutItem,
@@ -258,7 +260,7 @@ class ModalManager extends React.Component {
       'ui-checkout.confirmStatusModal.suppressedMessage' :
       'ui-checkout.confirmStatusModal.notSuppressedMessage';
     let heading;
-    switch(checkedoutItem?.status?.name) {
+    switch (checkedoutItem?.status?.name) {
       case statuses.MISSING:
         heading = 'ui-checkout.confirmStatusModal.heading.missing';
         values.status = statuses.MISSING;
@@ -266,6 +268,8 @@ class ModalManager extends React.Component {
       case statuses.WITHDRAWN:
         heading = 'ui-checkout.confirmStatusModal.heading.withdrawn';
         values.status = statuses.WITHDRAWN;
+        break;
+      default:
         break;
     }
 
@@ -278,8 +282,7 @@ class ModalManager extends React.Component {
         message={<SafeHTMLMessage
           id={messageId}
           values={values}
-        />
-      }
+        />}
         onConfirm={this.confirmStatusModal}
         onCancel={this.onCancel}
         confirmLabel={<FormattedMessage id="ui-checkout.confirm" />}
