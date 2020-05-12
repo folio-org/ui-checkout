@@ -37,8 +37,8 @@ class ModalManager extends React.Component {
     this.state = { checkedoutItem, checkoutNotesMode };
     this.steps = [
       {
-        validate: this.shouldWithdrawnModalBeShown,
-        exec: () => this.setState({ showWithdrawnModal: true }),
+        validate: this.shouldStatusModalBeShown,
+        exec: () => this.setState({ showStatusModal: true }),
       },
       {
         validate: this.shouldCheckoutNoteModalBeShown,
@@ -79,10 +79,11 @@ class ModalManager extends React.Component {
     return this.props.onDone();
   }
 
-  shouldWithdrawnModalBeShown = () => {
+  shouldStatusModalBeShown = () => {
     const { checkedoutItem } = this.state;
+    const status = checkedoutItem?.status?.name; 
 
-    return checkedoutItem?.status?.name === statuses.WITHDRAWN;
+    return status === statuses.MISSING || status === statuses.WITHDRAWN;
   }
 
   shouldCheckoutNoteModalBeShown = () => {
@@ -108,8 +109,8 @@ class ModalManager extends React.Component {
     );
   }
 
-  confirmWithdrawnModal = () => {
-    this.setState({ showWithdrawnModal: false }, () => this.execSteps(1));
+  confirmStatusModal = () => {
+    this.setState({ showStatusModal: false }, () => this.execSteps(1));
   }
 
   confirmCheckoutNoteModal = () => {
@@ -125,7 +126,7 @@ class ModalManager extends React.Component {
       showCheckoutNoteModal: false,
       checkoutNotesMode: false,
       showMultipieceModal: false,
-      showWithdrawnModal: false,
+      showStatusModal: false,
     });
 
     this.props.onCancel();
@@ -238,10 +239,10 @@ class ModalManager extends React.Component {
     );
   }
 
-  renderConfirmWithdrawnModal() {
+  renderConfirmStatusModal() {
     const {
       checkedoutItem,
-      showWithdrawnModal,
+      showStatusModal,
     } = this.state;
     const {
       barcode,
@@ -254,21 +255,32 @@ class ModalManager extends React.Component {
       materialType: upperFirst(materialType?.name ?? ''),
     };
     const messageId = checkedoutItem.discoverySuppress ?
-      'ui-checkout.confirmWithdrawnModal.suppressedMessage' :
-      'ui-checkout.confirmWithdrawnModal.notSuppressedMessage';
+      'ui-checkout.confirmStatusModal.suppressedMessage' :
+      'ui-checkout.confirmStatusModal.notSuppressedMessage';
+    let heading;
+    switch(checkedoutItem?.status?.name) {
+      case statuses.MISSING:
+        heading = 'ui-checkout.confirmStatusModal.heading.missing';
+        values.status = statuses.MISSING;
+        break;
+      case statuses.WITHDRAWN:
+        heading = 'ui-checkout.confirmStatusModal.heading.withdrawn';
+        values.status = statuses.WITHDRAWN;
+        break;
+    }
 
     return (
       <ConfirmationModal
         id="test-confirm-withdrawn-modal"
-        open={showWithdrawnModal}
+        open={showStatusModal}
         item={checkedoutItem}
-        heading={<FormattedMessage id="ui-checkout.confirmWithdrawnModal.heading" />}
+        heading={<FormattedMessage id={heading} />}
         message={<SafeHTMLMessage
           id={messageId}
           values={values}
         />
       }
-        onConfirm={this.confirmWithdrawnModal}
+        onConfirm={this.confirmStatusModal}
         onCancel={this.onCancel}
         confirmLabel={<FormattedMessage id="ui-checkout.confirm" />}
       />
@@ -279,12 +291,12 @@ class ModalManager extends React.Component {
     const {
       showCheckoutNoteModal,
       showMultipieceModal,
-      showWithdrawnModal,
+      showStatusModal,
     } = this.state;
 
     return (
       <>
-        {showWithdrawnModal && this.renderConfirmWithdrawnModal()}
+        {showStatusModal && this.renderConfirmStatusModal()}
         {showCheckoutNoteModal && this.renderCheckoutNoteModal()}
         {showMultipieceModal && this.renderMultipieceModal()}
       </>
