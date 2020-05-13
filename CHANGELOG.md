@@ -3,6 +3,7 @@
 ## [4.0.0] (IN PROGRESS)
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Upgrade to `react-intl-safe-html` `2.0`. Refs STRIPES-672.
 
 ## [3.1.0] (IN PROGRESS)
 
