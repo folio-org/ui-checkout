@@ -95,5 +95,9 @@
     "source": "来源",
     "confirmWithdrawnModal.heading": "借出撤回单件？",
     "confirmWithdrawnModal.notSuppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>撤回</strong> 。",
-    "confirmWithdrawnModal.suppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>撤回</strong>并且在发现中被隐藏。"
+    "confirmWithdrawnModal.suppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong>撤回</strong>并且在发现中被隐藏。",
+    "confirmStatusModal.heading.missing": "Check out missing item?",
+    "confirmStatusModal.heading.withdrawn": "Check out withdrawn item?",
+    "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery."
 }
