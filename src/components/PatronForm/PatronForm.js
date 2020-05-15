@@ -1,7 +1,9 @@
-import { find } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
+import { find } from 'lodash';
+import { Field } from 'react-final-form';
+
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   Button,
@@ -15,15 +17,18 @@ import { FormattedMessage } from 'react-intl';
 
 import { patronIdentifierMap, patronLabelMap } from '../../constants';
 
+import css from './PatronForm.css';
+
 class PatronForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     userIdentifiers: PropTypes.arrayOf(PropTypes.string),
-    change: PropTypes.func,
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
-    patron: PropTypes.object, // eslint-disable-line react/no-unused-prop-types
+    patron: PropTypes.object,
     forwardedRef: PropTypes.object,
+    formRef: PropTypes.object,
+    form: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -36,6 +41,15 @@ class PatronForm extends React.Component {
       username: <FormattedMessage id="ui-checkout.user.username" />,
       barcode: <FormattedMessage id="ui-checkout.user.barcode" />
     };
+  }
+
+  componentDidMount() {
+    const {
+      formRef,
+      form,
+    } = this.props;
+
+    formRef.current = form;
   }
 
   componentDidUpdate() {
@@ -64,13 +78,13 @@ class PatronForm extends React.Component {
     const {
       userIdentifiers,
       handleSubmit,
-      change,
+      form,
     } = this.props;
 
     const ident = find(userIdentifiers, i => user[patronIdentifierMap[i]]);
 
     if (ident) {
-      change('patron.identifier', user[patronIdentifierMap[ident]]);
+      form.change('patron.identifier', user[patronIdentifierMap[ident]]);
       setTimeout(() => handleSubmit());
     } else {
       const { username } = user;
@@ -86,22 +100,36 @@ class PatronForm extends React.Component {
     }
   }
 
+  onSubmit = async (event) => {
+    const {
+      form,
+      handleSubmit,
+    } = this.props;
+
+    const error = await handleSubmit(event);
+    if (error.patron) {
+      return error;
+    }
+    return form.reset();
+  };
+
   render() {
     const {
       userIdentifiers,
       submitting,
-      handleSubmit,
       forwardedRef,
+      form,
     } = this.props;
 
     const validationEnabled = false;
     const disableRecordCreation = true;
     const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
+    const formState = form.getState();
 
     return (
       <form
         id="patron-form"
-        onSubmit={handleSubmit}
+        onSubmit={this.onSubmit}
       >
         <Row id="section-patron">
           <Col xs={9}>
@@ -127,6 +155,11 @@ class PatronForm extends React.Component {
                 </FormattedMessage>
               )}
             </FormattedMessage>
+            { formState.hasSubmitErrors && (
+              <span className={css.error}>
+                {formState.submitErrors.patron.identifier}
+              </span>
+            )}
           </Col>
           <Col xs={3}>
             <Button
@@ -162,6 +195,6 @@ class PatronForm extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: 'patronForm',
+export default stripesFinalForm({
+  navigationCheck: true,
 })(PatronForm);

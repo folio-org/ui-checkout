@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
-import {
-  reduxForm,
-  Form,
-} from 'redux-form';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
@@ -66,7 +62,7 @@ function OverrideModal(props) {
       label={<FormattedMessage id="ui-checkout.overrideLoanPolicy" />}
       onClose={closeOverrideModal}
     >
-      <Form
+      <form
         id="override-form"
         onSubmit={onSubmit}
       >
@@ -127,7 +123,7 @@ function OverrideModal(props) {
             </Button>
           </Row>
         </Col>
-      </Form>
+      </form>
     </Modal>
   );
 }
@@ -140,6 +136,4 @@ OverrideModal.propTypes = {
   closeOverrideModal: PropTypes.func.isRequired,
 };
 
-export default reduxForm({
-  form: 'overrideForm',
-})(OverrideModal);
+export default OverrideModal;
