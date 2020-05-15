@@ -95,5 +95,9 @@
     "source": "المصدر",
     "confirmWithdrawnModal.heading": "إعارة المادة المسحوبة؟",
     "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود: {barcode}) له حالة المادة <strong>مسحوبة</strong>",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود: {barcode}) له حالة المادة <strong>مسحوبة</strong> ومحجوب من الاكتشاف"
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود: {barcode}) له حالة المادة <strong>مسحوبة</strong> ومحجوب من الاكتشاف",
+    "confirmStatusModal.heading.missing": "إعارة المادة المفقودة؟",
+    "confirmStatusModal.heading.withdrawn": "إعارة المادة المسحوبة؟",
+    "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف."
 }
