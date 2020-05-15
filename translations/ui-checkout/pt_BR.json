@@ -95,5 +95,9 @@
     "source": "Fonte",
     "confirmWithdrawnModal.heading": "Emprestar item descartado?",
     "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> .",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> e é ocultado na descoberta."
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem o status do item <strong>Descartado</strong> e é ocultado na descoberta.",
+    "confirmStatusModal.heading.missing": "Emprestar item desaparecido?",
+    "confirmStatusModal.heading.withdrawn": "Emprestar item descartado?",
+    "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>{status}</strong>.",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é ocultado na descoberta."
 }
