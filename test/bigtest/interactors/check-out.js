@@ -22,6 +22,7 @@ import CheckoutNoteModalInteractor from './checkout-note-modal';
 import ErrorModal from './error-modal';
 import OverrideModal from './override-modal';
 import Item from './item';
+import ProxyModalInteractor from './proxy-modal';
 
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
@@ -29,6 +30,7 @@ export default interactor(class CheckOutInteractor {
   scanItems = new ScanItemsInteractor('[data-test-scan-items]');
   itemMenu = new ItemMenuInteractor();
   blockModal = new BlockModalInteractor();
+  proxyModal = new ProxyModalInteractor();
 
   openRequestsCount = new Interactor('[data-test-open-requests-count]');
   patronIdentifierPresent = isPresent('#input-patron-identifier');
@@ -43,7 +45,8 @@ export default interactor(class CheckOutInteractor {
   clickEndSessionBtn = clickable('#clickable-done');
   endSessionBtnPresent = isPresent('#clickable-done');
 
-  patronFullName = text('[data-test-check-out-patron-full-name]');
+  patronFullName = text('#patron-detail [data-test-check-out-patron-full-name]');
+  proxyFullName = text('#proxy-detail [data-test-check-out-patron-full-name]');
   itemBarcode = value('#input-item-barcode');
 
   errorModal = new ErrorModal();
@@ -55,6 +58,8 @@ export default interactor(class CheckOutInteractor {
 
   patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
   confirmWithdrawnModalPresent = isPresent('#test-confirm-withdrawn-modal');
+  patronDetailIsPresent = isPresent('#patron-detail');
+  proxyDetailIsPresent = isPresent('#proxy-detail');
 
   checkoutItem(barcode) {
     return this
@@ -72,5 +77,9 @@ export default interactor(class CheckOutInteractor {
 
   whenItemListIsPresent() {
     return this.when(() => this.itemList.rowCount > 0);
+  }
+
+  whenProxyModalIsPresent() {
+    return this.when(() => this.proxyModal.isPresent);
   }
 });

@@ -23,6 +23,7 @@ class ViewPatron extends React.Component {
     onClearPatron: PropTypes.func.isRequired,
     openBlockedModal: PropTypes.func,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
+    settings: PropTypes.arrayOf(PropTypes.object),
   };
 
   constructor(props) {
@@ -41,6 +42,7 @@ class ViewPatron extends React.Component {
       onClearPatron,
       patronBlocks,
       openBlockedModal,
+      settings
     } = this.props;
 
     const patronDetail = (
@@ -55,6 +57,7 @@ class ViewPatron extends React.Component {
           }
           user={patron}
           renderLoans
+          settings={settings}
           {...this.props}
         />
       </div>
@@ -67,6 +70,7 @@ class ViewPatron extends React.Component {
           id="proxy-detail"
           label={<FormattedMessage id="ui-checkout.borrowerProxy" />}
           user={proxy}
+          settings={settings}
         />
         <div className={css.section}>
           <Row>
