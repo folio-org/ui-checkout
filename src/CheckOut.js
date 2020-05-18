@@ -1,16 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux';
-import {
-  SubmissionError,
-  reset,
-  change,
-  submit,
-  formValueSelector,
-} from 'redux-form';
-
 import createInactivityTimer from 'inactivity-timer';
+import { FormattedMessage } from 'react-intl';
+
 import {
   isEmpty,
   get,
@@ -167,10 +159,6 @@ class CheckOut extends React.Component {
         POST: PropTypes.func,
       }),
     }),
-    setFieldValue: PropTypes.func.isRequired,
-    submitForm: PropTypes.func.isRequired,
-    itemBarcodeFieldValue: PropTypes.string,
-    patronBarcodeFieldValue: PropTypes.string,
     history: PropTypes.shape({
       push: PropTypes.func,
     }),
@@ -197,45 +185,36 @@ class CheckOut extends React.Component {
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
     this.state = { loading: false, blocked: false };
+    this.patronFormInputRef = React.createRef();
     this.patronFormRef = React.createRef();
+    this.itemFormRef = React.createRef();
     this.timer = undefined;
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
-    this.state = { submitting: false };
+    this.state = {
+      submitting: false,
+    };
   }
 
   componentDidMount() {
-    const {
-      setFieldValue,
-      location,
-    } = this.props;
-
-    if (this.shouldSubmitAutomatically) {
-      setFieldValue('patronForm', 'patron.identifier', location.state.patronBarcode);
-      setFieldValue('itemForm', 'item.barcode', location.state.itemBarcode);
-    } else {
-      this.patronFormRef.current.focus();
+    if (!this.shouldSubmitAutomatically) {
+      this.patronFormInputRef.current.focus();
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
-      submitForm,
-      patronBarcodeFieldValue,
       mutator,
       resources,
     } = this.props;
 
     const {
       resources: prevResources,
-      patronBarcodeFieldValue: prevPatronBarcodeFieldValue,
     } = prevProps;
 
     const { submitting } = this.state;
 
-    const patronFormFilled = !prevPatronBarcodeFieldValue && patronBarcodeFieldValue;
-
-    if (patronFormFilled && this.shouldSubmitAutomatically) {
-      submitForm('patronForm');
+    if (this.shouldSubmitAutomatically) {
+      this.submitForm('patron-form');
     }
 
     const patronBlocks = get(resources, ['patronBlocks', 'records'], []);
@@ -285,6 +264,12 @@ class CheckOut extends React.Component {
     }
   }
 
+  submitForm = (domId) => {
+    const submitEvent = new Event('submit', { cancelable: true });
+    const form = document.querySelector(`#${domId}`);
+    form.dispatchEvent(submitEvent);
+  };
+
   async onSessionEnd() {
     const {
       resources: { activeRecord: { patronId } },
@@ -294,14 +279,19 @@ class CheckOut extends React.Component {
       },
     } = this.props;
 
+    const { submitting: patronFormSubmitting = false } = this.patronFormRef.current.getState();
+
     this.clearResources();
 
     if (!this.shouldSubmitAutomatically) {
-      this.clearForm('itemForm');
+      this.itemFormRef.current.reset();
     }
-    this.clearForm('patronForm');
 
-    const current = this.patronFormRef.current;
+    if (!patronFormSubmitting) {
+      this.patronFormRef.current.reset();
+    }
+
+    const current = this.patronFormInputRef.current;
     // This is not defined when the timeout fires while another app is active: which is fine
     if (current) {
       setTimeout(() => current.focus());
@@ -353,27 +343,27 @@ class CheckOut extends React.Component {
     }
 
     mutator.requests.reset();
-    const patron = await this.findPatron(data);
+    const { error, patron } = await this.findPatron(data);
 
-    if (!patron) return;
+    if (!patron) return error;
 
     const proxies = await this.findProxies(patron);
     // patron can act as a proxy
     // so wait with finding requests
     // until proxy is selected. Part of UICHKOUT-475
-    if (proxies.length) return;
+    if (proxies.length) return {};
     this.findRequests(patron);
+
+    return {};
   }
 
   async findPatron(data) {
     const patron = data.patron;
+    const error = { patron: {} };
 
     if (!patron) {
-      throw new SubmissionError({
-        patron: {
-          identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
-        },
-      });
+      error.patron.identifier = <FormattedMessage id="ui-checkout.missingDataError" />;
+      return { error, patron: null };
     }
 
     this.clearResources();
@@ -387,12 +377,10 @@ class CheckOut extends React.Component {
       if (!patrons.length) {
         const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
 
-        throw new SubmissionError({
-          patron: {
-            identifier: <FormattedMessage id="ui-checkout.userNotFoundError" values={{ identifier }} />,
-            _error: errorTypes.SCAN_FAILED,
-          },
-        });
+        error.patron.identifier = <FormattedMessage id="ui-checkout.userNotFoundError" values={{ identifier }} />;
+        error.patron._error = errorTypes.SCAN_FAILED;
+
+        return { error, patron: null };
       }
 
       const selPatronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
@@ -407,9 +395,10 @@ class CheckOut extends React.Component {
       }
 
       if (!showBlockModal && this.shouldSubmitAutomatically) {
-        this.props.submitForm('itemForm');
+        this.submitForm('item-form');
       }
-      return selPatron;
+
+      return { error, patron: selPatron };
     } finally {
       this.shouldSubmitAutomatically = false;
       this.setState({ loading: false });
@@ -435,10 +424,6 @@ class CheckOut extends React.Component {
     mutator.requests.reset();
     const requests = await mutator.requests.GET({ params: { query } });
     this.setState({ requestsCount: requests.length });
-  }
-
-  clearForm(formName) {
-    this.store.dispatch(reset(formName));
   }
 
   onCloseBlockedModal = () => {
@@ -471,8 +456,11 @@ class CheckOut extends React.Component {
       resources,
       mutator,
       stripes,
+      location,
     } = this.props;
 
+    const patronInitialValue = this.shouldSubmitAutomatically ? { patron: { identifier: location.state.patronBarcode } } : {};
+    const itemInitialValue = this.shouldSubmitAutomatically ? { item: { barcode: location.state.itemBarcode } } : {};
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
@@ -501,7 +489,9 @@ class CheckOut extends React.Component {
               onSubmit={this.onPatronLookup}
               userIdentifiers={this.getPatronIdentifiers()}
               patron={selPatron}
-              forwardedRef={this.patronFormRef}
+              forwardedRef={this.patronFormInputRef}
+              formRef={this.patronFormRef}
+              initialValues={patronInitialValue}
               {...this.props}
             />
             {loading &&
@@ -537,6 +527,8 @@ class CheckOut extends React.Component {
               settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
               shouldSubmitAutomatically={this.shouldSubmitAutomatically}
+              formRef={this.itemFormRef}
+              initialValues={itemInitialValue}
             />
           </Pane>
         </Paneset>
@@ -573,20 +565,4 @@ class CheckOut extends React.Component {
   }
 }
 
-const patronFormValueSelector = formValueSelector('patronForm');
-const itemFormValueSelector = formValueSelector('itemForm');
-
-export default connect(
-  store => ({
-    patronBarcodeFieldValue: patronFormValueSelector(store, 'patron.identifier'),
-    itemBarcodeFieldValue: itemFormValueSelector(store, 'item.barcode'),
-  }),
-  dispatch => ({
-    setFieldValue(formName, fieldName, fieldValue) {
-      dispatch(change(formName, fieldName, fieldValue));
-    },
-    submitForm(formName) {
-      dispatch(submit(formName));
-    },
-  })
-)(CheckOut);
+export default CheckOut;

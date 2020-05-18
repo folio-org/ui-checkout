@@ -56,7 +56,7 @@ export default interactor(class CheckOutInteractor {
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
   itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
-  patronErrorPresent = isPresent('#section-patron [class*=feedbackError---]');
+  patronErrorPresent = isPresent('#section-patron [class*=error---]');
   confirmWithdrawnModalPresent = isPresent('#test-confirm-withdrawn-modal');
   patronDetailIsPresent = isPresent('#patron-detail');
   proxyDetailIsPresent = isPresent('#proxy-detail');
