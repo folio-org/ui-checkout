@@ -8,6 +8,11 @@ import {
 } from 'react-intl';
 
 import {
+  withStripes,
+  stripesShape,
+} from '@folio/stripes/core';
+
+import {
   Col,
   KeyValue,
   Row,
@@ -42,8 +47,9 @@ class UserDetail extends React.Component {
 
   static propTypes = {
     user: PropTypes.object,
+    id: PropTypes.string.isRequired,
     label: PropTypes.node,
-    settings: PropTypes.arrayOf(PropTypes.object),
+    settings: PropTypes.arrayOf(PropTypes.object).isRequired,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -59,9 +65,7 @@ class UserDetail extends React.Component {
       }),
     }),
     renderLoans: PropTypes.bool,
-    stripes: PropTypes.shape({
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
+    stripes: stripesShape.isRequired,
   };
 
   getUserValue = (user) => {
@@ -170,6 +174,7 @@ class UserDetail extends React.Component {
 
   render() {
     const {
+      id,
       user,
       resources,
       label,
@@ -182,7 +187,7 @@ class UserDetail extends React.Component {
     const statusVal = (get(user, ['active'], '') ? 'ui-checkout.active' : 'ui-checkout.inactive');
 
     return (
-      <div>
+      <div id={id}>
         <div>
           <Row>
             <Col xs={hasProfilePicture ? 10 : 12}>
@@ -234,4 +239,4 @@ class UserDetail extends React.Component {
   }
 }
 
-export default UserDetail;
+export default withStripes(UserDetail);
