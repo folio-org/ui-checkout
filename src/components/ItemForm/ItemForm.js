@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { FormattedMessage } from 'react-intl';
+import { Field } from 'react-final-form';
 
-import {
-  Field,
-  reduxForm,
-  reset,
-  getFormSubmitErrors,
-} from 'redux-form';
+import stripesFinalForm from '@folio/stripes/final-form';
 
 import {
   Col,
@@ -31,25 +26,25 @@ class ItemForm extends React.Component {
   static propTypes = {
     stripes: stripesShape.isRequired,
     shouldSubmitAutomatically: PropTypes.bool.isRequired,
-    submitErrors: PropTypes.shape({
-      item: PropTypes.object,
-    }),
-    resetForm: PropTypes.func.isRequired,
     submitting: PropTypes.bool.isRequired,
-    submitSucceeded: PropTypes.bool.isRequired,
     item: PropTypes.object,
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onOverride: PropTypes.func.isRequired,
+    form: PropTypes.object.isRequired,
+    formRef: PropTypes.object.isRequired,
+    checkoutError: PropTypes.object,
+    onClearCheckoutErrors: PropTypes.func,
   };
 
   static defaultProps = {
     patron: {},
     item: {},
+    checkoutError: {},
   };
 
   static getDerivedStateFromProps(props, { error }) {
-    return { error: props.submitErrors.item || error || {} };
+    return { error: props.checkoutError?.item || error || {} };
   }
 
   constructor(props) {
@@ -66,22 +61,24 @@ class ItemForm extends React.Component {
     if (this.props.patron) {
       this.focusInput();
     }
+    this.props.formRef.current = this.props.form;
   }
 
   componentDidUpdate(prevProps) {
     const {
-      submitSucceeded,
       shouldSubmitAutomatically,
       patron,
+      form: { getState }
     } = this.props;
 
-    if (document.activeElement === this.barcodeEl.current ||
-      !patron || !patron.id) {
+    const { submitSucceeded } = getState();
+
+    if (document.activeElement === this.barcodeEl.current || !patron || !patron.id) {
       return;
     }
 
     // Focus on the item barcode input after the patron is entered
-    if (!shouldSubmitAutomatically && (submitSucceeded || !prevProps.patron ||
+    if (!shouldSubmitAutomatically && (submitSucceeded || !prevProps.patron || // ?
       prevProps.patron.id !== patron.id)) {
       this.clearForm();
       this.focusInput();
@@ -105,18 +102,25 @@ class ItemForm extends React.Component {
   }
 
   clearForm = () => {
-    const { resetForm } = this.props;
-
-    this.setError({});
-    resetForm();
-  };
-
-  handleSubmit = (data) => {
     const {
-      handleSubmit,
+      form,
+      onClearCheckoutErrors,
     } = this.props;
 
-    handleSubmit(data);
+    this.setError({});
+    onClearCheckoutErrors();
+    form.reset();
+  };
+
+  onSubmit = async (event) => {
+    const { handleSubmit } = this.props;
+    const error = await handleSubmit(event);
+
+    if (error?.item) {
+      return error;
+    }
+
+    return this.clearForm();
   };
 
   render() {
@@ -135,7 +139,7 @@ class ItemForm extends React.Component {
       <>
         <form
           id="item-form"
-          onSubmit={this.handleSubmit}
+          onSubmit={this.onSubmit}
         >
           <Row id="section-item">
             <Col xs={4}>
@@ -207,16 +211,7 @@ class ItemForm extends React.Component {
     );
   }
 }
-const itemForm = reduxForm({
-  form: 'itemForm',
+
+export default stripesFinalForm({
+  navigationCheck: true,
 })(withStripes(ItemForm));
-
-const mapDispatchToProps = dispatch => ({
-  resetForm: () => dispatch(reset('itemForm')),
-});
-
-const mapStateToProps = state => ({
-  submitErrors: getFormSubmitErrors('itemForm')(state)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(itemForm);

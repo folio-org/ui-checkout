@@ -1,10 +1,9 @@
-import { get } from 'lodash';
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { SubmissionError, change, stopSubmit, setSubmitFailed } from 'redux-form';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
+import { get, isEmpty } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 
@@ -87,10 +86,13 @@ class ScanItems extends React.Component {
     settings: PropTypes.object,
     openBlockedModal: PropTypes.func,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
+    formRef: PropTypes.object.isRequired,
+    initialValues: PropTypes.object,
   };
 
   static defaultProps = {
     settings: {},
+    initialValues: {},
   };
 
   constructor(props) {
@@ -100,9 +102,8 @@ class ScanItems extends React.Component {
       loading: false,
       checkoutStatus: null,
       item: null,
+      error: null,
     };
-
-    this.itemInput = React.createRef();
   }
 
   async fetchItem(barcode) {
@@ -115,6 +116,13 @@ class ScanItems extends React.Component {
     return get(itemsResp, '[0]');
   }
 
+  // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
+  triggerPatronFormSubmit = () => {
+    const submitEvent = new Event('submit', { cancelable: true });
+    const form = document.querySelector('#patron-form');
+    form.dispatchEvent(submitEvent);
+  };
+
   validate(barcode) {
     const {
       patron,
@@ -123,43 +131,50 @@ class ScanItems extends React.Component {
     } = this.props;
 
     if (!barcode) {
-      throw new SubmissionError({
+      return {
         item: {
-          barcode: <FormattedMessage id="ui-checkout.missingDataError" />,
-        },
-      });
+          barcode: <FormattedMessage id="ui-checkout.missingDataError" />
+        }
+      };
     }
 
     if (!patron) {
-      this.dispatchError('patronForm', 'patron.identifier', {
+      this.triggerPatronFormSubmit();
+      return {
         patron: {
-          identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
-        },
-      });
-
-      throw new SubmissionError({});
+          identifier: <FormattedMessage id="ui-checkout.missingDataError" />
+        }
+      };
     }
 
     if (patronBlocks.length > 0) {
       openBlockedModal();
-      throw new SubmissionError({});
+      return {
+        patron: {
+          blocked: <FormattedMessage id="ui-checkout.blockModal" />
+        }
+      };
     }
+
+    return {};
   }
 
   tryCheckout = async (data) => {
     const barcode = get(data, 'item.barcode');
-    this.validate(barcode);
+    const error = this.validate(barcode);
+
+    if (!isEmpty(error)) {
+      this.setState({ error });
+      return;
+    }
+
     const item = await this.fetchItem(barcode);
 
-    return new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-      if (!item) {
-        this.checkout(barcode);
-      } else {
-        this.setState({ item });
-      }
-    });
+    if (!item) {
+      this.checkout(barcode);
+    } else {
+      this.setState({ item });
+    }
   }
 
   // Called from ViewItem when the 'show checkout notes' item
@@ -176,8 +191,6 @@ class ScanItems extends React.Component {
 
   successfulCheckout = () => {
     this.setState({ checkoutStatus: 'success', item: null });
-    this.clearField('itemForm', 'item.barcode');
-    this.resolve();
   };
 
   getRequestData(barcode) {
@@ -214,8 +227,7 @@ class ScanItems extends React.Component {
   }
 
   performAction(action, data) {
-    this.setState({ loading: true });
-    this.clearError('itemForm');
+    this.setState({ loading: true, error: null });
 
     return action.POST(data)
       .then(this.fetchLoanPolicy)
@@ -231,7 +243,6 @@ class ScanItems extends React.Component {
     if (contentType && contentType.startsWith('application/json')) {
       return resp.json().then(this.handleErrors);
     } else {
-      this.reject();
       return resp.text().then(alert); // eslint-disable-line no-alert
     }
   }
@@ -266,7 +277,7 @@ class ScanItems extends React.Component {
       };
     }
 
-    this.reject(new SubmissionError({ item: itemError }));
+    this.setState({ error: { item: itemError } });
   }
 
   addScannedItem = (loan) => {
@@ -297,21 +308,16 @@ class ScanItems extends React.Component {
     return loan;
   };
 
-  clearField(formName, fieldName) {
-    this.store.dispatch(change(formName, fieldName, ''));
-  }
-
-  clearError(formName) {
-    this.store.dispatch(stopSubmit(formName, {}));
-  }
-
-  dispatchError(formName, fieldName, errors) {
-    this.store.dispatch(stopSubmit(formName, errors));
-    this.store.dispatch(setSubmitFailed(formName, [fieldName]));
+  clearField(fieldName) {
+    this.props.formRef.current.change(fieldName, '');
   }
 
   onFinishedPlaying = () => {
     this.setState({ checkoutStatus: null });
+  }
+
+  onClearCheckoutErrors = () => {
+    this.setState({ error: null });
   }
 
   onCancel = () => {
@@ -321,13 +327,12 @@ class ScanItems extends React.Component {
     // when the mode is false, meaning that notes were shown as
     // part of the item checkout workflow.
     if (!this.state.checkoutNotesMode) {
-      this.clearField('itemForm', 'item.barcode');
-      this.reject(new SubmissionError({}));
+      this.clearField('item.barcode');
     }
     this.setState({ checkoutNotesMode: false });
   }
 
-  onDone = () => {
+  onDone = async () => {
     const barcode = get(this.state, 'item.barcode', '');
     this.checkout(barcode);
   }
@@ -339,6 +344,8 @@ class ScanItems extends React.Component {
       patron,
       settings: { audioAlertsEnabled },
       shouldSubmitAutomatically,
+      formRef,
+      initialValues,
     } = this.props;
 
     const {
@@ -365,7 +372,7 @@ class ScanItems extends React.Component {
             onCancel={this.onCancel}
           />}
         <ItemForm
-          ref={this.itemInput}
+          formRef={formRef}
           onSubmit={this.tryCheckout}
           onOverride={this.override}
           patron={patron}
@@ -373,6 +380,9 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
+          checkoutError={this.state.error}
+          onClearCheckoutErrors={this.onClearCheckoutErrors}
+          initialValues={initialValues}
         />
         {loading &&
           <Icon

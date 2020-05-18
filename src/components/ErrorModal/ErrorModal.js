@@ -93,12 +93,13 @@ ErrorModal.propTypes = {
   stripes: stripesShape.isRequired,
   onClose: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  loanPolicy: PropTypes.string.isRequired,
+  loanPolicy: PropTypes.string,
   openOverrideModal: PropTypes.func,
 };
 
 ErrorModal.defaultProps = {
   item: {},
+  loanPolicy: '',
   openOverrideModal: noop,
 };
 
