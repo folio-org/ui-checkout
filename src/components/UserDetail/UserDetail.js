@@ -6,6 +6,12 @@ import {
   FormattedDate,
   FormattedMessage,
 } from 'react-intl';
+import classNames from 'classnames';
+
+import {
+  withStripes,
+  stripesShape,
+} from '@folio/stripes/core';
 
 import {
   withStripes,
@@ -19,6 +25,8 @@ import {
 } from '@folio/stripes/components';
 
 import { getFullName } from '../../util';
+import userPlaceholder from '../../../icons/user-placeholder.png';
+
 
 import css from './UserDetail.css';
 
@@ -200,10 +208,7 @@ class UserDetail extends React.Component {
             </Col>
             {hasProfilePicture &&
               <Col xs={2}>
-                <img
-                  src="http://placehold.it/60x60"
-                  alt={<FormattedMessage id="ui-checkout.presentation" />}
-                />
+                <img className={classNames('floatEnd', css.userPlaceholder)} src={userPlaceholder} alt="presentation" />
               </Col> }
           </Row>
         </div>
