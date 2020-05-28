@@ -14,11 +14,6 @@ import {
 } from '@folio/stripes/core';
 
 import {
-  withStripes,
-  stripesShape,
-} from '@folio/stripes/core';
-
-import {
   Col,
   KeyValue,
   Row,
