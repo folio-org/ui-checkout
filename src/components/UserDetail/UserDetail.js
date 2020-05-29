@@ -6,7 +6,6 @@ import {
   FormattedDate,
   FormattedMessage,
 } from 'react-intl';
-import classNames from 'classnames';
 
 import {
   withStripes,
@@ -203,7 +202,7 @@ class UserDetail extends React.Component {
             </Col>
             {hasProfilePicture &&
               <Col xs={2}>
-                <img className={classNames('floatEnd', css.userPlaceholder)} src={userPlaceholder} alt="presentation" />
+                <img className={`floatEnd ${css.userPlaceholder}`} src={userPlaceholder} alt="presentation" />
               </Col> }
           </Row>
         </div>
