@@ -66,6 +66,7 @@
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
+  "confirmStatusModal.heading.lostAndPaid": "Check out lost and paid item?",
   "confirmStatusModal.heading.missing": "Check out missing item?",
   "confirmStatusModal.heading.withdrawn": "Check out withdrawn item?",
   "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
