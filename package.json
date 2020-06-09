@@ -31,7 +31,8 @@
       "item-storage": "8.0",
       "loan-policy-storage": "1.0 2.0",
       "users": "15.0",
-      "inventory": "10.0"
+      "inventory": "10.0",
+      "automated-patron-blocks": "0.1"
     },
     "permissionSets": [
       {

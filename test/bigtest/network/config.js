@@ -32,6 +32,10 @@ export default function config() {
     totalRecords: 0,
   });
 
+  this.get('/automated-patron-blocks/:id', {
+    automatedPatronBlocks: []
+  });
+
   this.post('/circulation/end-patron-action-session', {});
 
   this.get('/groups', {
