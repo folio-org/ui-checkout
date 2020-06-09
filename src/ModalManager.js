@@ -281,7 +281,7 @@ class ModalManager extends React.Component {
 
     return (
       <ConfirmationModal
-        id="test-confirm-withdrawn-modal"
+        id="test-confirm-status-modal"
         open={showStatusModal}
         item={checkedoutItem}
         heading={<FormattedMessage id={heading} />}

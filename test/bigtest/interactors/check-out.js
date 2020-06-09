@@ -52,12 +52,12 @@ export default interactor(class CheckOutInteractor {
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
-  confirmWithdrawnModal = new ConfirmModalInteractor('#test-confirm-withdrawn-modal');
+  confirmStatusModal = new ConfirmModalInteractor('#test-confirm-status-modal');
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
   itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
   patronErrorPresent = isPresent('#section-patron [class*=error---]');
-  confirmWithdrawnModalPresent = isPresent('#test-confirm-withdrawn-modal');
+  confirmStatusModalPresent = isPresent('#test-confirm-status-modal');
   patronDetailIsPresent = isPresent('#patron-detail');
   proxyDetailIsPresent = isPresent('#proxy-detail');
 

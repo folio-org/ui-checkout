@@ -4,7 +4,8 @@
 
 * Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
 * Upgrade to `react-intl-safe-html` `2.0`. Refs STRIPES-672.
-* Use local file as a profile placeholder. Refs UICHKOUT-624
+* Use local file as a profile placeholder. Refs UICHKOUT-624.
+* Add confirmation modal for Lost and paid items. Refs UICHKOUT-549.
 
 ## [3.1.0] (IN PROGRESS)
 

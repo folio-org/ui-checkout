@@ -5,6 +5,12 @@ import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
 
+const itemModalStatuses = [
+  'Missing',
+  'Withdrawn',
+  'Lost and paid',
+];
+
 describe('CheckOut', () => {
   setupApplication(); // { scenarios: ['checkoutByBarcode'] });
   const checkOut = new CheckOutInteractor();
@@ -420,6 +426,33 @@ describe('CheckOut', () => {
     // });
   });
 
+  describe('asks for confirmation before checking out items with special status', () => {
+    itemModalStatuses.forEach(status => {
+      describe(`Checking out item with status ${status}`, function () {
+        beforeEach(async function () {
+          const user = this.server.create('user');
+          this.server.create('item', 'withLoan', {
+            barcode: '123',
+            status: { name: status },
+          });
+
+          await checkOut
+            .fillPatronBarcode(user.barcode.toString())
+            .clickPatronBtn()
+            .whenUserIsLoaded();
+
+          await checkOut
+            .fillItemBarcode('123')
+            .clickItemBtn();
+        });
+
+        it('shows the status confirmation modal', () => {
+          expect(checkOut.confirmStatusModal.isPresent).to.be.true;
+        });
+      });
+    });
+  });
+
   describe('shows and hides all pre checkout modals one after another', () => {
     beforeEach(async function () {
       const user = this.server.create('user');
@@ -453,13 +486,13 @@ describe('CheckOut', () => {
         .fillItemBarcode('123')
         .clickItemBtn();
 
-      await checkOut.confirmWithdrawnModal.confirmButton.click();
+      await checkOut.confirmStatusModal.confirmButton.click();
       await checkOut.checkoutNoteModal.clickConfirm();
       await checkOut.multipieceModal.clickConfirm();
     });
 
     it('hides all pre checkout modals', () => {
-      expect(checkOut.confirmWithdrawnModalPresent).to.be.false;
+      expect(checkOut.confirmStatusModalPresent).to.be.false;
       expect(checkOut.multipieceModal.present).to.be.false;
       expect(checkOut.checkoutNoteModal.present).to.be.false;
     });
