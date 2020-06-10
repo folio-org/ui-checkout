@@ -1,14 +1,14 @@
 import {
   interactor,
   isPresent,
-  text,
+  collection,
 } from '@bigtest/interactor';
 
 @interactor class BlockModalInteractor {
   static defaultScope = 'body';
 
   modalPresent = isPresent('[data-test-block-modal]');
-  modalMessage = text('[data-test-block-message] b');
+  modalMessage = collection('[data-test-block-message]');
 
   whenBlockMessageIsLoaded() {
     return this.when(() => this.modalMessage.isPresent);

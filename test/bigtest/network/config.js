@@ -2,6 +2,8 @@ import CQLParser from './cql';
 import {
   loanPolicyId,
   loanPolicyName,
+  blockedUserId,
+  blockedMessage,
 } from '../constants';
 
 // typical mirage config export
@@ -34,6 +36,16 @@ export default function config() {
 
   this.get('/automated-patron-blocks/:id', {
     automatedPatronBlocks: []
+  });
+
+  this.get(`/automated-patron-blocks/${blockedUserId}`, {
+    automatedPatronBlocks: [{
+      patronBlockConditionId: 'cf7a0d5f-a327-4ca1-aa9e-dc55ec006b8a',
+      blockBorrowing: true,
+      blockRenewals: false,
+      blockRequests: false,
+      message: blockedMessage
+    }]
   });
 
   this.post('/circulation/end-patron-action-session', {});

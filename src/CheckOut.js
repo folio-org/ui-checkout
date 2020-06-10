@@ -77,8 +77,7 @@ class CheckOut extends React.Component {
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
-      fetch: false,
-    }, 
+    },
     patronGroups: {
       type: 'okapi',
       records: 'usergroups',
@@ -167,9 +166,6 @@ class CheckOut extends React.Component {
       manualPatronBlocks: PropTypes.shape({
         DELETE: PropTypes.func,
       }),
-      automatedPatronBlocks: PropTypes.shape({
-        GET: PropTypes.func,
-      }),
       endSession: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -183,10 +179,6 @@ class CheckOut extends React.Component {
         itemBarcode: PropTypes.string.isRequired,
       })
     }),
-  };
-
-  static defaultProps = {
-    automatedPatronBlocks: [],
   };
 
   constructor(props) {
@@ -492,12 +484,10 @@ class CheckOut extends React.Component {
     const settings = get(resources, ['settings', 'records'], []);
     const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
     const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
-    console.log(selAutomatedPatronBlocks);
     let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true) || [];
     manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
     const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true) || [];
     const patronBlocks = concat(automatedPatronBlocks, manualPatronBlocks);
-    console.log(patronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
     const { loading, blocked, requestsCount } = this.state;

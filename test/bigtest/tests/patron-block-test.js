@@ -1,64 +1,50 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
+import {
+  blockedUserId,
+  blockedMessage,
+} from '../constants';
+
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 
 const checkOut = new CheckOutInteractor();
 
 describe('Patron blocks', () => {
-  describe.only('automated block', () => {
-    setupApplication({
-      scenarios: ['automatedPatronBlocks'],
-      permissions: {
-        'automated-patron-blocks.collection.get': true
-      }
-    });
+  // describe('automated block', () => {
+  //   setupApplication({
+  //     permissions: {
+  //       'automated-patron-blocks.collection.get': true
+  //     }
+  //   });
 
-    // beforeEach(async function () {
-    //   this.server.create('user', {
-    //     barcode: '654321',
-    //   });
+  //     beforeEach(async function () {
+  //       server.create('user', {
+  //         id: blockedUserId,
+  //         barcode: '12345',
+  //         personal: {
+  //           firstName: 'John',
+  //           lastName: 'Doe',
+  //         },
+  //       });
+  
+  //       this.visit('/checkout');
 
-    //   this.visit('/checkout', () => {
-    //     expect(checkOut.$root).to.exist;
-    //   });
+  //       await checkOut
+  //         .fillPatronBarcode('12345')
+  //         .clickPatronBtn()
+  //         .whenUserIsLoaded();
+  //     });
 
-    //   await checkOut
-    //       .fillPatronBarcode('654321')
-    //       .clickPatronBtn()
-    //       .whenUserIsLoaded();
-    //   await checkOut.blockModal
-    //       .whenBlockMessageIsLoaded();
-    // });
+  //     it('shows the patron block modal', () => {
+  //       expect(checkOut.blockModal.modalPresent).to.be.true;
+  //     });
 
-
-      beforeEach(async function () {
-        // const user = this.server.create('user', {
-        //   id: '1',
-        //   barcode: '12345',
-        //   personal: {
-        //     firstName: 'Bob',
-        //     lastName: 'Brown',
-        //   },
-        // });
-        
-        this.visit('/checkout');
-
-        await checkOut
-          .fillPatronBarcode('12345')
-          .clickPatronBtn()
-          .whenUserIsLoaded();
-      });
-
-      it('shows the patron block modal', () => {
-        expect(checkOut.blockModal.modalPresent).to.be.true;
-      });
-
-      it('shows the patron block message', () => {
-        expect(checkOut.blockModal.modalMessage).to.equal('');
-      });
-  });
+  //     it('shows the patron block message', () => {
+  //       expect(checkOut.blockModal.modalMessage(0).text).to.equal(blockedMessage);
+  //     });
+  // });
 
   describe('manual block', () => {
     setupApplication({
