@@ -33,6 +33,7 @@ export const OVERRIDABLE_ERROR_MESSAGES = [ITEM_NOT_LOANABLE];
 
 export const statuses = {
   CHECK_OUT: 'Check out',
+  LOST_AND_PAID: 'Lost and paid',
   MISSING: 'Missing',
   WITHDRAWN: 'Withdrawn',
 };
