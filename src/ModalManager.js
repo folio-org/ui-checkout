@@ -81,9 +81,12 @@ class ModalManager extends React.Component {
 
   shouldStatusModalBeShown = () => {
     const { checkedoutItem } = this.state;
-    const status = checkedoutItem?.status?.name;
 
-    return status === statuses.MISSING || status === statuses.WITHDRAWN;
+    return [
+      statuses.LOST_AND_PAID,
+      statuses.MISSING,
+      statuses.WITHDRAWN,
+    ].includes(checkedoutItem?.status?.name);
   }
 
   shouldCheckoutNoteModalBeShown = () => {
@@ -259,15 +262,18 @@ class ModalManager extends React.Component {
     const messageId = checkedoutItem.discoverySuppress ?
       'ui-checkout.confirmStatusModal.suppressedMessage' :
       'ui-checkout.confirmStatusModal.notSuppressedMessage';
+    values.status = checkedoutItem?.status?.name;
+
     let heading;
     switch (checkedoutItem?.status?.name) {
+      case statuses.LOST_AND_PAID:
+        heading = 'ui-checkout.confirmStatusModal.heading.lostAndPaid';
+        break;
       case statuses.MISSING:
         heading = 'ui-checkout.confirmStatusModal.heading.missing';
-        values.status = statuses.MISSING;
         break;
       case statuses.WITHDRAWN:
         heading = 'ui-checkout.confirmStatusModal.heading.withdrawn';
-        values.status = statuses.WITHDRAWN;
         break;
       default:
         break;
@@ -275,7 +281,7 @@ class ModalManager extends React.Component {
 
     return (
       <ConfirmationModal
-        id="test-confirm-withdrawn-modal"
+        id="test-confirm-status-modal"
         open={showStatusModal}
         item={checkedoutItem}
         heading={<FormattedMessage id={heading} />}
