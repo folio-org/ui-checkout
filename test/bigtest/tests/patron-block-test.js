@@ -6,36 +6,38 @@ import CheckOutInteractor from '../interactors/check-out';
 
 const checkOut = new CheckOutInteractor();
 
-describe('patron blocks', () => {
-  setupApplication({
-    scenarios: ['patronBlocks'],
-  });
-
-  beforeEach(function () {
-    return this.visit('/checkout', () => {
-      expect(checkOut.$root).to.exist;
+describe('Patron blocks', () => {
+  describe('manual block', () => {
+    setupApplication({
+      scenarios: ['manualPatronBlocks'],
     });
-  });
 
-  describe('entering a blocked patron barcode', () => {
-    beforeEach(async function () {
-      const user = this.server.create('user', {
-        barcode: '654321',
-        personal: {
-          firstName: 'Bob',
-          lastName: 'Brown',
-        },
+    beforeEach(function () {
+      return this.visit('/checkout', () => {
+        expect(checkOut.$root).to.exist;
       });
-      this.server.create('manualblock', { userId: user.id, id: '46399627-08a9-414f-b91c-a8a7ec850d03' });
-
-      await checkOut
-        .fillPatronBarcode('654321')
-        .clickPatronBtn()
-        .whenUserIsLoaded();
     });
 
-    it('shows the patron block modal', () => {
-      expect(checkOut.blockModal.modalPresent).to.be.true;
+    describe('entering a blocked patron barcode', () => {
+      beforeEach(async function () {
+        const user = this.server.create('user', {
+          barcode: '654321',
+          personal: {
+            firstName: 'Bob',
+            lastName: 'Brown',
+          },
+        });
+        this.server.create('manualblock', { userId: user.id, id: '46399627-08a9-414f-b91c-a8a7ec850d03' });
+
+        await checkOut
+          .fillPatronBarcode('654321')
+          .clickPatronBtn()
+          .whenUserIsLoaded();
+      });
+
+      it('shows the patron block modal', () => {
+        expect(checkOut.blockModal.modalPresent).to.be.true;
+      });
     });
   });
 });

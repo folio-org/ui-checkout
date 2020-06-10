@@ -13,9 +13,9 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
   const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
   const renderBlocks = blocks.map(block => {
     return (
-      <Row key={block.id}>
+      <Row key={block.id || block.patronBlockConditionId}>
         <Col xs>
-          <b>{block.desc || ''}</b>
+          <b data-test-block-message>{block.desc || block.message || ''}</b>
         </Col>
       </Row>
     );
@@ -32,7 +32,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
       <Row>
         <Col xs>
           <FormattedMessage id="ui-checkout.blockedLabel" />
-:
+          :
         </Col>
       </Row>
       {renderBlocks}

@@ -7,6 +7,7 @@ import {
   isEmpty,
   get,
   hasIn,
+  concat,
 } from 'lodash';
 
 import {
@@ -62,13 +63,20 @@ class CheckOut extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
-    patronBlocks: {
+    manualPatronBlocks: {
       type: 'okapi',
       records: 'manualblocks',
       path: 'manualblocks?query=userId=%{activeRecord.patronId}',
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
+    },
+    automatedPatronBlocks: {
+      type: 'okapi',
+      records: 'automatedPatronBlocks',
+      path: 'automated-patron-blocks/%{activeRecord.patronId}',
+      params: { limit: '100' },
+      permissionsRequired: 'automated-patron-blocks.collection.get',
     },
     patronGroups: {
       type: 'okapi',
@@ -115,7 +123,10 @@ class CheckOut extends React.Component {
       checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
-      patronBlocks: PropTypes.shape({
+      manualPatronBlocks: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+      automatedPatronBlocks: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       requests: PropTypes.shape({
@@ -152,7 +163,7 @@ class CheckOut extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
-      patronBlocks: PropTypes.shape({
+      manualPatronBlocks: PropTypes.shape({
         DELETE: PropTypes.func,
       }),
       endSession: PropTypes.shape({
@@ -217,22 +228,26 @@ class CheckOut extends React.Component {
       this.submitForm('patron-form');
     }
 
-    const patronBlocks = get(resources, ['patronBlocks', 'records'], []);
-    const prevBlocks = get(prevResources, ['patronBlocks', 'records'], []);
-    const prevExpirated = prevBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
-    const expirated = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
+    const automatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
+    const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
+    const prevExpirated = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const expirated = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
-    if (prevExpirated.length > 0 && expirated.length === 0) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ submitting: false });
+    if ((prevExpirated.length > 0 && expirated.length === 0) || !isEmpty(automatedPatronBlocks)) {
+      if (submitting) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ submitting: false });
+      }
     }
 
-    if (expirated.length > 0 && !submitting) {
+    if ((expirated.length > 0 && !submitting) && isEmpty(automatedPatronBlocks)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ submitting: true });
+
       expirated.forEach(p => {
         mutator.activeRecord.update({ blockId: p.id });
-        mutator.patronBlocks.DELETE({ id: p.id });
+        mutator.manualPatronBlocks.DELETE({ id: p.id });
       });
     }
 
@@ -383,12 +398,15 @@ class CheckOut extends React.Component {
         return { error, patron: null };
       }
 
-      const selPatronBlocks = get(this.props.resources, ['patronBlocks', 'records'], []);
-      let patronBlocks = selPatronBlocks.filter(p => p.borrowing === true);
-      patronBlocks = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+      const selManualPatronBlocks = get(this.props.resources, ['manualPatronBlocks', 'records'], []);
+      const selAutomatedPatronBlocks = get(this.props.resources, ['automatedPatronBlocks', 'records'], []);
+      let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true);
+      manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+      const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true);
       const selPatron = patrons[0];
       this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
-      const showBlockModal = patronBlocks.length > 0 && patronBlocks[0].userId === selPatron.id;
+      const showBlockModal = (manualPatronBlocks.length > 0 && manualPatronBlocks[0].userId === selPatron.id)
+        || !isEmpty(automatedPatronBlocks);
 
       if (showBlockModal) {
         this.openBlockedModal();
@@ -464,9 +482,12 @@ class CheckOut extends React.Component {
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
-    const selPatronBlocks = get(resources, ['patronBlocks', 'records'], []);
-    let patronBlocks = selPatronBlocks.filter(p => p.borrowing === true) || [];
-    patronBlocks = patronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+    const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
+    const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
+    let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true) || [];
+    manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+    const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true) || [];
+    const patronBlocks = concat(automatedPatronBlocks, manualPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
     const { loading, blocked, requestsCount } = this.state;
@@ -554,11 +575,7 @@ class CheckOut extends React.Component {
               values={{ count: requestsCount }}
             />
           }
-          label={
-            <FormattedMessage
-              id="ui-checkout.awaitingPickupLabel"
-            />
-          }
+          label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
         />
       </div>
     );
