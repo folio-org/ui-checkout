@@ -44,7 +44,7 @@
     "title": "Название",
     "time": "Time",
     "itemDetails": "Item details",
-    "loanDetails": "Loan details",
+    "loanDetails": "Детали книговыдачи",
     "status": "Статус",
     "endSession": "Завершить сеанс",
     "whoAreYouActingAs": "Who are you acting as?",
@@ -94,10 +94,10 @@
     "date": "Дата",
     "source": "Источник",
     "confirmWithdrawnModal.heading": "Check out withdrawn item?",
-    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong>.",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>Withdrawn</strong> and is suppressed from discovery.",
+    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>Изъят из обращения</strong>.",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра  <strong>Изъят из обращения</strong> и скрыт от дискавери поиска.",
     "confirmStatusModal.heading.missing": "Выдать отсутствующее издание?",
     "confirmStatusModal.heading.withdrawn": "Выдать издание, изъятое из обращения?",
-    "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery."
+    "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>{status}</strong>.",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>{status}</strong> и исключен из поиска."
 }
