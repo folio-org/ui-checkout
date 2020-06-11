@@ -44,9 +44,9 @@ module.exports.test = function uiTest(uiTestCtx) {
           .click('#input-item-barcode')
           .insert('#input-item-barcode', 'item-before-patron')
           .click('#clickable-add-item')
-          .wait('#section-patron div[class*="Error"]')
+          .wait('#section-patron span[class*="error"]')
           .evaluate(() => {
-            const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
+            const errorText = document.querySelector('#section-patron span[class*="error"]').innerText;
             if (!errorText.startsWith('Please fill')) {
               throw new Error('Error message not found for item entered before patron found');
             }
@@ -69,9 +69,9 @@ module.exports.test = function uiTest(uiTestCtx) {
           .insert('#input-patron-identifier', 'wrong-patron-id')
           .wait('#clickable-find-patron')
           .click('#clickable-find-patron')
-          .wait('#section-patron div[class*="Error"]')
+          .wait('#section-patron span[class*="error"]')
           .evaluate(() => {
-            const errorText = document.querySelector('#section-patron div[class*="Error"]').innerText;
+            const errorText = document.querySelector('#section-patron span[class*="error"]').innerText;
             if (!(errorText.startsWith('User with this') && errorText.endsWith('does not exist'))) {
               throw new Error(`Error message not found for invalid user input: ${errorText}`);
             }
