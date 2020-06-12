@@ -7,6 +7,7 @@
 * Use local file as a profile placeholder. Refs UICHKOUT-624.
 * Add confirmation modal for Lost and paid items. Refs UICHKOUT-549.
 * Include automated patron blocks as reason to block patron from borrowing. Refs UICHKOUT-627.
+* Make permission names l10nable. Refs UICHKOUT-629.
 
 ## [3.1.0] (IN PROGRESS)
 
