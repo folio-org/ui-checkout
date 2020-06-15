@@ -1,21 +1,19 @@
 # Change history for ui-checkout
 
-## [4.0.0] (IN PROGRESS)
-
-* Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
-* Upgrade to `react-intl-safe-html` `2.0`. Refs STRIPES-672.
-* Use local file as a profile placeholder. Refs UICHKOUT-624.
-* Add confirmation modal for Lost and paid items. Refs UICHKOUT-549.
-* Include automated patron blocks as reason to block patron from borrowing. Refs UICHKOUT-627.
-* Make permission names l10nable. Refs UICHKOUT-629.
-
-## [3.1.0] (IN PROGRESS)
+## [4.0.0](https://github.com/folio-org/ui-checkout/tree/v4.0.0) (2020-06-15)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v3.0.0...v4.0.0)
 
 * Change selected parton background color to increase color contrast. Refs UICHKOUT-603.
 * Fix bug preventing continuation after cancelling checkout notes or multipiece modal. Fixes UICHKOUT-610, UICHKOUT-611.
 * Show confirmation modal when item with withdrawn status is scanned. Refs UICHKOUT-605.
 * Show confirmation modal when item with Missing status is scanned. Refs UICHKOUT-582.
 * Pin `moment` at `~2.24.0`. Refs STRIPES-678.
+* Upgrade to `stripes` `4.0`, `react-intl` `4.5`. Refs STRIPES-672.
+* Upgrade to `react-intl-safe-html` `2.0`. Refs STRIPES-672.
+* Use local file as a profile placeholder. Refs UICHKOUT-624.
+* Add confirmation modal for Lost and paid items. Refs UICHKOUT-549.
+* Include automated patron blocks as reason to block patron from borrowing. Refs UICHKOUT-627.
+* Make permission names l10nable. Refs UICHKOUT-629.
 
 ## [3.0.0](https://github.com/folio-org/ui-checkout/tree/v3.0.0) (2020-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v2.0.0...v3.0.0)
