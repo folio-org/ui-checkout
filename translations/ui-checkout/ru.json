@@ -93,11 +93,15 @@
     "openRequests": "Открыть запросы",
     "date": "Дата",
     "source": "Источник",
-    "confirmWithdrawnModal.heading": "Check out withdrawn item?",
+    "confirmWithdrawnModal.heading": "Выдать экземпляр, изъятый из обращения?",
     "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>Изъят из обращения</strong>.",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра  <strong>Изъят из обращения</strong> и скрыт от дискавери поиска.",
-    "confirmStatusModal.heading.missing": "Выдать отсутствующее издание?",
-    "confirmStatusModal.heading.withdrawn": "Выдать издание, изъятое из обращения?",
+    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра  <strong>Изъят из обращения</strong> и скрыт от дискавери-поиска.",
+    "confirmStatusModal.heading.missing": "Выдать отсутствующий экземпляр?",
+    "confirmStatusModal.heading.withdrawn": "Выдать экземпляр, изъятый из обращения?",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>{status}</strong> и исключен из поиска."
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрих-код: {barcode}) имеет статус экземпляра <strong>{status}</strong> и исключен из поиска.",
+    "confirmStatusModal.heading.lostAndPaid": "Выдать утерянный и оплаченный экземпляр?",
+    "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
+    "permission.circulation": "Check out: Check out circulating items",
+    "permission.all": "Check out: All permissions"
 }

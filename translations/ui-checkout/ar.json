@@ -99,5 +99,9 @@
     "confirmStatusModal.heading.missing": "إعارة المادة المفقودة؟",
     "confirmStatusModal.heading.withdrawn": "إعارة المادة المسحوبة؟",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف."
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف.",
+    "confirmStatusModal.heading.lostAndPaid": "إعارة المواد المفقودة والمدفوعة؟",
+    "permission.overrideCheckOutByBarcode": "الإعارة: تخطى سياسة الأعارة عند الإعارة بواسطة الباركود",
+    "permission.circulation": "الإعارة: أعر مواد الإعارة",
+    "permission.all": "الإعارة: كل الصلاحيات"
 }

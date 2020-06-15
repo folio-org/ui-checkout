@@ -99,5 +99,9 @@
     "confirmStatusModal.heading.missing": "Emprestar item desaparecido?",
     "confirmStatusModal.heading.withdrawn": "Emprestar item descartado?",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é ocultado na descoberta."
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é ocultado na descoberta.",
+    "confirmStatusModal.heading.lostAndPaid": "Item de empréstimo perdido e pago?",
+    "permission.overrideCheckOutByBarcode": "Empréstimos: Sobrescrever políticas de empréstimos no empréstimo pelo código de barras",
+    "permission.circulation": "Empréstimo: Emprestar itens",
+    "permission.all": "Empréstimo: Todas as permissões"
 }

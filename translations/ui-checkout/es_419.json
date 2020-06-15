@@ -99,5 +99,9 @@
     "confirmStatusModal.heading.missing": "Check out missing item?",
     "confirmStatusModal.heading.withdrawn": "Check out withdrawn item?",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery."
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
+    "confirmStatusModal.heading.lostAndPaid": "Check out lost and paid item?",
+    "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
+    "permission.circulation": "Check out: Check out circulating items",
+    "permission.all": "Check out: All permissions"
 }
