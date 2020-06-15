@@ -103,5 +103,5 @@
     "confirmStatusModal.heading.lostAndPaid": "Выдать утерянный и оплаченный экземпляр?",
     "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
     "permission.circulation": "Check out: Check out circulating items",
-    "permission.all": "Check out: All permissions"
+    "permission.all": "Выдача: Все разрешения"
 }
