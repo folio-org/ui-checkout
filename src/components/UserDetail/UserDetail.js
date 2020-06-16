@@ -43,7 +43,10 @@ class UserDetail extends React.Component {
     openRequests: {
       type: 'okapi',
       throwErrors: false,
-      path: 'circulation/requests?query=(requesterId==!{user.id} and status==Open)&limit=100',
+      // yes, `status=Open` not `status==Open` becuase in fact `status` has
+      // values like `Open - Awaiting pickup` and `Open - In transit` and we
+      // want to retrieve all "open" statuses.
+      path: 'circulation/requests?query=(requesterId==!{user.id} and status=Open)&limit=100',
     },
   });
 
