@@ -28,22 +28,22 @@ class UserDetail extends React.Component {
   static manifest = Object.freeze({
     patronGroups: {
       type: 'okapi',
-      path: 'groups?query=(id=!{user.patronGroup})',
+      path: 'groups?query=(id==!{user.patronGroup})',
       records: 'usergroups',
     },
     openLoansCount: {
       type: 'okapi',
-      path: 'circulation/loans?query=(userId=!{user.id} and status.name<>Closed)&limit=1',
+      path: 'circulation/loans?query=(userId==!{user.id} and status.name<>Closed)&limit=1',
     },
     openAccounts: {
       type: 'okapi',
       records: 'accounts',
-      path: 'accounts?query=(userId=!{user.id} and status.name<>Closed)&limit=100',
+      path: 'accounts?query=(userId==!{user.id} and status.name<>Closed)&limit=100',
     },
     openRequests: {
       type: 'okapi',
       throwErrors: false,
-      path: 'circulation/requests?query=(requesterId=!{user.id} and status=Open)&limit=100',
+      path: 'circulation/requests?query=(requesterId==!{user.id} and status==Open)&limit=100',
     },
   });
 
