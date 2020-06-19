@@ -43,7 +43,7 @@ class CheckOut extends React.Component {
     checkoutSettings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module==CHECKOUT and configName==other_settings)',
+      path: 'configurations/entries?query=(module=CHECKOUT and configName=other_settings)',
     },
     patrons: {
       type: 'okapi',
@@ -55,7 +55,7 @@ class CheckOut extends React.Component {
     settings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module==USERS and configName==profile_pictures)',
+      path: 'configurations/entries?query=(module=USERS and configName=profile_pictures)',
     },
     loans: {
       type: 'okapi',
@@ -66,7 +66,7 @@ class CheckOut extends React.Component {
     manualPatronBlocks: {
       type: 'okapi',
       records: 'manualblocks',
-      path: 'manualblocks?query=userId==%{activeRecord.patronId}',
+      path: 'manualblocks?query=userId=%{activeRecord.patronId}',
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
