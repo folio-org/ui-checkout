@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 4.0.1 (IN PROGRESS)
+## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
 
 * Use `==` for more efficient queries. Refs CIRCSTORE-215, PERF-62.
 * Increment `@folio/plugin-find-user` to `v3.0` for `@folio/stripes` `v4` compatibility.
