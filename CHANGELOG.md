@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## 4.0.1 (IN PROGRESS)
+
+* Use `==` for more efficient queries. Refs CIRCSTORE-215, PERF-62.
+
 ## [4.0.0](https://github.com/folio-org/ui-checkout/tree/v4.0.0) (2020-06-15)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v3.0.0...v4.0.0)
 
