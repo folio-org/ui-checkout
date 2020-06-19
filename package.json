@@ -126,7 +126,7 @@
     "react-router-dom": "^4.0.0"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-user": "^2.0.0"
+    "@folio/plugin-find-user": "^3.0.0"
   },
   "resolutions": {
     "moment": "~2.24.0"
