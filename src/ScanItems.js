@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { get, isEmpty } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
+import { escapeCqlValue } from '@folio/stripes/util';
 
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
@@ -108,7 +109,8 @@ class ScanItems extends React.Component {
 
   async fetchItem(barcode) {
     const { mutator } = this.props;
-    const query = `barcode==${barcode}`;
+    const bcode = '"' + escapeCqlValue(barcode) + '"';
+    const query = `barcode==${bcode}`;
     this.setState({ item: null });
     mutator.items.reset();
     const itemsResp = await mutator.items.GET({ params: { query } });
@@ -258,7 +260,6 @@ class ScanItems extends React.Component {
     // TODO make error message internationalized
     // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
     let itemError;
-
     if (!parameters) {
       itemError = {
         barcode: <FormattedMessage id="ui-checkout.unknownError" />,
