@@ -1,5 +1,10 @@
 # Change history for ui-checkout
 
+## 4.1.0 (IN PROGRESS)
+
+* Checkout barcode CQL injection.  Fixes UICHKOUT-633.
+* Updated React-intl dependency to 4.7.2
+
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
 
