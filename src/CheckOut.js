@@ -66,7 +66,7 @@ class CheckOut extends React.Component {
     manualPatronBlocks: {
       type: 'okapi',
       records: 'manualblocks',
-      path: 'manualblocks?query=userId=%{activeRecord.patronId}',
+      path: 'manualblocks?query=userId==%{activeRecord.patronId}',
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
