@@ -102,6 +102,6 @@
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) имеет статус экземпляра <strong>{status}</strong> и исключен из поиска.",
     "confirmStatusModal.heading.lostAndPaid": "Выдать утерянный и оплаченный экземпляр?",
     "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
-    "permission.circulation": "Check out: Check out circulating items",
+    "permission.circulation": "Выдать: Выдача экземпляров по абонементу",
     "permission.all": "Выдача: Все разрешения"
 }
