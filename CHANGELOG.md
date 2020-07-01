@@ -5,6 +5,7 @@
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2
 * Use `==` for more efficient queries. Refs PERF-62.
+* pass proxy borrower's barcode to checkout endpoint. Fixes UICHKOUT-639
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
