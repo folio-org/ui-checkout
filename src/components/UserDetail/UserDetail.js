@@ -43,7 +43,7 @@ class UserDetail extends React.Component {
     openRequests: {
       type: 'okapi',
       throwErrors: false,
-      path: 'circulation/requests?query=(requesterId==!{user.id} and status=Open)&limit=100',
+      path: 'circulation/requests?query=(requesterId==!{user.id} and status=="Open*")&limit=100',
     },
   });
 
