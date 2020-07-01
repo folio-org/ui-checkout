@@ -42,6 +42,7 @@ export default interactor(class CheckOutInteractor {
   itemBarcodePresent = isPresent('#input-item-barcode');
   fillItemBarcode = fillable('#input-item-barcode');
   clickItemBtn = clickable('#clickable-add-item');
+  clickFindUserBtn = clickable('#clickable-find-user');
   clickEndSessionBtn = clickable('#clickable-done');
   endSessionBtnPresent = isPresent('#clickable-done');
 

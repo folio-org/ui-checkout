@@ -6,11 +6,11 @@ import {
 
 @interactor class ProxyModalInteractor {
   modalPresent = isPresent('#proxy-form');
-  clickAsSelf = clickable('[data-test-acting-as-self]');
-  clickAsProxy = clickable('[data-test-acting-as-proxy]');
+  clickAsSelf = clickable('[for="sponsor-1"]');
+  clickAsProxy = clickable('[for="proxy-2"]');
 
-  clickContinue = clickable('#OverlayContainer [data-test-continue-button]');
-  clickCancel = clickable('#OverlayContainer [data-test-cancel-button]');
+  clickContinue = clickable('#proxy-form button[type="submit"]');
+  clickCancel = clickable('#proxy-form button:first-of-type');
 }
 
 export default ProxyModalInteractor;
