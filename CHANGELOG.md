@@ -5,6 +5,7 @@
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2
 * Use `==` for more efficient queries. Refs PERF-62.
+* pass proxy borrower's barcode to checkout endpoint. Fixes UICHKOUT-639
 * Use right truncation to fetch user's open request (UICHKOUT-641).
 * Create BigTest tests for patron lookup widget. Refs UICHKOUT-533.
 

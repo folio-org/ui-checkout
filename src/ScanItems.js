@@ -83,6 +83,7 @@ class ScanItems extends React.Component {
     }),
 
     patron: PropTypes.object,
+    proxy: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
     settings: PropTypes.object,
     openBlockedModal: PropTypes.func,
@@ -196,14 +197,25 @@ class ScanItems extends React.Component {
   };
 
   getRequestData(barcode) {
-    const { stripes, patron } = this.props;
+    const { stripes, patron, proxy } = this.props;
     const servicePointId = get(stripes, 'user.user.curServicePoint.id', '');
+    let data;
+    if (Object.keys(proxy).length > 0) {
+      data = {
+        itemBarcode: barcode.trim(),
+        userBarcode: patron.barcode,
+        proxyUserBarcode: proxy.barcode,
+        servicePointId,
+      };
+    } else {
+      data = {
+        itemBarcode: barcode.trim(),
+        userBarcode: patron.barcode,
+        servicePointId,
+      };
+    }
 
-    return {
-      itemBarcode: barcode.trim(),
-      userBarcode: patron.barcode,
-      servicePointId,
-    };
+    return data;
   }
 
   checkout = (barcode) => {
@@ -230,7 +242,6 @@ class ScanItems extends React.Component {
 
   performAction(action, data) {
     this.setState({ loading: true, error: null });
-
     return action.POST(data)
       .then(this.fetchLoanPolicy)
       .then(this.addScannedItem)
