@@ -1,7 +1,7 @@
 {
     "externalSystemId": "id de sistema externo",
     "folioRecordNumber": "número de registro do folio",
-    "missingDataError": "Por favor, retire o preenchimento disto para continuar",
+    "missingDataError": "Por favor, preencha para continuar",
     "checkoutDateRangeError": "O item não pode ser emprestado, pois a data do empréstimo está fora dos intervalos de datas da política de empréstimo. Por favor, revise {name} antes de tentar emprestar novamente.",
     "itemNotFoundError": "Item com este código de barras não existe",
     "itemNotAvailableError": "O item não está disponível para empréstimo",
