@@ -64,7 +64,7 @@ class ViewItem extends React.Component {
       no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
       title: <FormattedMessage id="ui-checkout.title" />,
       loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
-      dueDate: <FormattedMessage id="ui-checkout.dueDate" />,
+      dueDate: <FormattedMessage id="ui-checkout.due.date" />,
       loanDate: <FormattedMessage id="ui-checkout.time" />,
     };
   }
@@ -246,7 +246,7 @@ class ViewItem extends React.Component {
               buttonStyle="dropdownItem"
               onClick={(e) => this.handleOptionsChange({ loan, action: 'showCheckoutNotes' }, e)}
             >
-              <FormattedMessage id="ui-checkout.checkoutNotes" />
+              <FormattedMessage id="ui-checkout.checkout.notes" />
             </Button>}
         </DropdownMenu>
       );
