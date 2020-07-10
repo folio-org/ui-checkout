@@ -86,7 +86,6 @@
   "devDependencies": {
     "@bigtest/convergence": "^1.1.1",
     "@bigtest/interactor": "^0.9.1",
-    "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^5.1.0",
@@ -98,6 +97,9 @@
     "chai": "^4.2.0",
     "core-js": "^3.6.4",
     "eslint": "^6.2.1",
+    "faker": "^4.1.0",
+    "inflected": "^2.0.4",
+    "miragejs": "^0.1.40",
     "mocha": "^5.2.0",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
@@ -110,14 +112,14 @@
   },
   "dependencies": {
     "@folio/react-intl-safe-html": "^2.0.0",
+    "final-form": "^4.19.1",
     "inactivity-timer": "^1.0.0",
     "lodash": "^4.17.4",
     "moment": "~2.24.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "^15.6.0",
     "react-audio-player": "^0.9.0",
-    "react-hot-loader": "^4.3.12",
-    "final-form": "^4.19.1",
-    "react-final-form": "^6.4.0"
+    "react-final-form": "^6.4.0",
+    "react-hot-loader": "^4.3.12"
   },
   "peerDependencies": {
     "@folio/stripes": "^4.0.0",
