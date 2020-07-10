@@ -5,9 +5,5 @@ import './helpers/monkey-patch-run';
 
 // require all modules ending in "-test" from the current directory and
 // all subdirectories
-try {
-  const requireTest = require.context('./tests/', true, /-test/);
-  requireTest.keys().forEach(requireTest);
-} catch (e) {
-  throw new Error('min bug:', e);
-}
+const requireTest = require.context('./tests/', true, /-test/);
+requireTest.keys().forEach(requireTest);

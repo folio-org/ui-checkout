@@ -564,15 +564,13 @@ describe('CheckOut', () => {
 
       const item = this.server.create('item');
 
-      this.visit({
+      return this.visit({
         pathname: '/checkout',
         state: {
           itemBarcode: item.barcode,
           patronBarcode: user.barcode,
         }
       });
-
-      await new Promise(resolve => { setTimeout(resolve, 300); });
     });
 
     it('should display patron information', () => {
