@@ -211,7 +211,7 @@ class UserDetail extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-checkout.patronGroup" />}
+                label={<FormattedMessage id="ui-checkout.user.patronGroup" />}
               >
                 {patronGroup.group}
               </KeyValue>
@@ -225,7 +225,7 @@ class UserDetail extends React.Component {
             </Col>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-checkout.userExpiration" />}
+                label={<FormattedMessage id="ui-checkout.user.expiration" />}
                 value={user.expirationDate ? <FormattedDate value={user.expirationDate} /> : '-'}
               />
             </Col>
