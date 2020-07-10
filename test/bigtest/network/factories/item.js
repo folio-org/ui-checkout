@@ -1,4 +1,5 @@
-import { Factory, faker, trait } from '@bigtest/mirage';
+import { Factory } from 'miragejs';
+import faker from 'faker';
 
 export default Factory.extend({
   status: () => ({ name: 'Checked out' }),
@@ -14,11 +15,14 @@ export default Factory.extend({
   missingPieces: () => '',
   numberOfPieces: () => 1,
 
-  withLoan: trait({
-    afterCreate(item, server) {
-      server.create('loan', {
-        item
-      });
-    }
-  })
+  withLoan: {
+    extension: {
+      afterCreate(item, server) {
+        server.create('loan', {
+          item
+        });
+      }
+    },
+    __isTrait__: true
+  }
 });
