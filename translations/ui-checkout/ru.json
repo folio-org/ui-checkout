@@ -103,5 +103,11 @@
     "confirmStatusModal.heading.lostAndPaid": "Выдать утерянный и оплаченный экземпляр?",
     "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
     "permission.circulation": "Выдать: Выдача экземпляров по абонементу",
-    "permission.all": "Выдача: Все разрешения"
+    "permission.all": "Выдача: Все разрешения",
+    "proxy.expiration": "Proxy expiration",
+    "due.date": "Due date",
+    "user.expiration": "User expiration",
+    "end.session": "End session",
+    "patron.identifier": "Patron identifier",
+    "checkout.notes": "Check out notes"
 }
