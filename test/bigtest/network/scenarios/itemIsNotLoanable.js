@@ -1,4 +1,4 @@
-import { Response } from '@bigtest/mirage';
+import { Response } from 'miragejs';
 
 export default (server) => {
   server.post('circulation/check-out-by-barcode', () => {
