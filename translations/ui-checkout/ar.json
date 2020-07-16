@@ -104,10 +104,10 @@
     "permission.overrideCheckOutByBarcode": "الإعارة: تخطى سياسة الأعارة عند الإعارة بواسطة الباركود",
     "permission.circulation": "الإعارة: أعر مواد الإعارة",
     "permission.all": "الإعارة: كل الصلاحيات",
-    "proxy.expiration": "Proxy expiration",
-    "due.date": "Due date",
-    "user.expiration": "User expiration",
-    "end.session": "End session",
-    "patron.identifier": "Patron identifier",
-    "checkout.notes": "Check out notes"
+    "proxy.expiration": "انتهاء صلاحية النائب",
+    "due.date": "تاريخ الاستحقاق",
+    "user.expiration": "انتهاء صلاحية المستخدم",
+    "end.session": "إنهاء الجلسة",
+    "patron.identifier": "معرّف المستفيد",
+    "checkout.notes": "ملاحظات الإعارة"
 }
