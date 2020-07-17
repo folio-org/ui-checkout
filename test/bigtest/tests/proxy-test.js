@@ -25,7 +25,6 @@ describe('checkout with proxy', function () {
     scenarios: ['proxies'],
   });
 
-
   beforeEach(function () {
     return this.visit('/checkout', () => {
       expect(checkOut.$root).to.exist;

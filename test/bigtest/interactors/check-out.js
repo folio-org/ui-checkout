@@ -13,7 +13,6 @@ import {
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import ConfirmModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
 
-
 import ScanItemsInteractor from './scan-items';
 import ItemMenuInteractor from './item-menu';
 import BlockModalInteractor from './block-modal';
