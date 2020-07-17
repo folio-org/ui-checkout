@@ -76,7 +76,7 @@ class ViewPatron extends React.Component {
           <Row>
             <Col xs={4}>
               <KeyValue
-                label={<FormattedMessage id="ui-checkout.proxyExpiration" />}
+                label={<FormattedMessage id="ui-checkout.proxy.expiration" />}
                 value="-"
               />
             </Col>

@@ -138,7 +138,7 @@ class PatronForm extends React.Component {
               values={{ identifier }}
             >
               {placeholder => (
-                <FormattedMessage id="ui-checkout.patronIdentifier">
+                <FormattedMessage id="ui-checkout.patron.identifier">
                   {ariaLabel => (
                     <Field
                       name="patron.identifier"

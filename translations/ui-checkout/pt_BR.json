@@ -103,5 +103,11 @@
     "confirmStatusModal.heading.lostAndPaid": "Item de empréstimo perdido e pago?",
     "permission.overrideCheckOutByBarcode": "Empréstimos: Sobrescrever políticas de empréstimos no empréstimo pelo código de barras",
     "permission.circulation": "Empréstimo: Emprestar itens",
-    "permission.all": "Empréstimo: Todas as permissões"
+    "permission.all": "Empréstimo: Todas as permissões",
+    "proxy.expiration": "Expiração de autorização",
+    "due.date": "Data de vencimento",
+    "user.expiration": "Validade do usuário",
+    "end.session": "Encerrar sessão",
+    "patron.identifier": "Identificador de usuário",
+    "checkout.notes": "Notas de empréstimo"
 }

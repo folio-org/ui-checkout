@@ -3,6 +3,7 @@
 ## 4.1.0 (IN PROGRESS)
 
 * Refactor from `bigtest/mirage` to `miragejs`.
+* refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2
 * Use `==` for more efficient queries. Refs PERF-62.
