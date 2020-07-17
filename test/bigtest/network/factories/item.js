@@ -1,4 +1,4 @@
-import { Factory } from 'miragejs';
+import { Factory, trait } from 'miragejs';
 import faker from 'faker';
 
 export default Factory.extend({
@@ -15,14 +15,11 @@ export default Factory.extend({
   missingPieces: () => '',
   numberOfPieces: () => 1,
 
-  withLoan: {
-    extension: {
-      afterCreate(item, server) {
-        server.create('loan', {
-          item
-        });
-      }
-    },
-    __isTrait__: true
-  }
+  withLoan: trait({
+    afterCreate(item, server) {
+      server.create('loan', {
+        item
+      });
+    }
+  })
 });
