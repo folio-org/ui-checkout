@@ -199,22 +199,14 @@ class ScanItems extends React.Component {
   getRequestData(barcode) {
     const { stripes, patron, proxy } = this.props;
     const servicePointId = get(stripes, 'user.user.curServicePoint.id', '');
-    let data;
-    if (Object.keys(proxy).length > 0) {
-      data = {
-        itemBarcode: barcode.trim(),
-        userBarcode: patron.barcode,
-        proxyUserBarcode: proxy.barcode,
-        servicePointId,
-      };
-    } else {
-      data = {
-        itemBarcode: barcode.trim(),
-        userBarcode: patron.barcode,
-        servicePointId,
-      };
+    const data = {
+      itemBarcode: barcode.trim(),
+      userBarcode: patron.barcode,
+      servicePointId,
+    };
+    if (proxy?.barcode) {
+      data.proxyUserBarcode = proxy.barcode;
     }
-
     return data;
   }
 
