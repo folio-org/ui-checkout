@@ -1,12 +1,85 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
 
+import {
+  blockedUserId1,
+  blockedUserId2,
+  blockedMessage,
+  manualBlockMessage,
+} from '../constants';
+
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 
 const checkOut = new CheckOutInteractor();
 
 describe('Patron blocks', () => {
+  describe('automated block', () => {
+    setupApplication({
+      permissions: {
+        'automated-patron-blocks.collection.get': true
+      }
+    });
+
+    beforeEach(async function () {
+      this.server.create('user', {
+        id: blockedUserId1,
+        barcode: '12345',
+        personal: {
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      });
+
+      this.visit('/checkout');
+
+      await checkOut
+        .fillPatronBarcode('12345')
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+    });
+
+    it('shows the patron block modal', () => {
+      expect(checkOut.blockModal.modalPresent).to.be.true;
+    });
+
+    it('shows the patron block message', () => {
+      expect(checkOut.blockModal.modalMessage(0).text).to.equal(blockedMessage);
+    });
+  });
+  describe('automated block without patron message', () => {
+    setupApplication({
+      permissions: {
+        'automated-patron-blocks.collection.get': true
+      }
+    });
+
+    beforeEach(async function () {
+      this.server.create('user', {
+        id: blockedUserId2,
+        barcode: '12345',
+        personal: {
+          firstName: 'John',
+          lastName: 'Doe',
+        },
+      });
+
+      this.visit('/checkout');
+
+      await checkOut
+        .fillPatronBarcode('12345')
+        .clickPatronBtn()
+        .whenUserIsLoaded();
+    });
+
+    it('shows the patron block modal', () => {
+      expect(checkOut.blockModal.modalPresent).to.be.true;
+    });
+
+    it('shows the empty patron block message', () => {
+      expect(checkOut.blockModal.modalMessage(0).text).to.equal('');
+    });
+  });
   describe('manual block', () => {
     setupApplication({
       scenarios: ['manualPatronBlocks'],
@@ -37,6 +110,10 @@ describe('Patron blocks', () => {
 
       it('shows the patron block modal', () => {
         expect(checkOut.blockModal.modalPresent).to.be.true;
+      });
+
+      it('shows the patron block message', () => {
+        expect(checkOut.blockModal.modalMessage(0).text).to.equal(manualBlockMessage);
       });
     });
   });

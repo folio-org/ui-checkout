@@ -10,6 +10,7 @@
 * Use right truncation to fetch user's open request (UICHKOUT-641).
 * Create BigTest tests for patron lookup widget. Refs UICHKOUT-533.
 * Refactor from `bigtest/mirage` to `miragejs`.
+* Increase test coverage for automated patron blocks. Refs UICHKOUT-531.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)

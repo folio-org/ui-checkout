@@ -2,7 +2,8 @@ import CQLParser from './cql';
 import {
   loanPolicyId,
   loanPolicyName,
-  blockedUserId,
+  blockedUserId1,
+  blockedUserId2,
   blockedMessage,
 } from '../constants';
 
@@ -38,13 +39,22 @@ export default function config() {
     automatedPatronBlocks: []
   });
 
-  this.get(`/automated-patron-blocks/${blockedUserId}`, {
+  this.get(`/automated-patron-blocks/${blockedUserId1}`, {
     automatedPatronBlocks: [{
       patronBlockConditionId: 'cf7a0d5f-a327-4ca1-aa9e-dc55ec006b8a',
       blockBorrowing: true,
       blockRenewals: false,
       blockRequests: false,
       message: blockedMessage
+    }]
+  });
+
+  this.get(`/automated-patron-blocks/${blockedUserId2}`, {
+    automatedPatronBlocks: [{
+      patronBlockConditionId: 'cf7a0d5f-a327-4ca1-aa9e-dc55ec006b8a',
+      blockBorrowing: true,
+      blockRenewals: false,
+      blockRequests: false
     }]
   });
 
