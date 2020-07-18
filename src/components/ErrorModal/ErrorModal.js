@@ -17,7 +17,6 @@ import {
   OVERRIDABLE_ERROR_MESSAGES,
 } from '../../constants';
 
-
 function ErrorModal(props) {
   const {
     open,

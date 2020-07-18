@@ -21,7 +21,6 @@ import {
 import { getFullName } from '../../util';
 import userPlaceholder from '../../../icons/user-placeholder.png';
 
-
 import css from './UserDetail.css';
 
 class UserDetail extends React.Component {
