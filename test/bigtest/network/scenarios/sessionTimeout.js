@@ -6,7 +6,7 @@ export default (server) => {
         'module': 'CHECKOUT',
         'configName': 'other_settings',
         'enabled': true,
-        'value': '{"checkoutTimeout":true,"checkoutTimeoutDuration":"0.1"}',
+        'value': '{"checkoutTimeout":true,"checkoutTimeoutDuration":"0.01"}',
       }
     ],
     'totalRecords': 1,

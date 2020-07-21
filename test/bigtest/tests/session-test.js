@@ -1,4 +1,4 @@
-import { beforeEach, describe } from '@bigtest/mocha';
+import { beforeEach, describe, it } from '@bigtest/mocha';
 import { always } from '@bigtest/convergence';
 import { expect } from 'chai';
 
@@ -12,22 +12,22 @@ describe('checkout session', () => {
     scenarios: ['sessionTimeout'],
   });
 
-  beforeEach(function () {
-    return this.visit('/checkout', () => {
+  beforeEach(async function () {
+    await this.visit('/checkout', () => {
       expect(checkOut.$root).to.exist;
+    });
+    this.server.create('user', {
+      id: 'user1',
+      barcode: '123456',
+      personal: {
+        firstName: 'Bob',
+        lastName: 'Brown',
+      },
     });
   });
 
   describe('session times out', () => {
     beforeEach(async function () {
-      this.server.create('user', {
-        barcode: '123456',
-        personal: {
-          firstName: 'Bob',
-          lastName: 'Brown',
-        },
-      });
-
       await checkOut
         .fillPatronBarcode('123456')
         .clickPatronBtn()
@@ -36,11 +36,11 @@ describe('checkout session', () => {
       await always(() => true, 8000);
     });
 
-  //   it('resets the app', () => {
-  //   //  setTimeout(() => {
-  //  //     expect(checkOut.patronFullName).to.equal('Brown, Bob');
-  //       expect(checkOut.endSessionBtnPresent).to.be.false;
-  //  //   }, 1000);
-  //   });
+    it('resets the app', () => {
+      setTimeout(() => {
+        expect(checkOut.patronFullName).to.equal('Brown, Bob');
+        expect(checkOut.endSessionBtnPresent).to.be.false;
+      }, 200);
+    });
   });
 });
