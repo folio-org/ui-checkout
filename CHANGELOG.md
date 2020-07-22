@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## 4.1.0 (IN PROGRESS)
+## 5.0.0 (IN PROGRESS)
 
 * refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
@@ -11,6 +11,7 @@
 * Create BigTest tests for patron lookup widget. Refs UICHKOUT-533.
 * Refactor from `bigtest/mirage` to `miragejs`.
 * Increase test coverage for automated patron blocks. Refs UICHKOUT-531.
+* Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
