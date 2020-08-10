@@ -34,6 +34,7 @@ export default interactor(class CheckOutInteractor {
   openRequestsCount = new Interactor('[data-test-open-requests-count]');
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
+  createInventoryEnterBtnPresent = isPresent('#clickable-create-inventory-records');
   checkoutNotes = new Interactor('[data-test-checkout-notes]');
   fillPatronBarcode = fillable('#input-patron-identifier');
   clickPatronBtn = clickable('#clickable-find-patron');
@@ -42,8 +43,8 @@ export default interactor(class CheckOutInteractor {
   fillItemBarcode = fillable('#input-item-barcode');
   clickItemBtn = clickable('#clickable-add-item');
   clickFindUserBtn = clickable('#clickable-find-user');
-  clickEndSessionBtn = clickable('#clickable-done');
-  endSessionBtnPresent = isPresent('#clickable-done');
+  clickEndSessionBtn = clickable('#clickable-done-footer');
+  endSessionBtnPresent = isPresent('#clickable-done-footer');
 
   patronFullName = text('#patron-detail [data-test-check-out-patron-full-name]');
   proxyFullName = text('#proxy-detail [data-test-check-out-patron-full-name]');

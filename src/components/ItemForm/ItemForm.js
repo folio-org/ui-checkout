@@ -18,7 +18,6 @@ import {
   stripesShape,
 } from '@folio/stripes/core';
 
-import ScanTotal from '../ScanTotal';
 import ErrorModal from '../ErrorModal';
 import OverrideModal from '../OverrideModal';
 
@@ -126,7 +125,6 @@ class ItemForm extends React.Component {
   render() {
     const {
       submitting,
-      patron,
       stripes,
       item,
       onOverride,
@@ -166,23 +164,12 @@ class ItemForm extends React.Component {
               <Button
                 id="clickable-add-item"
                 type="submit"
-                buttonStyle="primary"
+                buttonStyle="default"
                 disabled={submitting}
               >
                 <FormattedMessage id="ui-checkout.enter" />
               </Button>
             </Col>
-            {
-              !isEmpty(patron) &&
-              <Col xs={6}>
-                <Row end="xs">
-                  <ScanTotal
-                    buttonId="clickable-done"
-                    {...this.props}
-                  />
-                </Row>
-              </Col>
-            }
           </Row>
         </form>
         {

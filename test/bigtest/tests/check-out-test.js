@@ -31,6 +31,19 @@ describe('CheckOut', () => {
           Patron look-up
         </Button>
       ),
+    },
+    {
+      type: 'plugin',
+      name: '@folio/plugin-create-inventory-records',
+      pluginType: 'create-inventory-records',
+      module: () => (
+        <Button
+          id="clickable-create-inventory-records"
+          buttonStyle="default"
+        >
+          New fast add record
+        </Button>
+      ),
     }],
   });
 
@@ -52,6 +65,10 @@ describe('CheckOut', () => {
 
   it('has an enter button for patron lookup', () => {
     expect(checkOut.patronEnterBtnPresent).to.be.true;
+  });
+
+  it('has a button for New fast add record', () => {
+    expect(checkOut.createInventoryEnterBtnPresent).to.be.true;
   });
 
   describe('entering a patron barcode', () => {

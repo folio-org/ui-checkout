@@ -31,7 +31,7 @@ class ScanTotal extends React.Component {
         <div>
           <Button
             id={buttonId}
-            buttonStyle="primary"
+            buttonStyle="primary mega"
             onClick={onSessionEnd}
           >
             <FormattedMessage id="ui-checkout.end.session" />

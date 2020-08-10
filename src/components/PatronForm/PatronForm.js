@@ -165,7 +165,7 @@ class PatronForm extends React.Component {
             <Button
               id="clickable-find-patron"
               type="submit"
-              buttonStyle="primary"
+              buttonStyle="default"
               disabled={submitting}
             >
               <FormattedMessage id="ui-checkout.enter" />

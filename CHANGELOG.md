@@ -12,6 +12,7 @@
 * Refactor from `bigtest/mirage` to `miragejs`.
 * Increase test coverage for automated patron blocks. Refs UICHKOUT-531.
 * Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
+* Create access to New fast add record template from Check out screen. Refs UICHKOUT-628.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
