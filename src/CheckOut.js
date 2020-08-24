@@ -497,7 +497,11 @@ class CheckOut extends React.Component {
 
     if (!isEmpty(selPatron)) {
       patron = selPatron;
-      proxy = patrons[0];
+
+      // configure a proxy user ONLY if the patron and selected patron differ.
+      // if those values match, the patron _has_ a proxy but is acting as self
+      // and therefore proxy shouldn't come into play here.
+      proxy = (patrons[0].id !== patron.id) ? patrons[0] : {};
     }
 
     return (
