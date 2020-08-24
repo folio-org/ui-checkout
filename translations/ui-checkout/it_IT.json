@@ -104,10 +104,10 @@
     "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
     "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "Check out: All permissions",
-    "proxy.expiration": "Proxy expiration",
-    "due.date": "Due date",
-    "user.expiration": "User expiration",
-    "end.session": "End session",
-    "patron.identifier": "Patron identifier",
-    "checkout.notes": "Check out notes"
+    "proxy.expiration": "Scadenza proxy",
+    "due.date": "Data di scadenza",
+    "user.expiration": "Scadenza prenotazione",
+    "end.session": "Fine sessione",
+    "patron.identifier": "Identificatore dell'utente",
+    "checkout.notes": "Note per il prestito"
 }
