@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Added permission checking to fast add button. Fixes UICHKOUT-646
 * refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2

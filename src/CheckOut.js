@@ -15,7 +15,7 @@ import {
   Pane,
   Paneset,
 } from '@folio/stripes/components';
-import { Pluggable } from '@folio/stripes/core';
+import { Pluggable, IfPermission } from '@folio/stripes/core';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
@@ -541,11 +541,13 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Pluggable
-                aria-haspopup="true"
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-              />
+              <IfPermission perm="module.ui-plugin-create-inventory-records.enabled">
+                <Pluggable
+                  aria-haspopup="true"
+                  type="create-inventory-records"
+                  id="clickable-create-inventory-records"
+                />
+              </IfPermission>
             }
           >
             <this.connectedScanItems
