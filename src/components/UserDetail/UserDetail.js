@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  FormattedDate,
   FormattedMessage,
 } from 'react-intl';
 
@@ -16,6 +15,7 @@ import {
   Col,
   KeyValue,
   Row,
+  FormattedDate,
 } from '@folio/stripes/components';
 
 import { getFullName } from '../../util';
