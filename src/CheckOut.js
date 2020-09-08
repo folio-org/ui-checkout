@@ -600,7 +600,7 @@ class CheckOut extends React.Component {
             />
           </Pane>
         </Paneset>
-        {patrons.length > 0 &&
+        {patrons.length > 0 && !showNewFastAddModal &&
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
