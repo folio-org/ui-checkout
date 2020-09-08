@@ -14,6 +14,7 @@ import {
   Icon,
   Pane,
   Paneset,
+  Button,
 } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
 
@@ -205,7 +206,6 @@ class CheckOut extends React.Component {
     this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
-    this.state = { loading: false, blocked: false };
     this.patronFormInputRef = React.createRef();
     this.patronFormRef = React.createRef();
     this.itemFormRef = React.createRef();
@@ -213,6 +213,9 @@ class CheckOut extends React.Component {
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = {
       submitting: false,
+      loading: false,
+      blocked: false,
+      showNewFastAddModal: false,
     };
   }
 
@@ -479,6 +482,12 @@ class CheckOut extends React.Component {
     this.props.history.push(viewUserPath);
   }
 
+  toggleNewFastAddModal = () => {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
   render() {
     const {
       resources,
@@ -500,7 +509,12 @@ class CheckOut extends React.Component {
     const patronBlocks = concat(automatedPatronBlocks, manualPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
-    const { loading, blocked, requestsCount } = this.state;
+    const {
+      loading,
+      blocked,
+      requestsCount,
+      showNewFastAddModal,
+    } = this.state;
 
     let patron = patrons[0];
     let proxy = {};
@@ -560,11 +574,13 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Pluggable
-                aria-haspopup="true"
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-              />
+              <Button
+                data-test-add-inventory-records
+                marginBottom0
+                onClick={this.toggleNewFastAddModal}
+              >
+                <FormattedMessage id="ui-checkout.fastAddLabel" />
+              </Button>
             }
           >
             <this.connectedScanItems
@@ -607,6 +623,13 @@ class CheckOut extends React.Component {
             />
           }
           label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
+        />
+        <Pluggable
+          buttonVisible={false}
+          open={showNewFastAddModal}
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
         />
       </div>
     );

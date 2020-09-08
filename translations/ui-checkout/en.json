@@ -101,5 +101,7 @@
 
   "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
   "permission.circulation": "Check out: Check out circulating items",
-  "permission.all": "Check out: All permissions"
+  "permission.all": "Check out: All permissions",
+
+  "fastAddLabel": "New fast add record"
 }
