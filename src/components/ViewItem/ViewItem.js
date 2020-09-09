@@ -9,7 +9,7 @@ import {
   Button,
   Dropdown,
   DropdownMenu,
-  Icon,
+  IconButton,
   MultiColumnList,
   Tooltip,
 } from '@folio/stripes/components';
@@ -180,25 +180,25 @@ class ViewItem extends React.Component {
     const isCheckOutNote = element => element.noteType === 'Check out';
     const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
 
-    const trigger = ({ getTriggerProps, triggerRef }) => {
-      return (
-        <>
-          <Button
+    const trigger = ({ getTriggerProps, triggerRef }) => (
+      <Tooltip
+        id="checkout-actions-tooltip"
+        text={<FormattedMessage id="ui-checkout.actions.moreDetails" />}
+        triggerRef={triggerRef}
+        placement="top"
+      >
+        {({ ref, ariaIds }) => (
+          <IconButton
             {...getTriggerProps()}
-            buttonStyle="hover dropdownActive"
-            aria-labelledby="checkout-actions-tooltip-text"
+            aria-labelledby={ariaIds.text}
             id="available-item-actions-button"
-          >
-            <Icon icon="ellipsis" size="large" />
-          </Button>
-          <Tooltip
-            id="checkout-actions-tooltip"
-            text={<FormattedMessage id="ui-checkout.actions.moreDetails" />}
-            triggerRef={triggerRef}
+            icon="ellipsis"
+            size="medium"
+            ref={ref}
           />
-        </>
-      );
-    };
+        )}
+      </Tooltip>
+    );
 
     const menu = ({ onToggle }) => {
       return (
