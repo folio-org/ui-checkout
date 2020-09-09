@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* upgraded some dependencies and tweaked some testing settings.  Addresses UICHKOUT-643
 * refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2
