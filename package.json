@@ -105,7 +105,7 @@
     "react-dom": "^16.5.0",
     "react-intl": "^4.7.2",
     "react-redux": "^5.0.7",
-    "react-router-dom": "^4.0.0",
+    "react-router-dom": "^5.2.0",
     "redux": "^4.0.0",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.2.2"
@@ -128,7 +128,7 @@
     "react-router-dom": "^5.2.0"
   },
   "optionalDependencies": {
-    "@folio/plugin-find-user": "^3.0.0",
+    "@folio/plugin-find-user": "^4.0.0",
     "@folio/plugin-create-inventory-records": "^1.0.0"
   },
   "resolutions": {
