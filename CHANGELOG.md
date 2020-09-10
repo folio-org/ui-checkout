@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* upgraded some dependencies and tweaked some testing settings.  Addresses UICHKOUT-643
 * refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
 * Updated React-intl dependency to 4.7.2
@@ -14,6 +15,7 @@
 * Increment `@folio/stripes` to `v5`, `react-router` to `v5.2`.
 * Create access to New fast add record template from Check out screen. Refs UICHKOUT-628.
 * Do not send proxy info when patron has a proxy but is acting as self. Fixes UICHKOUT-644.
+* Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-650.
 * Handle malformed timestamps. Refs UICHKOUT-649.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)

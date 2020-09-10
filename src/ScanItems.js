@@ -204,7 +204,9 @@ class ScanItems extends React.Component {
       userBarcode: patron.barcode,
       servicePointId,
     };
-    if (proxy?.barcode) {
+
+    // only include the proxy barcode if it differs from the patron barcode
+    if (proxy?.barcode && proxy.barcode !== patron.barcode) {
       data.proxyUserBarcode = proxy.barcode;
     }
     return data;

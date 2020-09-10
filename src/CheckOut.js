@@ -14,6 +14,7 @@ import {
   Icon,
   Pane,
   Paneset,
+  Button,
 } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
 
@@ -36,8 +37,17 @@ import {
 } from './util';
 import css from './CheckOut.css';
 
+/**
+ * Check out items to patrons. Patrons may be proxies for others (i.e. patrons
+ * may have sponsors and the items will be checked out to the sponsor, not the
+ * proxy).
+ */
 class CheckOut extends React.Component {
   static manifest = Object.freeze({
+    // the "selected patron", i.e. the one chosen from the select-a-patron
+    // modal when the original patron has a sponsor and therefore may be
+    // checking out as the sponsor (selPatron and patron are different) or
+    // checkout out as self (selPatron and patron are the same)
     selPatron: { initialValue: {} },
     query: { initialValue: {} },
     scannedItems: { initialValue: [] },
@@ -196,7 +206,6 @@ class CheckOut extends React.Component {
     this.onPatronLookup = this.onPatronLookup.bind(this);
     this.selectPatron = this.selectPatron.bind(this);
     this.clearResources = this.clearResources.bind(this);
-    this.state = { loading: false, blocked: false };
     this.patronFormInputRef = React.createRef();
     this.patronFormRef = React.createRef();
     this.itemFormRef = React.createRef();
@@ -204,6 +213,9 @@ class CheckOut extends React.Component {
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
     this.state = {
       submitting: false,
+      loading: false,
+      blocked: false,
+      showNewFastAddModal: false,
     };
   }
 
@@ -232,21 +244,21 @@ class CheckOut extends React.Component {
     const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
     const automatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
     const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
-    const prevExpirated = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
-    const expirated = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
-    if ((prevExpirated.length > 0 && expirated.length === 0) || !isEmpty(automatedPatronBlocks)) {
+    if ((prevExpired.length > 0 && expired.length === 0) || !isEmpty(automatedPatronBlocks)) {
       if (submitting) {
         // eslint-disable-next-line react/no-did-update-set-state
         this.setState({ submitting: false });
       }
     }
 
-    if ((expirated.length > 0 && !submitting) && isEmpty(automatedPatronBlocks)) {
+    if ((expired.length > 0 && !submitting) && isEmpty(automatedPatronBlocks)) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ submitting: true });
 
-      expirated.forEach(p => {
+      expired.forEach(p => {
         mutator.activeRecord.update({ blockId: p.id });
         mutator.manualPatronBlocks.DELETE({ id: p.id });
       });
@@ -470,6 +482,12 @@ class CheckOut extends React.Component {
     this.props.history.push(viewUserPath);
   }
 
+  toggleNewFastAddModal = () => {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
   render() {
     const {
       resources,
@@ -491,17 +509,32 @@ class CheckOut extends React.Component {
     const patronBlocks = concat(automatedPatronBlocks, manualPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
-    const { loading, blocked, requestsCount } = this.state;
-    let patron = patrons[0];
-    let proxy = selPatron;
+    const {
+      loading,
+      blocked,
+      requestsCount,
+      showNewFastAddModal,
+    } = this.state;
 
+    let patron = patrons[0];
+    let proxy = {};
+
+    // handling for users with sponsors: if we have a selected-patron
+    // (i.e. the borrower chosen in the ProxyManager dialog), then
+    // patron (borrower) should receive the selected user and the
+    // proxy should receive the original patron. Note that this means
+    // patron and proxy may be assigned the same value (i.e. when a patron
+    // has sponsors but is acting-as-self).
+    //
+    // This is necessary for ViewPatron (and its subsidiary ProxyManager)
+    // because ProxyManager will prompt to select a user if its proxy prop
+    // is empty. Huh? You might think that when a patron is acting-as-self
+    // then proxy should be empty, but instead proxy must match patron.
+    // Otherwise, navigating away from checkout and back will cause
+    // ProxyManager to re-display its prompt.
     if (!isEmpty(selPatron)) {
       patron = selPatron;
-
-      // configure a proxy user ONLY if the patron and selected patron differ.
-      // if those values match, the patron _has_ a proxy but is acting as self
-      // and therefore proxy shouldn't come into play here.
-      proxy = (patrons[0].id !== patron.id) ? patrons[0] : {};
+      proxy = patrons[0];
     }
 
     return (
@@ -541,11 +574,13 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Pluggable
-                aria-haspopup="true"
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-              />
+              <Button
+                data-test-add-inventory-records
+                marginBottom0
+                onClick={this.toggleNewFastAddModal}
+              >
+                <FormattedMessage id="ui-checkout.fastAddLabel" />
+              </Button>
             }
           >
             <this.connectedScanItems
@@ -565,7 +600,7 @@ class CheckOut extends React.Component {
             />
           </Pane>
         </Paneset>
-        {patrons.length > 0 &&
+        {patrons.length > 0 && !showNewFastAddModal &&
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
@@ -588,6 +623,13 @@ class CheckOut extends React.Component {
             />
           }
           label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
+        />
+        <Pluggable
+          buttonVisible={false}
+          open={showNewFastAddModal}
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+          onClose={this.toggleNewFastAddModal}
         />
       </div>
     );

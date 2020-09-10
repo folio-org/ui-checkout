@@ -110,7 +110,10 @@ export default function config() {
     if (request.queryParams.query) {
       return requests.all();
     } else {
-      return [];
+      return {
+        'requests' : [],
+        'totalRecords' : 0
+      };
     }
   });
 
