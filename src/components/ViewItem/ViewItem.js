@@ -28,12 +28,12 @@ const sortMap = {
 const visibleColumns = ['no', 'Barcode', 'title', 'loanPolicy', 'dueDate', 'Time', ' '];
 
 const columnWidths = {
-  'Barcode': 140,
-  'title': 180,
-  'loanPolicy': 150,
-  'dueDate': 90,
-  'Time': 75,
-  ' ': 75,
+  'Barcode': { max: 140 },
+  'title': { max: 180 },
+  'loanPolicy': { max: 150 },
+  'dueDate': { max: 90 },
+  'Time': { max: 75 },
+  ' ': { max: 75 },
 };
 
 class ViewItem extends React.Component {
@@ -317,6 +317,7 @@ class ViewItem extends React.Component {
     return (
       <>
         <MultiColumnList
+          key={contentData.length}
           id="list-items-checked-out"
           visibleColumns={visibleColumns}
           columnMapping={this.columnMapping}
