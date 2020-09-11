@@ -18,6 +18,7 @@
 * Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-650.
 * Handle malformed timestamps. Refs UICHKOUT-649.
 * Increment `react-intl` to `v5` as part of the `@folio/stripes` `v5` update. Refs STRIPES-694.
+* Clean up imports for react-router v5.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)
