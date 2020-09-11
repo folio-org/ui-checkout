@@ -16,6 +16,7 @@
 * Create access to New fast add record template from Check out screen. Refs UICHKOUT-628.
 * Do not send proxy info when patron has a proxy but is acting as self. Fixes UICHKOUT-644.
 * Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-650.
+* Handle malformed timestamps. Refs UICHKOUT-649.
 
 ## [4.0.1](https://github.com/folio-org/ui-checkout/tree/v4.0.1) (2020-06-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.0...v4.0.1)

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
-import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
@@ -12,6 +12,8 @@ import {
   Icon,
   MultiColumnList,
   Tooltip,
+  FormattedDate,
+  FormattedTime,
 } from '@folio/stripes/components';
 
 const sortMap = {

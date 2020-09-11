@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
-  FormattedDate,
-  FormattedTime,
   injectIntl,
 } from 'react-intl';
-import { ConfirmationModal } from '@folio/stripes/components';
+import {
+  ConfirmationModal,
+  FormattedDate,
+  FormattedTime,
+} from '@folio/stripes/components';
 
 import CheckoutNoteModal from './components/CheckoutNoteModal';
 import MultipieceModal from './components/MultipieceModal';
