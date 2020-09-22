@@ -109,5 +109,6 @@
     "user.expiration": "Date d'échéance de l'utilisateur",
     "end.session": "Fermer la session",
     "patron.identifier": "Identifiant Utilisateur",
-    "checkout.notes": "Commentaires liés à l'emprunt"
+    "checkout.notes": "Commentaires liés à l'emprunt",
+    "actions.moreDetails": "Get more details about this item"
 }

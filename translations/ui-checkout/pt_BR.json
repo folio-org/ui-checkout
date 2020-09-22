@@ -109,5 +109,6 @@
     "user.expiration": "Validade do usuário",
     "end.session": "Encerrar sessão",
     "patron.identifier": "Identificador de usuário",
-    "checkout.notes": "Notas de empréstimo"
+    "checkout.notes": "Notas de empréstimo",
+    "actions.moreDetails": "Obtenha mais detalhes sobre este item"
 }
