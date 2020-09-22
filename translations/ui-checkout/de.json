@@ -109,5 +109,6 @@
     "user.expiration": "User expiration",
     "end.session": "End session",
     "patron.identifier": "Patron identifier",
-    "checkout.notes": "Check out notes"
+    "checkout.notes": "Check out notes",
+    "actions.moreDetails": "Get more details about this item"
 }

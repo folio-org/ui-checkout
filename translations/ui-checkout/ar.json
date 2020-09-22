@@ -109,5 +109,6 @@
     "user.expiration": "انتهاء صلاحية المستخدم",
     "end.session": "إنهاء الجلسة",
     "patron.identifier": "معرّف المستفيد",
-    "checkout.notes": "ملاحظات الإعارة"
+    "checkout.notes": "ملاحظات الإعارة",
+    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة"
 }

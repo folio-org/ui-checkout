@@ -109,5 +109,6 @@
     "user.expiration": "Scadenza prenotazione",
     "end.session": "Fine sessione",
     "patron.identifier": "Identificatore dell'utente",
-    "checkout.notes": "Note per il prestito"
+    "checkout.notes": "Note per il prestito",
+    "actions.moreDetails": "Get more details about this item"
 }
