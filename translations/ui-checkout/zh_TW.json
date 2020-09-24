@@ -81,7 +81,7 @@
     "checkoutNotes": "借出附註",
     "checkoutNotes.heading": "借出附注",
     "checkoutNotes.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count} </strong> {count, plural, one { note } other { notes }}",
-    "messages.itemIsNotLoanable": "根据<strong>非流通</strong>借阅政策，<strong> {title} {materialType} </strong> （条码： {barcode} ）不是<strong>可借阅的</strong>。",
+    "messages.itemIsNotLoanable": "根据<strong>{loanPolicy}</strong>借阅政策，<strong> {title} {materialType} </strong> （条码： {barcode} ）不是<strong>可借阅的</strong>。",
     "cddd.date": "日期",
     "cddd.time": "时间",
     "comment": "备注",
