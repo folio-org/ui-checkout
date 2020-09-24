@@ -16,7 +16,10 @@ import {
   Paneset,
   Button,
 } from '@folio/stripes/components';
-import { Pluggable } from '@folio/stripes/core';
+import {
+  IfPermission,
+  Pluggable,
+} from '@folio/stripes/core';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
@@ -488,6 +491,7 @@ class CheckOut extends React.Component {
     });
   }
 
+
   render() {
     const {
       resources,
@@ -574,13 +578,15 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Button
-                data-test-add-inventory-records
-                marginBottom0
-                onClick={this.toggleNewFastAddModal}
-              >
-                <FormattedMessage id="ui-checkout.fastAddLabel" />
-              </Button>
+              <IfPermission perm="ui-plugin-create-inventory-records.create">
+                <Button
+                  data-test-add-inventory-records
+                  marginBottom0
+                  onClick={this.toggleNewFastAddModal}
+                >
+                  <FormattedMessage id="ui-checkout.fastAddLabel" />
+                </Button>
+              </IfPermission>
             }
           >
             <this.connectedScanItems

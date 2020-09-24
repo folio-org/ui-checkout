@@ -2,6 +2,7 @@
 
 ## 5.0.0 (IN PROGRESS)
 
+* Added permission checking to fast-add button.  Addresses UICHKOUT-646
 * upgraded some dependencies and tweaked some testing settings.  Addresses UICHKOUT-643
 * refactor of code fix for UICHKOUT-633
 * Checkout barcode CQL injection.  Fixes UICHKOUT-633.
