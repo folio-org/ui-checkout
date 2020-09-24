@@ -16,7 +16,10 @@ import {
   Paneset,
   Button,
 } from '@folio/stripes/components';
-import { IfPermission, Pluggable } from '@folio/stripes/core';
+import {
+  IfPermission,
+  Pluggable,
+} from '@folio/stripes/core';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
