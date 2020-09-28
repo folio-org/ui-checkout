@@ -110,5 +110,5 @@
     "end.session": "结束会话",
     "patron.identifier": "读者标识符",
     "checkout.notes": "借出附注",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "获取此单件的更多详情"
 }
