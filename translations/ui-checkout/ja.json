@@ -16,7 +16,7 @@
     "borrowerProxy": "Borrower's proxy",
     "borrower": "Borrower",
     "noItemsEntered": "まだ項目が入力されていません。",
-    "numberAbbreviation": "いいえ。",
+    "numberAbbreviation": "番号",
     "loanPolicy": "貸出ポリシー",
     "dueDate": "期日",
     "patronGroup": "利用者グループ",
