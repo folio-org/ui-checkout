@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 5.0.0 (IN PROGRESS)
+## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)
 
 * Added permission checking to fast-add button.  Addresses UICHKOUT-646
 * upgraded some dependencies and tweaked some testing settings.  Addresses UICHKOUT-643
