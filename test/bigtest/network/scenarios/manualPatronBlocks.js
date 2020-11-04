@@ -1,3 +1,4 @@
+import faker from 'faker';
 import { manualBlockMessage } from '../../constants';
 
 export default function patronBlocks(server) {
@@ -9,7 +10,7 @@ export default function patronBlocks(server) {
         'desc': manualBlockMessage,
         'staffInformation': 'Last 3 have bounced back and the letter we sent was returned to us.',
         'patronMessage': 'Please contact the Main Library to update your contact information.',
-        'expirationDate': '2020-10-23T00:00:00Z',
+        'expirationDate': faker.date.future().toISOString(),
         'borrowing': true,
         'renewals': true,
         'requests': true,
