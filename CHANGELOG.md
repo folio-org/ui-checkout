@@ -3,6 +3,7 @@
 ## 5.0.1 IN PROGRESS
 
 * Do not use hard-coded dates in unit tests. Refs UICHKOUT-668.
+* Make room for `<Datepicker>` in the loan-policy override modal. Refs UICHKOUT-666.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)
