@@ -97,40 +97,45 @@ class UserDetail extends React.Component {
       renderLoans,
       resources,
       user,
+      stripes,
     } = this.props;
 
     if (!renderLoans) return null;
 
     const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
     const openLoansPath = `/users/${user.id}/loans/open`;
-    const openLoansLink = <Link to={openLoansPath}>{openLoansCount}</Link>;
     const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
     const openAccounts = get(resources, ['openAccounts', 'records'], []);
     const openAccountsPath = `/users/view/${user.id}?layer=open-accounts&filters=pg.${patronGroups}`;
     const owedAmount = openAccounts.reduce((owed, { remaining }) => {
       return owed + parseFloat(remaining);
     }, 0);
-    let openAccountsLink = parseFloat(owedAmount).toFixed(2);
-    if (owedAmount) {
-      openAccountsLink = <Link to={openAccountsPath}>{openAccountsLink}</Link>;
+    let openAccountsCount = parseFloat(owedAmount).toFixed(2);
+    if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
+      openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
     }
+    const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans') ?
+      <Link to={openLoansPath}>{openLoansCount}</Link> : openLoansCount;
 
     return (
       <div className={css.section}>
         <Row>
           <Col xs={4}>
+            22222
             <KeyValue
               label={<FormattedMessage id="ui-checkout.openLoans" />}
               value={openLoansLink}
             />
           </Col>
           <Col xs={4}>
+          user.expiration
             <KeyValue
               label={<FormattedMessage id="ui-checkout.openAccounts" />}
-              value={openAccountsLink}
+              value={openAccountsCount}
             />
           </Col>
           <Col xs={4}>
+            33333
             <KeyValue
               label={<FormattedMessage id="ui-checkout.openRequests" />}
               value={this.renderOpenRequests()}
@@ -162,15 +167,17 @@ class UserDetail extends React.Component {
       .join(',');
 
     const openRequestsPath = `/requests?query=${user.barcode}&filters=${openRequestStatuses}&sort=Request date`;
-
-    return (
-      <Link
-        data-test-open-requests-count
-        to={openRequestsPath}
-      >
-        {openRequestsCount}
-      </Link>
-    );
+    if (stripes.hasPerm('ui-checkout.viewRequests')) {
+      return (
+        <Link
+          data-test-open-requests-count
+          to={openRequestsPath}
+        >
+          {openRequestsCount}
+        </Link>
+      );
+    }
+    return openRequestsCount;
   }
 
   render() {

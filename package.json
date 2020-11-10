@@ -73,7 +73,10 @@
         "visible": true,
         "subPermissions": [
           "ui-checkout.circulation",
-          "ui-checkout.overrideCheckOutByBarcode"
+          "ui-checkout.overrideCheckOutByBarcode",
+          "ui-checkout.viewLoans",
+          "ui-checkout.viewFeeFines",
+          "ui-checkout.viewRequests"
         ]
       }
     ]
