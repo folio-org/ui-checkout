@@ -20,6 +20,7 @@ import {
 
 import { getFullName } from '../../util';
 import userPlaceholder from '../../../icons/user-placeholder.png';
+import Loans from './Loans';
 
 import css from './UserDetail.css';
 
@@ -92,94 +93,6 @@ class UserDetail extends React.Component {
     );
   };
 
-  renderLoans() {
-    const {
-      renderLoans,
-      resources,
-      user,
-      stripes,
-    } = this.props;
-
-    if (!renderLoans) return null;
-
-    const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
-    const openLoansPath = `/users/${user.id}/loans/open`;
-    const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
-    const openAccounts = get(resources, ['openAccounts', 'records'], []);
-    const openAccountsPath = `/users/view/${user.id}?layer=open-accounts&filters=pg.${patronGroups}`;
-    const owedAmount = openAccounts.reduce((owed, { remaining }) => {
-      return owed + parseFloat(remaining);
-    }, 0);
-    let openAccountsCount = parseFloat(owedAmount).toFixed(2);
-    if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
-      openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
-    }
-    const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans') ?
-      <Link to={openLoansPath}>{openLoansCount}</Link> : openLoansCount;
-
-    return (
-      <div className={css.section}>
-        <Row>
-          <Col xs={4}>
-            22222
-            <KeyValue
-              label={<FormattedMessage id="ui-checkout.openLoans" />}
-              value={openLoansLink}
-            />
-          </Col>
-          <Col xs={4}>
-          user.expiration
-            <KeyValue
-              label={<FormattedMessage id="ui-checkout.openAccounts" />}
-              value={openAccountsCount}
-            />
-          </Col>
-          <Col xs={4}>
-            33333
-            <KeyValue
-              label={<FormattedMessage id="ui-checkout.openRequests" />}
-              value={this.renderOpenRequests()}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-
-  renderOpenRequests() {
-    const {
-      resources,
-      stripes,
-      user,
-    } = this.props;
-
-    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return '-';
-
-    const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
-
-    const openRequestStatuses = [
-      'Open - Not yet filled',
-      'Open - Awaiting pickup',
-      'Open - In transit',
-      'Open - Awaiting delivery',
-    ]
-      .map(status => `requestStatus.${status}`)
-      .join(',');
-
-    const openRequestsPath = `/requests?query=${user.barcode}&filters=${openRequestStatuses}&sort=Request date`;
-    if (stripes.hasPerm('ui-checkout.viewRequests')) {
-      return (
-        <Link
-          data-test-open-requests-count
-          to={openRequestsPath}
-        >
-          {openRequestsCount}
-        </Link>
-      );
-    }
-    return openRequestsCount;
-  }
-
   render() {
     const {
       id,
@@ -187,6 +100,8 @@ class UserDetail extends React.Component {
       resources,
       label,
       settings,
+      renderLoans,
+      stripes,
     } = this.props;
 
     const patronGroups = (resources.patronGroups || {}).records || [];
@@ -238,7 +153,13 @@ class UserDetail extends React.Component {
           </Row>
         </div>
 
-        {this.renderLoans()}
+        {renderLoans && (
+          <Loans
+            resources={resources}
+            stripes={stripes}
+            user={user}
+          />
+        )}
       </div>
     );
   }
