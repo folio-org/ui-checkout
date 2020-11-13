@@ -77,7 +77,6 @@ function Loans({
           />
         </Col>
         <Col xs={4}>
-        user.expiration
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openAccounts" />}
             value={openAccountsCount}
