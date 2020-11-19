@@ -110,5 +110,8 @@
     "end.session": "세션 종료",
     "patron.identifier": "이용자 식별자",
     "checkout.notes": "대출 노트",
-    "actions.moreDetails": "이 항목에 대한 자세한 내용보기"
+    "actions.moreDetails": "이 항목에 대한 자세한 내용보기",
+    "permission.viewLoans": "Check out: View loans",
+    "permission.viewFeeFines": "Check out: View fees/fines",
+    "permission.viewRequests": "Check out: View requests"
 }
