@@ -110,5 +110,8 @@
     "end.session": "إنهاء الجلسة",
     "patron.identifier": "معرّف المستفيد",
     "checkout.notes": "ملاحظات الإعارة",
-    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة"
+    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
+    "permission.viewLoans": "الإعارة: اعرض الإعارات",
+    "permission.viewFeeFines": "الإعارة: اعرض الرسوم/الغرامات",
+    "permission.viewRequests": "الإعارة: اعرض الطلبات"
 }

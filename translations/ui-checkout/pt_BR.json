@@ -110,5 +110,8 @@
     "end.session": "Encerrar sessão",
     "patron.identifier": "Identificador de usuário",
     "checkout.notes": "Notas de empréstimo",
-    "actions.moreDetails": "Obtenha mais detalhes sobre este item"
+    "actions.moreDetails": "Obtenha mais detalhes sobre este item",
+    "permission.viewLoans": "Empréstimos: Ver empréstimos",
+    "permission.viewFeeFines": "Empréstimos: Ver taxas/multas",
+    "permission.viewRequests": "Empréstimos: Ver requisições"
 }

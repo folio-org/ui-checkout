@@ -110,5 +110,8 @@
     "end.session": "Fermer la session",
     "patron.identifier": "Identifiant Utilisateur",
     "checkout.notes": "Commentaires liés à l'emprunt",
-    "actions.moreDetails": "Obtenez plus de détails sur cet article"
+    "actions.moreDetails": "Obtenez plus de détails sur cet article",
+    "permission.viewLoans": "Check out: View loans",
+    "permission.viewFeeFines": "Check out: View fees/fines",
+    "permission.viewRequests": "Check out: View requests"
 }

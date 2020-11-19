@@ -110,5 +110,8 @@
     "end.session": "End session",
     "patron.identifier": "Patron identifier",
     "checkout.notes": "Check out notes",
-    "actions.moreDetails": "Get more details about this item"
+    "actions.moreDetails": "Get more details about this item",
+    "permission.viewLoans": "Check out: View loans",
+    "permission.viewFeeFines": "Check out: View fees/fines",
+    "permission.viewRequests": "Check out: View requests"
 }
