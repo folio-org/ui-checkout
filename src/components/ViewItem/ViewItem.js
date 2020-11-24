@@ -25,14 +25,14 @@ const sortMap = {
   time: loan => moment(loan.dueDate).format('hh:mm a'),
 };
 
-const visibleColumns = ['no', 'Barcode', 'title', 'loanPolicy', 'dueDate', 'Time', ' '];
+const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', ' '];
 
 const columnWidths = {
-  'Barcode': { max: 140 },
+  'barcode': { max: 140 },
   'title': { max: 180 },
   'loanPolicy': { max: 150 },
   'dueDate': { max: 90 },
-  'Time': { max: 75 },
+  'time': { max: 75 },
   ' ': { max: 75 },
 };
 
@@ -63,24 +63,26 @@ class ViewItem extends React.Component {
     };
 
     this.columnMapping = {
-      no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
-      title: <FormattedMessage id="ui-checkout.title" />,
-      loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
+      barcode: <FormattedMessage id="ui-checkout.header.barcode" />,
       dueDate: <FormattedMessage id="ui-checkout.due.date" />,
       loanDate: <FormattedMessage id="ui-checkout.time" />,
+      loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
+      no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
+      time: <FormattedMessage id="ui-checkout.time" />,
+      title: <FormattedMessage id="ui-checkout.title" />,
     };
   }
 
   onSort(e, meta) {
-    if (!sortMap[meta.alias]) return;
+    if (!sortMap[meta.name]) return;
 
     let {
       sortOrder,
       sortDirection,
     } = this.state;
 
-    if (sortOrder[0] !== meta.alias) {
-      sortOrder = [meta.alias, sortOrder[0]];
+    if (sortOrder[0] !== meta.name) {
+      sortOrder = [meta.name, sortOrder[0]];
       sortDirection = ['asc', sortDirection[0]];
     } else {
       const direction = (sortDirection[0] === 'desc') ? 'asc' : 'desc';
@@ -94,9 +96,9 @@ class ViewItem extends React.Component {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
       'loanPolicy': loan => (<div data-test-item-loan-policy>{_.get(loan, ['loanPolicy', 'name'])}</div>),
-      'Barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
+      'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => (<div data-test-item-due-date><FormattedDate value={loan.dueDate} /></div>),
-      'Time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
+      'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
       ' ': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }
