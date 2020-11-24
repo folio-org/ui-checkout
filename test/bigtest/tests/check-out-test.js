@@ -396,13 +396,13 @@ describe('CheckOut', () => {
 
     beforeEach(async function () {
       user = this.server.create('user');
+      items = this.server.createList('item', itemsAmount, 'withLoan');
 
       await checkOut
         .fillPatronBarcode(user.barcode.toString())
         .clickPatronBtn()
         .whenUserIsLoaded();
 
-      items = this.server.createList('item', 2, 'withLoan');
 
       for (const [index, item] of items.entries()) {
         // eslint-disable-next-line no-await-in-loop
@@ -468,23 +468,38 @@ describe('CheckOut', () => {
       expect(checkOut.itemsCount).to.equal(3);
     });
 
-    // it('shows the first item first before sort', () => {
-    //   expect(checkOut.items(0).title.text).to.equal('B');
-    // });
+    it('shows the first item first before sort', () => {
+      expect(checkOut.items(0).title.text).to.equal('B');
+    });
 
-    // TODO: this test should be re-enabled once UICHKOUT-513 is fixed
-    // describe('clicking a header to sort', () => {
-    //   beforeEach(async function () {
-    //     const titleHeader = checkOut.itemList.headers(titleColumnIndex);
-    //     await titleHeader.click().whenListIsSorted(titleColumnIndex);
-    //   });
+    describe('clicking a header to sort', () => {
+      const titleColumnIndex = 2;
+      beforeEach(async function () {
+        const titleHeader = checkOut.itemList.headers(titleColumnIndex);
+        await titleHeader.click();
+      });
 
-    //   it('sorts the list of items alphabetically', () => {
-    //     expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
-    //     expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
-    //     expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
-    //   });
-    // });
+      it('sorts the list of items alphabetically, ascending', () => {
+        expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
+        expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('A');
+        expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('C');
+      });
+    });
+
+    describe('clicking a header twice to reverse sort, descending', () => {
+      const titleColumnIndex = 2;
+      beforeEach(async function () {
+        const titleHeader = checkOut.itemList.headers(titleColumnIndex);
+        await titleHeader.click();
+        await titleHeader.click();
+      });
+
+      it('sorts the list of items alphabetically', () => {
+        expect(checkOut.itemList.headers(titleColumnIndex).isSortHeader).to.be.true;
+        expect(checkOut.itemList.rows(0).cells(titleColumnIndex).content).to.equal('C');
+        expect(checkOut.itemList.rows(2).cells(titleColumnIndex).content).to.equal('A');
+      });
+    });
   });
 
   describe('asks for confirmation before checking out items with special status', () => {

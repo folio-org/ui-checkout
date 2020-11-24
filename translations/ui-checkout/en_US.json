@@ -18,7 +18,7 @@
     "noItemsEntered": "No items have been entered yet",
     "numberAbbreviation": "No.",
     "loanPolicy": "Loan policy",
-    "dueDate": "Due Date",
+    "header.barcode": "Barcode",
     "patronGroup": "Patron Group",
     "active": "Active",
     "inactive": "Inactive",
