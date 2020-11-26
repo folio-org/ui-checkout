@@ -100,7 +100,7 @@
     "confirmStatusModal.heading.withdrawn": "إعارة المادة المسحوبة؟",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف.",
-    "confirmStatusModal.heading.lostAndPaid": "إعارة المواد المفقودة والمدفوعة؟",
+    "confirmStatusModal.heading.lostAndPaid": "إعارة المواد الضائعة والمدفوعة؟",
     "permission.overrideCheckOutByBarcode": "الإعارة: تخطى سياسة الأعارة عند الإعارة بواسطة الباركود",
     "permission.circulation": "الإعارة: أعر مواد الإعارة",
     "permission.all": "الإعارة: كل الصلاحيات",
@@ -110,5 +110,8 @@
     "end.session": "إنهاء الجلسة",
     "patron.identifier": "معرّف المستفيد",
     "checkout.notes": "ملاحظات الإعارة",
-    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة"
+    "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
+    "permission.viewLoans": "الإعارة: اعرض الإعارات",
+    "permission.viewFeeFines": "الإعارة: اعرض الرسوم/الغرامات",
+    "permission.viewRequests": "الإعارة: اعرض الطلبات"
 }

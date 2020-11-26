@@ -75,6 +75,24 @@
           "ui-checkout.circulation",
           "ui-checkout.overrideCheckOutByBarcode"
         ]
+      },
+      {
+        "permissionName": "ui-checkout.viewLoans",
+        "displayName": "Check out: View loans",
+        "description": "Entire set of permissions needed to view loans",
+        "visible": true
+      },
+      {
+        "permissionName": "ui-checkout.viewFeeFines",
+        "displayName": "Check out: View fees/fines",
+        "description": "Entire set of permissions needed to view fees/fines",
+        "visible": true
+      },
+      {
+        "permissionName": "ui-checkout.viewRequests",
+        "displayName": "Check out: View requests",
+        "description": "Entire set of permissions needed to view requests",
+        "visible": true
       }
     ]
   },
