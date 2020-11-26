@@ -307,7 +307,6 @@ class ViewItem extends React.Component {
     const {
       sortOrder,
       sortDirection,
-      changeDueDateDialogOpen,
     } = this.state;
 
     const size = scannedItems.length;
@@ -315,7 +314,7 @@ class ViewItem extends React.Component {
     const contentData = _.orderBy(items,
       [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkout.noItemsEntered" /> : null;
-    console.log('changeDueDateDialogOpen', changeDueDateDialogOpen)
+
     return (
       <>
         <MultiColumnList
