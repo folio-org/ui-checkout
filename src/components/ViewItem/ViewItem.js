@@ -135,6 +135,7 @@ class ViewItem extends React.Component {
 
     const newLoans = loans.map(loan => {
       loan.loanPolicy = _.get(loanMap, `${loan.id}.loanPolicy`);
+      loan.item.circulationNotes = _.get(loanMap, `${loan.id}.item.circulationNotes`);
       return loan;
     });
 
