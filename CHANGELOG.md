@@ -7,6 +7,7 @@
 * Check out permissions: refinements. Refs UICHKOUT-622.
 * Restore sortability of charged items table. Refs UICHKOUT-513.
 * Update due date when changed in the Check Out app. Refs UICHKOUT-647.
+* Replace 'ui-users.loans.edit' permisson with 'ui-users.loans.change-due-date' for changing due date.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)
