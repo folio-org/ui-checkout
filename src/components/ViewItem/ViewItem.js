@@ -238,7 +238,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.loanPolicy" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.edit') &&
+          { stripes.hasPerm('ui-users.loans.change-due-date') &&
             <Button
               data-test-date-picker
               buttonStyle="dropdownItem"
