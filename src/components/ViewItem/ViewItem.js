@@ -63,7 +63,7 @@ class ViewItem extends React.Component {
     };
 
     this.columnMapping = {
-      barcode: <FormattedMessage id="ui-checkout.header.barcode" />,
+      barcode: <FormattedMessage id="ui-checkout.barcode" />,
       dueDate: <FormattedMessage id="ui-checkout.due.date" />,
       loanDate: <FormattedMessage id="ui-checkout.time" />,
       loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
