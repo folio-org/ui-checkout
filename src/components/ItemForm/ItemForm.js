@@ -53,6 +53,7 @@ class ItemForm extends React.Component {
     this.state = {
       overrideModalOpen: false,
       error: {},
+      message: '',
     };
   }
 
@@ -89,7 +90,11 @@ class ItemForm extends React.Component {
   };
 
   openOverrideModal = () => {
-    this.setState({ overrideModalOpen: true });
+    const { checkoutError: { item: { barcode }}} = this.props;
+    this.setState({
+      message: barcode,
+      overrideModalOpen: true
+    });
   };
 
   closeOverrideModal = () => {
@@ -130,7 +135,7 @@ class ItemForm extends React.Component {
       onOverride,
     } = this.props;
 
-    const { error, overrideModalOpen } = this.state;
+    const { error, message, overrideModalOpen } = this.state;
     const validationEnabled = false;
 
     return (
@@ -188,9 +193,9 @@ class ItemForm extends React.Component {
           overrideModalOpen &&
           <OverrideModal
             item={item}
+            message={message}
             stripes={stripes}
             onOverride={onOverride}
-            overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
           />
         }

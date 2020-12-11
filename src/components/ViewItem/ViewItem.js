@@ -95,7 +95,18 @@ class ViewItem extends React.Component {
   getItemFormatter() {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
-      'loanPolicy': loan => (<div data-test-item-loan-policy>{_.get(loan, ['loanPolicy', 'name'])}</div>),
+      'loanPolicy': loan => {
+        console.log('LOAN ', loan);
+        return(
+          <div data-test-item-loan-policy>
+            {_.get(loan, ['loanPolicy', 'name'])}
+            {loan.loanPolicy?.itemLimit
+              ? <span data-test-overrided-item-block><FormattedMessage id="ui-checkout.item.block.overrided" /></span>
+              : null
+            }
+          </div>
+        )
+      },
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => (<div data-test-item-due-date><FormattedDate value={loan.dueDate} /></div>),
       'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),

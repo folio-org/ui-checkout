@@ -97,6 +97,8 @@
   "override": "Override",
   "saveAndClose": "Save & close",
   "overrideLoanPolicy": "Override loan policy",
+  "overrideItemBlock": "Override item block",
+  "item.block.overrided": "(Item limit overridden)",
   "actions.moreDetails": "Get more details about this item",
 
   "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",

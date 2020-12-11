@@ -3,7 +3,11 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-import { get, isEmpty } from 'lodash';
+import {
+  get,
+  isEmpty,
+  unset,
+} from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 import { escapeCqlValue } from '@folio/stripes/util';
@@ -230,6 +234,10 @@ class ScanItems extends React.Component {
       comment,
       dueDate,
     };
+
+    if (!dueDate) {
+      unset(overrideData, 'dueDate');
+    }
 
     return this.performAction(overrideCheckout, overrideData);
   }
