@@ -16,10 +16,7 @@ import {
   Paneset,
   Button,
 } from '@folio/stripes/components';
-import {
-  IfPermission,
-  Pluggable,
-} from '@folio/stripes/core';
+import { Pluggable } from '@folio/stripes/core';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
@@ -218,7 +215,6 @@ class CheckOut extends React.Component {
       submitting: false,
       loading: false,
       blocked: false,
-      showNewFastAddModal: false,
     };
   }
 
@@ -510,7 +506,6 @@ class CheckOut extends React.Component {
       loading,
       blocked,
       requestsCount,
-      showNewFastAddModal,
     } = this.state;
 
     let patron = patrons[0];
@@ -603,7 +598,7 @@ class CheckOut extends React.Component {
             />
           </Pane>
         </Paneset>
-        {patrons.length > 0 && !showNewFastAddModal &&
+        {patrons.length > 0 &&
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
