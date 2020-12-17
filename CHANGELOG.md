@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## 5.0.1 IN PROGRESS
+## 5.1.0 IN PROGRESS
 
 * Do not use hard-coded dates in unit tests. Refs UICHKOUT-668.
 * Make room for `<Datepicker>` in the loan-policy override modal. Refs UICHKOUT-666.
@@ -9,6 +9,7 @@
 * Update due date when changed in the Check Out app. Refs UICHKOUT-647.
 * Replace 'ui-users.loans.edit' permisson with 'ui-users.loans.change-due-date' for changing due date.
 * Fix a label translation. Fixes UICHKOUT-675.
+* Upgraded to create-inventory plugin v2.0.0.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)

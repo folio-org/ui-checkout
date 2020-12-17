@@ -485,13 +485,6 @@ class CheckOut extends React.Component {
     this.props.history.push(viewUserPath);
   }
 
-  toggleNewFastAddModal = () => {
-    this.setState((state) => {
-      return { showNewFastAddModal: !state.showNewFastAddModal };
-    });
-  }
-
-
   render() {
     const {
       resources,
@@ -578,15 +571,19 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <IfPermission perm="ui-plugin-create-inventory-records.create">
-                <Button
-                  data-test-add-inventory-records
-                  marginBottom0
-                  onClick={this.toggleNewFastAddModal}
-                >
-                  <FormattedMessage id="ui-checkout.fastAddLabel" />
-                </Button>
-              </IfPermission>
+              <Pluggable
+                type="create-inventory-records"
+                id="clickable-create-inventory-records"
+                renderTrigger={({ onClick }) => (
+                  <Button
+                    data-test-add-inventory-records
+                    marginBottom0
+                    onClick={onClick}
+                  >
+                    <FormattedMessage id="ui-checkout.fastAddLabel" />
+                  </Button>
+                )}
+              />
             }
           >
             <this.connectedScanItems
@@ -629,13 +626,6 @@ class CheckOut extends React.Component {
             />
           }
           label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
-        />
-        <Pluggable
-          buttonVisible={false}
-          open={showNewFastAddModal}
-          type="create-inventory-records"
-          id="clickable-create-inventory-records"
-          onClose={this.toggleNewFastAddModal}
         />
       </div>
     );
