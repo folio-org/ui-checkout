@@ -111,7 +111,7 @@
     "patron.identifier": "读者标识符",
     "checkout.notes": "借出附注",
     "actions.moreDetails": "获取此单件的更多详情",
-    "permission.viewLoans": "Check out: View loans",
-    "permission.viewFeeFines": "Check out: View fees/fines",
-    "permission.viewRequests": "Check out: View requests"
+    "permission.viewLoans": "借出：查看借阅",
+    "permission.viewFeeFines": "借出：查看费用/罚款",
+    "permission.viewRequests": "借出：查看请求"
 }
