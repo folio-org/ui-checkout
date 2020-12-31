@@ -102,17 +102,5 @@
     "permission.viewLoans": "الإعارة: اعرض الإعارات",
     "permission.viewFeeFines": "الإعارة: اعرض الرسوم/الغرامات",
     "permission.viewRequests": "الإعارة: اعرض الطلبات",
-    "fastAddLabel": "New fast add record",
-    "proxyExpiration": "",
-    "dueDate": "",
-    "patronGroup": "",
-    "userExpiration": "",
-    "patronIdentifier": "",
-    "okay": "",
-    "endSession": "",
-    "multipieceModal.back": "",
-    "checkoutNotes": "",
-    "confirmWithdrawnModal.heading": "",
-    "confirmWithdrawnModal.notSuppressedMessage": "",
-    "confirmWithdrawnModal.suppressedMessage": ""
+    "fastAddLabel": "New fast add record"
 }
