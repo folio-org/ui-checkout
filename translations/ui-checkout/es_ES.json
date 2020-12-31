@@ -102,17 +102,5 @@
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record",
-    "proxyExpiration": "Vencimiento del proxy",
-    "dueDate": "Fecha de Vencimiento",
-    "patronGroup": "Grupo de Usuarios",
-    "userExpiration": "Vencimiento del usuario",
-    "patronIdentifier": "Identificador de Usuario",
-    "okay": "Bien",
-    "endSession": "Terminar sesión",
-    "multipieceModal.back": "Cancelar",
-    "checkoutNotes": "Notas de préstamo",
-    "confirmWithdrawnModal.heading": "Prestar ejemplar retirado?",
-    "confirmWithdrawnModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tiene el estado de ejemplar<strong>retirado</strong>.",
-    "confirmWithdrawnModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tiene el estado del ejemplar<strong>retirado</strong> y está oculto en el catálogo."
+    "fastAddLabel": "New fast add record"
 }

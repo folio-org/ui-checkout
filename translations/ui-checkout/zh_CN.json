@@ -102,17 +102,5 @@
     "permission.viewLoans": "借出：查看借阅",
     "permission.viewFeeFines": "借出：查看费用/罚款",
     "permission.viewRequests": "借出：查看请求",
-    "fastAddLabel": "New fast add record",
-    "proxyExpiration": "",
-    "dueDate": "",
-    "patronGroup": "",
-    "userExpiration": "",
-    "patronIdentifier": "",
-    "okay": "",
-    "endSession": "",
-    "multipieceModal.back": "",
-    "checkoutNotes": "",
-    "confirmWithdrawnModal.heading": "",
-    "confirmWithdrawnModal.notSuppressedMessage": "",
-    "confirmWithdrawnModal.suppressedMessage": ""
+    "fastAddLabel": "New fast add record"
 }

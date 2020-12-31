@@ -33,7 +33,7 @@
     "user.patronGroup": "Grupo de usuário",
     "close": "Fechar",
     "meta.title": "Empréstimo",
-    "barcode": "código de barras",
+    "barcode": "Código de barras",
     "username": "nome de usuário",
     "title": "Título",
     "time": "Horário",
@@ -102,17 +102,5 @@
     "permission.viewLoans": "Empréstimos: Ver empréstimos",
     "permission.viewFeeFines": "Empréstimos: Ver taxas/multas",
     "permission.viewRequests": "Empréstimos: Ver requisições",
-    "fastAddLabel": "New fast add record",
-    "proxyExpiration": "",
-    "dueDate": "",
-    "patronGroup": "",
-    "userExpiration": "",
-    "patronIdentifier": "",
-    "okay": "",
-    "endSession": "",
-    "multipieceModal.back": "",
-    "checkoutNotes": "",
-    "confirmWithdrawnModal.heading": "",
-    "confirmWithdrawnModal.notSuppressedMessage": "",
-    "confirmWithdrawnModal.suppressedMessage": ""
+    "fastAddLabel": "Novo registro rápido"
 }

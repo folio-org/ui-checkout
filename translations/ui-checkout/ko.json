@@ -102,17 +102,5 @@
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record",
-    "proxyExpiration": "",
-    "dueDate": "",
-    "patronGroup": "",
-    "userExpiration": "",
-    "patronIdentifier": "",
-    "okay": "",
-    "endSession": "",
-    "multipieceModal.back": "",
-    "checkoutNotes": "",
-    "confirmWithdrawnModal.heading": "",
-    "confirmWithdrawnModal.notSuppressedMessage": "",
-    "confirmWithdrawnModal.suppressedMessage": ""
+    "fastAddLabel": "New fast add record"
 }
