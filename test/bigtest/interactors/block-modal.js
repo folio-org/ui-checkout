@@ -9,6 +9,10 @@ import {
 
   modalPresent = isPresent('[data-test-block-modal]');
   modalMessage = collection('[data-test-block-message]');
+
+  whenBlockModalLoaded() {
+    return this.when(() => this.modalPresent);
+  }
 }
 
 export default BlockModalInteractor;
