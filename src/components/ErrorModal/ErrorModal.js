@@ -43,7 +43,7 @@ function ErrorModal(props) {
 
   // TODO: Replace with correct permission
   const canOverrideItemBlock = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
-    && message.includes(MAX_ITEM_BLOCK_LIMIT);
+    && (message && message.includes(MAX_ITEM_BLOCK_LIMIT));
   const canBeOverridden = canOverrideByBarcode || canOverrideItemBlock;
   const isItemNotLoanable = message === ITEM_NOT_LOANABLE;
 

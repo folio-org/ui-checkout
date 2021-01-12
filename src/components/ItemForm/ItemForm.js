@@ -5,14 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import stripesFinalForm from '@folio/stripes/final-form';
-
 import {
   Col,
   Button,
   Row,
   TextField,
 } from '@folio/stripes/components';
-
 import {
   withStripes,
   stripesShape,
@@ -177,20 +175,18 @@ class ItemForm extends React.Component {
             </Col>
           </Row>
         </form>
-        {
-          !isEmpty(error) &&
+        {!isEmpty(error) &&
           <ErrorModal
             stripes={stripes}
             item={item || {}}
-            message={error.barcode}
+            message={error.barcode || ''}
             loanPolicy={error.loanPolicy}
             open={!isEmpty(error)}
             openOverrideModal={this.openOverrideModal}
             onClose={this.clearForm}
           />
         }
-        {
-          overrideModalOpen &&
+        {overrideModalOpen &&
           <OverrideModal
             item={item}
             message={message}

@@ -13,7 +13,10 @@ export default function config() {
     configs: []
   });
 
-  this.get('/circulation/loans');
+  this.get('/circulation/loans', {
+    loans: [],
+    totalRecords: 0,
+  });
 
   this.get('/proxiesfor', {
     proxiesFor: [],
@@ -238,6 +241,7 @@ export default function config() {
     const parsedRequest = JSON.parse(request.requestBody);
     const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
     const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+
     return (
       {
         'id': item.id,
@@ -277,26 +281,4 @@ export default function config() {
       }
     );
   });
-
-  // this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
-  //   const { itemBarcode } = JSON.parse(request.requestBody);
-
-  //   return items.findBy({ barcode: itemBarcode });
-  // });
-
-  // this.post('/circulation/override-check-out-by-barcode', ({ items }, request) => {
-  //   const {
-  //     itemBarcode,
-  //     dueDate,
-  //     comment,
-  //   } = JSON.parse(request.requestBody);
-  //   const { attrs: item } = items.findBy({ barcode: itemBarcode });
-
-  //   return {
-  //     loanPolicyId,
-  //     comment,
-  //     dueDate,
-  //     item,
-  //   };
-  // });
 }

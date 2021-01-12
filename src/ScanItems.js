@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   get,
   isEmpty,
-  unset,
 } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
@@ -227,19 +226,23 @@ class ScanItems extends React.Component {
   }
 
   override = (data) => {
-    const { mutator: { overrideCheckout } } = this.props;
+    const { mutator: { checkout } } = this.props;
     const { barcode, comment, dueDate } = data;
-    const overrideData = {
-      ...this.getRequestData(barcode),
-      comment,
-      dueDate,
-    };
+    const overrideData = { ...this.getRequestData(barcode) };
 
     if (!dueDate) {
-      unset(overrideData, 'dueDate');
+      overrideData.overrideBlocks = {
+        itemLimitBlock: {},
+        comment,
+      };
+    } else {
+      overrideData.overrideBlocks = {
+        itemNotLoanableBlock: { dueDate },
+        comment,
+      };
     }
 
-    return this.performAction(overrideCheckout, overrideData);
+    return this.performAction(checkout, overrideData);
   }
 
   performAction(action, data) {
@@ -273,9 +276,10 @@ class ScanItems extends React.Component {
     // TODO make error message internationalized
     // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
     let itemError;
+
     if (!parameters) {
       itemError = {
-        barcode: <FormattedMessage id="ui-checkout.unknownError" />,
+        barcode: 'Unknown error occurred',
         _error: 'unknownError',
       };
     } else if (parameters.length === 0) {

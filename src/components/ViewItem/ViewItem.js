@@ -96,12 +96,15 @@ class ViewItem extends React.Component {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
       'loanPolicy': loan => {
-        console.log('LOAN ', loan);
+
         return(
           <div data-test-item-loan-policy>
             {_.get(loan, ['loanPolicy', 'name'])}
             {loan.loanPolicy?.itemLimit
-              ? <span data-test-overrided-item-block><FormattedMessage id="ui-checkout.item.block.overrided" /></span>
+              ? <span data-test-overrided-item-block>
+                  <br />
+                  <FormattedMessage id="ui-checkout.item.block.overrided" />
+                </span>
               : null
             }
           </div>
