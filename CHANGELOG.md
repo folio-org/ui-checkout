@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## 5.1.0 IN PROGRESS
+## 6.0.0 IN PROGRESS
 
 * Do not use hard-coded dates in unit tests. Refs UICHKOUT-668.
 * Make room for `<Datepicker>` in the loan-policy override modal. Refs UICHKOUT-666.
@@ -11,6 +11,7 @@
 * Fix a label translation. Fixes UICHKOUT-675.
 * Upgraded to create-inventory plugin v2.0.0.
 * Prevent check out when item with intellectual item status is scanned. Refs UICHKOUT-669.
+* Update to stripes v6. Refs UICHKOUT-687.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)
