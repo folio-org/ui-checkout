@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import { omit } from 'lodash';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
@@ -18,16 +19,20 @@ import { DueDatePicker } from '@folio/stripes/smart-components';
 import {
   DATE_PICKER_DEFAULTS,
   INVALID_DATE_MESSAGE,
+  ITEM_NOT_LOANABLE,
+  MAX_ITEM_BLOCK_LIMIT,
 } from '../../constants';
 
 function OverrideModal(props) {
   const {
     stripes,
-    overrideModalOpen,
     closeOverrideModal,
     onOverride,
     message,
+<<<<<<< HEAD
     overridePatronBlock,
+=======
+>>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
     item: {
       title,
       barcode,
@@ -38,21 +43,44 @@ function OverrideModal(props) {
   const [comment, setAdditionalInfo] = useState('');
   const [dueDate, setDatetime] = useState('');
 
+  const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
+  const blockLimitIsReached = message.includes(MAX_ITEM_BLOCK_LIMIT);
+
   const handleDateTimeChanged = (newDateTime) => {
     setDatetime(newDateTime);
   };
 
+<<<<<<< HEAD
   const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
   const canBeSubmitted = comment && dueDate !== INVALID_DATE_MESSAGE;
+=======
+  const canBeSubmitted = itemIsNotLoanable
+    ? comment && dueDate !== INVALID_DATE_MESSAGE
+    : comment;
+
+  const getModalLabel = () => {
+    if (itemIsNotLoanable) {
+      return <FormattedMessage id="ui-checkout.overrideLoanPolicy" />;
+    }
+
+    if (blockLimitIsReached) {
+      return <FormattedMessage id="ui-checkout.overrideItemBlock" />;
+    }
+  };
+>>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
 
   const onSubmit = async (event) => {
     event.preventDefault();
     closeOverrideModal();
-    onOverride({
+    const overrideItem = {
       comment,
       dueDate,
       barcode,
-    });
+    };
+
+    itemIsNotLoanable
+      ? onOverride(overrideItem)
+      : onOverride(omit(overrideItem, 'dueDate'));
   };
 
   return (
@@ -61,8 +89,8 @@ function OverrideModal(props) {
       dismissible
       enforceFocus={false}
       data-test-override-modal
-      open={overrideModalOpen}
-      label={<FormattedMessage id="ui-checkout.overrideLoanPolicy" />}
+      open
+      label={getModalLabel()}
       onClose={closeOverrideModal}
     >
       <form
@@ -77,27 +105,33 @@ function OverrideModal(props) {
             />
           </p>
         </Col>
-        <Col
-          xs={12}
-          data-test-override-modal-due-date-picker
-        >
-          <DueDatePicker
-            required
-            initialValues={DATE_PICKER_DEFAULTS}
-            stripes={stripes}
-            dateProps={{ label: (
-              <FormattedMessage id="ui-checkout.cddd.date">
-                {message => `${message} *`}
-              </FormattedMessage>
-            ) }}
-            timeProps={{ label:(
-              <FormattedMessage id="ui-checkout.cddd.time">
-                {message => `${message} *`}
-              </FormattedMessage>
-            ) }}
-            onChange={handleDateTimeChanged}
-          />
-        </Col>
+       {itemIsNotLoanable &&
+         <Col
+            xs={12}
+            data-test-override-modal-due-date-picker
+          >
+            <DueDatePicker
+              required
+              initialValues={DATE_PICKER_DEFAULTS}
+              stripes={stripes}
+              dateProps={{
+                label: (
+                  <FormattedMessage id="ui-checkout.cddd.date">
+                    {message => `${message} *`}
+                  </FormattedMessage>
+                )
+              }}
+              timeProps={{
+                label: (
+                  <FormattedMessage id="ui-checkout.cddd.time">
+                    {message => `${message} *`}
+                  </FormattedMessage>
+                )
+              }}
+              onChange={handleDateTimeChanged}
+            />
+          </Col>
+        }
         <Col
           data-test-override-modal-comment
           xs={12}
@@ -127,21 +161,32 @@ function OverrideModal(props) {
           </Row>
         </Col>
       </form>
-      <br />
-      <br />
-      <br />
-      <br />
+      {itemIsNotLoanable &&
+        <>
+          <br />
+          <br />
+          <br />
+          <br />
+        </>
+      }
     </Modal>
   );
 }
 
 OverrideModal.propTypes = {
   stripes: stripesShape.isRequired,
+<<<<<<< HEAD
   item: PropTypes.object,
   overrideModalOpen: PropTypes.bool.isRequired,
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
   overridePatronBlock: PropTypes.bool,
+=======
+  item: PropTypes.object.isRequired,
+  onOverride: PropTypes.func.isRequired,
+  closeOverrideModal: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+>>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
 };
 
 OverrideModal.defaultProps = {

@@ -3,7 +3,10 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-import { get, isEmpty } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 import { escapeCqlValue } from '@folio/stripes/util';
@@ -223,15 +226,23 @@ class ScanItems extends React.Component {
   }
 
   override = (data) => {
-    const { mutator: { overrideCheckout } } = this.props;
+    const { mutator: { checkout } } = this.props;
     const { barcode, comment, dueDate } = data;
-    const overrideData = {
-      ...this.getRequestData(barcode),
-      comment,
-      dueDate,
-    };
+    const overrideData = { ...this.getRequestData(barcode) };
 
-    return this.performAction(overrideCheckout, overrideData);
+    if (!dueDate) {
+      overrideData.overrideBlocks = {
+        itemLimitBlock: {},
+        comment,
+      };
+    } else {
+      overrideData.overrideBlocks = {
+        itemNotLoanableBlock: { dueDate },
+        comment,
+      };
+    }
+
+    return this.performAction(checkout, overrideData);
   }
 
   performAction(action, data) {
@@ -265,9 +276,10 @@ class ScanItems extends React.Component {
     // TODO make error message internationalized
     // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
     let itemError;
+
     if (!parameters) {
       itemError = {
-        barcode: <FormattedMessage id="ui-checkout.unknownError" />,
+        barcode: 'Unknown error occurred',
         _error: 'unknownError',
       };
     } else if (parameters.length === 0) {
