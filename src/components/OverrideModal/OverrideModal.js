@@ -26,6 +26,8 @@ function OverrideModal(props) {
     overrideModalOpen,
     closeOverrideModal,
     onOverride,
+    message,
+    overridePatronBlock,
     item: {
       title,
       barcode,
@@ -40,6 +42,7 @@ function OverrideModal(props) {
     setDatetime(newDateTime);
   };
 
+  const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
   const canBeSubmitted = comment && dueDate !== INVALID_DATE_MESSAGE;
 
   const onSubmit = async (event) => {
@@ -134,10 +137,15 @@ function OverrideModal(props) {
 
 OverrideModal.propTypes = {
   stripes: stripesShape.isRequired,
-  item: PropTypes.object.isRequired,
+  item: PropTypes.object,
   overrideModalOpen: PropTypes.bool.isRequired,
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
+  overridePatronBlock: PropTypes.bool,
 };
 
+OverrideModal.defaultProps = {
+  item: {},
+  overridePatronBlock: false,
+};
 export default OverrideModal;

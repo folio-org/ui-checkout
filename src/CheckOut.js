@@ -26,6 +26,7 @@ import ViewPatron from './components/ViewPatron';
 import ScanFooter from './components/ScanFooter';
 import ScanItems from './ScanItems';
 import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
+import OverrideModal from './components/OverrideModal';
 import NotificationModal from './components/NotificationModal';
 
 import { patronIdentifierMap, errorTypes } from './constants';
@@ -215,6 +216,7 @@ class CheckOut extends React.Component {
       submitting: false,
       loading: false,
       blocked: false,
+      overrideModalOpen: false,
     };
   }
 
@@ -481,6 +483,14 @@ class CheckOut extends React.Component {
     this.props.history.push(viewUserPath);
   }
 
+  closeOverrideModal = () => {
+    this.setState({ overrideModalOpen: false });
+  };
+
+  openOverridePatronBlockModal = () => {
+    this.setState({ overrideModalOpen: true });
+  };
+
   render() {
     const {
       resources,
@@ -506,6 +516,7 @@ class CheckOut extends React.Component {
       loading,
       blocked,
       requestsCount,
+      overrideModalOpen,
     } = this.state;
 
     let patron = patrons[0];
@@ -610,6 +621,16 @@ class CheckOut extends React.Component {
           viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks || []}
         />
+        {
+          overrideModalOpen &&
+          <OverrideModal
+            overridePatronBlock
+            stripes={stripes}
+            onOverride={onOverride}
+            overrideModalOpen={overrideModalOpen}
+            closeOverrideModal={this.closeOverrideModal}
+          />
+        }
         <NotificationModal
           id="awaiting-pickup-modal"
           open={!!requestsCount}

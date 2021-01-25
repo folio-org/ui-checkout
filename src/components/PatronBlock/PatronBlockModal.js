@@ -21,6 +21,8 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
     );
   });
 
+  const canBeOverridden = true; // TODO: permission check
+
   return (
     <Modal
       data-test-block-modal
@@ -38,12 +40,21 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
       {renderBlocks}
       <br />
       <Row>
-        <Col xs={8}>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
-        <Col xs={4}>
+        <Col xs={6}>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
+        <Col xs={6}>
           <Row end="xs">
             <Col>
+              {
+                canBeOverridden &&
+                <Button
+                  data-test-override-patron-block-button
+                  onClick={() => {}}
+                >
+                  <FormattedMessage id="ui-checkout.override" />
+                </Button>
+              }
               <Button onClick={onClose}><FormattedMessage id="ui-checkout.close" /></Button>
-              <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
+              <Button buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
             </Col>
           </Row>
         </Col>
