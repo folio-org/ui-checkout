@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createInactivityTimer from 'inactivity-timer';
 import { FormattedMessage } from 'react-intl';
-
+import moment from 'moment';
 import {
   isEmpty,
   get,
@@ -17,10 +17,8 @@ import {
   Button,
 } from '@folio/stripes/components';
 import { Pluggable } from '@folio/stripes/core';
-
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
-import moment from 'moment';
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
 import ScanFooter from './components/ScanFooter';
@@ -28,13 +26,17 @@ import ScanItems from './ScanItems';
 import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
 import NotificationModal from './components/NotificationModal';
 
-import { patronIdentifierMap, errorTypes } from './constants';
+import {
+  patronIdentifierMap,
+  errorTypes,
+} from './constants';
 import {
   getPatronIdentifiers,
   buildIdentifierQuery,
   buildRequestQuery,
   getCheckoutSettings,
 } from './util';
+
 import css from './CheckOut.css';
 
 /**
@@ -78,6 +80,8 @@ class CheckOut extends React.Component {
       type: 'okapi',
       records: 'manualblocks',
       path: 'manualblocks?query=userId==%{activeRecord.patronId}',
+      accumulate: 'true',
+      fetch: false,
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
@@ -88,6 +92,8 @@ class CheckOut extends React.Component {
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
+      accumulate: 'true',
+      fetch: false,
     },
     patronGroups: {
       type: 'okapi',
@@ -174,9 +180,15 @@ class CheckOut extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      automatedPatronBlocks: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }).isRequired,
       manualPatronBlocks: PropTypes.shape({
-        DELETE: PropTypes.func,
-      }),
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+        DELETE: PropTypes.func.isRequired,
+      }).isRequired,
       endSession: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -291,6 +303,23 @@ class CheckOut extends React.Component {
     }
   }
 
+  showBlockModal = (patron) => {
+    const {
+      resources,
+    } = this.props;
+
+    const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
+    const manualPatronBlocks = selManualPatronBlocks.filter(
+      p => p.borrowing === true && moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format())
+    );
+
+    const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
+    const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true);
+
+    return (!isEmpty(manualPatronBlocks) && manualPatronBlocks[0].userId === patron.id)
+      || !isEmpty(automatedPatronBlocks);
+  };
+
   submitForm = (domId) => {
     const submitEvent = new Event('submit', { cancelable: true });
     const form = document.querySelector(`#${domId}`);
@@ -348,14 +377,31 @@ class CheckOut extends React.Component {
     selPatron.replace({});
   }
 
-  selectPatron(patron) {
-    const { resources, mutator } = this.props;
+  async selectPatron(patron) {
+    const {
+      resources,
+      mutator,
+    } = this.props;
     const patrons = get(resources, ['patrons', 'records'], []);
-    this.props.mutator.selPatron.replace(patron);
+    mutator.selPatron.replace(patron);
+    mutator.activeRecord.update({ patronId: patron.id });
+
     mutator.requests.reset();
     // only find requests if patron acts as self
     if (patrons[0].id === patron.id) {
       this.findRequests(patron);
+    }
+
+    mutator.manualPatronBlocks.reset();
+    await mutator.manualPatronBlocks.GET();
+
+    mutator.automatedPatronBlocks.reset();
+    await mutator.automatedPatronBlocks.GET();
+
+    const showBlockModal = this.showBlockModal(patron);
+
+    if (showBlockModal) {
+      this.openBlockedModal();
     }
   }
 
@@ -378,7 +424,16 @@ class CheckOut extends React.Component {
     // patron can act as a proxy
     // so wait with finding requests
     // until proxy is selected. Part of UICHKOUT-475
-    if (proxies.length) return {};
+    if (proxies.length) {
+      return {};
+    } else {
+      const showBlockModal = this.showBlockModal(patron);
+
+      if (showBlockModal) {
+        this.openBlockedModal();
+      }
+    }
+
     this.findRequests(patron);
 
     return {};
@@ -410,19 +465,16 @@ class CheckOut extends React.Component {
         return { error, patron: null };
       }
 
-      const selManualPatronBlocks = get(this.props.resources, ['manualPatronBlocks', 'records'], []);
-      const selAutomatedPatronBlocks = get(this.props.resources, ['automatedPatronBlocks', 'records'], []);
-      let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true);
-      manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
-      const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true);
       const selPatron = patrons[0];
       this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
-      const showBlockModal = (manualPatronBlocks.length > 0 && manualPatronBlocks[0].userId === selPatron.id)
-        || !isEmpty(automatedPatronBlocks);
 
-      if (showBlockModal) {
-        this.openBlockedModal();
-      }
+      this.props.mutator.manualPatronBlocks.reset();
+      await this.props.mutator.manualPatronBlocks.GET();
+
+      this.props.mutator.automatedPatronBlocks.reset();
+      await this.props.mutator.automatedPatronBlocks.GET();
+
+      const showBlockModal = this.showBlockModal(selPatron);
 
       if (!showBlockModal && this.shouldSubmitAutomatically) {
         this.submitForm('item-form');
@@ -555,7 +607,6 @@ class CheckOut extends React.Component {
                 onSelectPatron={this.selectPatron}
                 onClearPatron={this.clearResources}
                 patron={patron}
-                openBlockedModal={this.openBlockedModal}
                 patronBlocks={patronBlocks}
                 proxy={proxy}
                 settings={settings}
