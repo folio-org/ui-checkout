@@ -82,6 +82,7 @@ class CheckOut extends React.Component {
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
+      accumulate: 'true',
     },
     automatedPatronBlocks: {
       type: 'okapi',
@@ -89,6 +90,7 @@ class CheckOut extends React.Component {
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
+      accumulate: 'true',
     },
     patronGroups: {
       type: 'okapi',
@@ -177,6 +179,12 @@ class CheckOut extends React.Component {
       }),
       manualPatronBlocks: PropTypes.shape({
         DELETE: PropTypes.func,
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      automatedPatronBlocks: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
       }),
       endSession: PropTypes.shape({
         POST: PropTypes.func,
@@ -217,6 +225,7 @@ class CheckOut extends React.Component {
       loading: false,
       blocked: false,
       overrideModalOpen: false,
+      patronBlockOverridenInfo: {},
     };
   }
 
@@ -484,11 +493,26 @@ class CheckOut extends React.Component {
   }
 
   closeOverrideModal = () => {
-    this.setState({ overrideModalOpen: false });
+    this.setState({
+      overrideModalOpen: false,
+    });
+  };
+
+  overridePatronBlock = ({ comment }) => {
+    console.log('overridePatronBlock');
+    this.setState({
+      patronBlockOverridenInfo: {
+        patronBlock: {},
+        comment,
+      }
+    });
   };
 
   openOverridePatronBlockModal = () => {
-    this.setState({ overrideModalOpen: true });
+    this.setState({
+      overrideModalOpen: true
+    });
+    this.onCloseBlockedModal();
   };
 
   render() {
@@ -517,6 +541,7 @@ class CheckOut extends React.Component {
       blocked,
       requestsCount,
       overrideModalOpen,
+      patronBlockOverridenInfo,
     } = this.state;
 
     let patron = patrons[0];
@@ -600,6 +625,7 @@ class CheckOut extends React.Component {
               patron={patron}
               openBlockedModal={this.openBlockedModal}
               patronBlocks={patronBlocks}
+              patronBlockOverridenInfo={patronBlockOverridenInfo}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
@@ -617,20 +643,22 @@ class CheckOut extends React.Component {
           /> }
         <PatronBlockModal
           open={blocked}
+          openOverrideModal={this.openOverridePatronBlockModal}
           onClose={this.onCloseBlockedModal}
           viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks || []}
         />
-        {
-          overrideModalOpen &&
-          <OverrideModal
-            overridePatronBlock
-            stripes={stripes}
-            onOverride={onOverride}
-            overrideModalOpen={overrideModalOpen}
-            closeOverrideModal={this.closeOverrideModal}
-          />
-        }
+        {/*{*/}
+        {/*  overrideModalOpen &&*/}
+        {/*  <OverrideModal*/}
+        {/*    overridePatronBlock*/}
+        {/*    stripes={stripes}*/}
+        {/*    onOverride={this.overridePatronBlock}*/}
+        {/*    overrideModalOpen={overrideModalOpen}*/}
+        {/*    closeOverrideModal={this.closeOverrideModal}*/}
+        {/*    patronBlocks={patronBlocks || []}*/}
+        {/*  />*/}
+        {/*}*/}
         <NotificationModal
           id="awaiting-pickup-modal"
           open={!!requestsCount}

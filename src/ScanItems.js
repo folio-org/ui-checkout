@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   get,
   isEmpty,
+  concat,
 } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
@@ -46,6 +47,26 @@ class ScanItems extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
+    // manualPatronBlocks: {
+    //   type: 'okapi',
+    //   records: 'manualblocks',
+    //   path: 'manualblocks?query=userId==%{activeRecord.patronId}?limit=2000',
+    //   shouldRefresh: (resource, action, refresh) => {
+    //     const { path } = action.meta;
+    //     console.log(path);
+    //     return refresh || (path && path.match(/circulation/));
+    //   },
+    // },
+    // automatedPatronBlocks: {
+    //   type: 'okapi',
+    //   records: 'automatedPatronBlocks',
+    //   path: 'automated-patron-blocks/:{id}?limit=2000',
+    //   permissionsRequired: 'automated-patron-blocks.collection.get',
+    //   shouldRefresh: (resource, action, refresh) => {
+    //     const { path } = action.meta;
+    //     return refresh || (path && path.match(/circulation/));
+    //   },
+    // },
   });
 
   static propTypes = {
@@ -83,6 +104,14 @@ class ScanItems extends React.Component {
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      manualPatronBlocks: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      automatedPatronBlocks: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
     }),
 
     patron: PropTypes.object,
@@ -93,6 +122,7 @@ class ScanItems extends React.Component {
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
     formRef: PropTypes.object.isRequired,
     initialValues: PropTypes.object,
+    patronBlockOverridenInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -122,6 +152,23 @@ class ScanItems extends React.Component {
     return get(itemsResp, '[0]');
   }
 
+  async fetchBlocks() {
+    const {
+      parentMutator,
+      parentMutator: {
+        manualPatronBlocks,
+        automatedPatronBlocks,
+      }
+    } = this.props;
+    console.log(parentMutator);
+    manualPatronBlocks.reset();
+    automatedPatronBlocks.reset();
+    const automatedBlocks = await automatedPatronBlocks.GET();
+    const manualBlocks = await manualPatronBlocks.GET();
+
+    return concat(automatedBlocks, manualBlocks);
+  }
+
   // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
   triggerPatronFormSubmit = () => {
     const submitEvent = new Event('submit', { cancelable: true });
@@ -133,7 +180,8 @@ class ScanItems extends React.Component {
     const {
       patron,
       patronBlocks,
-      openBlockedModal
+      openBlockedModal,
+      patronBlockOverridenInfo,
     } = this.props;
 
     if (!barcode) {
@@ -153,7 +201,7 @@ class ScanItems extends React.Component {
       };
     }
 
-    if (patronBlocks.length > 0) {
+    if (patronBlocks.length > 0 && isEmpty(patronBlockOverridenInfo)) {
       openBlockedModal();
       return {
         patron: {
@@ -175,6 +223,12 @@ class ScanItems extends React.Component {
     }
 
     const item = await this.fetchItem(barcode);
+    const patronBlocks = await this.fetchBlocks();
+
+    if (!isEmpty(patronBlocks)) {
+      this.props.openBlockedModal();
+      return;
+    }
 
     if (!item) {
       this.checkout(barcode);
@@ -216,19 +270,27 @@ class ScanItems extends React.Component {
   }
 
   checkout = (barcode) => {
-    const { mutator: { checkout } } = this.props;
+    const { mutator: { checkout }, patronBlockOverridenInfo } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
       loanDate: moment().utc().format(),
     };
 
+    if (!isEmpty(patronBlockOverridenInfo)) {
+      checkoutData.overrideBlocks = { ...patronBlockOverridenInfo };
+    }
+
     return this.performAction(checkout, checkoutData);
   }
 
   override = (data) => {
-    const { mutator: { checkout } } = this.props;
+    const { mutator: { checkout }, patronBlockOverridenInfo } = this.props;
     const { barcode, comment, dueDate } = data;
     const overrideData = { ...this.getRequestData(barcode) };
+    console.log('override data ', data);
+    if (!isEmpty(patronBlockOverridenInfo)) {
+      overrideData.overrideBlocks.patronBlock = {};
+    }
 
     if (!dueDate) {
       overrideData.overrideBlocks = {
@@ -364,6 +426,7 @@ class ScanItems extends React.Component {
       shouldSubmitAutomatically,
       formRef,
       initialValues,
+      patronBlockOverridenInfo,
     } = this.props;
 
     const {
@@ -401,6 +464,7 @@ class ScanItems extends React.Component {
           checkoutError={this.state.error}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
+          patronBlockOverridenInfo={patronBlockOverridenInfo}
         />
         {loading &&
           <Icon

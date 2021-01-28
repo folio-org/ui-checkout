@@ -28,19 +28,18 @@ function OverrideModal(props) {
     stripes,
     closeOverrideModal,
     onOverride,
-    message,
-<<<<<<< HEAD
+    message = '',
     overridePatronBlock,
-=======
->>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
+    patronBlockOverridenInfo,
+    patronBlocks,
+    item,
     item: {
       title,
       barcode,
-      materialType: { name: materialType },
     },
-
   } = props;
-  const [comment, setAdditionalInfo] = useState('');
+  console.log('patronBlockOverridenInfo ', patronBlockOverridenInfo);
+  const [comment, setAdditionalInfo] = useState(patronBlockOverridenInfo?.comment ?? '');
   const [dueDate, setDatetime] = useState('');
 
   const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
@@ -50,24 +49,27 @@ function OverrideModal(props) {
     setDatetime(newDateTime);
   };
 
-<<<<<<< HEAD
-  const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
-  const canBeSubmitted = comment && dueDate !== INVALID_DATE_MESSAGE;
-=======
   const canBeSubmitted = itemIsNotLoanable
     ? comment && dueDate !== INVALID_DATE_MESSAGE
     : comment;
 
   const getModalLabel = () => {
+    let label = '';
+
     if (itemIsNotLoanable) {
-      return <FormattedMessage id="ui-checkout.overrideLoanPolicy" />;
+      label = <FormattedMessage id="ui-checkout.overrideLoanPolicy" />;
     }
 
     if (blockLimitIsReached) {
-      return <FormattedMessage id="ui-checkout.overrideItemBlock" />;
+      label = <FormattedMessage id="ui-checkout.overrideItemBlock" />;
     }
+
+    if (overridePatronBlock) {
+      label = <FormattedMessage id="ui-checkout.overridePatronBlock" />;
+    }
+
+    return label;
   };
->>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -78,10 +80,29 @@ function OverrideModal(props) {
       barcode,
     };
 
-    itemIsNotLoanable
+    return itemIsNotLoanable
       ? onOverride(overrideItem)
       : onOverride(omit(overrideItem, 'dueDate'));
   };
+
+  const renderPatronBlocks = patronBlocks.map(block => {
+    return (
+      <Row key={block.id || block.patronBlockConditionId}>
+        <Col xs>
+          <b data-test-block-message>{block.desc || block.message || ''}</b>
+        </Col>
+      </Row>
+    );
+  });
+
+  const renderItemInfo = () => (
+    <p>
+      <SafeHTMLMessage
+        id="ui-checkout.messages.itemWillBeCheckedOut"
+        values={{ title, barcode, name: item?.materialType?.name }}
+      />
+    </p>
+  );
 
   return (
     <Modal
@@ -98,39 +119,46 @@ function OverrideModal(props) {
         onSubmit={onSubmit}
       >
         <Col xs={12}>
-          <p>
-            <SafeHTMLMessage
-              id="ui-checkout.messages.itemWillBeCheckedOut"
-              values={{ title, barcode, materialType }}
-            />
-          </p>
+          {overridePatronBlock
+            ? (
+              <>
+                <Row>
+                  <Col xs>
+                    <FormattedMessage id="ui-checkout.blockedLabel" /> :
+                  </Col>
+                </Row>
+                {renderPatronBlocks}
+                <br />
+              </>)
+            : renderItemInfo
+          }
         </Col>
-       {itemIsNotLoanable &&
-         <Col
-            xs={12}
-            data-test-override-modal-due-date-picker
-          >
-            <DueDatePicker
-              required
-              initialValues={DATE_PICKER_DEFAULTS}
-              stripes={stripes}
-              dateProps={{
-                label: (
-                  <FormattedMessage id="ui-checkout.cddd.date">
-                    {message => `${message} *`}
-                  </FormattedMessage>
-                )
-              }}
-              timeProps={{
-                label: (
-                  <FormattedMessage id="ui-checkout.cddd.time">
-                    {message => `${message} *`}
-                  </FormattedMessage>
-                )
-              }}
-              onChange={handleDateTimeChanged}
-            />
-          </Col>
+        {itemIsNotLoanable &&
+        <Col
+          xs={12}
+          data-test-override-modal-due-date-picker
+        >
+          <DueDatePicker
+            required
+            initialValues={DATE_PICKER_DEFAULTS}
+            stripes={stripes}
+            dateProps={{
+              label: (
+                <FormattedMessage id="ui-checkout.cddd.date">
+                  {(label) => `${label} *`}
+                </FormattedMessage>
+              )
+            }}
+            timeProps={{
+              label: (
+                <FormattedMessage id="ui-checkout.cddd.time">
+                  {label => `${label} *`}
+                </FormattedMessage>
+              )
+            }}
+            onChange={handleDateTimeChanged}
+          />
+        </Col>
         }
         <Col
           data-test-override-modal-comment
@@ -139,6 +167,7 @@ function OverrideModal(props) {
           <TextArea
             required
             label={<FormattedMessage id="ui-checkout.comment" />}
+            value={comment}
             onChange={(e) => { setAdditionalInfo(e.target.value); }}
           />
         </Col>
@@ -175,22 +204,19 @@ function OverrideModal(props) {
 
 OverrideModal.propTypes = {
   stripes: stripesShape.isRequired,
-<<<<<<< HEAD
   item: PropTypes.object,
-  overrideModalOpen: PropTypes.bool.isRequired,
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
   overridePatronBlock: PropTypes.bool,
-=======
-  item: PropTypes.object.isRequired,
-  onOverride: PropTypes.func.isRequired,
-  closeOverrideModal: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
->>>>>>> 81212e5a03c41091c1b6164ec79dc553b1cbf323
+  patronBlocks: PropTypes.arrayOf(PropTypes.object),
+  patronBlockOverridenInfo: PropTypes.object,
 };
 
 OverrideModal.defaultProps = {
   item: {},
   overridePatronBlock: false,
+  patronBlocks: [],
+  patronBlockOverridenInfo: {},
 };
 export default OverrideModal;
