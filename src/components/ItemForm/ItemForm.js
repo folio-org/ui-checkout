@@ -89,10 +89,10 @@ class ItemForm extends React.Component {
   };
 
   openOverrideModal = () => {
-    const { checkoutError: { item: { barcode }}} = this.props;
+    const { checkoutError: { item: { barcode } } } = this.props;
     this.setState({
       message: barcode,
-      overrideModalOpen: true
+      overrideModalOpen: true,
     });
   };
 

@@ -18,6 +18,7 @@ import ModalManager from './ModalManager';
 
 import checkoutSuccessSound from '../sound/checkout_success.m4a';
 import checkoutErrorSound from '../sound/checkout_error.m4a';
+import { getPatronBlocks } from './util';
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
@@ -113,7 +114,6 @@ class ScanItems extends React.Component {
         reset: PropTypes.func,
       }),
     }),
-
     patron: PropTypes.object,
     proxy: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
@@ -166,7 +166,7 @@ class ScanItems extends React.Component {
     const automatedBlocks = await automatedPatronBlocks.GET();
     const manualBlocks = await manualPatronBlocks.GET();
 
-    return concat(automatedBlocks, manualBlocks);
+    return getPatronBlocks(manualBlocks, automatedBlocks);
   }
 
   // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
@@ -214,6 +214,11 @@ class ScanItems extends React.Component {
   }
 
   tryCheckout = async (data) => {
+    const {
+      patronBlocks: initialPatronBlocks,
+      openBlockedModal,
+      patronBlockOverridenInfo,
+    } = this.props;
     const barcode = get(data, 'item.barcode');
     const error = this.validate(barcode);
 
@@ -224,9 +229,13 @@ class ScanItems extends React.Component {
 
     const item = await this.fetchItem(barcode);
     const patronBlocks = await this.fetchBlocks();
+    console.log('initialPatronBlocks.length ', initialPatronBlocks.length);
+    console.log('patronBlocks.length ', patronBlocks.length);
+    console.log('patronBlockOverridenInfo ', patronBlockOverridenInfo);
+    const shouldShowBlockedModal = !isEmpty(patronBlocks) && isEmpty(patronBlockOverridenInfo);
 
-    if (!isEmpty(patronBlocks)) {
-      this.props.openBlockedModal();
+    if (shouldShowBlockedModal) {
+      openBlockedModal();
       return;
     }
 
@@ -287,10 +296,7 @@ class ScanItems extends React.Component {
     const { mutator: { checkout }, patronBlockOverridenInfo } = this.props;
     const { barcode, comment, dueDate } = data;
     const overrideData = { ...this.getRequestData(barcode) };
-    console.log('override data ', data);
-    if (!isEmpty(patronBlockOverridenInfo)) {
-      overrideData.overrideBlocks.patronBlock = {};
-    }
+    console.log('override data in ScanItems ', data);
 
     if (!dueDate) {
       overrideData.overrideBlocks = {
@@ -302,6 +308,10 @@ class ScanItems extends React.Component {
         itemNotLoanableBlock: { dueDate },
         comment,
       };
+    }
+
+    if (!isEmpty(patronBlockOverridenInfo)) {
+      overrideData.overrideBlocks.patronBlock = {};
     }
 
     return this.performAction(checkout, overrideData);

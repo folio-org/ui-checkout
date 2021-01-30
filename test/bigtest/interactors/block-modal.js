@@ -1,7 +1,7 @@
 import {
   interactor,
   isPresent,
-  collection,
+  collection, scoped,
 } from '@bigtest/interactor';
 
 @interactor class BlockModalInteractor {
@@ -9,6 +9,7 @@ import {
 
   modalPresent = isPresent('[data-test-block-modal]');
   modalMessage = collection('[data-test-block-message]');
+  overrideButton = scoped('[data-test-override-patron-block-button]');
 }
 
 export default BlockModalInteractor;

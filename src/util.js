@@ -1,4 +1,8 @@
-import { get } from 'lodash';
+import {
+  concat,
+  get,
+} from 'lodash';
+import moment from 'moment';
 
 import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
 
@@ -49,4 +53,12 @@ export function to(promise) {
   return promise
     .then(data => [null, data])
     .catch(err => [err]);
+}
+
+export function getPatronBlocks(manualBlocks, automatedBlocks) {
+  let manualPatronBlocks = manualBlocks.filter(p => p.borrowing === true) || [];
+  manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+  const automatedPatronBlocks = automatedBlocks.filter(p => p.blockBorrowing === true) || [];
+
+  return concat(automatedPatronBlocks, manualPatronBlocks);
 }

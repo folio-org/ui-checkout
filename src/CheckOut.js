@@ -35,6 +35,7 @@ import {
   buildIdentifierQuery,
   buildRequestQuery,
   getCheckoutSettings,
+  getPatronBlocks,
 } from './util';
 import css from './CheckOut.css';
 
@@ -224,7 +225,6 @@ class CheckOut extends React.Component {
       submitting: false,
       loading: false,
       blocked: false,
-      overrideModalOpen: false,
       patronBlockOverridenInfo: {},
     };
   }
@@ -245,7 +245,7 @@ class CheckOut extends React.Component {
       resources: prevResources,
     } = prevProps;
 
-    const { submitting } = this.state;
+    const { submitting, patronBlockOverridenInfo } = this.state;
 
     if (this.shouldSubmitAutomatically) {
       this.submitForm('patron-form');
@@ -254,6 +254,7 @@ class CheckOut extends React.Component {
     const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
     const automatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
     const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
+    const prevAutomatedBlocks = get(prevResources, ['automatedPatronBlocks', 'records'], []);
     const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
     const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
@@ -273,6 +274,19 @@ class CheckOut extends React.Component {
         mutator.manualPatronBlocks.DELETE({ id: p.id });
       });
     }
+
+    // const currentPatronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
+    // const prevPatronBlocks = getPatronBlocks(prevManualBlocks, prevAutomatedBlocks);
+    //
+    // if ((prevPatronBlocks.length < currentPatronBlocks.length) && !isEmpty(patronBlockOverridenInfo)) {
+    //   console.log('currentPatronBlocks ', currentPatronBlocks.length);
+    //   console.log('prevPatronBlocks ', prevPatronBlocks.length);
+    //   console.log('here ')
+    //   this.setState({
+    //     blocked: true,
+    //     patronBlockOverridenInfo: {},
+    //   });
+    // }
 
     if (this.timer) {
       return;
@@ -499,7 +513,8 @@ class CheckOut extends React.Component {
   };
 
   overridePatronBlock = ({ comment }) => {
-    console.log('overridePatronBlock');
+    console.log('overridePatronBlock in CheckOut');
+    console.log('this.props');
     this.setState({
       patronBlockOverridenInfo: {
         patronBlock: {},
@@ -530,10 +545,7 @@ class CheckOut extends React.Component {
     const settings = get(resources, ['settings', 'records'], []);
     const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
     const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
-    let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true) || [];
-    manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
-    const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true) || [];
-    const patronBlocks = concat(automatedPatronBlocks, manualPatronBlocks);
+    const patronBlocks = getPatronBlocks(selManualPatronBlocks, selAutomatedPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
     const {
@@ -640,25 +652,25 @@ class CheckOut extends React.Component {
             buttonId="clickable-done-footer"
             total={scannedTotal}
             onSessionEnd={() => this.onSessionEnd()}
-          /> }
-        <PatronBlockModal
-          open={blocked}
+          />
+        }
+        <PatronBlockModal // и айтем еще не ввели добавить проверку
+          open={blocked && isEmpty(patronBlockOverridenInfo)}
           openOverrideModal={this.openOverridePatronBlockModal}
           onClose={this.onCloseBlockedModal}
           viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks || []}
         />
-        {/*{*/}
-        {/*  overrideModalOpen &&*/}
-        {/*  <OverrideModal*/}
-        {/*    overridePatronBlock*/}
-        {/*    stripes={stripes}*/}
-        {/*    onOverride={this.overridePatronBlock}*/}
-        {/*    overrideModalOpen={overrideModalOpen}*/}
-        {/*    closeOverrideModal={this.closeOverrideModal}*/}
-        {/*    patronBlocks={patronBlocks || []}*/}
-        {/*  />*/}
-        {/*}*/}
+        {overrideModalOpen &&
+          <OverrideModal
+            overridePatronBlock
+            stripes={stripes}
+            onOverride={this.overridePatronBlock}
+            overrideModalOpen={overrideModalOpen}
+            closeOverrideModal={this.closeOverrideModal}
+            patronBlocks={patronBlocks || []}
+          />
+        }
         <NotificationModal
           id="awaiting-pickup-modal"
           open={!!requestsCount}
