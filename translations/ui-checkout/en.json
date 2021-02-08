@@ -65,9 +65,7 @@
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
-  "confirmStatusModal.heading.lostAndPaid": "Check out lost and paid item?",
-  "confirmStatusModal.heading.missing": "Check out missing item?",
-  "confirmStatusModal.heading.withdrawn": "Check out withdrawn item?",
+  "confirmStatusModal.heading": "Check out {status} item?",
   "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
   "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
   "note": "Note",
@@ -105,6 +103,15 @@
   "permission.viewLoans": "Check out: View loans",
   "permission.viewFeeFines": "Check out: View fees/fines",
   "permission.viewRequests": "Check out: View requests",
+
+  "statuses.missing": "Missing",
+  "statuses.withdrawn": "Withdrawn",
+  "statuses.lostAndPaid": "Lost and paid",
+  "statuses.restricted": "Restricted",
+  "statuses.inProcessNonRequestable": "In process (non-requestable)",
+  "statuses.longMissing": "Long missing",
+  "statuses.unavailable": "Unavailable",
+  "statuses.unknown": "Unknown",
 
   "fastAddLabel": "New fast add record"
 }

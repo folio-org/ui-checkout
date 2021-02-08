@@ -13,6 +13,7 @@
 * Prevent check out when item with intellectual item status is scanned. Refs UICHKOUT-669.
 * Update to stripes v6. Refs UICHKOUT-687.
 * Proxy not allowed to checkout items for sponsor if proxy has patron block. Refs UICHKOUT-673.
+* Show confirmation modal when scanning an item with one of the new statuses (Long missing, In process (non-requestable), Restricted, Unavailable, Unknown). Refs UICHKOUT-671.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)

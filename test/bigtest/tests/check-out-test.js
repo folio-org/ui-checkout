@@ -10,9 +10,14 @@ import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
 
 const itemModalStatuses = [
-  'Missing',
-  'Withdrawn',
+  'In process (non-requestable)',
+  'Long missing',
   'Lost and paid',
+  'Missing',
+  'Restricted',
+  'Unavailable',
+  'Unknown',
+  'Withdrawn',
 ];
 
 // Assumed to be several non-checked out item statuses
