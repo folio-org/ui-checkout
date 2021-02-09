@@ -20,14 +20,16 @@ import {
   ITEM_NOT_LOANABLE,
   OVERRIDABLE_ERROR_MESSAGES,
 } from '../../constants';
-import { getAllErrorMessages } from '../../util';
+import {
+  getAllErrorMessages,
+  extractErrorDetails,
+} from '../../util';
 
 function ErrorModal(props) {
   const {
     open,
     onClose,
     errors,
-    loanPolicy,
     openOverrideModal,
     stripes,
     item: {
@@ -36,18 +38,40 @@ function ErrorModal(props) {
       materialType: { name: materialType } = {},
     } = {},
   } = props;
-// TODO: Remove all staff related to item
-  console.log('errors in ErrorModal ', errors);
   const allErrors = getAllErrorMessages(errors);
   const messages = split(allErrors, ';');
+
   const handleOverrideClick = () => {
     onClose();
     openOverrideModal();
   };
 
+  const containsOverrideErrorMessage = messages.some((message) => {
+    return OVERRIDABLE_ERROR_MESSAGES.includes(message);
+  });
+
   const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
-    && OVERRIDABLE_ERROR_MESSAGES.includes(messages);
-  const isItemNotLoanable = messages.includes(ITEM_NOT_LOANABLE);
+    && containsOverrideErrorMessage;
+
+  const renderMessages = () => {
+    return map(messages, (message, index) => {
+      const key = `error-${index}`;
+      if (message === ITEM_NOT_LOANABLE) {
+        const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
+
+        return (
+          <p data-test-error-item key={key}>
+            <SafeHTMLMessage
+              id="ui-checkout.messages.itemIsNotLoanable"
+              values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
+            />
+          </p>
+        );
+      } else {
+        return (<p data-test-error-item key={key}>{message}</p>);
+      }
+    });
+  };
 
   return (
     <Modal
@@ -58,18 +82,7 @@ function ErrorModal(props) {
       label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
       dismissible
     >
-      <p>
-        {
-          isItemNotLoanable
-            ? (
-              <SafeHTMLMessage
-                id="ui-checkout.messages.itemIsNotLoanable"
-                values={{ title, barcode, materialType, loanPolicy }}
-              />
-            )
-            : map(messages, (message) => <div>{message}</div>)
-        }
-      </p>
+      {renderMessages()}
       <Col xs={12}>
         <Row end="xs">
           {
@@ -99,14 +112,14 @@ ErrorModal.propTypes = {
   open: PropTypes.bool.isRequired,
   stripes: stripesShape.isRequired,
   onClose: PropTypes.func.isRequired,
-  errors: PropTypes.array.isRequired,
-  loanPolicy: PropTypes.string,
+  errors: PropTypes.arrayOf(
+    PropTypes.object
+  ).isRequired,
   openOverrideModal: PropTypes.func,
 };
 
 ErrorModal.defaultProps = {
   item: {},
-  loanPolicy: '',
   openOverrideModal: noop,
 };
 

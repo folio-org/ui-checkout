@@ -335,7 +335,8 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       item,
-      checkoutNotesMode
+      errors,
+      checkoutNotesMode,
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -363,7 +364,7 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
-          checkoutError={this.state.errors}
+          checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
         />

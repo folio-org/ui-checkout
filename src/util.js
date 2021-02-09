@@ -54,7 +54,12 @@ export function to(promise) {
 export function getAllErrorMessages(errors = []) {
   const errorMessages = [];
   errors.forEach(({ message }) => errorMessages.push(message));
-  errorMessages.join(',');
 
-  return errorMessages;
+  return errorMessages.join(';');
+}
+
+export function extractErrorDetails(errors, errorMessage) {
+  const singleError = errors.find(({ message }) => message === errorMessage);
+
+  return singleError || {};
 }

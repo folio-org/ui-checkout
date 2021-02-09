@@ -41,7 +41,6 @@ class ItemForm extends React.Component {
   static defaultProps = {
     patron: {},
     item: {},
-    checkoutError: {},
   };
 
   static getDerivedStateFromProps(props, { errors }) {
@@ -180,7 +179,6 @@ class ItemForm extends React.Component {
             stripes={stripes}
             item={item || {}}
             errors={errors}
-            // loanPolicy={error.loanPolicy}
             open
             openOverrideModal={this.openOverrideModal}
             onClose={this.clearForm}
