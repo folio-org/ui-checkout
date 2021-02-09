@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   get,
   isEmpty,
-  concat,
 } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
@@ -154,13 +153,11 @@ class ScanItems extends React.Component {
 
   async fetchBlocks() {
     const {
-      parentMutator,
       parentMutator: {
         manualPatronBlocks,
         automatedPatronBlocks,
       }
     } = this.props;
-    console.log(parentMutator);
     manualPatronBlocks.reset();
     automatedPatronBlocks.reset();
     const automatedBlocks = await automatedPatronBlocks.GET();
@@ -215,7 +212,6 @@ class ScanItems extends React.Component {
 
   tryCheckout = async (data) => {
     const {
-      patronBlocks: initialPatronBlocks,
       openBlockedModal,
       patronBlockOverridenInfo,
     } = this.props;
@@ -229,9 +225,6 @@ class ScanItems extends React.Component {
 
     const item = await this.fetchItem(barcode);
     const patronBlocks = await this.fetchBlocks();
-    console.log('initialPatronBlocks.length ', initialPatronBlocks.length);
-    console.log('patronBlocks.length ', patronBlocks.length);
-    console.log('patronBlockOverridenInfo ', patronBlockOverridenInfo);
     const shouldShowBlockedModal = !isEmpty(patronBlocks) && isEmpty(patronBlockOverridenInfo);
 
     if (shouldShowBlockedModal) {
@@ -296,7 +289,6 @@ class ScanItems extends React.Component {
     const { mutator: { checkout }, patronBlockOverridenInfo } = this.props;
     const { barcode, comment, dueDate } = data;
     const overrideData = { ...this.getRequestData(barcode) };
-    console.log('override data in ScanItems ', data);
 
     if (!dueDate) {
       overrideData.overrideBlocks = {

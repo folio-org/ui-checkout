@@ -55,24 +55,24 @@ describe('Override item block', () => {
 
       item = this.server.create('item', { barcode });
       this.server.get('/loan-policy-storage/loan-policies', {
-          'loanPolicies' : [{
-            'id' : loanPolicyWithLimitId,
-            'name' : loanPolicyWithLimitName,
-            'loanable' : true,
-            'loansPolicy' : {
-              'profileId' : 'Fixed',
-              'closedLibraryDueDateManagementId' : 'CURRENT_DUE_DATE',
-              'gracePeriod' : {
-                'duration' : 1,
-                'intervalId' : 'Weeks'
-              },
-              'fixedDueDateScheduleId' : 'fe837440-381e-4cd7-a102-6e66a90c4a2a',
-              'itemLimit' : 1
+        'loanPolicies' : [{
+          'id' : loanPolicyWithLimitId,
+          'name' : loanPolicyWithLimitName,
+          'loanable' : true,
+          'loansPolicy' : {
+            'profileId' : 'Fixed',
+            'closedLibraryDueDateManagementId' : 'CURRENT_DUE_DATE',
+            'gracePeriod' : {
+              'duration' : 1,
+              'intervalId' : 'Weeks'
             },
-            'itemLimit' : 1,
-            'renewable' : false,
-          }],
-          'totalRecords' : 1
+            'fixedDueDateScheduleId' : 'fe837440-381e-4cd7-a102-6e66a90c4a2a',
+            'itemLimit' : 1
+          },
+          'itemLimit' : 1,
+          'renewable' : false,
+        }],
+        'totalRecords' : 1
       });
 
       await checkOut

@@ -9,7 +9,14 @@ import {
   Row
 } from '@folio/stripes/components';
 
-const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath, openOverrideModal }) => {
+const PatronBlockModal = ({
+  open,
+  onClose,
+  patronBlocks,
+  viewUserPath,
+  openOverrideModal,
+  stripes,
+}) => {
   const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
   const renderBlocks = blocks.map(block => {
     return (
@@ -21,7 +28,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath, openOverr
     );
   });
 
-  const canBeOverridden = true; // TODO: permission check
+  const canBeOverridden = stripes.hasPerm('ui-users.overridePatronBlock');
 
   return (
     <Modal
@@ -44,8 +51,7 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath, openOverr
         <Col xs={6}>
           <Row end="xs">
             <Col>
-              {
-                canBeOverridden &&
+              {canBeOverridden &&
                 <Button
                   data-test-override-patron-block-button
                   onClick={openOverrideModal}
@@ -69,6 +75,9 @@ PatronBlockModal.propTypes = {
   patronBlocks: PropTypes.arrayOf(PropTypes.object),
   viewUserPath: PropTypes.func,
   openOverrideModal: PropTypes.func,
+  stripes: PropTypes.shape({
+    hasPerm: PropTypes.func.isRequired,
+  }),
 };
 
 export default PatronBlockModal;

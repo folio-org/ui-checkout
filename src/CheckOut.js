@@ -7,7 +7,6 @@ import {
   isEmpty,
   get,
   hasIn,
-  concat,
 } from 'lodash';
 
 import {
@@ -226,6 +225,7 @@ class CheckOut extends React.Component {
       loading: false,
       blocked: false,
       patronBlockOverridenInfo: {},
+      patronBlocksAmount: 0,
     };
   }
 
@@ -245,16 +245,17 @@ class CheckOut extends React.Component {
       resources: prevResources,
     } = prevProps;
 
-    const { submitting, patronBlockOverridenInfo } = this.state;
+    const { submitting } = this.state;
 
     if (this.shouldSubmitAutomatically) {
       this.submitForm('patron-form');
     }
 
-    const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
-    const automatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
+    const {
+      manualPatronBlocks,
+      automatedPatronBlocks,
+    } = this.extractPatronBlocks();
     const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
-    const prevAutomatedBlocks = get(prevResources, ['automatedPatronBlocks', 'records'], []);
     const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
     const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
@@ -274,19 +275,6 @@ class CheckOut extends React.Component {
         mutator.manualPatronBlocks.DELETE({ id: p.id });
       });
     }
-
-    // const currentPatronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
-    // const prevPatronBlocks = getPatronBlocks(prevManualBlocks, prevAutomatedBlocks);
-    //
-    // if ((prevPatronBlocks.length < currentPatronBlocks.length) && !isEmpty(patronBlockOverridenInfo)) {
-    //   console.log('currentPatronBlocks ', currentPatronBlocks.length);
-    //   console.log('prevPatronBlocks ', prevPatronBlocks.length);
-    //   console.log('here ')
-    //   this.setState({
-    //     blocked: true,
-    //     patronBlockOverridenInfo: {},
-    //   });
-    // }
 
     if (this.timer) {
       return;
@@ -316,6 +304,17 @@ class CheckOut extends React.Component {
     }
   }
 
+  extractPatronBlocks = () => {
+    const { resources } = this.props;
+    const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
+    const automatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
+
+    return {
+      manualPatronBlocks,
+      automatedPatronBlocks,
+    };
+  }
+
   submitForm = (domId) => {
     const submitEvent = new Event('submit', { cancelable: true });
     const form = document.querySelector(`#${domId}`);
@@ -327,7 +326,7 @@ class CheckOut extends React.Component {
       resources: { activeRecord: { patronId } },
       mutator: {
         endSession: { POST: endSession },
-        activeRecord: { update }
+        activeRecord: { update },
       },
     } = this.props;
 
@@ -353,6 +352,11 @@ class CheckOut extends React.Component {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
       update({ patronId: null, hasTimer: false });
       this.timer = null;
+      this.setState({
+        patronBlockOverridenInfo: {},
+        patronBlocksAmount: 0,
+        blocked: false,
+      });
     }
   }
 
@@ -435,8 +439,10 @@ class CheckOut extends React.Component {
         return { error, patron: null };
       }
 
-      const selManualPatronBlocks = get(this.props.resources, ['manualPatronBlocks', 'records'], []);
-      const selAutomatedPatronBlocks = get(this.props.resources, ['automatedPatronBlocks', 'records'], []);
+      const {
+        manualPatronBlocks: selManualPatronBlocks,
+        automatedPatronBlocks: selAutomatedPatronBlocks,
+      } = this.extractPatronBlocks();
       let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true);
       manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
       const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true);
@@ -513,9 +519,14 @@ class CheckOut extends React.Component {
   };
 
   overridePatronBlock = ({ comment }) => {
-    console.log('overridePatronBlock in CheckOut');
-    console.log('this.props');
+    const {
+      manualPatronBlocks,
+      automatedPatronBlocks,
+    } = this.extractPatronBlocks();
+    const patronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
+
     this.setState({
+      patronBlocksAmount: patronBlocks.length,
       patronBlockOverridenInfo: {
         patronBlock: {},
         comment,
@@ -543,9 +554,11 @@ class CheckOut extends React.Component {
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
     const settings = get(resources, ['settings', 'records'], []);
-    const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
-    const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);
-    const patronBlocks = getPatronBlocks(selManualPatronBlocks, selAutomatedPatronBlocks);
+    const {
+      manualPatronBlocks,
+      automatedPatronBlocks,
+    } = this.extractPatronBlocks();
+    const patronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
     const selPatron = resources.selPatron;
     const {
@@ -554,7 +567,10 @@ class CheckOut extends React.Component {
       requestsCount,
       overrideModalOpen,
       patronBlockOverridenInfo,
+      patronBlocksAmount,
     } = this.state;
+    const patronHasNewBlocks = patronBlocksAmount !== 0 && patronBlocksAmount < patronBlocks.length;
+    const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverridenInfo)) || (blocked && patronHasNewBlocks);
 
     let patron = patrons[0];
     let proxy = {};
@@ -654,12 +670,13 @@ class CheckOut extends React.Component {
             onSessionEnd={() => this.onSessionEnd()}
           />
         }
-        <PatronBlockModal // и айтем еще не ввели добавить проверку
-          open={blocked && isEmpty(patronBlockOverridenInfo)}
+        <PatronBlockModal
+          open={isPatronBlockModalOpen}
           openOverrideModal={this.openOverridePatronBlockModal}
           onClose={this.onCloseBlockedModal}
           viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks || []}
+          stripes={stripes}
         />
         {overrideModalOpen &&
           <OverrideModal
@@ -669,6 +686,7 @@ class CheckOut extends React.Component {
             overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
             patronBlocks={patronBlocks || []}
+            patronBlockOverridenInfo={patronBlockOverridenInfo}
           />
         }
         <NotificationModal

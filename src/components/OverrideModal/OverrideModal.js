@@ -28,7 +28,7 @@ function OverrideModal(props) {
     stripes,
     closeOverrideModal,
     onOverride,
-    message = '',
+    message,
     overridePatronBlock,
     patronBlockOverridenInfo,
     patronBlocks,
@@ -38,7 +38,6 @@ function OverrideModal(props) {
       barcode,
     },
   } = props;
-  console.log('patronBlockOverridenInfo ', patronBlockOverridenInfo);
   const [comment, setAdditionalInfo] = useState(patronBlockOverridenInfo?.comment ?? '');
   const [dueDate, setDatetime] = useState('');
 
@@ -208,7 +207,7 @@ OverrideModal.propTypes = {
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
   overridePatronBlock: PropTypes.bool,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
   patronBlocks: PropTypes.arrayOf(PropTypes.object),
   patronBlockOverridenInfo: PropTypes.object,
 };
@@ -218,5 +217,6 @@ OverrideModal.defaultProps = {
   overridePatronBlock: false,
   patronBlocks: [],
   patronBlockOverridenInfo: {},
+  message: '',
 };
 export default OverrideModal;

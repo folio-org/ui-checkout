@@ -40,9 +40,7 @@ function ErrorModal(props) {
 
   const canOverrideByBarcode = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
     && OVERRIDABLE_ERROR_MESSAGES.includes(message);
-
-  // TODO: Replace with correct permission
-  const canOverrideItemBlock = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
+  const canOverrideItemBlock = stripes.hasPerm('ui-users.overrideItemBlock')
     && (message && message.includes(MAX_ITEM_BLOCK_LIMIT));
   const canBeOverridden = canOverrideByBarcode || canOverrideItemBlock;
   const isItemNotLoanable = message === ITEM_NOT_LOANABLE;

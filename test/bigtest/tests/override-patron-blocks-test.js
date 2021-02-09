@@ -18,6 +18,7 @@ const checkOut = new CheckOutInteractor();
 
 describe('Override patron block', () => {
   let item;
+  let newItem;
   let user;
   const servicePoint = {
     id: 'servicepointId2',
@@ -56,11 +57,9 @@ describe('Override patron block', () => {
 
     it('should show patron blocked modal', () => {
       expect(checkOut.blockModal.modalPresent).to.be.true;
-      expect(checkOut.blockModal.overrideButton.isPresent).to.be.true;
     });
 
     it('should show override button', () => {
-      expect(checkOut.blockModal.modalPresent).to.be.true;
       expect(checkOut.blockModal.overrideButton.isPresent).to.be.true;
     });
 
@@ -71,7 +70,7 @@ describe('Override patron block', () => {
 
       it('should show override patron block modal', () => {
         expect(checkOut.overrideModal.isPresent).to.be.true;
-        expect(checkOut.overrideModal.label.text).to.equal(translations['overridePatronBlock']);
+        expect(checkOut.overrideModal.label.text).to.equal(translations.overridePatronBlock);
       });
 
       describe('fill override patron block comment', () => {
@@ -105,7 +104,7 @@ describe('Override patron block', () => {
               .clickItemBtn();
 
             await this.server.post('circulation/check-out-by-barcode', () => {
-              return new Response(422, {'Content-Type': 'application/json'}, {
+              return new Response(422, { 'Content-Type': 'application/json' }, {
                 'errors': [{
                   'message': 'Item is not loanable',
                   'parameters': [{
@@ -142,6 +141,60 @@ describe('Override patron block', () => {
 
               it('should hide override modal', () => {
                 expect(checkOut.overrideModal.isPresent).to.be.false;
+              });
+            });
+          });
+        });
+
+        describe('try to checkout item when new block appeared', () => {
+          beforeEach(async function () {
+            this.server.create('manualblock', { userId: user.id });
+            newItem = this.server.create('item', { barcode: '111111' });
+
+            await checkOut
+              .fillItemBarcode(newItem.barcode)
+              .clickItemBtn();
+          });
+
+
+          it('should show patron blocked modal', () => {
+            expect(checkOut.blockModal.modalPresent).to.be.true;
+          });
+
+          it('should show override button', () => {
+            expect(checkOut.blockModal.overrideButton.isPresent).to.be.true;
+          });
+
+          describe('override patron block', () => {
+            beforeEach(async () => {
+              await checkOut.blockModal.overrideButton.click();
+            });
+
+            it('should show override patron block modal', () => {
+              expect(checkOut.overrideModal.isPresent).to.be.true;
+              expect(checkOut.overrideModal.commentTextarea.value).to.equal('Reason');
+            });
+
+            describe('fill override patron block comment', () => {
+              beforeEach(async function () {
+                await checkOut.overrideModal.comment.fill('textarea', 'Reason + another reason');
+                await checkOut.overrideModal.saveAndCloseButton.click();
+              });
+
+              it('override modal should not be displayed', () => {
+                expect(checkOut.overrideModal.isPresent).to.be.false;
+              });
+
+              describe('checkout item', () => {
+                beforeEach(async function () {
+                  await checkOut
+                    .fillItemBarcode(newItem.barcode)
+                    .clickItemBtn();
+                });
+
+                it('should checkout item', () => {
+                  expect(checkOut.scanItems.itemListPresent).to.be.true;
+                });
               });
             });
           });
