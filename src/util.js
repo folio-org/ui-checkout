@@ -50,3 +50,11 @@ export function to(promise) {
     .then(data => [null, data])
     .catch(err => [err]);
 }
+
+export function getAllErrorMessages(errors = []) {
+  const errorMessages = [];
+  errors.forEach(({ message }) => errorMessages.push(message));
+  errorMessages.join(',');
+
+  return errorMessages;
+}

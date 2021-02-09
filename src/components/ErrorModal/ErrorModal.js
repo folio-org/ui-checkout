@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { noop } from 'lodash';
+import {
+  noop,
+  map,
+  split,
+} from 'lodash';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesShape } from '@folio/stripes/core';
@@ -16,12 +20,13 @@ import {
   ITEM_NOT_LOANABLE,
   OVERRIDABLE_ERROR_MESSAGES,
 } from '../../constants';
+import { getAllErrorMessages } from '../../util';
 
 function ErrorModal(props) {
   const {
     open,
     onClose,
-    message,
+    errors,
     loanPolicy,
     openOverrideModal,
     stripes,
@@ -31,15 +36,18 @@ function ErrorModal(props) {
       materialType: { name: materialType } = {},
     } = {},
   } = props;
-
+// TODO: Remove all staff related to item
+  console.log('errors in ErrorModal ', errors);
+  const allErrors = getAllErrorMessages(errors);
+  const messages = split(allErrors, ';');
   const handleOverrideClick = () => {
     onClose();
     openOverrideModal();
   };
 
   const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
-    && OVERRIDABLE_ERROR_MESSAGES.includes(message);
-  const isItemNotLoanable = message === ITEM_NOT_LOANABLE;
+    && OVERRIDABLE_ERROR_MESSAGES.includes(messages);
+  const isItemNotLoanable = messages.includes(ITEM_NOT_LOANABLE);
 
   return (
     <Modal
@@ -59,7 +67,7 @@ function ErrorModal(props) {
                 values={{ title, barcode, materialType, loanPolicy }}
               />
             )
-            : message
+            : map(messages, (message) => <div>{message}</div>)
         }
       </p>
       <Col xs={12}>
@@ -91,7 +99,7 @@ ErrorModal.propTypes = {
   open: PropTypes.bool.isRequired,
   stripes: stripesShape.isRequired,
   onClose: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
+  errors: PropTypes.array.isRequired,
   loanPolicy: PropTypes.string,
   openOverrideModal: PropTypes.func,
 };
