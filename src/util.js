@@ -1,6 +1,13 @@
-import { get } from 'lodash';
+import {
+  get,
+  includes,
+} from 'lodash';
 
-import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
+import {
+  defaultPatronIdentifier,
+  patronIdentifierMap,
+  statuses,
+} from './constants';
 
 // serialized object into http params
 export function toParams(obj) {
@@ -62,4 +69,17 @@ export function extractErrorDetails(errors, errorMessage) {
   const singleError = errors.find(({ message }) => message === errorMessage);
 
   return singleError || {};
+}
+
+export function shouldStatusModalBeShown(item) {
+  return includes([
+    statuses.IN_PROCESS_NON_REQUESTABLE,
+    statuses.LONG_MISSING,
+    statuses.LOST_AND_PAID,
+    statuses.MISSING,
+    statuses.RESTRICTED,
+    statuses.UNAVAILABLE,
+    statuses.UNKNOWN,
+    statuses.WITHDRAWN,
+  ], item?.status?.name);
 }

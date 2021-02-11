@@ -100,7 +100,7 @@
     "checkout.notes": "Notas de préstamo",
     "actions.moreDetails": "Obtenga más detalles sobre este artículo",
     "permission.viewLoans": "Consulte: Ver préstamos",
-    "permission.viewFeeFines": "Check out: View fees/fines",
-    "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record"
+    "permission.viewFeeFines": "Préstamos: Ver tarifas / multas",
+    "permission.viewRequests": "Préstamos: Ver solicitudes",
+    "fastAddLabel": "Crear un registro rápido"
 }

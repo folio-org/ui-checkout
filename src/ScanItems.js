@@ -136,7 +136,7 @@ class ScanItems extends React.Component {
     const errors = [];
 
     if (!barcode) {
-      return errors.push({
+      errors.push({
         item: {
           barcode: <FormattedMessage id="ui-checkout.missingDataError" />
         }
@@ -145,7 +145,7 @@ class ScanItems extends React.Component {
 
     if (!patron) {
       this.triggerPatronFormSubmit();
-      return errors.push({
+      errors.push({
         patron: {
           identifier: <FormattedMessage id="ui-checkout.missingDataError" />
         }
@@ -154,7 +154,7 @@ class ScanItems extends React.Component {
 
     if (patronBlocks.length > 0) {
       openBlockedModal();
-      return errors.push({
+      errors.push({
         patron: {
           blocked: <FormattedMessage id="ui-checkout.blockModal" />
         }
