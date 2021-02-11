@@ -42,7 +42,12 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
         <Col xs={4}>
           <Row end="xs">
             <Col>
-              <Button onClick={onClose}><FormattedMessage id="ui-checkout.close" /></Button>
+              <Button
+                data-test-close-patron-block-modal
+                onClick={onClose}
+              >
+                <FormattedMessage id="ui-checkout.close" />
+              </Button>
               <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
             </Col>
           </Row>
