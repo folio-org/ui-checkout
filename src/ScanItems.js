@@ -168,6 +168,10 @@ class ScanItems extends React.Component {
     const barcode = get(data, 'item.barcode');
     const errors = this.validate(barcode);
 
+    if (!isEmpty(this.props.patronBlocks)) {
+      return;
+    }
+
     if (!isEmpty(errors)) {
       this.setState({ errors });
       return;

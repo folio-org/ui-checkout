@@ -89,7 +89,7 @@
   "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
   "awaitingPickupLabel": "Items awaiting pickup",
 
-  "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy.",
+  "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy",
   "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
   "cddd.date": "Date",
   "cddd.time": "Time",

@@ -88,6 +88,10 @@ describe('Handle list of errors', () => {
         expect(checkOut.errorModal.errorsListCollection(1).text).to.include(`${item.materialType.name}`);
         expect(checkOut.errorModal.errorsListCollection(1).text).to.include(notLoanablePolicyName);
       });
+
+      it('should not display override button', () => {
+        expect(checkOut.errorModal.overrideButton.isPresent).to.be.false;
+      });
     });
   });
 });

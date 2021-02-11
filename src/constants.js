@@ -29,6 +29,9 @@ export const INVALID_DATE_MESSAGE = 'Invalid date';
 export const defaultPatronIdentifier = 'BARCODE';
 
 export const ITEM_NOT_LOANABLE = 'Item is not loanable';
+
+// export const MAX_ITEM_BLOCK_LIMIT = 'Patron has reached maximum limit of';
+
 export const OVERRIDABLE_ERROR_MESSAGES = [ITEM_NOT_LOANABLE];
 
 export const statuses = {

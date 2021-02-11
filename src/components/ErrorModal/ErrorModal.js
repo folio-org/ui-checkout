@@ -46,8 +46,8 @@ function ErrorModal(props) {
     openOverrideModal();
   };
 
-  const containsOverrideErrorMessage = messages.some((message) => {
-    return OVERRIDABLE_ERROR_MESSAGES.includes(message);
+  const containsOverrideErrorMessage = messages.every((message) => {
+    return OVERRIDABLE_ERROR_MESSAGES.find(error => message.includes(error));
   });
 
   const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
@@ -55,21 +55,23 @@ function ErrorModal(props) {
 
   const renderMessages = () => {
     return map(messages, (message, index) => {
-      const key = `error-${index}`;
+      let notLoanableError = '';
+
       if (message === ITEM_NOT_LOANABLE) {
         const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
-
-        return (
-          <p data-test-error-item key={key}>
-            <SafeHTMLMessage
-              id="ui-checkout.messages.itemIsNotLoanable"
-              values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
-            />
-          </p>
+        notLoanableError = (
+          <SafeHTMLMessage
+            id="ui-checkout.messages.itemIsNotLoanable"
+            values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
+          />
         );
-      } else {
-        return (<p data-test-error-item key={key}>{message}</p>);
       }
+
+      return (
+        <p data-test-error-item key={`error-${index}`}>
+          {notLoanableError || message}
+        </p>
+      );
     });
   };
 
