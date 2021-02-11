@@ -11,7 +11,7 @@
     "unknownError": "Unbekannter Fehler aufgetreten",
     "scanPatronCard": "Personenkarte scannen",
     "scanItems": "Exemplare scannen",
-    "openLoans": "Offene Ausleihen",
+    "openLoans": "Aktuelle Ausleihen",
     "borrowerProxy": "Borrower's proxy",
     "borrower": "Entleiher",
     "noItemsEntered": "Keine Exemplare wurden eingegeben",
@@ -101,6 +101,6 @@
     "actions.moreDetails": "Mehr Details über dieses Exemplar",
     "permission.viewLoans": "Ausleihe: Ausleihen anzeigen",
     "permission.viewFeeFines": "Ausleihe: Gebühren/Bußgelder anzeigen",
-    "permission.viewRequests": "Ausleihe: Vormerkungen anzeigen",
+    "permission.viewRequests": "Ausleihe: Bestellungen anzeigen",
     "fastAddLabel": "Neue Kurzaufnahme"
 }
