@@ -84,11 +84,8 @@
     "openRequests": "فتح الطلبات",
     "date": "التاريخ",
     "source": "المصدر",
-    "confirmStatusModal.heading.missing": "إعارة المادة المفقودة؟",
-    "confirmStatusModal.heading.withdrawn": "إعارة المادة المسحوبة؟",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف.",
-    "confirmStatusModal.heading.lostAndPaid": "إعارة المواد الضائعة والمدفوعة؟",
     "permission.overrideCheckOutByBarcode": "الإعارة: تخطى سياسة الأعارة عند الإعارة بواسطة الباركود",
     "permission.circulation": "الإعارة: أعر مواد الإعارة",
     "permission.all": "الإعارة: كل الصلاحيات",
@@ -102,5 +99,14 @@
     "permission.viewLoans": "الإعارة: اعرض الإعارات",
     "permission.viewFeeFines": "الإعارة: اعرض الرسوم/الغرامات",
     "permission.viewRequests": "الإعارة: اعرض الطلبات",
-    "fastAddLabel": "إضافة تسجيلة سريعة جديدة"
+    "fastAddLabel": "إضافة تسجيلة سريعة جديدة",
+    "confirmStatusModal.heading": "إعارة المادة {status}؟",
+    "statuses.missing": "مفقودة",
+    "statuses.withdrawn": "مسحوبة",
+    "statuses.lostAndPaid": "ضائعة ومدفوعة",
+    "statuses.restricted": "مقيدة",
+    "statuses.inProcessNonRequestable": "قيد المعالجة (غير قابل للطلب)",
+    "statuses.longMissing": "مفقودة منذ مدة",
+    "statuses.unavailable": "غير متاحة",
+    "statuses.unknown": "غير معروف"
 }

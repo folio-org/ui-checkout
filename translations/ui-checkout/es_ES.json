@@ -84,11 +84,8 @@
     "openRequests": "Solicitudes abiertas",
     "date": "Fecha",
     "source": "Fuente",
-    "confirmStatusModal.heading.missing": "Préstamo de un ejemplar perdido?",
-    "confirmStatusModal.heading.withdrawn": "Préstamos de un ejemplar retirado?",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) el estado de ejemplar es<strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) el estado de ejemplar es<strong>{status}</strong> y está oculto en el catálogo.",
-    "confirmStatusModal.heading.lostAndPaid": "Préstamo de un ejemplar perdido y pagado?",
     "permission.overrideCheckOutByBarcode": "Préstamo: Invalidar la política de préstamo al prestar por código de barras",
     "permission.circulation": "Préstamo: prestar ejemplares en circulación",
     "permission.all": "Préstamo: todos los permisos",
@@ -102,5 +99,14 @@
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record"
+    "fastAddLabel": "New fast add record",
+    "confirmStatusModal.heading": "Check out {status} item?",
+    "statuses.missing": "Missing",
+    "statuses.withdrawn": "Withdrawn",
+    "statuses.lostAndPaid": "Lost and paid",
+    "statuses.restricted": "Restricted",
+    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.longMissing": "Long missing",
+    "statuses.unavailable": "Unavailable",
+    "statuses.unknown": "Unknown"
 }

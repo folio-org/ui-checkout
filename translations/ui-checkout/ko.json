@@ -84,11 +84,8 @@
     "openRequests": "요청 열기",
     "date": "날짜",
     "source": "출처",
-    "confirmStatusModal.heading.missing": "분실된 품목을 확인하시겠습니까?",
-    "confirmStatusModal.heading.withdrawn": "철회된 항목을 확인하시겠습니까?",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} ( {materialType} ) </strong> (바코드 : {barcode} )의 항목 상태는 <strong> {status} </strong> 입니다.",
     "confirmStatusModal.suppressedMessage": "<strong> {title} ( {materialType} ) </strong> (바코드 : {barcode} )의 항목 상태는 <strong> {status} </strong> 이며 검색되지 않습니다.",
-    "confirmStatusModal.heading.lostAndPaid": "분실물 및 유료 품목을 확인하시겠습니까?",
     "permission.overrideCheckOutByBarcode": "대출: 바코드로 대출시 대출 정책을 재정의",
     "permission.circulation": "대출: 대출 품목 확인 ",
     "permission.all": "대출 : 모든 권한",
@@ -102,5 +99,14 @@
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record"
+    "fastAddLabel": "New fast add record",
+    "confirmStatusModal.heading": "Check out {status} item?",
+    "statuses.missing": "Missing",
+    "statuses.withdrawn": "Withdrawn",
+    "statuses.lostAndPaid": "Lost and paid",
+    "statuses.restricted": "Restricted",
+    "statuses.inProcessNonRequestable": "In process (non-requestable)",
+    "statuses.longMissing": "Long missing",
+    "statuses.unavailable": "Unavailable",
+    "statuses.unknown": "Unknown"
 }
