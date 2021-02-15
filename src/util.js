@@ -58,6 +58,19 @@ export function to(promise) {
     .catch(err => [err]);
 }
 
+export function getAllErrorMessages(errors = []) {
+  const errorMessages = [];
+  errors.forEach(({ message }) => errorMessages.push(message));
+
+  return errorMessages.join(';');
+}
+
+export function extractErrorDetails(errors, errorMessage) {
+  const singleError = errors.find(({ message }) => message === errorMessage);
+
+  return singleError || {};
+}
+
 export function shouldStatusModalBeShown(item) {
   return includes([
     statuses.IN_PROCESS_NON_REQUESTABLE,

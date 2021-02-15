@@ -183,6 +183,10 @@ describe('CheckOut', () => {
         await checkOut.checkoutItem('123');
       });
 
+      it('should not display error modal', () => {
+        expect(checkOut.errorModal.isPresent).to.be.false;
+      });
+
       it('shows a list of checked out items', () => {
         expect(checkOut.scanItems.itemListPresent).to.be.true;
         expect(checkOut.items().length).to.equal(1);
