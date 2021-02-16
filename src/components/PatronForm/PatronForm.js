@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  find,
-  isEmpty,
-} from 'lodash';
+import { find } from 'lodash';
 import { Field } from 'react-final-form';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -110,7 +107,7 @@ class PatronForm extends React.Component {
     } = this.props;
 
     const error = await handleSubmit(event);
-    if (!isEmpty(error)) {
+    if (error.patron) {
       return error;
     }
     return form.reset();

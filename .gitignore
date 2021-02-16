@@ -3,7 +3,6 @@ yarn.lock
 .DS_Store
 yarn-error.log
 artifacts
-.idea
 .vscode
 .npmrc
 stripes.config.js.local

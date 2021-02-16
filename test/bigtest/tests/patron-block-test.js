@@ -115,23 +115,6 @@ describe('Patron blocks', () => {
       it('shows the patron block message', () => {
         expect(checkOut.blockModal.modalMessage(0).text).to.equal(manualBlockMessage);
       });
-
-      describe('close patron block modal and try to checkout item', () => {
-        beforeEach(async function () {
-          const item = this.server.create('item');
-
-          await checkOut.blockModal.closeButton.click();
-          await checkOut.checkoutItem(item.barcode);
-        });
-
-        it('should not display error modal', () => {
-          expect(checkOut.errorModal.isPresent).to.be.false;
-        });
-
-        it('shows the patron block modal', () => {
-          expect(checkOut.blockModal.modalPresent).to.be.true;
-        });
-      });
     });
   });
 });

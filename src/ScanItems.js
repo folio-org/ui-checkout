@@ -3,10 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-import {
-  get,
-  isEmpty,
-} from 'lodash';
+import { get, isEmpty } from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 import { escapeCqlValue } from '@folio/stripes/util';
@@ -107,7 +104,7 @@ class ScanItems extends React.Component {
       loading: false,
       checkoutStatus: null,
       item: null,
-      errors: [],
+      error: null,
     };
   }
 
@@ -136,47 +133,41 @@ class ScanItems extends React.Component {
       openBlockedModal
     } = this.props;
 
-    const errors = [];
-
     if (!barcode) {
-      errors.push({
+      return {
         item: {
           barcode: <FormattedMessage id="ui-checkout.missingDataError" />
         }
-      });
+      };
     }
 
     if (!patron) {
       this.triggerPatronFormSubmit();
-      errors.push({
+      return {
         patron: {
           identifier: <FormattedMessage id="ui-checkout.missingDataError" />
         }
-      });
+      };
     }
 
     if (patronBlocks.length > 0) {
       openBlockedModal();
-      errors.push({
+      return {
         patron: {
           blocked: <FormattedMessage id="ui-checkout.blockModal" />
         }
-      });
+      };
     }
 
-    return errors;
+    return {};
   }
 
   tryCheckout = async (data) => {
     const barcode = get(data, 'item.barcode');
-    const errors = this.validate(barcode);
+    const error = this.validate(barcode);
 
-    if (!isEmpty(this.props.patronBlocks)) {
-      return;
-    }
-
-    if (!isEmpty(errors)) {
-      this.setState({ errors });
+    if (!isEmpty(error)) {
+      this.setState({ error });
       return;
     }
 
@@ -232,27 +223,19 @@ class ScanItems extends React.Component {
   }
 
   override = (data) => {
-    const { mutator: { checkout } } = this.props;
+    const { mutator: { overrideCheckout } } = this.props;
     const { barcode, comment, dueDate } = data;
-    const overrideData = { ...this.getRequestData(barcode) };
+    const overrideData = {
+      ...this.getRequestData(barcode),
+      comment,
+      dueDate,
+    };
 
-    if (!dueDate) {
-      overrideData.overrideBlocks = {
-        itemLimitBlock: {},
-        comment,
-      };
-    } else {
-      overrideData.overrideBlocks = {
-        itemNotLoanableBlock: { dueDate },
-        comment,
-      };
-    }
-
-    return this.performAction(checkout, overrideData);
+    return this.performAction(overrideCheckout, overrideData);
   }
 
   performAction(action, data) {
-    this.setState({ loading: true, errors: [] });
+    this.setState({ loading: true, error: null });
     return action.POST(data)
       .then(this.fetchLoanPolicy)
       .then(this.addScannedItem)
@@ -271,11 +254,36 @@ class ScanItems extends React.Component {
     }
   }
 
-  handleErrors = ({ errors }) => {
+  handleErrors = ({
+    errors: [
+      {
+        parameters,
+        message,
+      } = {},
+    ] = [],
+  }) => {
     // TODO make error message internationalized
     // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
+    let itemError;
+    if (!parameters) {
+      itemError = {
+        barcode: <FormattedMessage id="ui-checkout.unknownError" />,
+        _error: 'unknownError',
+      };
+    } else if (parameters.length === 0) {
+      itemError = {
+        barcode: message,
+        loanPolicy: ''
+      };
+    } else {
+      itemError = {
+        barcode: message,
+        _error: parameters[0].key,
+        loanPolicy: parameters[0].value,
+      };
+    }
 
-    this.setState({ errors });
+    this.setState({ error: { item: itemError } });
   }
 
   addScannedItem = (loan) => {
@@ -315,7 +323,7 @@ class ScanItems extends React.Component {
   }
 
   onClearCheckoutErrors = () => {
-    this.setState({ errors: [] });
+    this.setState({ error: null });
   }
 
   onCancel = () => {
@@ -350,8 +358,7 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       item,
-      errors,
-      checkoutNotesMode,
+      checkoutNotesMode
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -379,7 +386,7 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
-          checkoutError={errors}
+          checkoutError={this.state.error}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
         />

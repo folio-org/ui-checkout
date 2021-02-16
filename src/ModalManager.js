@@ -1,3 +1,4 @@
+import { get, upperFirst } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
@@ -6,12 +7,6 @@ import {
   injectIntl,
 } from 'react-intl';
 import {
-  get,
-  lowerFirst,
-  upperFirst,
-} from 'lodash';
-
-import {
   ConfirmationModal,
   FormattedDate,
   FormattedTime,
@@ -19,15 +14,10 @@ import {
 
 import CheckoutNoteModal from './components/CheckoutNoteModal';
 import MultipieceModal from './components/MultipieceModal';
-import {
-  statuses,
-  statusMessages,
-} from './constants';
-import { shouldStatusModalBeShown } from './util';
+import { statuses } from './constants';
 
 class ModalManager extends React.Component {
   static propTypes = {
-    intl: PropTypes.object,
     checkedoutItem: PropTypes.object.isRequired,
     checkoutNotesMode: PropTypes.bool,
     onDone: PropTypes.func.isRequired,
@@ -49,7 +39,7 @@ class ModalManager extends React.Component {
     this.state = { checkedoutItem, checkoutNotesMode };
     this.steps = [
       {
-        validate: () => shouldStatusModalBeShown(this.state.checkedoutItem),
+        validate: this.shouldStatusModalBeShown,
         exec: () => this.setState({ showStatusModal: true }),
       },
       {
@@ -89,6 +79,16 @@ class ModalManager extends React.Component {
     }
 
     return this.props.onDone();
+  }
+
+  shouldStatusModalBeShown = () => {
+    const { checkedoutItem } = this.state;
+
+    return [
+      statuses.LOST_AND_PAID,
+      statuses.MISSING,
+      statuses.WITHDRAWN,
+    ].includes(checkedoutItem?.status?.name);
   }
 
   shouldCheckoutNoteModalBeShown = () => {
@@ -247,43 +247,46 @@ class ModalManager extends React.Component {
   // This modal handles confirmation (check out? Don't check out?)
   // for various special item statuses, e.g. Missing, Withdrawn.
   renderConfirmStatusModal() {
-    const { intl: { formatMessage } } = this.props;
     const {
       checkedoutItem,
       showStatusModal,
     } = this.state;
-
     const {
       barcode,
       title,
       materialType,
-      status: { name },
     } = checkedoutItem;
-
-    const status = formatMessage({ id: statusMessages[name] });
-
     const values = {
       title,
       barcode,
       materialType: upperFirst(materialType?.name ?? ''),
-      status,
     };
     const messageId = checkedoutItem.discoverySuppress ?
       'ui-checkout.confirmStatusModal.suppressedMessage' :
       'ui-checkout.confirmStatusModal.notSuppressedMessage';
+    values.status = checkedoutItem?.status?.name;
 
-    const heading = (
-      <FormattedMessage
-        id="ui-checkout.confirmStatusModal.heading"
-        values={{ status: lowerFirst(status) }}
-      />);
+    let heading;
+    switch (checkedoutItem?.status?.name) {
+      case statuses.LOST_AND_PAID:
+        heading = 'ui-checkout.confirmStatusModal.heading.lostAndPaid';
+        break;
+      case statuses.MISSING:
+        heading = 'ui-checkout.confirmStatusModal.heading.missing';
+        break;
+      case statuses.WITHDRAWN:
+        heading = 'ui-checkout.confirmStatusModal.heading.withdrawn';
+        break;
+      default:
+        break;
+    }
 
     return (
       <ConfirmationModal
         id="test-confirm-status-modal"
         open={showStatusModal}
         item={checkedoutItem}
-        heading={heading}
+        heading={<FormattedMessage id={heading} />}
         message={<SafeHTMLMessage
           id={messageId}
           values={values}

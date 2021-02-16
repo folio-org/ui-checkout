@@ -5,12 +5,14 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import stripesFinalForm from '@folio/stripes/final-form';
+
 import {
   Col,
   Button,
   Row,
   TextField,
 } from '@folio/stripes/components';
+
 import {
   withStripes,
   stripesShape,
@@ -30,19 +32,18 @@ class ItemForm extends React.Component {
     onOverride: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
     formRef: PropTypes.object.isRequired,
-    checkoutError: PropTypes.arrayOf(
-      PropTypes.object
-    ).isRequired,
+    checkoutError: PropTypes.object,
     onClearCheckoutErrors: PropTypes.func,
   };
 
   static defaultProps = {
     patron: {},
     item: {},
+    checkoutError: {},
   };
 
-  static getDerivedStateFromProps(props, { errors }) {
-    return { errors: props.checkoutError || errors || [] };
+  static getDerivedStateFromProps(props, { error }) {
+    return { error: props.checkoutError?.item || error || {} };
   }
 
   constructor(props) {
@@ -51,8 +52,7 @@ class ItemForm extends React.Component {
     this.barcodeEl = React.createRef();
     this.state = {
       overrideModalOpen: false,
-      errors: [],
-      message: '',
+      error: {},
     };
   }
 
@@ -84,16 +84,12 @@ class ItemForm extends React.Component {
     }
   }
 
-  setError = (errors) => {
-    this.setState({ errors });
+  setError = (error) => {
+    this.setState({ error });
   };
 
   openOverrideModal = () => {
-    const { errors } = this.state;
-    this.setState({
-      message: errors[0].message,
-      overrideModalOpen: true
-    });
+    this.setState({ overrideModalOpen: true });
   };
 
   closeOverrideModal = () => {
@@ -110,17 +106,17 @@ class ItemForm extends React.Component {
       onClearCheckoutErrors,
     } = this.props;
 
-    this.setError([]);
+    this.setError({});
     onClearCheckoutErrors();
     form.reset();
   };
 
   onSubmit = async (event) => {
     const { handleSubmit } = this.props;
-    const errors = await handleSubmit(event);
+    const error = await handleSubmit(event);
 
-    if (!isEmpty(errors)) {
-      return errors;
+    if (error?.item) {
+      return error;
     }
 
     return this.clearForm();
@@ -134,11 +130,7 @@ class ItemForm extends React.Component {
       onOverride,
     } = this.props;
 
-    const {
-      errors,
-      message,
-      overrideModalOpen,
-    } = this.state;
+    const { error, overrideModalOpen } = this.state;
     const validationEnabled = false;
 
     return (
@@ -180,22 +172,25 @@ class ItemForm extends React.Component {
             </Col>
           </Row>
         </form>
-        {!isEmpty(errors) &&
+        {
+          !isEmpty(error) &&
           <ErrorModal
             stripes={stripes}
             item={item || {}}
-            errors={errors}
-            open
+            message={error.barcode}
+            loanPolicy={error.loanPolicy}
+            open={!isEmpty(error)}
             openOverrideModal={this.openOverrideModal}
             onClose={this.clearForm}
           />
         }
-        {overrideModalOpen &&
+        {
+          overrideModalOpen &&
           <OverrideModal
             item={item}
-            message={message}
             stripes={stripes}
             onOverride={onOverride}
+            overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
           />
         }

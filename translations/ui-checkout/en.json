@@ -11,6 +11,7 @@
   "itemNotCheckedOut": "Item not checked out",
   "userNotFoundError": "User with this {identifier} does not exist",
   "missingIdentifierError": "User {username} does not have a {identifier}",
+  "unknownError": "Unknown error occurred",
   "scanPatronCard": "Scan patron card",
   "scanItems": "Scan items",
   "openLoans": "Open loans",
@@ -64,7 +65,9 @@
   "multipieceModal.item.descriptionOfPieces": "Description of pieces",
   "multipieceModal.item.numberOfMissingPieces": "Number of missing pieces",
   "multipieceModal.item.descriptionOfmissingPieces": "Description of missing pieces",
-  "confirmStatusModal.heading": "Check out {status} item?",
+  "confirmStatusModal.heading.lostAndPaid": "Check out lost and paid item?",
+  "confirmStatusModal.heading.missing": "Check out missing item?",
+  "confirmStatusModal.heading.withdrawn": "Check out withdrawn item?",
   "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
   "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
   "note": "Note",
@@ -86,7 +89,7 @@
   "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
   "awaitingPickupLabel": "Items awaiting pickup",
 
-  "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy",
+  "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy.",
   "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",
   "cddd.date": "Date",
   "cddd.time": "Time",
@@ -94,8 +97,6 @@
   "override": "Override",
   "saveAndClose": "Save & close",
   "overrideLoanPolicy": "Override loan policy",
-  "overrideItemBlock": "Override item block",
-  "item.block.overrided": "(Item limit overridden)",
   "actions.moreDetails": "Get more details about this item",
 
   "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
@@ -104,15 +105,6 @@
   "permission.viewLoans": "Check out: View loans",
   "permission.viewFeeFines": "Check out: View fees/fines",
   "permission.viewRequests": "Check out: View requests",
-
-  "statuses.missing": "Missing",
-  "statuses.withdrawn": "Withdrawn",
-  "statuses.lostAndPaid": "Lost and paid",
-  "statuses.restricted": "Restricted",
-  "statuses.inProcessNonRequestable": "In process (non-requestable)",
-  "statuses.longMissing": "Long missing",
-  "statuses.unavailable": "Unavailable",
-  "statuses.unknown": "Unknown",
 
   "fastAddLabel": "New fast add record"
 }
