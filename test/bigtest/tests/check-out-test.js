@@ -1,6 +1,7 @@
 import React from 'react';
 import { beforeEach, describe, it } from '@bigtest/mocha';
 import { expect } from 'chai';
+import { Response } from 'miragejs';
 
 import { Button } from '@folio/stripes/components';
 
@@ -9,9 +10,19 @@ import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
 
 const itemModalStatuses = [
-  'Missing',
-  'Withdrawn',
+  'In process (non-requestable)',
+  'Long missing',
   'Lost and paid',
+  'Missing',
+  'Restricted',
+  'Unavailable',
+  'Unknown',
+  'Withdrawn',
+];
+
+// Assumed to be several non-checked out item statuses
+const nonCheckedOutItemStatuses = [
+  'Intellectual item',
 ];
 
 describe('CheckOut', () => {
@@ -172,6 +183,10 @@ describe('CheckOut', () => {
         await checkOut.checkoutItem('123');
       });
 
+      it('should not display error modal', () => {
+        expect(checkOut.errorModal.isPresent).to.be.false;
+      });
+
       it('shows a list of checked out items', () => {
         expect(checkOut.scanItems.itemListPresent).to.be.true;
         expect(checkOut.items().length).to.equal(1);
@@ -190,6 +205,47 @@ describe('CheckOut', () => {
 
       it('should hide item list empty message during checkout', () => {
         expect(checkOut.itemListEmptyMessage).to.equal('');
+      });
+    });
+
+    nonCheckedOutItemStatuses.forEach(status => {
+      describe(`checking out item with status ${status}`, () => {
+        let item;
+        let errorMessage;
+
+        beforeEach(async function () {
+          const intellectualItem = this.server.create('item', {
+            status: {
+              name: status,
+            },
+          });
+
+          this.server.post('/circulation/check-out-by-barcode', (schema, request) => {
+            const params = JSON.parse(request.requestBody);
+            item = schema.items.findBy({ barcode: params.itemBarcode });
+            errorMessage = `${item.title} (${item.materialType.name}) (Barcode: ${item.barcode}) has the item status ${item.status.name} and cannot be checked out`;
+
+            return new Response(422, { 'Content-Type': 'application/json' }, {
+              errors: [{
+                message: errorMessage,
+                parameters: [{
+                  key : 'itemBarcode',
+                  value : params.itemBarcode,
+                }]
+              }]
+            });
+          });
+
+          await checkOut.checkoutItem(intellectualItem.barcode);
+        });
+
+        it('should show error modal', () => {
+          expect(checkOut.errorModal.isPresent).to.be.true;
+        });
+
+        it('should show error message', () => {
+          expect(checkOut.errorModal.content).to.equal(errorMessage);
+        });
       });
     });
 

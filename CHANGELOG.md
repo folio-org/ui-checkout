@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## 5.0.1 IN PROGRESS
+## 6.0.0 IN PROGRESS
 
 * Do not use hard-coded dates in unit tests. Refs UICHKOUT-668.
 * Make room for `<Datepicker>` in the loan-policy override modal. Refs UICHKOUT-666.
@@ -9,6 +9,14 @@
 * Update due date when changed in the Check Out app. Refs UICHKOUT-647.
 * Replace 'ui-users.loans.edit' permisson with 'ui-users.loans.change-due-date' for changing due date.
 * Fix a label translation. Fixes UICHKOUT-675.
+* Upgraded to create-inventory plugin v2.0.0.
+* Prevent check out when item with intellectual item status is scanned. Refs UICHKOUT-669.
+* Update to stripes v6. Refs UICHKOUT-687.
+* Proxy not allowed to checkout items for sponsor if proxy has patron block. Refs UICHKOUT-673.
+* Show confirmation modal when scanning an item with one of the new statuses (Long missing, In process (non-requestable), Restricted, Unavailable, Unknown). Refs UICHKOUT-671.
+* Increment `@folio/stripes-cli` to `v2`. Refs UICHKOUT-692.
+* Handle a full list of errors when check out fails. Refs UICHKOUT-679.
+* Item blocks: Allow for override when logged in user has credentials. Refs UICHKOUT-677.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)

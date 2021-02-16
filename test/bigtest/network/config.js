@@ -13,7 +13,10 @@ export default function config() {
     configs: []
   });
 
-  this.get('/circulation/loans');
+  this.get('/circulation/loans', {
+    loans: [],
+    totalRecords: 0,
+  });
 
   this.get('/proxiesfor', {
     proxiesFor: [],
@@ -21,12 +24,12 @@ export default function config() {
   });
 
   this.get('/accounts', {
-    accounts : [],
-    totalRecords : 0,
-    resultInfo : {
-      totalRecords : 0,
-      facets : [],
-      diagnostics : []
+    accounts: [],
+    totalRecords: 0,
+    resultInfo: {
+      totalRecords: 0,
+      facets: [],
+      diagnostics: []
     }
   });
 
@@ -61,48 +64,48 @@ export default function config() {
   this.post('/circulation/end-patron-action-session', {});
 
   this.get('/groups', {
-    'usergroups' : [{
-      'group' : 'faculty',
-      'desc' : 'Faculty Member',
-      'id' : 'cb5c73ae-092f-4c28-8a52-4c7396937e09',
-      'metadata' : {
-        'createdDate' : '2019-03-10T11:02:41.298+0000',
-        'createdByUserId' : '1582c806-9824-51c0-abff-d98432283103',
-        'updatedDate' : '2019-03-10T11:02:41.298+0000',
-        'updatedByUserId' : '1582c806-9824-51c0-abff-d98432283103'
+    usergroups: [{
+      group: 'faculty',
+      desc: 'Faculty Member',
+      id: 'cb5c73ae-092f-4c28-8a52-4c7396937e09',
+      metadata: {
+        createdDate: '2019-03-10T11:02:41.298+0000',
+        createdByUserId: '1582c806-9824-51c0-abff-d98432283103',
+        updatedDate: '2019-03-10T11:02:41.298+0000',
+        updatedByUserId: '1582c806-9824-51c0-abff-d98432283103'
       }
     }, {
-      'group' : 'staff',
-      'desc' : 'Staff Member',
-      'id' : 'e4554dc5-bd88-4076-905e-73f99ce49101',
-      'metadata' : {
-        'createdDate' : '2019-03-10T11:02:42.481+0000',
-        'createdByUserId' : '1582c806-9824-51c0-abff-d98432283103',
-        'updatedDate' : '2019-03-10T11:02:42.481+0000',
-        'updatedByUserId' : '1582c806-9824-51c0-abff-d98432283103'
+      group: 'staff',
+      desc: 'Staff Member',
+      id: 'e4554dc5-bd88-4076-905e-73f99ce49101',
+      metadata: {
+        createdDate: '2019-03-10T11:02:42.481+0000',
+        createdByUserId: '1582c806-9824-51c0-abff-d98432283103',
+        updatedDate: '2019-03-10T11:02:42.481+0000',
+        updatedByUserId: '1582c806-9824-51c0-abff-d98432283103'
       }
     }, {
-      'group' : 'graduate',
-      'desc' : 'Graduate Student',
-      'id' : '66a0affc-b060-466b-bc39-edbd0ae6221d',
-      'metadata' : {
-        'createdDate' : '2019-03-10T11:02:43.644+0000',
-        'createdByUserId' : '1582c806-9824-51c0-abff-d98432283103',
-        'updatedDate' : '2019-03-10T11:02:43.644+0000',
-        'updatedByUserId' : '1582c806-9824-51c0-abff-d98432283103'
+      group: 'graduate',
+      desc: 'Graduate Student',
+      id: '66a0affc-b060-466b-bc39-edbd0ae6221d',
+      metadata: {
+        createdDate: '2019-03-10T11:02:43.644+0000',
+        createdByUserId: '1582c806-9824-51c0-abff-d98432283103',
+        updatedDate: '2019-03-10T11:02:43.644+0000',
+        updatedByUserId: '1582c806-9824-51c0-abff-d98432283103'
       }
     }, {
-      'group' : 'undergrad',
-      'desc' : 'Undergraduate Student',
-      'id' : '69b07fe4-32b5-4780-83c3-e99a168f0e08',
-      'metadata' : {
-        'createdDate' : '2019-03-10T11:02:44.814+0000',
-        'createdByUserId' : '1582c806-9824-51c0-abff-d98432283103',
-        'updatedDate' : '2019-03-10T11:02:44.814+0000',
-        'updatedByUserId' : '1582c806-9824-51c0-abff-d98432283103'
+      group: 'undergrad',
+      desc: 'Undergraduate Student',
+      id: '69b07fe4-32b5-4780-83c3-e99a168f0e08',
+      metadata: {
+        createdDate: '2019-03-10T11:02:44.814+0000',
+        createdByUserId: '1582c806-9824-51c0-abff-d98432283103',
+        updatedDate: '2019-03-10T11:02:44.814+0000',
+        updatedByUserId: '1582c806-9824-51c0-abff-d98432283103'
       }
     }],
-    'totalRecords' : 4
+    totalRecords: 4
   });
 
   // requests
@@ -111,8 +114,8 @@ export default function config() {
       return requests.all();
     } else {
       return {
-        'requests' : [],
-        'totalRecords' : 0
+        requests: [],
+        totalRecords: 0
       };
     }
   });
@@ -138,35 +141,35 @@ export default function config() {
   });
 
   this.get('/loan-policy-storage/loan-policies', {
-    'loanPolicies' : [{
-      'id' : loanPolicyId,
-      'name' : loanPolicyName,
-      'description' : 'An example loan policy',
-      'loanable' : true,
-      'loansPolicy' : {
-        'profileId' : 'Rolling',
-        'period' : {
-          'duration' : 1,
-          'intervalId' : 'Months'
+    loanPolicies: [{
+      id: loanPolicyId,
+      name: loanPolicyName,
+      description: 'An example loan policy',
+      loanable: true,
+      loansPolicy: {
+        profileId: 'Rolling',
+        period: {
+          duration: 1,
+          intervalId: 'Months'
         },
-        'closedLibraryDueDateManagementId' : 'CURRENT_DUE_DATE',
-        'gracePeriod' : {
-          'duration' : 7,
-          'intervalId' : 'Days'
+        closedLibraryDueDateManagementId: 'CURRENT_DUE_DATE',
+        gracePeriod: {
+          duration: 7,
+          intervalId: 'Days'
         }
       },
-      'renewable' : true,
-      'renewalsPolicy' : {
-        'unlimited' : true,
-        'renewFromId' : 'CURRENT_DUE_DATE',
-        'differentPeriod' : true,
-        'period' : {
-          'duration' : 30,
-          'intervalId' : 'Days'
+      renewable: true,
+      renewalsPolicy: {
+        unlimited: true,
+        renewFromId: 'CURRENT_DUE_DATE',
+        differentPeriod: true,
+        period: {
+          duration: 30,
+          intervalId: 'Days'
         }
       }
     }],
-    'totalRecords' : 1
+    totalRecords: 1
   });
 
   this.get('/inventory/items', ({ items }, request) => {
@@ -194,11 +197,11 @@ export default function config() {
   });
 
   this.get('/accounts', {
-    'accounts': [{
-      'id': '11111',
-      'remaining': 15.31,
+    accounts: [{
+      id: '11111',
+      remaining: 15.31,
     }],
-    'totalRecords': 1
+    totalRecords: 1
   });
 
   this.get('/alternative-title-types');
@@ -238,20 +241,21 @@ export default function config() {
     const parsedRequest = JSON.parse(request.requestBody);
     const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
     const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+
     return (
       {
-        'id': item.id,
-        'userId': patron.id,
-        'itemId': item.id,
-        'status': {
-          'name': 'Open'
+        id: item.id,
+        userId: patron.id,
+        itemId: item.id,
+        status: {
+          name: 'Open'
         },
-        'loanDate': '2017-03-05T18:32:31Z',
-        'dueDate': '2017-03-19T18:32:31.000+0000',
-        'action': 'checkedout',
-        'renewalCount': 0,
+        loanDate: '2017-03-05T18:32:31Z',
+        dueDate: '2017-03-19T18:32:31.000+0000',
+        action: 'checkedout',
+        renewalCount: 0,
         item,
-        'loanPolicyId': loanPolicyId,
+        loanPolicyId,
       }
     );
   });
@@ -262,41 +266,19 @@ export default function config() {
     const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
     return (
       {
-        'id': item.id,
-        'userId': patron.id,
-        'itemId': item.id,
-        'status': {
-          'name': 'Open'
+        id: item.id,
+        userId: patron.id,
+        itemId: item.id,
+        status: {
+          name: 'Open'
         },
-        'loanDate': '2017-03-05T18:32:31Z',
-        'dueDate': '2017-03-19T18:32:31.000+0000',
-        'action': 'checkedout',
-        'renewalCount': 0,
+        loanDate: '2017-03-05T18:32:31Z',
+        dueDate: '2017-03-19T18:32:31.000+0000',
+        action: 'checkedout',
+        renewalCount: 0,
         item,
-        'loanPolicyId': loanPolicyId,
+        loanPolicyId,
       }
     );
   });
-
-  // this.post('/circulation/check-out-by-barcode', ({ items }, request) => {
-  //   const { itemBarcode } = JSON.parse(request.requestBody);
-
-  //   return items.findBy({ barcode: itemBarcode });
-  // });
-
-  // this.post('/circulation/override-check-out-by-barcode', ({ items }, request) => {
-  //   const {
-  //     itemBarcode,
-  //     dueDate,
-  //     comment,
-  //   } = JSON.parse(request.requestBody);
-  //   const { attrs: item } = items.findBy({ barcode: itemBarcode });
-
-  //   return {
-  //     loanPolicyId,
-  //     comment,
-  //     dueDate,
-  //     item,
-  //   };
-  // });
 }

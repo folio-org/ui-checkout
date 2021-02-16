@@ -8,10 +8,11 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-
 import { ProxyManager } from '@folio/stripes/smart-components';
+
 import UserDetail from '../UserDetail';
 import PatronBlock from '../PatronBlock';
+
 import css from './ViewPatron.css';
 
 class ViewPatron extends React.Component {
@@ -21,7 +22,6 @@ class ViewPatron extends React.Component {
     proxy: PropTypes.object.isRequired,
     onSelectPatron: PropTypes.func.isRequired,
     onClearPatron: PropTypes.func.isRequired,
-    openBlockedModal: PropTypes.func,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
     settings: PropTypes.arrayOf(PropTypes.object),
   };
@@ -41,13 +41,11 @@ class ViewPatron extends React.Component {
       onSelectPatron,
       onClearPatron,
       patronBlocks,
-      openBlockedModal,
-      settings
+      settings,
     } = this.props;
 
     const patronDetail = (
-      <div>
-        <br />
+      <div className={css.detail}>
         <this.connectedPatronDetail
           id="patron-detail"
           label={
@@ -64,8 +62,7 @@ class ViewPatron extends React.Component {
     );
 
     const proxyDetail = (
-      <div>
-        <br />
+      <div className={css.detail}>
         <this.connectedProxyDetail
           id="proxy-detail"
           label={<FormattedMessage id="ui-checkout.borrowerProxy" />}
@@ -88,18 +85,16 @@ class ViewPatron extends React.Component {
     return (
       <div>
         {patronDetail}
+        <PatronBlock
+          patronBlocksCount={patronBlocks.length || 0}
+          user={patron}
+        />
         {proxy.id && proxy.id !== patron.id && proxyDetail}
         <this.connectedProxyManager
           patron={patron}
           proxy={proxy}
           onSelectPatron={onSelectPatron}
           onClose={onClearPatron}
-        />
-        <PatronBlock
-          patronBlocksCount={patronBlocks.length || 0}
-          patronBlocks={patronBlocks}
-          openBlockedModal={openBlockedModal}
-          user={patron}
         />
       </div>
     );

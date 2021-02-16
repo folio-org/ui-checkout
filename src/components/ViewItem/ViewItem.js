@@ -92,10 +92,24 @@ class ViewItem extends React.Component {
     this.setState({ sortOrder, sortDirection });
   }
 
+  renderOverridenLabel = () => (
+    <span data-test-overrided-item-block>
+      <br />
+      <FormattedMessage id="ui-checkout.item.block.overrided" />
+    </span>
+  );
+
   getItemFormatter() {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
-      'loanPolicy': loan => (<div data-test-item-loan-policy>{_.get(loan, ['loanPolicy', 'name'])}</div>),
+      'loanPolicy': loan => {
+        return (
+          <div data-test-item-loan-policy>
+            {_.get(loan, ['loanPolicy', 'name'])}
+            {loan.loanPolicy?.itemLimit ? this.renderOverridenLabel() : null}
+          </div>
+        );
+      },
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => (<div data-test-item-due-date><FormattedDate value={loan.dueDate} /></div>),
       'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
