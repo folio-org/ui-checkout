@@ -1,7 +1,10 @@
 export const loanPolicyId = 'd9cd0bed-1b49-4b5e-a7bd-064b8d177231';
 export const loanPolicyName = 'testLoanPolicyName';
+<<<<<<< HEAD
 export const loanPolicyWithLimitId = 'd9cd0bed-1b49-4b5e-a7bd-064b8d177232';
 export const loanPolicyWithLimitName = 'loanPolicyWithLimitName';
+=======
+>>>>>>> e541182220c84233f57042ffcfe2e6fda7eee44b
 export const notLoanablePolicyName = 'Not loanable';
 export const notLoanablePolicyId = 'notLoanablePolicyId';
 export const notLoanableItemBarcode = 'notLoanableBarcode';

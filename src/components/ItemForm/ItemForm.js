@@ -52,7 +52,10 @@ class ItemForm extends React.Component {
     this.state = {
       overrideModalOpen: false,
       errors: [],
+<<<<<<< HEAD
       message: '',
+=======
+>>>>>>> e541182220c84233f57042ffcfe2e6fda7eee44b
     };
   }
 
@@ -134,11 +137,15 @@ class ItemForm extends React.Component {
       onOverride,
     } = this.props;
 
+<<<<<<< HEAD
     const {
       errors,
       message,
       overrideModalOpen,
     } = this.state;
+=======
+    const { errors, overrideModalOpen } = this.state;
+>>>>>>> e541182220c84233f57042ffcfe2e6fda7eee44b
     const validationEnabled = false;
 
     return (
@@ -180,7 +187,12 @@ class ItemForm extends React.Component {
             </Col>
           </Row>
         </form>
+<<<<<<< HEAD
         {!isEmpty(errors) &&
+=======
+        {
+          !isEmpty(errors) &&
+>>>>>>> e541182220c84233f57042ffcfe2e6fda7eee44b
           <ErrorModal
             stripes={stripes}
             item={item || {}}

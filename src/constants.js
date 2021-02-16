@@ -30,12 +30,16 @@ export const defaultPatronIdentifier = 'BARCODE';
 
 export const ITEM_NOT_LOANABLE = 'Item is not loanable';
 
+<<<<<<< HEAD
 export const MAX_ITEM_BLOCK_LIMIT = 'Patron has reached maximum limit of';
 
 export const OVERRIDABLE_ERROR_MESSAGES = [
   ITEM_NOT_LOANABLE,
   MAX_ITEM_BLOCK_LIMIT,
 ];
+=======
+export const OVERRIDABLE_ERROR_MESSAGES = [ITEM_NOT_LOANABLE];
+>>>>>>> e541182220c84233f57042ffcfe2e6fda7eee44b
 
 export const statuses = {
   CHECK_OUT: 'Check out',
