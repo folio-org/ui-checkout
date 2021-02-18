@@ -108,6 +108,8 @@ class ScanItems extends React.Component {
       checkoutStatus: null,
       item: null,
       errors: [],
+      itemLimitOverriden: false,
+      overridenItemsList: [],
     };
   }
 
@@ -241,6 +243,13 @@ class ScanItems extends React.Component {
         itemLimitBlock: {},
         comment,
       };
+      this.setState(prevState => ({
+        itemLimitOverriden: true,
+        overridenItemsList: [
+          ...prevState.overridenItemsList,
+          barcode
+        ],
+      }));
     } else {
       overrideData.overrideBlocks = {
         itemNotLoanableBlock: { dueDate },
@@ -352,8 +361,14 @@ class ScanItems extends React.Component {
       item,
       errors,
       checkoutNotesMode,
+      itemLimitOverriden,
+      overridenItemsList,
     } = this.state;
 
+    const overridenItemLimitData = {
+      itemLimitOverriden,
+      overridenItemsList,
+    };
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
     const checkoutSound = (checkoutStatus === 'success')
@@ -392,6 +407,7 @@ class ScanItems extends React.Component {
           scannedItems={scannedItems}
           loading={loading}
           showCheckoutNotes={this.showCheckoutNotes}
+          overridenItemLimitData={overridenItemLimitData}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus &&
