@@ -54,7 +54,6 @@ function OverrideModal(props) {
 
   const getModalLabel = () => {
     let label = '';
-
     if (itemIsNotLoanable) {
       label = <FormattedMessage id="ui-checkout.overrideLoanPolicy" />;
     }
@@ -144,7 +143,7 @@ function OverrideModal(props) {
             dateProps={{
               label: (
                 <FormattedMessage id="ui-checkout.cddd.date">
-                  {(label) => `${label} *`}
+                  {label => `${label} *`}
                 </FormattedMessage>
               )
             }}
@@ -171,6 +170,14 @@ function OverrideModal(props) {
           />
         </Col>
         <Col xs={12}>
+          {itemIsNotLoanable &&
+            <>
+              <br />
+              <br />
+              <br />
+              <br />
+            </>
+          }
           <Row end="xs">
             <Button
               onClick={closeOverrideModal}
@@ -189,14 +196,6 @@ function OverrideModal(props) {
           </Row>
         </Col>
       </form>
-      {itemIsNotLoanable &&
-        <>
-          <br />
-          <br />
-          <br />
-          <br />
-        </>
-      }
     </Modal>
   );
 }

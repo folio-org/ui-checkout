@@ -30,7 +30,9 @@ class ItemForm extends React.Component {
     onOverride: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
     formRef: PropTypes.object.isRequired,
-    checkoutError: PropTypes.object,
+    checkoutError: PropTypes.arrayOf(
+      PropTypes.object
+    ).isRequired,
     onClearCheckoutErrors: PropTypes.func,
     patronBlockOverridenInfo: PropTypes.object.isRequired,
   };
@@ -38,11 +40,10 @@ class ItemForm extends React.Component {
   static defaultProps = {
     patron: {},
     item: {},
-    checkoutError: {},
   };
 
-  static getDerivedStateFromProps(props, { error }) {
-    return { error: props.checkoutError?.item || error || {} };
+  static getDerivedStateFromProps(props, { errors }) {
+    return { errors: props.checkoutError || errors || [] };
   }
 
   constructor(props) {
@@ -51,7 +52,7 @@ class ItemForm extends React.Component {
     this.barcodeEl = React.createRef();
     this.state = {
       overrideModalOpen: false,
-      error: {},
+      errors: [],
       message: '',
     };
   }
@@ -84,15 +85,15 @@ class ItemForm extends React.Component {
     }
   }
 
-  setError = (error) => {
-    this.setState({ error });
+  setError = (errors) => {
+    this.setState({ errors });
   };
 
   openOverrideModal = () => {
-    const { checkoutError: { item: { barcode } } } = this.props;
+    const { errors } = this.state;
     this.setState({
-      message: barcode,
-      overrideModalOpen: true,
+      message: errors[0].message,
+      overrideModalOpen: true
     });
   };
 
@@ -110,17 +111,19 @@ class ItemForm extends React.Component {
       onClearCheckoutErrors,
     } = this.props;
 
-    this.setError({});
+    this.setError([]);
     onClearCheckoutErrors();
     form.reset();
   };
 
   onSubmit = async (event) => {
     const { handleSubmit } = this.props;
-    const error = await handleSubmit(event);
+    console.log('event ', event);
+    const errors = await handleSubmit(event);
 
-    if (error?.item) {
-      return error;
+    if (!isEmpty(errors)) {
+      console.log('errors', errors); 
+      return errors;
     }
 
     return this.clearForm();
@@ -135,7 +138,11 @@ class ItemForm extends React.Component {
       patronBlockOverridenInfo,
     } = this.props;
 
-    const { error, message, overrideModalOpen } = this.state;
+    const {
+      errors,
+      message,
+      overrideModalOpen,
+    } = this.state;
     const validationEnabled = false;
 
     return (
@@ -177,13 +184,12 @@ class ItemForm extends React.Component {
             </Col>
           </Row>
         </form>
-        {!isEmpty(error) &&
+        {!isEmpty(errors) &&
           <ErrorModal
             stripes={stripes}
             item={item || {}}
-            message={error.barcode || ''}
-            loanPolicy={error.loanPolicy}
-            open={!isEmpty(error)}
+            errors={errors}
+            open
             openOverrideModal={this.openOverrideModal}
             onClose={this.clearForm}
           />

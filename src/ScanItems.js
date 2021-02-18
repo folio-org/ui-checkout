@@ -136,7 +136,7 @@ class ScanItems extends React.Component {
       loading: false,
       checkoutStatus: null,
       item: null,
-      error: null,
+      errors: [],
     };
   }
 
@@ -181,33 +181,35 @@ class ScanItems extends React.Component {
       patronBlockOverridenInfo,
     } = this.props;
 
+    const errors = [];
+
     if (!barcode) {
-      return {
+      errors.push({
         item: {
           barcode: <FormattedMessage id="ui-checkout.missingDataError" />
         }
-      };
+      });
     }
 
     if (!patron) {
       this.triggerPatronFormSubmit();
-      return {
+      errors.push({
         patron: {
           identifier: <FormattedMessage id="ui-checkout.missingDataError" />
         }
-      };
+      });
     }
 
     if (patronBlocks.length > 0 && isEmpty(patronBlockOverridenInfo)) {
       openBlockedModal();
-      return {
+      errors.push({
         patron: {
           blocked: <FormattedMessage id="ui-checkout.blockModal" />
         }
-      };
+      });
     }
 
-    return {};
+    return errors;
   }
 
   tryCheckout = async (data) => {
@@ -310,7 +312,7 @@ class ScanItems extends React.Component {
   }
 
   performAction(action, data) {
-    this.setState({ loading: true, error: null });
+    this.setState({ loading: true, errors: [] });
     return action.POST(data)
       .then(this.fetchLoanPolicy)
       .then(this.addScannedItem)
@@ -329,37 +331,11 @@ class ScanItems extends React.Component {
     }
   }
 
-  handleErrors = ({
-    errors: [
-      {
-        parameters,
-        message,
-      } = {},
-    ] = [],
-  }) => {
+  handleErrors = ({ errors }) => {
     // TODO make error message internationalized
     // (https://github.com/folio-org/ui-checkout/pull/408#pullrequestreview-317759489)
-    let itemError;
 
-    if (!parameters) {
-      itemError = {
-        barcode: 'Unknown error occurred',
-        _error: 'unknownError',
-      };
-    } else if (parameters.length === 0) {
-      itemError = {
-        barcode: message,
-        loanPolicy: ''
-      };
-    } else {
-      itemError = {
-        barcode: message,
-        _error: parameters[0].key,
-        loanPolicy: parameters[0].value,
-      };
-    }
-
-    this.setState({ error: { item: itemError } });
+    this.setState({ errors });
   }
 
   addScannedItem = (loan) => {
@@ -399,7 +375,7 @@ class ScanItems extends React.Component {
   }
 
   onClearCheckoutErrors = () => {
-    this.setState({ error: null });
+    this.setState({ errors: [] });
   }
 
   onCancel = () => {
@@ -435,7 +411,8 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       item,
-      checkoutNotesMode
+      errors,
+      checkoutNotesMode,
     } = this.state;
 
     const scannedItems = parentResources.scannedItems || [];
@@ -463,7 +440,7 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
-          checkoutError={this.state.error}
+          checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
           patronBlockOverridenInfo={patronBlockOverridenInfo}

@@ -10,9 +10,14 @@ import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
 
 const itemModalStatuses = [
-  'Missing',
-  'Withdrawn',
+  'In process (non-requestable)',
+  'Long missing',
   'Lost and paid',
+  'Missing',
+  'Restricted',
+  'Unavailable',
+  'Unknown',
+  'Withdrawn',
 ];
 
 // Assumed to be several non-checked out item statuses
@@ -176,6 +181,10 @@ describe('CheckOut', () => {
         });
 
         await checkOut.checkoutItem('123');
+      });
+
+      it('should not display error modal', () => {
+        expect(checkOut.errorModal.isPresent).to.be.false;
       });
 
       it('shows a list of checked out items', () => {

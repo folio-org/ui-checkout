@@ -1,10 +1,15 @@
 import {
-  concat,
   get,
+  includes,
+  concat,
 } from 'lodash';
 import moment from 'moment';
 
-import { defaultPatronIdentifier, patronIdentifierMap } from './constants';
+import {
+  defaultPatronIdentifier,
+  patronIdentifierMap,
+  statuses,
+} from './constants';
 
 // serialized object into http params
 export function toParams(obj) {
@@ -61,4 +66,30 @@ export function getPatronBlocks(manualBlocks, automatedBlocks) {
   const automatedPatronBlocks = automatedBlocks.filter(p => p.blockBorrowing === true) || [];
 
   return concat(automatedPatronBlocks, manualPatronBlocks);
+}
+
+export function getAllErrorMessages(errors = []) {
+  const errorMessages = [];
+  errors.forEach(({ message }) => errorMessages.push(message));
+
+  return errorMessages.join(';');
+}
+
+export function extractErrorDetails(errors, errorMessage) {
+  const singleError = errors.find(({ message }) => message === errorMessage);
+
+  return singleError || {};
+}
+
+export function shouldStatusModalBeShown(item) {
+  return includes([
+    statuses.IN_PROCESS_NON_REQUESTABLE,
+    statuses.LONG_MISSING,
+    statuses.LOST_AND_PAID,
+    statuses.MISSING,
+    statuses.RESTRICTED,
+    statuses.UNAVAILABLE,
+    statuses.UNKNOWN,
+    statuses.WITHDRAWN,
+  ], item?.status?.name);
 }

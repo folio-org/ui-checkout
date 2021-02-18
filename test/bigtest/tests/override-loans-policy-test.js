@@ -9,12 +9,12 @@ import {
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 import {
-  loanPolicyIdNotLoanable,
-  loanPolicyNameNotLoanable,
+  notLoanablePolicyId,
+  notLoanablePolicyName,
+  notLoanableItemBarcode,
+  userBarcode,
 } from '../constants';
 
-const itemBarcode = '123';
-const userBarcode = '123456';
 const checkOut = new CheckOutInteractor();
 let item;
 let user;
@@ -59,19 +59,28 @@ describe('override loan policy', () => {
 
     describe('non loanable checkout', () => {
       beforeEach(async function () {
-        item = this.server.create('item', { barcode: itemBarcode });
+        item = this.server.create('item', { barcode: notLoanableItemBarcode });
 
         this.server.get('/loan-policy-storage/loan-policies', {
           'loanPolicies' : [{
-            'id' : loanPolicyIdNotLoanable,
-            'name' : loanPolicyNameNotLoanable,
+            'id' : notLoanablePolicyId,
+            'name' : notLoanablePolicyName,
+            'loanable' : false
+          }],
+          'totalRecords' : 1
+        });
+
+        this.server.get('/loan-policy-storage/loan-policies', {
+          'loanPolicies' : [{
+            'id' : notLoanablePolicyId,
+            'name' : notLoanablePolicyName,
             'loanable' : false
           }],
           'totalRecords' : 1
         });
 
         await checkOut
-          .fillItemBarcode(itemBarcode)
+          .fillItemBarcode(notLoanableItemBarcode)
           .clickItemBtn();
       });
 
@@ -111,7 +120,7 @@ describe('override loan policy', () => {
                 },
                 'loanDate': '2017-03-05T18:32:31Z',
                 'action': 'checkedOutThroughOverride',
-                'loanPolicyId': loanPolicyIdNotLoanable,
+                'loanPolicyId': notLoanablePolicyId,
                 item
               }
             );
@@ -143,12 +152,9 @@ describe('override loan policy', () => {
             expect(checkOut.overrideModal.cancelButton.isPresent).to.be.true;
           });
 
-          it('override button should be displayed', () => {
-            expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
-          });
-
           it('override button should be disabled', () => {
-            expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.true;
+            expect(checkOut.overrideModal.overrideButton.isPresent).to.be.true;
+            expect(checkOut.overrideModal.overrideButton).to.be.true;
           });
 
           describe('cancel button click', () => {
@@ -190,7 +196,7 @@ describe('override loan policy', () => {
                 });
 
                 it('should have proper loan policy', () => {
-                  expect(checkOut.items(0).loanPolicy.text).to.equal(loanPolicyNameNotLoanable);
+                  expect(checkOut.items(0).loanPolicy.text).to.equal(notLoanablePolicyName);
                 });
 
                 it('should have proper barcode', () => {

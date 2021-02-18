@@ -92,6 +92,13 @@ class ViewItem extends React.Component {
     this.setState({ sortOrder, sortDirection });
   }
 
+  renderOverridenLabel = () => (
+    <span data-test-overrided-item-block>
+      <br />
+      <FormattedMessage id="ui-checkout.item.block.overrided" />
+    </span>
+  );
+
   getItemFormatter() {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
@@ -99,16 +106,7 @@ class ViewItem extends React.Component {
         return (
           <div data-test-item-loan-policy>
             {_.get(loan, ['loanPolicy', 'name'])}
-            {loan.loanPolicy?.itemLimit
-              ?
-              (
-                <span data-test-overrided-item-block>
-                  <br />
-                  <FormattedMessage id="ui-checkout.item.block.overrided" />
-                </span>
-              )
-              : null
-            }
+            {loan.loanPolicy?.itemLimit ? this.renderOverridenLabel() : null}
           </div>
         );
       },
