@@ -46,6 +46,10 @@ class ViewItem extends React.Component {
     parentMutator: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     showCheckoutNotes: PropTypes.func,
+    overriddenItemLimitData: PropTypes.shape({
+      itemLimitOverridden: PropTypes.bool.isRequired,
+      overriddenItemsList: PropTypes.array.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
@@ -92,21 +96,35 @@ class ViewItem extends React.Component {
     this.setState({ sortOrder, sortDirection });
   }
 
-  renderOverridenLabel = () => (
-    <span data-test-overrided-item-block>
-      <br />
-      <FormattedMessage id="ui-checkout.item.block.overrided" />
-    </span>
-  );
+  renderOverriddenLabel = (barcode) => {
+    const {
+      overriddenItemLimitData: {
+        itemLimitOverridden,
+        overriddenItemsList,
+      }
+    } = this.props;
+
+    return itemLimitOverridden && overriddenItemsList.includes(barcode)
+      ?
+      (
+        <span data-test-overrided-item-block>
+          <br />
+          <FormattedMessage id="ui-checkout.item.block.overrided" />
+        </span>
+      )
+      : null;
+  }
 
   getItemFormatter() {
     return {
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
       'loanPolicy': loan => {
+        const barcode = _.get(loan, ['item', 'barcode']);
+
         return (
           <div data-test-item-loan-policy>
             {_.get(loan, ['loanPolicy', 'name'])}
-            {loan.loanPolicy?.itemLimit ? this.renderOverridenLabel() : null}
+            {this.renderOverriddenLabel(barcode)}
           </div>
         );
       },

@@ -70,15 +70,6 @@ describe('override loan policy', () => {
           'totalRecords' : 1
         });
 
-        this.server.get('/loan-policy-storage/loan-policies', {
-          'loanPolicies' : [{
-            'id' : notLoanablePolicyId,
-            'name' : notLoanablePolicyName,
-            'loanable' : false
-          }],
-          'totalRecords' : 1
-        });
-
         await checkOut
           .fillItemBarcode(notLoanableItemBarcode)
           .clickItemBtn();
@@ -152,9 +143,12 @@ describe('override loan policy', () => {
             expect(checkOut.overrideModal.cancelButton.isPresent).to.be.true;
           });
 
+          it('override button should be displayed', () => {
+            expect(checkOut.overrideModal.saveAndCloseButton.isPresent).to.be.true;
+          });
+
           it('override button should be disabled', () => {
-            expect(checkOut.overrideModal.overrideButton.isPresent).to.be.true;
-            expect(checkOut.overrideModal.overrideButton).to.be.true;
+            expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.true;
           });
 
           describe('cancel button click', () => {
