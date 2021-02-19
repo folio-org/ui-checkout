@@ -86,7 +86,6 @@ class CheckOut extends React.Component {
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
-      accumulate: 'true',
     },
     automatedPatronBlocks: {
       type: 'okapi',
@@ -230,7 +229,6 @@ class CheckOut extends React.Component {
       loading: false,
       blocked: false,
       patronBlockOverridenInfo: {},
-      patronBlocksAmount: 0,
     };
   }
 
@@ -319,7 +317,7 @@ class CheckOut extends React.Component {
       automatedPatronBlocks,
     };
   }
-  
+
   showBlockModal = (patron) => {
     const {
       resources,
@@ -376,7 +374,6 @@ class CheckOut extends React.Component {
       this.timer = null;
       this.setState({
         patronBlockOverridenInfo: {},
-        patronBlocksAmount: 0,
         blocked: false,
       });
     }
@@ -487,13 +484,6 @@ class CheckOut extends React.Component {
         return { error, patron: null };
       }
 
-      const {
-        manualPatronBlocks: selManualPatronBlocks,
-        automatedPatronBlocks: selAutomatedPatronBlocks,
-      } = this.extractPatronBlocks();
-      let manualPatronBlocks = selManualPatronBlocks.filter(p => p.borrowing === true);
-      manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
-      const automatedPatronBlocks = selAutomatedPatronBlocks.filter(p => p.blockBorrowing === true);
       const selPatron = patrons[0];
       this.props.mutator.activeRecord.update({ patronId: get(selPatron, 'id') });
 
@@ -569,14 +559,7 @@ class CheckOut extends React.Component {
   };
 
   overridePatronBlock = ({ comment }) => {
-    const {
-      manualPatronBlocks,
-      automatedPatronBlocks,
-    } = this.extractPatronBlocks();
-    const patronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
-
     this.setState({
-      patronBlocksAmount: patronBlocks.length,
       patronBlockOverridenInfo: {
         patronBlock: {},
         comment,
@@ -617,10 +600,8 @@ class CheckOut extends React.Component {
       requestsCount,
       overrideModalOpen,
       patronBlockOverridenInfo,
-      patronBlocksAmount,
     } = this.state;
-    const patronHasNewBlocks = patronBlocksAmount !== 0 && patronBlocksAmount < patronBlocks.length;
-    const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverridenInfo)) || (blocked && patronHasNewBlocks);
+    const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverridenInfo));
 
     let patron = patrons[0];
     let proxy = {};

@@ -47,26 +47,6 @@ class ScanItems extends React.Component {
       accumulate: 'true',
       fetch: false,
     },
-    // manualPatronBlocks: {
-    //   type: 'okapi',
-    //   records: 'manualblocks',
-    //   path: 'manualblocks?query=userId==%{activeRecord.patronId}?limit=2000',
-    //   shouldRefresh: (resource, action, refresh) => {
-    //     const { path } = action.meta;
-    //     console.log(path);
-    //     return refresh || (path && path.match(/circulation/));
-    //   },
-    // },
-    // automatedPatronBlocks: {
-    //   type: 'okapi',
-    //   records: 'automatedPatronBlocks',
-    //   path: 'automated-patron-blocks/:{id}?limit=2000',
-    //   permissionsRequired: 'automated-patron-blocks.collection.get',
-    //   shouldRefresh: (resource, action, refresh) => {
-    //     const { path } = action.meta;
-    //     return refresh || (path && path.match(/circulation/));
-    //   },
-    // },
   });
 
   static propTypes = {

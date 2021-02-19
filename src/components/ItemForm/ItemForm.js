@@ -118,11 +118,9 @@ class ItemForm extends React.Component {
 
   onSubmit = async (event) => {
     const { handleSubmit } = this.props;
-    console.log('event ', event);
     const errors = await handleSubmit(event);
 
     if (!isEmpty(errors)) {
-      console.log('errors', errors); 
       return errors;
     }
 

@@ -59,7 +59,12 @@ const PatronBlockModal = ({
                   <FormattedMessage id="ui-checkout.override" />
                 </Button>
               }
-              <Button onClick={onClose}><FormattedMessage id="ui-checkout.close" /></Button>
+              <Button
+                data-test-close-patron-block-modal
+                onClick={onClose}
+              >
+                <FormattedMessage id="ui-checkout.close" />
+              </Button>
               <Button buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
             </Col>
           </Row>

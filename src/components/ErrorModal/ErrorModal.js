@@ -18,7 +18,6 @@ import {
 
 import {
   ITEM_NOT_LOANABLE,
-  MAX_ITEM_BLOCK_LIMIT,
   OVERRIDABLE_ERROR_MESSAGES,
 } from '../../constants';
 import {
