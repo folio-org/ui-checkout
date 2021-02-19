@@ -13,7 +13,10 @@ export default function config() {
     configs: []
   });
 
-  this.get('/circulation/loans');
+  this.get('/circulation/loans', {
+    loans: [],
+    totalRecords: 0,
+  });
 
   this.get('/proxiesfor', {
     proxiesFor: [],
@@ -238,6 +241,7 @@ export default function config() {
     const parsedRequest = JSON.parse(request.requestBody);
     const patron = schema.users.findBy({ barcode: parsedRequest.userBarcode });
     const item = schema.items.findBy({ barcode: parsedRequest.itemBarcode });
+
     return (
       {
         id: item.id,

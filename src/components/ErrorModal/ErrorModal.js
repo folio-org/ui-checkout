@@ -50,7 +50,7 @@ function ErrorModal(props) {
     return OVERRIDABLE_ERROR_MESSAGES.find(error => message.includes(error));
   });
 
-  const canBeOverridden = stripes.hasPerm('ui-checkout.overrideCheckOutByBarcode')
+  const canBeOverridden = stripes.hasPerm('ui-users.overrideItemBlock')
     && containsOverrideErrorMessage;
 
   const renderMessages = () => {
@@ -87,8 +87,7 @@ function ErrorModal(props) {
       {renderMessages()}
       <Col xs={12}>
         <Row end="xs">
-          {
-          canBeOverridden &&
+          {canBeOverridden &&
             <Button
               data-test-override-button
               onClick={handleOverrideClick}

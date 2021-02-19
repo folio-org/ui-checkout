@@ -5,14 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 
 import stripesFinalForm from '@folio/stripes/final-form';
-
 import {
   Col,
   Button,
   Row,
   TextField,
 } from '@folio/stripes/components';
-
 import {
   withStripes,
   stripesShape,
@@ -54,6 +52,7 @@ class ItemForm extends React.Component {
     this.state = {
       overrideModalOpen: false,
       errors: [],
+      message: '',
     };
   }
 
@@ -90,7 +89,11 @@ class ItemForm extends React.Component {
   };
 
   openOverrideModal = () => {
-    this.setState({ overrideModalOpen: true });
+    const { errors } = this.state;
+    this.setState({
+      message: errors[0].message,
+      overrideModalOpen: true
+    });
   };
 
   closeOverrideModal = () => {
@@ -131,7 +134,11 @@ class ItemForm extends React.Component {
       onOverride,
     } = this.props;
 
-    const { errors, overrideModalOpen } = this.state;
+    const {
+      errors,
+      message,
+      overrideModalOpen,
+    } = this.state;
     const validationEnabled = false;
 
     return (
@@ -173,8 +180,7 @@ class ItemForm extends React.Component {
             </Col>
           </Row>
         </form>
-        {
-          !isEmpty(errors) &&
+        {!isEmpty(errors) &&
           <ErrorModal
             stripes={stripes}
             item={item || {}}
@@ -184,13 +190,12 @@ class ItemForm extends React.Component {
             onClose={this.clearForm}
           />
         }
-        {
-          overrideModalOpen &&
+        {overrideModalOpen &&
           <OverrideModal
             item={item}
+            message={message}
             stripes={stripes}
             onOverride={onOverride}
-            overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
           />
         }

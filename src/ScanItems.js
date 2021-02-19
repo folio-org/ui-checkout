@@ -3,7 +3,10 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
-import { get, isEmpty } from 'lodash';
+import {
+  get,
+  isEmpty,
+} from 'lodash';
 
 import { Icon } from '@folio/stripes/components';
 import { escapeCqlValue } from '@folio/stripes/util';
@@ -105,6 +108,8 @@ class ScanItems extends React.Component {
       checkoutStatus: null,
       item: null,
       errors: [],
+      itemLimitOverridden: false,
+      overriddenItemsList: [],
     };
   }
 
@@ -229,15 +234,30 @@ class ScanItems extends React.Component {
   }
 
   override = (data) => {
-    const { mutator: { overrideCheckout } } = this.props;
+    const { mutator: { checkout } } = this.props;
     const { barcode, comment, dueDate } = data;
-    const overrideData = {
-      ...this.getRequestData(barcode),
-      comment,
-      dueDate,
-    };
+    const overrideData = { ...this.getRequestData(barcode) };
 
-    return this.performAction(overrideCheckout, overrideData);
+    if (!dueDate) {
+      overrideData.overrideBlocks = {
+        itemLimitBlock: {},
+        comment,
+      };
+      this.setState(prevState => ({
+        itemLimitOverridden: true,
+        overriddenItemsList: [
+          ...prevState.overriddenItemsList,
+          barcode
+        ],
+      }));
+    } else {
+      overrideData.overrideBlocks = {
+        itemNotLoanableBlock: { dueDate },
+        comment,
+      };
+    }
+
+    return this.performAction(checkout, overrideData);
   }
 
   performAction(action, data) {
@@ -341,8 +361,14 @@ class ScanItems extends React.Component {
       item,
       errors,
       checkoutNotesMode,
+      itemLimitOverridden,
+      overriddenItemsList,
     } = this.state;
 
+    const overriddenItemLimitData = {
+      itemLimitOverridden,
+      overriddenItemsList,
+    };
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
     const checkoutSound = (checkoutStatus === 'success')
@@ -381,6 +407,7 @@ class ScanItems extends React.Component {
           scannedItems={scannedItems}
           loading={loading}
           showCheckoutNotes={this.showCheckoutNotes}
+          overriddenItemLimitData={overriddenItemLimitData}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus &&
