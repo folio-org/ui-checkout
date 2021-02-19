@@ -72,7 +72,7 @@
     "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
     "checkoutNotes.heading": "貸出ノート",
     "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
-    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy.",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy",
     "cddd.date": "Date",
     "cddd.time": "Time",
     "comment": "Comment",
