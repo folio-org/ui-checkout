@@ -55,7 +55,7 @@ describe('Override patron block', () => {
         .clickPatronBtn();
     });
 
-    it('should show patron blocked modal', () => {
+    it('should show patron block modal', () => {
       expect(checkOut.blockModal.modalPresent).to.be.true;
     });
 
@@ -155,7 +155,6 @@ describe('Override patron block', () => {
               .fillItemBarcode(newItem.barcode)
               .clickItemBtn();
           });
-
 
           it('should show patron blocked modal', () => {
             expect(checkOut.blockModal.modalPresent).to.be.true;

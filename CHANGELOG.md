@@ -17,10 +17,7 @@
 * Increment `@folio/stripes-cli` to `v2`. Refs UICHKOUT-692.
 * Handle a full list of errors when check out fails. Refs UICHKOUT-679.
 * Item blocks: Allow for override when logged in user has credentials. Refs UICHKOUT-677.
-<<<<<<< HEAD
 * Patron blocks: Allow for override when logged in user has credentials. Refs UICHKOUT-688.
-=======
->>>>>>> 188faed507528e23f535c92bbb02002e3abf0387
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)

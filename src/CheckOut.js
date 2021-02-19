@@ -228,7 +228,7 @@ class CheckOut extends React.Component {
       submitting: false,
       loading: false,
       blocked: false,
-      patronBlockOverridenInfo: {},
+      patronBlockOverriddenInfo: {},
     };
   }
 
@@ -373,7 +373,7 @@ class CheckOut extends React.Component {
       update({ patronId: null, hasTimer: false });
       this.timer = null;
       this.setState({
-        patronBlockOverridenInfo: {},
+        patronBlockOverriddenInfo: {},
         blocked: false,
       });
     }
@@ -527,17 +527,9 @@ class CheckOut extends React.Component {
     this.setState({ requestsCount: requests.length });
   }
 
-  onCloseBlockedModal = () => {
-    this.setState({
-      blocked: false,
-    });
-  }
+  onCloseBlockedModal = () => this.setState({ blocked: false });
 
-  openBlockedModal = () => {
-    this.setState({
-      blocked: true,
-    });
-  }
+  openBlockedModal = () => this.setState({ blocked: true });
 
   onCloseAwaitingPickupModal = () => {
     this.setState({
@@ -560,7 +552,7 @@ class CheckOut extends React.Component {
 
   overridePatronBlock = ({ comment }) => {
     this.setState({
-      patronBlockOverridenInfo: {
+      patronBlockOverriddenInfo: {
         patronBlock: {},
         comment,
       }
@@ -599,9 +591,9 @@ class CheckOut extends React.Component {
       blocked,
       requestsCount,
       overrideModalOpen,
-      patronBlockOverridenInfo,
+      patronBlockOverriddenInfo,
     } = this.state;
-    const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverridenInfo));
+    const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverriddenInfo));
 
     let patron = patrons[0];
     let proxy = {};
@@ -683,7 +675,7 @@ class CheckOut extends React.Component {
               patron={patron}
               openBlockedModal={this.openBlockedModal}
               patronBlocks={patronBlocks}
-              patronBlockOverridenInfo={patronBlockOverridenInfo}
+              patronBlockOverriddenInfo={patronBlockOverriddenInfo}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
               onSessionEnd={() => this.onSessionEnd()}
@@ -716,7 +708,7 @@ class CheckOut extends React.Component {
             overrideModalOpen={overrideModalOpen}
             closeOverrideModal={this.closeOverrideModal}
             patronBlocks={patronBlocks || []}
-            patronBlockOverridenInfo={patronBlockOverridenInfo}
+            patronBlockOverriddenInfo={patronBlockOverriddenInfo}
           />
         }
         <NotificationModal

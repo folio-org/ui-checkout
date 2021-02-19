@@ -30,7 +30,9 @@ function OverrideModal(props) {
     onOverride,
     message,
     overridePatronBlock,
-    patronBlockOverridenInfo,
+    patronBlockOverriddenInfo: {
+      comment: patronBlockOverriddenComment = '',
+    },
     patronBlocks,
     item,
     item: {
@@ -38,7 +40,7 @@ function OverrideModal(props) {
       barcode,
     },
   } = props;
-  const [comment, setAdditionalInfo] = useState(patronBlockOverridenInfo?.comment ?? '');
+  const [comment, setAdditionalInfo] = useState(patronBlockOverriddenComment);
   const [dueDate, setDatetime] = useState('');
 
   const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
@@ -48,9 +50,7 @@ function OverrideModal(props) {
     setDatetime(newDateTime);
   };
 
-  const canBeSubmitted = itemIsNotLoanable
-    ? comment && dueDate !== INVALID_DATE_MESSAGE
-    : comment;
+  const canBeSubmitted = itemIsNotLoanable ? comment && (dueDate !== INVALID_DATE_MESSAGE) : comment;
 
   const getModalLabel = () => {
     let label = '';
@@ -208,14 +208,14 @@ OverrideModal.propTypes = {
   overridePatronBlock: PropTypes.bool,
   message: PropTypes.string,
   patronBlocks: PropTypes.arrayOf(PropTypes.object),
-  patronBlockOverridenInfo: PropTypes.object,
+  patronBlockOverriddenInfo: PropTypes.object,
 };
 
 OverrideModal.defaultProps = {
   item: {},
   overridePatronBlock: false,
   patronBlocks: [],
-  patronBlockOverridenInfo: {},
+  patronBlockOverriddenInfo: {},
   message: '',
 };
 export default OverrideModal;

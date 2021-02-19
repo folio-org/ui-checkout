@@ -101,20 +101,16 @@ describe('override loan policy', () => {
         beforeEach(async function () {
           await checkOut.errorModal.overrideButton.click();
 
-          this.server.post('/circulation/check-out-by-barcode', (schema, request) => {
-            return (
-              {
-                'userId': user.id,
-                'itemId': item.id,
-                'status': {
-                  'name': 'Open'
-                },
-                'loanDate': '2017-03-05T18:32:31Z',
-                'action': 'checkedOutThroughOverride',
-                'loanPolicyId': notLoanablePolicyId,
-                item
-              }
-            );
+          this.server.post('/circulation/check-out-by-barcode', {
+            'userId': user.id,
+            'itemId': item.id,
+            'status': {
+              'name': 'Open'
+            },
+            'loanDate': '2017-03-05T18:32:31Z',
+            'action': 'checkedOutThroughOverride',
+            'loanPolicyId': notLoanablePolicyId,
+            item
           });
         });
 

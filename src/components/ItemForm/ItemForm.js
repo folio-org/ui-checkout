@@ -34,7 +34,7 @@ class ItemForm extends React.Component {
       PropTypes.object
     ).isRequired,
     onClearCheckoutErrors: PropTypes.func,
-    patronBlockOverridenInfo: PropTypes.object.isRequired,
+    patronBlockOverriddenInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -133,7 +133,7 @@ class ItemForm extends React.Component {
       stripes,
       item,
       onOverride,
-      patronBlockOverridenInfo,
+      patronBlockOverriddenInfo,
     } = this.props;
 
     const {
@@ -199,7 +199,7 @@ class ItemForm extends React.Component {
             stripes={stripes}
             onOverride={onOverride}
             closeOverrideModal={this.closeOverrideModal}
-            patronBlockOverridenInfo={patronBlockOverridenInfo}
+            patronBlockOverriddenInfo={patronBlockOverriddenInfo}
           />
         }
       </>
