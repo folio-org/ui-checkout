@@ -46,9 +46,9 @@ class ViewItem extends React.Component {
     parentMutator: PropTypes.object.isRequired,
     loading: PropTypes.bool.isRequired,
     showCheckoutNotes: PropTypes.func,
-    overridenItemLimitData: PropTypes.shape({
-      itemLimitOverriden: PropTypes.bool.isRequired,
-      overridenItemsList: PropTypes.array.isRequired,
+    overriddenItemLimitData: PropTypes.shape({
+      itemLimitOverridden: PropTypes.bool.isRequired,
+      overriddenItemsList: PropTypes.array.isRequired,
     }).isRequired,
   };
 
@@ -96,15 +96,15 @@ class ViewItem extends React.Component {
     this.setState({ sortOrder, sortDirection });
   }
 
-  renderOverridenLabel = (barcode) => {
+  renderOverriddenLabel = (barcode) => {
     const {
-      overridenItemLimitData: {
-        itemLimitOverriden,
-        overridenItemsList,
+      overriddenItemLimitData: {
+        itemLimitOverridden,
+        overriddenItemsList,
       }
     } = this.props;
 
-    return itemLimitOverriden && overridenItemsList.includes(barcode)
+    return itemLimitOverridden && overriddenItemsList.includes(barcode)
       ?
       (
         <span data-test-overrided-item-block>
@@ -124,7 +124,7 @@ class ViewItem extends React.Component {
         return (
           <div data-test-item-loan-policy>
             {_.get(loan, ['loanPolicy', 'name'])}
-            {this.renderOverridenLabel(barcode)}
+            {this.renderOverriddenLabel(barcode)}
           </div>
         );
       },
