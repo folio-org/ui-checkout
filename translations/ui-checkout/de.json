@@ -55,7 +55,7 @@
     "blockModal": "Person für Ausleihen gesperrt",
     "detailsButton": "Details der Sperre anzeigen",
     "blockedLabel": "Grund für Sperrung",
-    "awaitingPickupMessage": "Entleiher hat <strong>{count}</strong> {count, plural, one {Exemplar} other {Exemplare}} an dieser Servicestelle im Abholregal.",
+    "awaitingPickupMessage": "Entleiher/-in hat <strong>{count}</strong> {count, plural, one {Exemplar} other {Exemplare}} an dieser Servicestelle im Abholregal.",
     "awaitingPickupLabel": "Exemplare im Abholregal",
     "multipieceModal.confirm": "Ausleihe",
     "multipieceModal.label": "Ausleihe von mehrteiligem Medium bestätigen",
