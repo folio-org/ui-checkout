@@ -40,13 +40,6 @@
         "displayName": "UI: Check out module is enabled"
       },
       {
-        "permissionName": "ui-checkout.overrideCheckOutByBarcode",
-        "displayName": "Check out: Override loans policy on check out by barcode",
-        "subPermissions": [
-          "circulation.override-check-out-by-barcode.post"
-        ]
-      },
-      {
         "permissionName": "ui-checkout.circulation",
         "displayName": "Check out: Check out circulating items",
         "description": "Set of permissions needed to check out circulation items",
@@ -72,8 +65,7 @@
         "description": "Entire set of permissions needed to use Check out",
         "visible": true,
         "subPermissions": [
-          "ui-checkout.circulation",
-          "ui-checkout.overrideCheckOutByBarcode"
+          "ui-checkout.circulation"
         ]
       },
       {
