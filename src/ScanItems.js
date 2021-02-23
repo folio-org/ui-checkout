@@ -75,7 +75,6 @@ class ScanItems extends React.Component {
         replace: PropTypes.func,
       }),
     }),
-
     patron: PropTypes.object,
     proxy: PropTypes.object,
     onSessionEnd: PropTypes.func.isRequired,
@@ -84,6 +83,7 @@ class ScanItems extends React.Component {
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
     formRef: PropTypes.object.isRequired,
     initialValues: PropTypes.object,
+    patronBlockOverriddenInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -126,7 +126,8 @@ class ScanItems extends React.Component {
     const {
       patron,
       patronBlocks,
-      openBlockedModal
+      openBlockedModal,
+      patronBlockOverriddenInfo,
     } = this.props;
 
     const errors = [];
@@ -148,7 +149,7 @@ class ScanItems extends React.Component {
       });
     }
 
-    if (patronBlocks.length > 0) {
+    if (patronBlocks.length > 0 && isEmpty(patronBlockOverriddenInfo)) {
       openBlockedModal();
       errors.push({
         patron: {
@@ -161,15 +162,23 @@ class ScanItems extends React.Component {
   }
 
   tryCheckout = async (data) => {
+    const {
+      openBlockedModal,
+      patronBlockOverriddenInfo,
+      patronBlocks,
+    } = this.props;
     const barcode = get(data, 'item.barcode');
     const errors = this.validate(barcode);
 
-    if (!isEmpty(this.props.patronBlocks)) {
+    if (!isEmpty(errors)) {
+      this.setState({ errors });
       return;
     }
 
-    if (!isEmpty(errors)) {
-      this.setState({ errors });
+    const shouldShowBlockedModal = !isEmpty(patronBlocks) && isEmpty(patronBlockOverriddenInfo);
+
+    if (shouldShowBlockedModal) {
+      openBlockedModal();
       return;
     }
 
@@ -215,18 +224,32 @@ class ScanItems extends React.Component {
   }
 
   checkout = (barcode) => {
-    const { mutator: { checkout } } = this.props;
+    const {
+      mutator: { checkout },
+      patronBlockOverriddenInfo,
+    } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
       loanDate: moment().utc().format(),
     };
 
+    if (!isEmpty(patronBlockOverriddenInfo)) {
+      checkoutData.overrideBlocks = { ...patronBlockOverriddenInfo };
+    }
+
     return this.performAction(checkout, checkoutData);
   }
 
   override = (data) => {
-    const { mutator: { checkout } } = this.props;
-    const { barcode, comment, dueDate } = data;
+    const {
+      mutator: { checkout },
+      patronBlockOverriddenInfo,
+    } = this.props;
+    const {
+      barcode,
+      comment,
+      dueDate,
+    } = data;
     const overrideData = { ...this.getRequestData(barcode) };
 
     if (!dueDate) {
@@ -246,6 +269,10 @@ class ScanItems extends React.Component {
         itemNotLoanableBlock: { dueDate },
         comment,
       };
+    }
+
+    if (!isEmpty(patronBlockOverriddenInfo)) {
+      overrideData.overrideBlocks.patronBlock = {};
     }
 
     return this.performAction(checkout, overrideData);
@@ -344,6 +371,7 @@ class ScanItems extends React.Component {
       shouldSubmitAutomatically,
       formRef,
       initialValues,
+      patronBlockOverriddenInfo,
     } = this.props;
 
     const {
@@ -388,6 +416,7 @@ class ScanItems extends React.Component {
           checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
+          patronBlockOverriddenInfo={patronBlockOverriddenInfo}
         />
         {loading &&
           <Icon

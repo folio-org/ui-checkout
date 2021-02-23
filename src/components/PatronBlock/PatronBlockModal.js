@@ -1,4 +1,3 @@
-import { take, orderBy } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -8,18 +7,18 @@ import {
   Modal,
   Row
 } from '@folio/stripes/components';
+import { IfPermission } from '@folio/stripes/core';
 
-const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
-  const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
-  const renderBlocks = blocks.map(block => {
-    return (
-      <Row key={block.id || block.patronBlockConditionId}>
-        <Col xs>
-          <b data-test-block-message>{block.desc || block.message || ''}</b>
-        </Col>
-      </Row>
-    );
-  });
+import { renderOrderedPatronBlocks } from '../../util';
+
+const PatronBlockModal = ({
+  open,
+  onClose,
+  patronBlocks,
+  viewUserPath,
+  openOverrideModal,
+}) => {
+  const renderPatronBlocks = renderOrderedPatronBlocks(patronBlocks);
 
   return (
     <Modal
@@ -35,20 +34,28 @@ const PatronBlockModal = ({ open, onClose, patronBlocks, viewUserPath }) => {
           :
         </Col>
       </Row>
-      {renderBlocks}
+      {renderPatronBlocks}
       <br />
       <Row>
-        <Col xs={8}>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
-        <Col xs={4}>
+        <Col xs={6}>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
+        <Col xs={6}>
           <Row end="xs">
             <Col>
+              <IfPermission perm="ui-users.overridePatronBlock">
+                <Button
+                  data-test-override-patron-block-button
+                  onClick={openOverrideModal}
+                >
+                  <FormattedMessage id="ui-checkout.override" />
+                </Button>
+              </IfPermission>
               <Button
                 data-test-close-patron-block-modal
                 onClick={onClose}
               >
                 <FormattedMessage id="ui-checkout.close" />
               </Button>
-              <Button style={{ 'marginLeft': '15px' }} buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
+              <Button buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
             </Col>
           </Row>
         </Col>
@@ -62,6 +69,7 @@ PatronBlockModal.propTypes = {
   onClose: PropTypes.func,
   patronBlocks: PropTypes.arrayOf(PropTypes.object),
   viewUserPath: PropTypes.func,
+  openOverrideModal: PropTypes.func.isRequired,
 };
 
 export default PatronBlockModal;

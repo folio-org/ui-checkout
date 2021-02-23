@@ -55,24 +55,24 @@ describe('Override item block', () => {
 
       item = this.server.create('item', { barcode });
       this.server.get('/loan-policy-storage/loan-policies', {
-        'loanPolicies' : [{
-          'id' : loanPolicyWithLimitId,
-          'name' : loanPolicyWithLimitName,
-          'loanable' : true,
-          'loansPolicy' : {
-            'profileId' : 'Fixed',
-            'closedLibraryDueDateManagementId' : 'CURRENT_DUE_DATE',
-            'gracePeriod' : {
-              'duration' : 1,
-              'intervalId' : 'Weeks'
+        loanPolicies: [{
+          id: loanPolicyWithLimitId,
+          name: loanPolicyWithLimitName,
+          loanable: true,
+          loansPolicy: {
+            profileId: 'Fixed',
+            closedLibraryDueDateManagementId: 'CURRENT_DUE_DATE',
+            gracePeriod: {
+              duration: 1,
+              intervalId: 'Weeks'
             },
-            'fixedDueDateScheduleId' : 'fe837440-381e-4cd7-a102-6e66a90c4a2a',
-            'itemLimit' : 1
+            fixedDueDateScheduleId: 'fe837440-381e-4cd7-a102-6e66a90c4a2a',
+            itemLimit: 1
           },
-          'itemLimit' : 1,
-          'renewable' : false,
+          itemLimit: 1,
+          renewable: false,
         }],
-        'totalRecords' : 1
+        totalRecords: 1
       });
 
       await checkOut
@@ -113,20 +113,16 @@ describe('Override item block', () => {
         beforeEach(async function () {
           await checkOut.errorModal.overrideButton.click();
 
-          this.server.post('/circulation/check-out-by-barcode', (schema, request) => {
-            return (
-              {
-                'userId': user.id,
-                'itemId': item.id,
-                'status': {
-                  'name': 'Open'
-                },
-                'loanDate': '2017-03-05T18:32:31Z',
-                'action': 'checkedOutThroughOverride',
-                'loanPolicyId': loanPolicyWithLimitId,
-                item
-              }
-            );
+          this.server.post('/circulation/check-out-by-barcode', {
+            userId: user.id,
+            itemId: item.id,
+            status: {
+              name: 'Open'
+            },
+            loanDate: '2017-03-05T18:32:31Z',
+            action: 'checkedOutThroughOverride',
+            loanPolicyId: loanPolicyWithLimitId,
+            item
           });
         });
 

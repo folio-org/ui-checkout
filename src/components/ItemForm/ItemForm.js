@@ -39,6 +39,7 @@ class ItemForm extends React.Component {
     modules: PropTypes.shape({
       app: PropTypes.arrayOf(PropTypes.object),
     }),
+    patronBlockOverriddenInfo: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -138,6 +139,7 @@ class ItemForm extends React.Component {
       stripes,
       item,
       onOverride,
+      patronBlockOverriddenInfo,
     } = this.props;
 
     const {
@@ -207,6 +209,7 @@ class ItemForm extends React.Component {
             stripes={stripes}
             onOverride={onOverride}
             closeOverrideModal={this.closeOverrideModal}
+            patronBlockOverriddenInfo={patronBlockOverriddenInfo}
           />
         }
       </>

@@ -1,7 +1,17 @@
+import React from 'react';
 import {
   get,
   includes,
+  concat,
+  take,
+  orderBy,
 } from 'lodash';
+import moment from 'moment';
+
+import {
+  Col,
+  Row,
+} from '@folio/stripes/components';
 
 import {
   defaultPatronIdentifier,
@@ -58,6 +68,14 @@ export function to(promise) {
     .catch(err => [err]);
 }
 
+export function getPatronBlocks(manualBlocks, automatedBlocks) {
+  let manualPatronBlocks = manualBlocks.filter(p => p.borrowing === true) || [];
+  manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+  const automatedPatronBlocks = automatedBlocks.filter(p => p.blockBorrowing === true) || [];
+
+  return concat(automatedPatronBlocks, manualPatronBlocks);
+}
+
 export function getAllErrorMessages(errors = []) {
   const errorMessages = [];
   errors.forEach(({ message }) => errorMessages.push(message));
@@ -82,4 +100,17 @@ export function shouldStatusModalBeShown(item) {
     statuses.UNKNOWN,
     statuses.WITHDRAWN,
   ], item?.status?.name);
+}
+
+export function renderOrderedPatronBlocks(patronBlocks) {
+  const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
+  return blocks.map(block => {
+    return (
+      <Row key={block.id || block.patronBlockConditionId}>
+        <Col xs>
+          <b data-test-block-message>{block.desc || block.message || ''}</b>
+        </Col>
+      </Row>
+    );
+  });
 }

@@ -16,6 +16,7 @@ import {
 } from '@folio/stripes/core';
 import { DueDatePicker } from '@folio/stripes/smart-components';
 
+import { renderOrderedPatronBlocks } from '../../util';
 import {
   DATE_PICKER_DEFAULTS,
   INVALID_DATE_MESSAGE,
@@ -29,14 +30,18 @@ function OverrideModal(props) {
     closeOverrideModal,
     onOverride,
     message,
+    overridePatronBlock,
+    patronBlockOverriddenInfo: {
+      comment: patronBlockOverriddenComment = '',
+    },
+    patronBlocks,
+    item,
     item: {
       title,
       barcode,
-      materialType: { name: materialType },
     },
-
   } = props;
-  const [comment, setAdditionalInfo] = useState('');
+  const [comment, setAdditionalInfo] = useState(patronBlockOverriddenComment);
   const [dueDate, setDatetime] = useState('');
 
   const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
@@ -46,9 +51,7 @@ function OverrideModal(props) {
     setDatetime(newDateTime);
   };
 
-  const canBeSubmitted = itemIsNotLoanable
-    ? comment && dueDate !== INVALID_DATE_MESSAGE
-    : comment;
+  const canBeSubmitted = itemIsNotLoanable ? comment && (dueDate !== INVALID_DATE_MESSAGE) : comment;
 
   const getModalLabel = () => {
     let label = '';
@@ -58,6 +61,10 @@ function OverrideModal(props) {
 
     if (blockLimitIsReached) {
       label = <FormattedMessage id="ui-checkout.overrideItemBlock" />;
+    }
+
+    if (overridePatronBlock) {
+      label = <FormattedMessage id="ui-checkout.overridePatronBlock" />;
     }
 
     return label;
@@ -77,6 +84,16 @@ function OverrideModal(props) {
       : onOverride(omit(overrideItem, 'dueDate'));
   };
 
+  const renderPatronBlocks = renderOrderedPatronBlocks(patronBlocks);
+  const renderItemInfo = () => (
+    <p>
+      <SafeHTMLMessage
+        id="ui-checkout.messages.itemWillBeCheckedOut"
+        values={{ title, barcode, name: item?.materialType?.name }}
+      />
+    </p>
+  );
+
   return (
     <Modal
       size="small"
@@ -92,12 +109,23 @@ function OverrideModal(props) {
         onSubmit={onSubmit}
       >
         <Col xs={12}>
-          <p>
-            <SafeHTMLMessage
-              id="ui-checkout.messages.itemWillBeCheckedOut"
-              values={{ title, barcode, materialType }}
-            />
-          </p>
+          {overridePatronBlock
+            ? (
+              <>
+                <Row>
+                  <Col xs>
+                    <FormattedMessage id="ui-checkout.blockedLabel" /> :
+                  </Col>
+                </Row>
+                {renderPatronBlocks}
+                <br />
+                <Row>
+                  <Col xs>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
+                </Row>
+                <br />
+              </>)
+            : renderItemInfo
+          }
         </Col>
         {itemIsNotLoanable &&
         <Col
@@ -133,6 +161,7 @@ function OverrideModal(props) {
           <TextArea
             required
             label={<FormattedMessage id="ui-checkout.comment" />}
+            value={comment}
             onChange={(e) => { setAdditionalInfo(e.target.value); }}
           />
         </Col>
@@ -169,10 +198,20 @@ function OverrideModal(props) {
 
 OverrideModal.propTypes = {
   stripes: stripesShape.isRequired,
-  item: PropTypes.object.isRequired,
+  item: PropTypes.object,
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
+  overridePatronBlock: PropTypes.bool,
+  message: PropTypes.string,
+  patronBlocks: PropTypes.arrayOf(PropTypes.object),
+  patronBlockOverriddenInfo: PropTypes.object,
 };
 
+OverrideModal.defaultProps = {
+  item: {},
+  overridePatronBlock: false,
+  patronBlocks: [],
+  patronBlockOverriddenInfo: {},
+  message: '',
+};
 export default OverrideModal;

@@ -95,6 +95,7 @@
   "saveAndClose": "Save & close",
   "overrideLoanPolicy": "Override loan policy",
   "overrideItemBlock": "Override item block",
+  "overridePatronBlock": "Override patron block",
   "item.block.overrided": "(Item limit overridden)",
   "actions.moreDetails": "Get more details about this item",
 
