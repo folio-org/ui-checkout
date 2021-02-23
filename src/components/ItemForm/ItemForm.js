@@ -12,6 +12,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 import {
+  TitleManager,
+  withModules,
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
@@ -34,6 +36,9 @@ class ItemForm extends React.Component {
       PropTypes.object
     ).isRequired,
     onClearCheckoutErrors: PropTypes.func,
+    modules: PropTypes.shape({
+      app: PropTypes.arrayOf(PropTypes.object),
+    }),
   };
 
   static defaultProps = {
@@ -49,6 +54,7 @@ class ItemForm extends React.Component {
     super(props);
 
     this.barcodeEl = React.createRef();
+    this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkout')?.readyPrefix;
     this.state = {
       overrideModalOpen: false,
       errors: [],
@@ -153,16 +159,20 @@ class ItemForm extends React.Component {
                 {placeholder => (
                   <FormattedMessage id="ui-checkout.itemId">
                     {ariaLabel => (
-                      <Field
-                        fullWidth
-                        name="item.barcode"
-                        component={TextField}
-                        aria-label={ariaLabel}
-                        id="input-item-barcode"
-                        placeholder={placeholder}
-                        inputRef={this.barcodeEl}
-                        validationEnabled={validationEnabled}
-                      />
+                      <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
+                        <Field
+                          fullWidth
+                          name="item.barcode"
+                          component={TextField}
+                          aria-label={ariaLabel}
+                          id="input-item-barcode"
+                          placeholder={placeholder}
+                          inputRef={this.barcodeEl}
+                          validationEnabled={validationEnabled}
+                          onFocus={this.readyPrefix ? () => this.setState({ readyToScan: true }) : undefined}
+                          onBlur={this.readyPrefix ? () => this.setState({ readyToScan: false }) : undefined}
+                        />
+                      </TitleManager>
                     )}
                   </FormattedMessage>
                 )}
@@ -206,4 +216,4 @@ class ItemForm extends React.Component {
 
 export default stripesFinalForm({
   navigationCheck: true,
-})(withStripes(ItemForm));
+})(withStripes(withModules(ItemForm)));
