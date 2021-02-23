@@ -54,7 +54,7 @@ class ItemForm extends React.Component {
     super(props);
 
     this.barcodeEl = React.createRef();
-    this.readyPrefix = props.modules?.app?.filter(el => el.module === '@folio/checkout')?.[0]?.readyPrefix;
+    this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkout')?.readyPrefix;
     this.state = {
       overrideModalOpen: false,
       errors: [],
