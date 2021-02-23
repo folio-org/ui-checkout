@@ -105,11 +105,11 @@ describe('Override patron block', () => {
 
             await this.server.post('circulation/check-out-by-barcode', () => {
               return new Response(422, { 'Content-Type': 'application/json' }, {
-                'errors': [{
-                  'message': 'Item is not loanable',
-                  'parameters': [{
-                    'key': 'itemBarcode',
-                    'value': '123'
+                errors: [{
+                  message: 'Item is not loanable',
+                  parameters: [{
+                    key: 'itemBarcode',
+                    value: '123'
                   }]
                 }]
               });

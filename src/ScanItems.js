@@ -33,12 +33,6 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
-    overrideCheckout: {
-      type: 'okapi',
-      path: 'circulation/override-check-out-by-barcode',
-      fetch: false,
-      throwErrors: false,
-    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
@@ -62,9 +56,6 @@ class ScanItems extends React.Component {
         reset: PropTypes.func,
       }),
       checkout: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-      overrideCheckout: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
@@ -233,7 +224,10 @@ class ScanItems extends React.Component {
   }
 
   checkout = (barcode) => {
-    const { mutator: { checkout }, patronBlockOverriddenInfo } = this.props;
+    const {
+      mutator: { checkout },
+      patronBlockOverriddenInfo,
+    } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
       loanDate: moment().utc().format(),
@@ -247,8 +241,15 @@ class ScanItems extends React.Component {
   }
 
   override = (data) => {
-    const { mutator: { checkout }, patronBlockOverriddenInfo } = this.props;
-    const { barcode, comment, dueDate } = data;
+    const {
+      mutator: { checkout },
+      patronBlockOverriddenInfo,
+    } = this.props;
+    const {
+      barcode,
+      comment,
+      dueDate,
+    } = data;
     const overrideData = { ...this.getRequestData(barcode) };
 
     if (!dueDate) {

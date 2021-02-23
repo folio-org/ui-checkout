@@ -1,9 +1,17 @@
+import React from 'react';
 import {
   get,
   includes,
   concat,
+  take,
+  orderBy,
 } from 'lodash';
 import moment from 'moment';
+
+import {
+  Col,
+  Row,
+} from '@folio/stripes/components';
 
 import {
   defaultPatronIdentifier,
@@ -92,4 +100,17 @@ export function shouldStatusModalBeShown(item) {
     statuses.UNKNOWN,
     statuses.WITHDRAWN,
   ], item?.status?.name);
+}
+
+export function renderOrderedPatronBlocks(patronBlocks) {
+  const blocks = take(orderBy(patronBlocks, ['metadata.updatedDate'], ['desc']), 3);
+  return blocks.map(block => {
+    return (
+      <Row key={block.id || block.patronBlockConditionId}>
+        <Col xs>
+          <b data-test-block-message>{block.desc || block.message || ''}</b>
+        </Col>
+      </Row>
+    );
+  });
 }

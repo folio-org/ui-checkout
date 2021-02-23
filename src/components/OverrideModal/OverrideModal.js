@@ -16,6 +16,7 @@ import {
 } from '@folio/stripes/core';
 import { DueDatePicker } from '@folio/stripes/smart-components';
 
+import { renderOrderedPatronBlocks } from '../../util';
 import {
   DATE_PICKER_DEFAULTS,
   INVALID_DATE_MESSAGE,
@@ -83,16 +84,7 @@ function OverrideModal(props) {
       : onOverride(omit(overrideItem, 'dueDate'));
   };
 
-  const renderPatronBlocks = patronBlocks.map(block => {
-    return (
-      <Row key={block.id || block.patronBlockConditionId}>
-        <Col xs>
-          <b data-test-block-message>{block.desc || block.message || ''}</b>
-        </Col>
-      </Row>
-    );
-  });
-
+  const renderPatronBlocks = renderOrderedPatronBlocks(patronBlocks);
   const renderItemInfo = () => (
     <p>
       <SafeHTMLMessage
@@ -126,6 +118,10 @@ function OverrideModal(props) {
                   </Col>
                 </Row>
                 {renderPatronBlocks}
+                <br />
+                <Row>
+                  <Col xs>{(patronBlocks.length > 3) && <FormattedMessage id="ui-checkout.additionalReasons" />}</Col>
+                </Row>
                 <br />
               </>)
             : renderItemInfo

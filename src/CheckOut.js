@@ -561,7 +561,7 @@ class CheckOut extends React.Component {
 
   openOverridePatronBlockModal = () => {
     this.setState({
-      overrideModalOpen: true
+      overrideModalOpen: true,
     });
     this.onCloseBlockedModal();
   };
@@ -698,7 +698,6 @@ class CheckOut extends React.Component {
           onClose={this.onCloseBlockedModal}
           viewUserPath={() => { this.onViewUserPath(patron); }}
           patronBlocks={patronBlocks || []}
-          stripes={stripes}
         />
         {overrideModalOpen &&
           <OverrideModal

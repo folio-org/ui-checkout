@@ -99,7 +99,6 @@
   "item.block.overrided": "(Item limit overridden)",
   "actions.moreDetails": "Get more details about this item",
 
-  "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
   "permission.circulation": "Check out: Check out circulating items",
   "permission.all": "Check out: All permissions",
   "permission.viewLoans": "Check out: View loans",
