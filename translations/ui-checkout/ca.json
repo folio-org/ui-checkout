@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "Item not checked out",
     "userNotFoundError": "User with this {identifier} does not exist",
     "missingIdentifierError": "User {username} does not have a {identifier}",
-    "unknownError": "Unknown error occurred",
     "scanPatronCard": "Scan patron card",
     "scanItems": "Scan items",
     "openLoans": "Open loans",
@@ -86,7 +85,6 @@
     "source": "Source",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
-    "permission.overrideCheckOutByBarcode": "Check out: Override loans policy on check out by barcode",
     "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "Check out: All permissions",
     "proxy.expiration": "Proxy expiration",
@@ -108,5 +106,7 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "overrideItemBlock": "Override item block",
+    "item.block.overrided": "(Item limit overridden)"
 }

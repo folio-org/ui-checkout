@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "貸出されていない資料",
     "userNotFoundError": "この{identifier}持つユーザーは存在しません",
     "missingIdentifierError": "ユーザー{username}には{identifier}がありません",
-    "unknownError": "不明なエラーが発生しました",
     "scanPatronCard": "利用者カードをスキャン",
     "scanItems": "資料のスキャン",
     "openLoans": "Open loans",
@@ -86,7 +85,6 @@
     "source": "ソース",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
-    "permission.overrideCheckOutByBarcode": "貸出：バーコードによる貸出時に貸出ポリシーを上書きする",
     "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "貸出：すべての権限",
     "proxy.expiration": "Proxy expiration",
@@ -108,5 +106,7 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "overrideItemBlock": "Override item block",
+    "item.block.overrided": "(Item limit overridden)"
 }

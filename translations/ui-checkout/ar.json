@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "لم تتم إعارة المادة",
     "userNotFoundError": "لا يوجد مستخدم بهذا {identifier}",
     "missingIdentifierError": "لا يملك المستخدم  {identifier} {username} ",
-    "unknownError": "حدث خطأ غير معروف",
     "scanPatronCard": "مسح بطاقة المستفيد ضوئيًا",
     "scanItems": "مسح المواد ضوئيًا",
     "openLoans": "إعارات مفتوحة",
@@ -86,7 +85,6 @@
     "source": "المصدر",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف.",
-    "permission.overrideCheckOutByBarcode": "الإعارة: تخطى سياسة الأعارة عند الإعارة بواسطة الباركود",
     "permission.circulation": "الإعارة: أعر مواد الإعارة",
     "permission.all": "الإعارة: كل الصلاحيات",
     "proxy.expiration": "انتهاء صلاحية النائب",
@@ -108,5 +106,7 @@
     "statuses.inProcessNonRequestable": "قيد المعالجة (غير قابل للطلب)",
     "statuses.longMissing": "مفقودة منذ مدة",
     "statuses.unavailable": "غير متاحة",
-    "statuses.unknown": "غير معروف"
+    "statuses.unknown": "غير معروف",
+    "overrideItemBlock": "تخطي كتلة المادة",
+    "item.block.overrided": "(تم تجاوز حد المادة)"
 }
