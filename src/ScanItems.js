@@ -33,12 +33,6 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
-    overrideCheckout: {
-      type: 'okapi',
-      path: 'circulation/override-check-out-by-barcode',
-      fetch: false,
-      throwErrors: false,
-    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
@@ -62,9 +56,6 @@ class ScanItems extends React.Component {
         reset: PropTypes.func,
       }),
       checkout: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-      overrideCheckout: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
