@@ -20,6 +20,7 @@
 * Remove old override endpoint and permission. Refs UICHKOUT-680.
 * Patron blocks: Allow for override when logged in user has credentials. Refs UICHKOUT-688.
 * Add support for optional `readyPrefix` property at the module level in stripes.config.js. If set, this prefix will be displayed in the title when the app is ready to receive a scanned item barcode. Implements UICHKOUT-686.
+* Use a compatible version of `ui-plugin-find-user`.
 
 ## [5.0.0](https://github.com/folio-org/ui-checkout/tree/v5.0.0) (2020-10-12)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v4.0.1...v5.0.0)
