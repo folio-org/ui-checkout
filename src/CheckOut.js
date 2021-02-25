@@ -236,6 +236,14 @@ class CheckOut extends React.Component {
     if (!this.shouldSubmitAutomatically) {
       this.patronFormInputRef.current.focus();
     }
+
+    const patronBlockOverriddenInfoFromStorage = JSON.parse(sessionStorage.getItem('patronBlockOverriddenInfo'));
+
+    if (patronBlockOverriddenInfoFromStorage) {
+      this.setState({
+        patronBlockOverriddenInfo: patronBlockOverriddenInfoFromStorage
+      });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -248,37 +256,38 @@ class CheckOut extends React.Component {
       resources: prevResources,
     } = prevProps;
 
-    const { submitting } = this.state;
+    const { submitting, patronBlockOverriddenInfo } = this.state;
 
     if (this.shouldSubmitAutomatically) {
       this.submitForm('patron-form');
     }
 
-    const {
-      manualPatronBlocks,
-      automatedPatronBlocks,
-    } = this.extractPatronBlocks();
-    const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
-    const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
-    const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    if (isEmpty(patronBlockOverriddenInfo)) {
+      const {
+        manualPatronBlocks,
+        automatedPatronBlocks,
+      } = this.extractPatronBlocks();
+      const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
+      const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+      const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
 
-    if ((prevExpired.length > 0 && expired.length === 0) || !isEmpty(automatedPatronBlocks)) {
-      if (submitting) {
+      if ((prevExpired.length > 0 && expired.length === 0) || !isEmpty(automatedPatronBlocks)) {
+        if (submitting) {
+          // eslint-disable-next-line react/no-did-update-set-state
+          this.setState({ submitting: false });
+        }
+      }
+
+      if ((expired.length > 0 && !submitting) && isEmpty(automatedPatronBlocks)) {
         // eslint-disable-next-line react/no-did-update-set-state
-        this.setState({ submitting: false });
+        this.setState({ submitting: true });
+
+        expired.forEach(p => {
+          mutator.activeRecord.update({ blockId: p.id });
+          mutator.manualPatronBlocks.DELETE({ id: p.id });
+        });
       }
     }
-
-    if ((expired.length > 0 && !submitting) && isEmpty(automatedPatronBlocks)) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ submitting: true });
-
-      expired.forEach(p => {
-        mutator.activeRecord.update({ blockId: p.id });
-        mutator.manualPatronBlocks.DELETE({ id: p.id });
-      });
-    }
-
     if (this.timer) {
       return;
     }
@@ -372,6 +381,7 @@ class CheckOut extends React.Component {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
       update({ patronId: null, hasTimer: false });
       this.timer = null;
+      sessionStorage.setItem('patronBlockOverriddenInfo', JSON.stringify({}));
       this.setState({
         patronBlockOverriddenInfo: {},
         blocked: false,
@@ -551,12 +561,13 @@ class CheckOut extends React.Component {
   };
 
   overridePatronBlock = ({ comment }) => {
-    this.setState({
-      patronBlockOverriddenInfo: {
-        patronBlock: {},
-        comment,
-      }
-    });
+    const patronBlockOverriddenInfo = {
+      patronBlock: {},
+      comment,
+    };
+
+    sessionStorage.setItem('patronBlockOverriddenInfo', JSON.stringify(patronBlockOverriddenInfo));
+    this.setState({ patronBlockOverriddenInfo });
   };
 
   openOverridePatronBlockModal = () => {
