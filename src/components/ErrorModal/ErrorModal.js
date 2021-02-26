@@ -19,6 +19,7 @@ import {
 import {
   ITEM_NOT_LOANABLE,
   OVERRIDABLE_ERROR_MESSAGES,
+  ERRORS_TO_HIDE,
 } from '../../constants';
 import {
   getAllErrorMessages,
@@ -56,6 +57,10 @@ function ErrorModal(props) {
   const renderMessages = () => {
     return map(messages, (message, index) => {
       let notLoanableError = '';
+
+      if (ERRORS_TO_HIDE.includes(message)) {
+        return null;
+      }
 
       if (message === ITEM_NOT_LOANABLE) {
         const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
