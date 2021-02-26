@@ -4,6 +4,7 @@ import {
   notLoanablePolicyId,
   notLoanablePolicyName,
   checkoutErrorMessage,
+  itemHasOpenLoanError,
 } from '../../constants';
 
 export default (server) => {
@@ -28,6 +29,13 @@ export default (server) => {
           }, {
             'key': 'loanPolicyId',
             'value': notLoanablePolicyId
+          }]
+        },
+        {
+          'message': itemHasOpenLoanError,
+          'parameters': [{
+            'key': 'itemBarcode',
+            'value': notLoanableItemBarcode,
           }]
         }
       ]
