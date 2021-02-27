@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "Exemplar nicht ausgeliehen",
     "userNotFoundError": "Person mit diesem {identifier} existiert nicht",
     "missingIdentifierError": "Person {username} hat keinen {identifier}",
-    "unknownError": "Unbekannter Fehler aufgetreten",
     "scanPatronCard": "Personenkarte scannen",
     "scanItems": "Exemplare scannen",
     "openLoans": "Aktuelle Ausleihen",
@@ -86,13 +85,12 @@
     "source": "Quelle",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType}) </strong>(Barcode: {barcode}) hat den Exemplarstatus <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) hat den Exemplarstatus <strong>{status}</strong> und Nachweis ist unterdrückt.",
-    "permission.overrideCheckOutByBarcode": "Ausleihe: Überschreiben der Ausleihregeln bei der Ausleihe per Barcode",
     "permission.circulation": "Ausleihe: zirkulierende Exemplare ausleihen",
     "permission.all": "Ausleihe: Alle Berechtigungen",
     "proxy.expiration": "Ablauf der Vollmacht",
     "due.date": "Fälligkeitsdatum",
     "user.expiration": "Ablauf Nutzungsberechtigung",
-    "end.session": "Ende der Session",
+    "end.session": "Session beenden",
     "patron.identifier": "Personen Identifier",
     "checkout.notes": "Ausleih-Notizen",
     "actions.moreDetails": "Mehr Details über dieses Exemplar",
@@ -108,5 +106,8 @@
     "statuses.inProcessNonRequestable": "In Bearbeitung (nicht bestellbar)",
     "statuses.longMissing": "Lang vermisst",
     "statuses.unavailable": "Nicht verfügbar",
-    "statuses.unknown": "Unbekannt"
+    "statuses.unknown": "Unbekannt",
+    "overrideItemBlock": "Override item block",
+    "item.block.overrided": "(Item limit overridden)",
+    "overridePatronBlock": "Override patron block"
 }
