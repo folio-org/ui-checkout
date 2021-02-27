@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "单件未借出",
     "userNotFoundError": "不存在有此{identifier}的用户",
     "missingIdentifierError": "用户{username}没有{identifier}",
-    "unknownError": "发生未知错误",
     "scanPatronCard": "扫描读者证",
     "scanItems": "扫描单件",
     "openLoans": "在借",
@@ -86,7 +85,6 @@
     "source": "来源",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong> {status} </strong> 。",
     "confirmStatusModal.suppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong> {status} </strong>并且被禁止发现。",
-    "permission.overrideCheckOutByBarcode": "借出：通过条码借出的越权借阅政策",
     "permission.circulation": "借出：借出流通单件",
     "permission.all": "借出：所有权限",
     "proxy.expiration": "代理到期",
@@ -108,5 +106,8 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "overrideItemBlock": "Override item block",
+    "item.block.overrided": "(Item limit overridden)",
+    "overridePatronBlock": "Override patron block"
 }
