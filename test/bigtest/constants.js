@@ -6,6 +6,7 @@ export const notLoanablePolicyName = 'Not loanable';
 export const notLoanablePolicyId = 'notLoanablePolicyId';
 export const notLoanableItemBarcode = 'notLoanableBarcode';
 export const checkoutErrorMessage = 'Item is already checked out';
+export const itemHasOpenLoanError = 'Cannot check out item that already has an open loan';
 export const blockedUserId1 = 'blockedUserId1';
 export const blockedUserId2 = 'blockedUserId2';
 export const blockedMessage = 'Patron has reached maximum allowed number of items charged out';

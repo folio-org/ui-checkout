@@ -37,6 +37,10 @@ export const OVERRIDABLE_ERROR_MESSAGES = [
   MAX_ITEM_BLOCK_LIMIT,
 ];
 
+export const ERRORS_TO_HIDE = [
+  'Cannot check out item that already has an open loan'
+];
+
 export const statuses = {
   CHECK_OUT: 'Check out',
   IN_PROCESS_NON_REQUESTABLE: 'In process (non-requestable)',
