@@ -54,6 +54,7 @@ class CheckOut extends React.Component {
     selPatron: { initialValue: {} },
     query: { initialValue: {} },
     scannedItems: { initialValue: [] },
+    patronBlockOverriddenInfo: { initialValue: {} },
     checkoutSettings: {
       type: 'okapi',
       records: 'configs',
@@ -132,6 +133,10 @@ class CheckOut extends React.Component {
           id: PropTypes.string,
         }),
       ),
+      patronBlockOverriddenInfo: PropTypes.shape({
+        patronBlock: PropTypes.object,
+        comment: PropTypes.string,
+      }).isRequired,
       patrons: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
       }),
@@ -164,6 +169,9 @@ class CheckOut extends React.Component {
         replace: PropTypes.func,
       }),
       scannedItems: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      patronBlockOverriddenInfo: PropTypes.shape({
         replace: PropTypes.func,
       }),
       activeRecord: PropTypes.shape({
@@ -228,7 +236,6 @@ class CheckOut extends React.Component {
       submitting: false,
       loading: false,
       blocked: false,
-      patronBlockOverriddenInfo: {},
     };
   }
 
@@ -352,6 +359,7 @@ class CheckOut extends React.Component {
 
     const { submitting: patronFormSubmitting = false } = this.patronFormRef.current.getState();
 
+    this.clearOverriddenPatronBlockInfo();
     this.clearResources();
 
     if (!this.shouldSubmitAutomatically) {
@@ -373,7 +381,6 @@ class CheckOut extends React.Component {
       update({ patronId: null, hasTimer: false });
       this.timer = null;
       this.setState({
-        patronBlockOverriddenInfo: {},
         blocked: false,
       });
     }
@@ -394,6 +401,7 @@ class CheckOut extends React.Component {
     scannedItems.replace([]);
     patrons.reset();
     selPatron.replace({});
+    this.clearOverriddenPatronBlockInfo();
   }
 
   async selectPatron(patron) {
@@ -551,12 +559,12 @@ class CheckOut extends React.Component {
   };
 
   overridePatronBlock = ({ comment }) => {
-    this.setState({
-      patronBlockOverriddenInfo: {
-        patronBlock: {},
-        comment,
-      }
-    });
+    const patronBlockOverriddenInfo = {
+      patronBlock: {},
+      comment,
+    };
+
+    this.props.mutator.patronBlockOverriddenInfo.replace(patronBlockOverriddenInfo);
   };
 
   openOverridePatronBlockModal = () => {
@@ -565,6 +573,10 @@ class CheckOut extends React.Component {
     });
     this.onCloseBlockedModal();
   };
+
+  clearOverriddenPatronBlockInfo = () => {
+    this.props.mutator.patronBlockOverriddenInfo.replace({});
+  }
 
   render() {
     const {
@@ -585,13 +597,13 @@ class CheckOut extends React.Component {
     } = this.extractPatronBlocks();
     const patronBlocks = getPatronBlocks(manualPatronBlocks, automatedPatronBlocks);
     const scannedTotal = get(resources, ['scannedItems', 'length'], []);
+    const patronBlockOverriddenInfo = get(resources, 'patronBlockOverriddenInfo', {});
     const selPatron = resources.selPatron;
     const {
       loading,
       blocked,
       requestsCount,
       overrideModalOpen,
-      patronBlockOverriddenInfo,
     } = this.state;
     const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverriddenInfo));
 

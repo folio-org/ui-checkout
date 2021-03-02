@@ -195,6 +195,20 @@ describe('Override patron block', () => {
                   expect(checkOut.scanItems.itemListPresent).to.be.true;
                 });
               });
+
+              describe('overridden information still available after visiting other pages', () => {
+                beforeEach(function () {
+                  this.visit('/settings');
+
+                  return this.visit('/checkout', () => {
+                    expect(checkOut.$root).to.exist;
+                  });
+                });
+
+                it('should not show patron blocked modal', () => {
+                  expect(checkOut.blockModal.modalPresent).to.be.false;
+                });
+              });
             });
           });
         });
