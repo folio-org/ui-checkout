@@ -109,5 +109,5 @@
     "statuses.unknown": "Nieznany",
     "overrideItemBlock": "Zastąp blokadę egzemplarza",
     "item.block.overrided": "(Limit egzemplarzy został zastąpiony)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Zastąp blokadę czytelnika"
 }
