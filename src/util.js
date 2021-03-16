@@ -1,33 +1,13 @@
 import React from 'react';
-import {
-  get,
-  includes,
-  concat,
-  take,
-  orderBy,
-} from 'lodash';
 import moment from 'moment';
+import { take, orderBy } from 'lodash';
 
-import {
-  Col,
-  Row,
-} from '@folio/stripes/components';
+import { Col, Row } from '@folio/stripes/components';
 
-import {
-  defaultPatronIdentifier,
-  patronIdentifierMap,
-  statuses,
-} from './constants';
-
-// serialized object into http params
-export function toParams(obj) {
-  return Object.entries(obj).map(([key, val]) => `${key}=${val}`).join('&');
-}
+import { defaultPatronIdentifier, statuses } from './constants';
 
 export function getFullName(user) {
-  return `${get(user, ['personal', 'lastName'], '')},
-    ${get(user, ['personal', 'firstName'], '')}
-    ${get(user, ['personal', 'middleName'], '')}`;
+  return `${user?.personal?.lastName ?? ''}, ${user?.personal?.firstName ?? ''} ${user?.personal?.middleName ?? ''}`;
 }
 
 export function getCheckoutSettings(checkoutSettings) {
@@ -52,20 +32,15 @@ export function getPatronIdentifiers(checkoutSettings) {
 }
 
 export function buildIdentifierQuery(patron, idents) {
-  const query = idents.map(ident => `${patronIdentifierMap[ident]}=="${patron.identifier}"`);
+  const query = idents.map(ident => `${ident}=="${patron.identifier}"`);
   return `(${query.join(' OR ')})`;
 }
 
 export function buildRequestQuery(requesterId, servicePointId) {
+  const servicePointClause = servicePointId ? `pickupServicePointId=${servicePointId} and` : '';
   return `(requesterId==${requesterId} and
-    pickupServicePointId=${servicePointId} and
+    ${servicePointClause}
     status=="Open - Awaiting pickup")`;
-}
-
-export function to(promise) {
-  return promise
-    .then(data => [null, data])
-    .catch(err => [err]);
 }
 
 export function getPatronBlocks(manualBlocks, automatedBlocks) {
@@ -73,7 +48,7 @@ export function getPatronBlocks(manualBlocks, automatedBlocks) {
   manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
   const automatedPatronBlocks = automatedBlocks.filter(p => p.blockBorrowing === true) || [];
 
-  return concat(automatedPatronBlocks, manualPatronBlocks);
+  return [...automatedPatronBlocks, ...manualPatronBlocks];
 }
 
 export function getAllErrorMessages(errors = []) {
@@ -90,7 +65,7 @@ export function extractErrorDetails(errors, errorMessage) {
 }
 
 export function shouldStatusModalBeShown(item) {
-  return includes([
+  return [
     statuses.IN_PROCESS_NON_REQUESTABLE,
     statuses.LONG_MISSING,
     statuses.LOST_AND_PAID,
@@ -99,7 +74,7 @@ export function shouldStatusModalBeShown(item) {
     statuses.UNAVAILABLE,
     statuses.UNKNOWN,
     statuses.WITHDRAWN,
-  ], item?.status?.name);
+  ].includes(item?.status?.name);
 }
 
 export function renderOrderedPatronBlocks(patronBlocks) {

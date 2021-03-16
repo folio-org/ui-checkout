@@ -18,8 +18,6 @@ import {
 import { Pluggable } from '@folio/stripes/core';
 import { FormattedMessage } from 'react-intl';
 
-import { patronIdentifierMap, patronLabelMap } from '../../constants';
-
 import css from './PatronForm.css';
 
 class PatronForm extends React.Component {
@@ -84,14 +82,14 @@ class PatronForm extends React.Component {
       form,
     } = this.props;
 
-    const ident = find(userIdentifiers, i => user[patronIdentifierMap[i]]);
+    const ident = find(userIdentifiers, i => user[i]);
 
     if (ident) {
-      form.change('patron.identifier', user[patronIdentifierMap[ident]]);
+      form.change('patron.identifier', user[ident]);
       setTimeout(() => handleSubmit());
     } else {
       const { username } = user;
-      const identifier = patronIdentifierMap[userIdentifiers[0]];
+      const identifier = userIdentifiers[0];
       const missingIdErrorMessage = (
         <FormattedMessage
           id="ui-checkout.missingIdentifierError"
@@ -126,7 +124,7 @@ class PatronForm extends React.Component {
 
     const validationEnabled = false;
     const disableRecordCreation = true;
-    const identifier = (userIdentifiers.length > 1) ? 'id' : patronLabelMap[userIdentifiers[0]];
+    const identifier = (userIdentifiers.length > 1) ? 'id' : userIdentifiers[0];
     const formState = form.getState();
 
     return (

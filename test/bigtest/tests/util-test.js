@@ -5,18 +5,10 @@ import {
   buildIdentifierQuery,
   getCheckoutSettings,
   getPatronIdentifiers,
-  toParams,
 } from '../../../src/util';
 
 describe('Utility functions', () => {
   setupApplication();
-
-  describe('converting an object to params', () => {
-    it('converts a kv-pair object to URL-encncoded params', () => {
-      const testObject = { key1: 'value1', key2: 'value2' };
-      expect(toParams(testObject)).to.equal('key1=value1&key2=value2');
-    });
-  });
 
   describe('getting checkout settings', () => {
     it('returns undefined for an empty array', () => {
@@ -32,15 +24,15 @@ describe('Utility functions', () => {
 
   describe('getting patron identifiers', () => {
     it('returns the identifiers from a valid prefs object', () => {
-      const settingsArray = [{ value:'{"prefPatronIdentifier":"BARCODE,FOLIO"}' }];
-      expect(getPatronIdentifiers(settingsArray)).to.have.members(['BARCODE', 'FOLIO']);
+      const settingsArray = [{ value:'{"prefPatronIdentifier":"barcode,id"}' }];
+      expect(getPatronIdentifiers(settingsArray)).to.have.members(['barcode', 'id']);
     });
   });
 
   describe('making a patron identifier query', () => {
     it('converts a set of identifiers to a CQL query', () => {
       const patron = { identifier: '12345678' };
-      const idents = ['BARCODE', 'FOLIO'];
+      const idents = ['barcode', 'id'];
       expect(buildIdentifierQuery(patron, idents)).to.equal('(barcode=="12345678" OR id=="12345678")');
     });
   });

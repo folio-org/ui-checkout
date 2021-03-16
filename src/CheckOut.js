@@ -26,10 +26,8 @@ import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
 import OverrideModal from './components/OverrideModal';
 import NotificationModal from './components/NotificationModal';
 
-import {
-  patronIdentifierMap,
-  errorTypes,
-} from './constants';
+import { errorTypes } from './constants';
+
 import {
   getPatronIdentifiers,
   buildIdentifierQuery,
@@ -386,10 +384,7 @@ class CheckOut extends React.Component {
     }
   }
 
-  getPatronIdentifiers() {
-    const checkoutSettings = get(this.props.resources, ['checkoutSettings', 'records'], []);
-    return getPatronIdentifiers(checkoutSettings);
-  }
+  getPatronIdentifiers = () => getPatronIdentifiers(this.props.resources?.checkoutSettings?.records ?? []);
 
   clearResources() {
     const {
@@ -484,7 +479,7 @@ class CheckOut extends React.Component {
       const patrons = await this.props.mutator.patrons.GET({ params: { query } });
 
       if (!patrons.length) {
-        const identifier = (idents.length > 1) ? 'id' : patronIdentifierMap[idents[0]];
+        const identifier = (idents.length > 1) ? 'id' : idents[0];
 
         error.patron.identifier = <FormattedMessage id="ui-checkout.userNotFoundError" values={{ identifier }} />;
         error.patron._error = errorTypes.SCAN_FAILED;
