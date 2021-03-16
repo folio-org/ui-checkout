@@ -8,7 +8,6 @@
     "itemNotCheckedOut": "Artículo no retirado",
     "userNotFoundError": "El usuario con este {identifier} no existe",
     "missingIdentifierError": "El usuario {username} no tiene un {identifier}",
-    "unknownError": "Se produjo un error desconocido",
     "scanPatronCard": "Escanear tarjeta de usuario",
     "scanItems": "Analizar artículos",
     "openLoans": "Préstamos abiertos",
@@ -86,7 +85,6 @@
     "source": "Fuente",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) el estado de ejemplar es<strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) el estado de ejemplar es<strong>{status}</strong> y está oculto en el catálogo.",
-    "permission.overrideCheckOutByBarcode": "Préstamo: Invalidar la política de préstamo al prestar por código de barras",
     "permission.circulation": "Préstamo: prestar ejemplares en circulación",
     "permission.all": "Préstamo: todos los permisos",
     "proxy.expiration": "Proxy expiration",
@@ -108,5 +106,8 @@
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
-    "statuses.unknown": "Unknown"
+    "statuses.unknown": "Unknown",
+    "overrideItemBlock": "Override item block",
+    "item.block.overrided": "(Item limit overridden)",
+    "overridePatronBlock": "Override patron block"
 }
