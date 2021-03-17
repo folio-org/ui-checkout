@@ -107,7 +107,7 @@
     "statuses.longMissing": "Desaparecido há muito tempo",
     "statuses.unavailable": "Indisponível",
     "statuses.unknown": "Desconhecido",
-    "overrideItemBlock": "Override item block",
+    "overrideItemBlock": "Sobrepor bloqueio de item",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Sobrescrever bloqueio de usuário"
 }
