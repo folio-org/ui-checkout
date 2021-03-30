@@ -108,6 +108,6 @@
     "statuses.unavailable": "Indisponível",
     "statuses.unknown": "Desconhecido",
     "overrideItemBlock": "Sobrepor bloqueio de item",
-    "item.block.overrided": "(Item limit overridden)",
+    "item.block.overrided": "(Limite de item sobrescrito)",
     "overridePatronBlock": "Sobrescrever bloqueio de usuário"
 }

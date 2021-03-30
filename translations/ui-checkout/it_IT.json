@@ -93,7 +93,7 @@
     "end.session": "Fine sessione",
     "patron.identifier": "Identificatore dell'utente",
     "checkout.notes": "Note per il prestito",
-    "actions.moreDetails": "Get more details about this item",
+    "actions.moreDetails": "Ottieni maggiori dettagli su questo item",
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
