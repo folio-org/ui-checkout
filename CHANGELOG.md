@@ -3,6 +3,7 @@
 ## [6.1.0] (IN PROGRESS)
 
 * Added ability to look-up patron by Custom Fields. Refs UICHKOUT-697
+* Also support `circulation` `10.0`. Refs UICHKOUT-710.
 
 ## [6.0.0](https://github.com/folio-org/ui-checkout/tree/v6.0.0) (2021-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v5.0.0...v6.0.0)
