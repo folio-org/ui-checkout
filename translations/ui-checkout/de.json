@@ -49,11 +49,11 @@
     "presentation": "Präsentation",
     "error.oops": "Uh-oh!",
     "error.routing": "How did you get to {pathname}?",
-    "patronBlocksCount": "{count, plural, one {Sperre vorhanden} other {Sperren vorhanden}}",
-    "patronBlocks": "Personensperre",
+    "patronBlocksCount": " {count, plural, one {Sperre vorhanden} other {Sperren vorhanden}}",
+    "patronBlocks": "Kontosperren",
     "blockModal": "Person für Ausleihen gesperrt",
     "detailsButton": "Details der Sperre anzeigen",
-    "blockedLabel": "Grund für Sperrung",
+    "blockedLabel": "Grund für Sperre",
     "awaitingPickupMessage": "Entleiher/-in hat <strong>{count}</strong> {count, plural, one {Exemplar} other {Exemplare}} an dieser Servicestelle im Abholregal.",
     "awaitingPickupLabel": "Exemplare im Abholregal",
     "multipieceModal.confirm": "Ausleihe",
@@ -64,7 +64,7 @@
     "multipieceModal.item.numberOfMissingPieces": "Anzahl der fehlenden Teile",
     "multipieceModal.item.descriptionOfmissingPieces": "Beschreibung der fehlenden Teile",
     "openAccounts": "geschuldete Forderungen",
-    "additionalReasons": "Details der Sperren anzeigen, um zusätzliche Gründe für die Sperren anzuzeigen...",
+    "additionalReasons": "Details der Sperre anzeigen, um zusätzliche Gründe für die Sperre anzuzeigen...",
     "multipieceModal.cancel": "Abbrechen",
     "note": "Notiz",
     "checkoutNoteModal.heading": "Ausleihe bestätigen",
@@ -109,5 +109,5 @@
     "statuses.unknown": "Unbekannt",
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Kontosperre umgehen"
 }
