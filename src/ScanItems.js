@@ -15,8 +15,24 @@ import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
 
-import checkoutSuccessSound from '../sound/checkout_success.m4a';
-import checkoutErrorSound from '../sound/checkout_error.m4a';
+
+function getCheckoutSound(checkoutStatus, audioTheme) {
+  if (!checkoutStatus) return null;
+  const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
+
+  let checkoutSound;
+  if (audioTheme) {
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
+  } else {
+    // Fall back to old hardwired sound, before themes were introduced
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
+  }
+
+  return checkoutSound;
+}
+
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
@@ -367,7 +383,7 @@ class ScanItems extends React.Component {
       parentResources,
       onSessionEnd,
       patron,
-      settings: { audioAlertsEnabled },
+      settings: { audioAlertsEnabled, audioTheme },
       shouldSubmitAutomatically,
       formRef,
       initialValues,
@@ -390,9 +406,7 @@ class ScanItems extends React.Component {
     };
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
-    const checkoutSound = (checkoutStatus === 'success')
-      ? checkoutSuccessSound
-      : checkoutErrorSound;
+    const checkoutSound = getCheckoutSound(checkoutStatus, audioTheme);
 
     return (
       <div data-test-scan-items>
