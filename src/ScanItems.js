@@ -21,13 +21,28 @@ function getCheckoutSound(checkoutStatus, audioTheme) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
 
   let checkoutSound;
-  if (audioTheme) {
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
-  } else {
-    // Fall back to old hardwired sound, before themes were introduced
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
+
+  try {
+    if (audioTheme) {
+      // Note that this require explicitly depends on @folio/circulation
+      // -- the sounds belong there so that they can be used by both
+      // checkout and checkin, the two modules whose settings it
+      // handles. If in the future a different circulation-settings
+      // module is used, this will need re-thinking.
+      //
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      checkoutSound = require(`@folio/circulation/sound/${audioTheme}/xcheckout_${soundName}.m4a`);
+    } else {
+      // Fall back to old hardwired sound, before themes were introduced
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
+    }
+  } catch (e) {
+    if (e.toString().includes('Cannot find module')) {
+      // Simply ignore a missing audio file
+    } else {
+      throw e;
+    }
   }
 
   return checkoutSound;
@@ -444,7 +459,7 @@ class ScanItems extends React.Component {
           overriddenItemLimitData={overriddenItemLimitData}
           {...this.props}
         />
-        {audioAlertsEnabled && checkoutStatus &&
+        {audioAlertsEnabled && checkoutSound &&
           <ReactAudioPlayer
             src={checkoutSound}
             autoPlay
