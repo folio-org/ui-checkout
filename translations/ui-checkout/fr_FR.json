@@ -19,7 +19,7 @@
     "active": "Actif",
     "inactive": "Inactif",
     "totalItemsScanned": "Total des articles scannés: {total}",
-    "sponsorExpired": "Enregistrement expiré",
+    "sponsorExpired": "Enregistrement échu",
     "proxyExpired": "Procuration échue",
     "continue": "Continuer",
     "orActingAsProxy": "Ou agissant par procuration pour",

@@ -71,7 +71,7 @@
     "checkoutNoteModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}} and will be <strong>checked out</strong> ",
     "checkoutNotes.heading": "대출 노트",
     "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count}</strong> {count, plural, one {note} other {notes}}",
-    "messages.itemIsNotLoanable": "<strong>{title}({materialType}) </strong>(바코드: {바코드})는 <strong>{loanPolicy}</strong> 대출 정책에 따라 <strong>대출할 수</strong> 없습니다.",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) is not <strong>loanable</strong> according to the <strong>{loanPolicy}</strong> loan policy",
     "cddd.date": "날짜",
     "cddd.time": "시각",
     "comment": "설명",
