@@ -20,6 +20,11 @@ function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
 
   let checkoutSound;
+  // We load the sounds from the already-built bundle using `require`,
+  // which is synchronous. It may be possible that this causes a
+  // delay, though if so I have not seen it. If we become aware of a
+  // delay in future, we could switch to using asynchronous `import`.
+
   if (audioTheme) {
     // Note that this require explicitly depends on @folio/circulation
     // -- the sounds belong there so that they can be used by both
