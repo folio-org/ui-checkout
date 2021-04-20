@@ -16,7 +16,7 @@ import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
 
 
-function getCheckoutSound(checkoutStatus, audioTheme) {
+function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
 
   let checkoutSound;
@@ -35,12 +35,6 @@ function getCheckoutSound(checkoutStatus, audioTheme) {
     checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
   }
 
-  return checkoutSound;
-}
-
-
-function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
-  const checkoutSound = getCheckoutSound(checkoutStatus, audioTheme);
   if (!checkoutSound) {
     return null;
   }
