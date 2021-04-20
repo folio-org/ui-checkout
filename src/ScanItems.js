@@ -17,45 +17,31 @@ import ModalManager from './ModalManager';
 
 
 function getCheckoutSound(checkoutStatus, audioTheme) {
-  console.log(`playSound(${checkoutStatus}, ${audioTheme})`);
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
 
   let checkoutSound;
-
-  try {
-    if (audioTheme) {
-      // Note that this require explicitly depends on @folio/circulation
-      // -- the sounds belong there so that they can be used by both
-      // checkout and checkin, the two modules whose settings it
-      // handles. If in the future a different circulation-settings
-      // module is used, this will need re-thinking.
-      //
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
-    } else {
-      // Fall back to old hardwired sound, before themes were introduced
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
-    }
-  } catch (e) {
-    console.warn('cannot load sound:', e);
-    if (e.toString().includes('Cannot find module')) {
-      // Simply ignore a missing audio file
-    } else {
-      throw e;
-    }
+  if (audioTheme) {
+    // Note that this require explicitly depends on @folio/circulation
+    // -- the sounds belong there so that they can be used by both
+    // checkout and checkin, the two modules whose settings it
+    // handles. If in the future a different circulation-settings
+    // module is used, this will need re-thinking.
+    //
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
+  } else {
+    // Fall back to old hardwired sound, before themes were introduced
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
   }
 
-  console.warn('got sound', checkoutSound);
   return checkoutSound;
 }
 
 
 function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
-  console.log(`playSound(${checkoutStatus}, ${audioTheme})`);
   const checkoutSound = getCheckoutSound(checkoutStatus, audioTheme);
   if (!checkoutSound) {
-    // onFinishedPlaying();
     return null;
   }
 
