@@ -98,7 +98,7 @@
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Afficher les demandes de réservations",
     "fastAddLabel": "Nouvel ajout rapide",
-    "confirmStatusModal.heading": "Prêter l'exemplaire {status} ?",
+    "confirmStatusModal.heading": "Emprunter l'exemplaire {status} ?",
     "statuses.missing": "Manquant",
     "statuses.withdrawn": "Retiré",
     "statuses.lostAndPaid": "Perdu et payé",
