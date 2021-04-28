@@ -16,6 +16,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { refundClaimReturned } from '../../constants';
 import css from './UserDetail.css';
 
 function Loans({
@@ -49,7 +50,7 @@ function Loans({
       );
     }
     return openRequestsCount;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources.openRequests, user.barcode]);
 
   const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
@@ -60,7 +61,26 @@ function Loans({
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
-  let openAccountsCount = parseFloat(owedAmount).toFixed(2);
+  // UICHECKOUT-619
+  let balanceOutstanding = 0;
+  let balanceSuspended = 0;
+  openAccounts.forEach((a) => {
+    if (a.paymentStatus.name === refundClaimReturned.PAYMENT_STATUS) {
+      balanceSuspended += (parseFloat(a.remaining));
+    } else {
+      balanceOutstanding += (parseFloat(a.remaining));
+    }
+  });
+  let suspendedAccounts = 0;
+  if (balanceSuspended > 0) {
+    suspendedAccounts = parseFloat(balanceSuspended).toFixed(2);
+    suspendedAccounts = <Link to={openAccountsPath}>{suspendedAccounts}</Link>;
+  }
+  const suspendedMessage = (balanceSuspended > 0) ? 'Suspended' : '';
+  // fin
+
+  // let openAccountsCount = parseFloat(owedAmount).toFixed(2);
+  let openAccountsCount = parseFloat(balanceOutstanding).toFixed(2);
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
     openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
   }
@@ -77,10 +97,19 @@ function Loans({
           />
         </Col>
         <Col xs={4}>
-          <KeyValue
-            label={<FormattedMessage id="ui-checkout.openAccounts" />}
-            value={openAccountsCount}
-          />
+          <Row>
+            <KeyValue
+              label={<FormattedMessage id="ui-checkout.openAccounts" />}
+              value={openAccountsCount}
+            />
+          </Row>
+          <Row>
+            (
+            <KeyValue
+              value={suspendedAccounts}
+            />
+            &nbsp;{suspendedMessage})
+          </Row>
         </Col>
         <Col xs={4}>
           <KeyValue
