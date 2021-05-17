@@ -61,6 +61,7 @@ function Loans({
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
+  // UICHECKOUT-619
   let balanceOutstanding = 0;
   let balanceSuspended = 0;
   openAccounts.forEach((a) => {
@@ -70,10 +71,15 @@ function Loans({
       balanceOutstanding += (parseFloat(a.remaining));
     }
   });
-  let suspended = parseFloat(balanceSuspended).toFixed(2);
-  if (balanceSuspended > 0 ) {
-    suspended = <Link to={openAccountsPath}>{suspended}</Link>;
+  let suspendedAccounts = 0;
+  if (balanceSuspended > 0) {
+    suspendedAccounts = parseFloat(balanceSuspended).toFixed(2);
+    suspendedAccounts = <Link to={openAccountsPath}>{suspendedAccounts}</Link>;
   }
+  const suspendedMessage = (balanceSuspended > 0) ? 'Suspended' : '';
+  // fin
+
+  // let openAccountsCount = parseFloat(owedAmount).toFixed(2);
   let openAccountsCount = parseFloat(balanceOutstanding).toFixed(2);
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
     openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
@@ -91,16 +97,19 @@ function Loans({
           />
         </Col>
         <Col xs={4}>
-          <KeyValue
-            label={<FormattedMessage id="ui-checkout.openAccounts" />}
-            value={openAccountsCount}
-          />
-          <FormattedMessage
-            id="ui-checkout.suspendedAccounts"
-            values={{
-              suspendedAccountsCount: suspended
-            }}
-          />
+          <Row>
+            <KeyValue
+              label={<FormattedMessage id="ui-checkout.openAccounts" />}
+              value={openAccountsCount}
+            />
+          </Row>
+          <Row>
+            (
+            <KeyValue
+              value={suspendedAccounts}
+            />
+            &nbsp;{suspendedMessage})
+          </Row>
         </Col>
         <Col xs={4}>
           <KeyValue
