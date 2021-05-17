@@ -15,7 +15,7 @@
   "scanItems": "Scan items",
   "openLoans": "Open loans",
   "openAccounts": "Fees/fines owed",
-  "suspendedAccounts": "({suspendedAccounts} Suspended)",
+  "suspendedAccounts": "({suspendedAccountsCount} suspended)",
   "openRequests": "Open requests",
   "proxy.expiration": "Proxy expiration",
   "borrowerProxy": "Borrower's proxy",
