@@ -72,7 +72,7 @@ function Loans({
   });
   let suspended = parseFloat(balanceSuspended).toFixed(2);
   if (balanceSuspended > 0) {
-    suspended = <Link to={openAccountsPath}>{suspended}</Link>;
+    suspended = <Link data-test-suspended-account to={openAccountsPath}>{suspended}</Link>;
   }
   let openAccountsCount = parseFloat(balanceOutstanding).toFixed(2);
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
@@ -90,16 +90,16 @@ function Loans({
             value={openLoansLink}
           />
         </Col>
-        <Col xs={4}>
+        <Col
+          xs={4}
+        >
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openAccounts" />}
             value={openAccountsCount}
           />
           <FormattedMessage
             id="ui-checkout.suspendedAccounts"
-            values={{
-              suspendedAccountsCount: suspended
-            }} 
+            values={{ suspendedAccountsCount: suspended }}
           />
         </Col>
         <Col xs={4}>
