@@ -3,6 +3,9 @@
 ## [6.1.0] (IN PROGRESS)
 
 * Added ability to look-up patron by Custom Fields. Refs UICHKOUT-697
+* Also support `circulation` `10.0`. Refs UICHKOUT-710.
+* For checkout alerts, use the audio theme specified in circulation settings; fall back to classic sounds if no theme is specified. Refs UICIRC-556.
+* Also support `circulation` `11.0`. Refs UICHKOUT-716.
 
 ## [6.0.0](https://github.com/folio-org/ui-checkout/tree/v6.0.0) (2021-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v5.0.0...v6.0.0)

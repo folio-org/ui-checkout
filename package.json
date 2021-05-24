@@ -26,7 +26,7 @@
       }
     ],
     "okapiInterfaces": {
-      "circulation": "9.0",
+      "circulation": "9.0 10.0 11.0",
       "configuration": "2.0",
       "item-storage": "8.0",
       "loan-policy-storage": "1.0 2.0",
@@ -139,6 +139,7 @@
     "react-router-dom": "^5.2.0"
   },
   "optionalDependencies": {
+    "@folio/circulation": "^5.0.0",
     "@folio/plugin-create-inventory-records": "^2.0.0",
     "@folio/plugin-find-user": "^5.0.0"
   }
