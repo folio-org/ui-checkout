@@ -84,7 +84,7 @@
     "date": "Date",
     "source": "Source",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} ( {materialType} ) </strong> (le code-barres: {barcode} ) a le statut du document {status} </strong> .",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
+    "confirmStatusModal.suppressedMessage": "<strong> {title} ( {materialType} ) </strong> (Code-barres: {barcode} ) a pour statut <strong> {status} </strong> et est supprimé de la recherche/découverte.",
     "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "Prêts: toutes les autorisations",
     "proxy.expiration": "Expiration de la procuration",
