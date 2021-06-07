@@ -7,6 +7,8 @@
 * For checkout alerts, use the audio theme specified in circulation settings; fall back to classic sounds if no theme is specified. Refs UICIRC-556.
 * Also support `circulation` `11.0`. Refs UICHKOUT-716.
 * Added `NotePopupModal` to view patron page. Refs UICHKOUT-685.
+* Remove `item-storage` `8.0` dependency that ui-checkout doesn't use directly. Refs UICHKOUT-718.
+* Add alternate `inventory` `11.0` dependency for optimistic locking. Refs UICHKOUT-718.
 
 ## [6.0.0](https://github.com/folio-org/ui-checkout/tree/v6.0.0) (2021-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v5.0.0...v6.0.0)
