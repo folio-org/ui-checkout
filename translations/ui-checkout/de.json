@@ -96,7 +96,7 @@
     "actions.moreDetails": "Mehr Details über dieses Exemplar",
     "permission.viewLoans": "Ausleihe: Ausleihen anzeigen",
     "permission.viewFeeFines": "Ausleihe: Forderungen anzeigen",
-    "permission.viewRequests": "Ausleihe: Bestellungen anzeigen",
+    "permission.viewRequests": "Ausleihe: Bestandsanfragen anzeigen",
     "fastAddLabel": "Neue Kurzaufnahme",
     "confirmStatusModal.heading": "{status} Exemplar ausleihen?",
     "statuses.missing": "Vermisst",
