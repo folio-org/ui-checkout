@@ -45,9 +45,6 @@
         "description": "Set of permissions needed to check out circulation items",
         "visible": true,
         "subPermissions": [
-          "circulation.all",
-          "circulation-storage.all",
-          "configuration.all",
           "users.collection.get",
           "usergroups.collection.get",
           "proxiesfor.collection.get",
@@ -56,7 +53,12 @@
           "automated-patron-blocks.collection.get",
           "module.checkout.enabled",
           "inventory.items.collection.get",
-          "circulation.end-patron-action-session.post"
+          "circulation.end-patron-action-session.post",
+          "circulation.check-out-by-barcode.post",
+          "circulation.loans.collection.get",
+          "circulation.requests.collection.get",
+          "circulation-storage.loan-policies.collection.get",
+          "configuration.entries.collection.get"
         ]
       },
       {
