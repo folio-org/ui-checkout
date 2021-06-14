@@ -58,7 +58,8 @@
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",
           "circulation-storage.loan-policies.collection.get",
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "notes.collection.get.by.status"
         ]
       },
       {
