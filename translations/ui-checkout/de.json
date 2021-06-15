@@ -107,7 +107,7 @@
     "statuses.longMissing": "Lang vermisst",
     "statuses.unavailable": "Nicht verfügbar",
     "statuses.unknown": "Unbekannt",
-    "overrideItemBlock": "Override item block",
+    "overrideItemBlock": "Exemplarsperre umgehen",
     "item.block.overrided": "(Item limit overridden)",
     "overridePatronBlock": "Kontosperre umgehen"
 }
