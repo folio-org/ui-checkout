@@ -50,4 +50,8 @@ export const statusMessages = {
   'Withdrawn': 'ui-checkout.statuses.withdrawn',
 };
 
+export const refundClaimReturned = {
+  PAYMENT_STATUS: 'Suspended claim returned',
+};
+
 export default '';

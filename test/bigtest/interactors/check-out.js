@@ -31,6 +31,7 @@ export default interactor(class CheckOutInteractor {
   blockModal = new BlockModalInteractor();
   proxyModal = new ProxyModalInteractor();
 
+  suspendedAccount = new Interactor('[data-test-suspended-account]');
   openRequestsCount = new Interactor('[data-test-open-requests-count]');
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
