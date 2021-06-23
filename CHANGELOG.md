@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 6.0.1 IN PROGRESS
+## [6.0.1](https://github.com/folio-org/ui-checkout/tree/v6.0.1) (2021-06-23)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.0.1)
 
 * Adjust `ui-checkout.circulation` permission set. Fixes UICHKOUT-724.
 
