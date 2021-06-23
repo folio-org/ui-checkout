@@ -652,13 +652,16 @@ describe('CheckOut', () => {
 
       const item = this.server.create('item');
 
-      return this.visit({
+      this.visit({
         pathname: '/checkout',
         state: {
           itemBarcode: item.barcode,
           patronBarcode: user.barcode,
         }
       });
+
+      await checkOut.whenUserIsLoaded();
+      await checkOut.whenItemListIsPresent();
     });
 
     it('should display patron information', () => {

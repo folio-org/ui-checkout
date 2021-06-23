@@ -18,6 +18,11 @@ export default function config() {
     totalRecords: 0,
   });
 
+  this.get('/note-links/domain/users/type/user/id/:id', {
+    notes: [],
+    totalRecords: 0,
+  });
+
   this.get('/proxiesfor', {
     proxiesFor: [],
     totalRecords: 0,
