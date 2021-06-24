@@ -15,6 +15,7 @@ import {
   Paneset,
   Button,
 } from '@folio/stripes/components';
+import { NotePopupModal } from '@folio/stripes/smart-components';
 import { Pluggable } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
@@ -731,6 +732,13 @@ class CheckOut extends React.Component {
             />
           }
           label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
+        />
+        <NotePopupModal
+          id="user-popup-note-modal"
+          domainName="users"
+          entityType="user"
+          popUpPropertyName="popUpOnCheckOut"
+          entityId={patron?.id}
         />
       </div>
     );

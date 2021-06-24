@@ -15,8 +15,44 @@ import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
 
-import checkoutSuccessSound from '../sound/checkout_success.m4a';
-import checkoutErrorSound from '../sound/checkout_error.m4a';
+
+function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
+  const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
+
+  let checkoutSound;
+  // We load the sounds from the already-built bundle using `require`,
+  // which is synchronous. It may be possible that this causes a
+  // delay, though if so I have not seen it. If we become aware of a
+  // delay in future, we could switch to using asynchronous `import`.
+
+  if (audioTheme) {
+    // Note that this require explicitly depends on @folio/circulation
+    // -- the sounds belong there so that they can be used by both
+    // checkout and checkin, the two modules whose settings it
+    // handles. If in the future a different circulation-settings
+    // module is used, this will need re-thinking.
+    //
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
+  } else {
+    // Fall back to old hardwired sound, before themes were introduced
+    // eslint-disable-next-line global-require, import/no-dynamic-require
+    checkoutSound = require(`../sound/checkout_${soundName}.m4a`);
+  }
+
+  if (!checkoutSound) {
+    return null;
+  }
+
+  return (
+    <ReactAudioPlayer
+      src={checkoutSound}
+      autoPlay
+      onEnded={onFinishedPlaying}
+    />
+  );
+}
+
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
@@ -367,7 +403,7 @@ class ScanItems extends React.Component {
       parentResources,
       onSessionEnd,
       patron,
-      settings: { audioAlertsEnabled },
+      settings: { audioAlertsEnabled, audioTheme },
       shouldSubmitAutomatically,
       formRef,
       initialValues,
@@ -390,9 +426,6 @@ class ScanItems extends React.Component {
     };
     const scannedItems = parentResources.scannedItems || [];
     const scannedTotal = scannedItems.length;
-    const checkoutSound = (checkoutStatus === 'success')
-      ? checkoutSuccessSound
-      : checkoutErrorSound;
 
     return (
       <div data-test-scan-items>
@@ -430,12 +463,7 @@ class ScanItems extends React.Component {
           overriddenItemLimitData={overriddenItemLimitData}
           {...this.props}
         />
-        {audioAlertsEnabled && checkoutStatus &&
-          <ReactAudioPlayer
-            src={checkoutSound}
-            autoPlay
-            onEnded={this.onFinishedPlaying}
-          />}
+        {audioAlertsEnabled && checkoutStatus && playSound(checkoutStatus, audioTheme, this.onFinishedPlaying)}
       </div>
     );
   }

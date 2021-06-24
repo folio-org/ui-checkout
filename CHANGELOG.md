@@ -1,10 +1,18 @@
 # Change history for ui-checkout
 
-## [6.1.0] (IN PROGRESS)
+## [6.2.0] (IN PROGRESS)
+
+* Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
+
+## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
 
 * Added ability to look-up patron by Custom Fields. Refs UICHKOUT-697
 * Also support `circulation` `10.0`. Refs UICHKOUT-710.
-* Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
+* For checkout alerts, use the audio theme specified in circulation settings; fall back to classic sounds if no theme is specified. Refs UICIRC-556.
+* Also support `circulation` `11.0`. Refs UICHKOUT-716.
+* Added `NotePopupModal` to view patron page. Refs UICHKOUT-685.
+* Adjust `ui-checkout.circulation` permission set. Fixes UICHKOUT-724.
 
 ## [6.0.0](https://github.com/folio-org/ui-checkout/tree/v6.0.0) (2021-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v5.0.0...v6.0.0)

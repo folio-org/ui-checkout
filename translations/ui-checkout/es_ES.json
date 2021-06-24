@@ -71,7 +71,7 @@
     "checkoutNoteModal.message": "<strong> {title} ({materialType}) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note } other {notes }} y será <strong> prestado </strong>",
     "checkoutNotes.heading": "Notas de préstamo",
     "checkoutNotes.message": "<strong> {title} ({materialType}) </strong> (Código de barras: {barcode} ) tiene <strong> {count} </strong> {count, plural, one {note} other {notes}}",
-    "messages.itemIsNotLoanable": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} ) no es <strong> prestable </strong> de acuerdo con <strong> No circulante </strong>  política de préstamo.",
+    "messages.itemIsNotLoanable": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) no <strong>se presta</strong> de acuerdo con la política de préstamos <strong>{loanPolicy}</strong>.",
     "cddd.date": "Fecha",
     "cddd.time": "Tiempo",
     "comment": "Comentario",
