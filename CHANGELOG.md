@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## [6.2.0] (IN PROGRESS)
+
+* Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
+
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
 

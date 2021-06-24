@@ -94,7 +94,10 @@ class CheckOut extends React.Component {
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
       accumulate: 'true',
-      fetch: false,
+      clear: true,
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || action.meta.path === 'circulation';
+      },
     },
     patronGroups: {
       type: 'okapi',
