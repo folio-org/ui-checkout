@@ -4,6 +4,7 @@
 
 * Added ability to look-up patron by Custom Fields. Refs UICHKOUT-697
 * Also support `circulation` `10.0`. Refs UICHKOUT-710.
+* Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
 
 ## [6.0.0](https://github.com/folio-org/ui-checkout/tree/v6.0.0) (2021-03-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v5.0.0...v6.0.0)
