@@ -102,7 +102,7 @@
     "statuses.missing": "Missing",
     "statuses.withdrawn": "Withdrawn",
     "statuses.lostAndPaid": "Lost and paid",
-    "statuses.restricted": "Restricted",
+    "statuses.restricted": "Restringido",
     "statuses.inProcessNonRequestable": "In process (non-requestable)",
     "statuses.longMissing": "Long missing",
     "statuses.unavailable": "Unavailable",
