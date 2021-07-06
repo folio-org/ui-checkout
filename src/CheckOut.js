@@ -7,6 +7,7 @@ import {
   isEmpty,
   get,
   hasIn,
+  noop,
 } from 'lodash';
 
 import {
@@ -16,7 +17,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 import { NotePopupModal } from '@folio/stripes/smart-components';
-import { Pluggable } from '@folio/stripes/core';
+import { Pluggable, IfPermission } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import PatronForm from './components/PatronForm';
@@ -316,6 +317,12 @@ class CheckOut extends React.Component {
     }
   }
 
+  toggleNewFastAddModal = () => {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
   extractPatronBlocks = () => {
     const { resources } = this.props;
     const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
@@ -603,6 +610,7 @@ class CheckOut extends React.Component {
       blocked,
       requestsCount,
       overrideModalOpen,
+      showNewFastAddModal,
     } = this.state;
     const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverriddenInfo));
 
@@ -663,19 +671,15 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Pluggable
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-                renderTrigger={({ onClick }) => (
-                  <Button
-                    data-test-add-inventory-records
-                    marginBottom0
-                    onClick={onClick}
-                  >
-                    <FormattedMessage id="ui-checkout.fastAddLabel" />
-                  </Button>
-                )}
-              />
+              <IfPermission perm="ui-plugin-create-inventory-records.create">
+                <Button
+                  data-test-add-inventory-records
+                  marginBottom0
+                  onClick={this.toggleNewFastAddModal}
+                >
+                  <FormattedMessage id="ui-checkout.fastAddLabel" />
+                </Button>
+              </IfPermission>
             }
           >
             <this.connectedScanItems
@@ -696,7 +700,7 @@ class CheckOut extends React.Component {
             />
           </Pane>
         </Paneset>
-        {patrons.length > 0 &&
+        {patrons.length > 0 && !showNewFastAddModal &&
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
@@ -739,6 +743,13 @@ class CheckOut extends React.Component {
           entityType="user"
           popUpPropertyName="popUpOnCheckOut"
           entityId={patron?.id}
+        />
+        <Pluggable
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+          open={showNewFastAddModal}
+          onClose={this.toggleNewFastAddModal}
+          renderTrigger={noop}
         />
       </div>
     );
