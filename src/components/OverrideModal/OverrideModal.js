@@ -102,8 +102,8 @@ function OverrideModal(props) {
         data-test-override-modal-save-and-close
         marginBottom0
         buttonStyle="primary"
-        type="submit"
         disabled={!canBeSubmitted}
+        onClick={onSubmit}
       >
         <FormattedMessage id="ui-checkout.saveAndClose" />
       </Button>
