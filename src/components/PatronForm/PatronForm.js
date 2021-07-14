@@ -197,5 +197,5 @@ class PatronForm extends React.Component {
 }
 
 export default stripesFinalForm({
-  navigationCheck: true,
+  navigationCheck: false,
 })(PatronForm);

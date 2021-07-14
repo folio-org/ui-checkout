@@ -65,6 +65,7 @@ class CheckOut extends React.Component {
       records: 'users',
       path: 'users',
       accumulate: 'true',
+      abortOnUnmount: true,
       fetch: false,
     },
     settings: {
@@ -76,6 +77,7 @@ class CheckOut extends React.Component {
       type: 'okapi',
       path: 'circulation/loans',
       accumulate: 'true',
+      abortOnUnmount: true,
       fetch: false,
     },
     manualPatronBlocks: {
@@ -84,6 +86,7 @@ class CheckOut extends React.Component {
       path: 'manualblocks?query=userId==%{activeRecord.patronId}',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
@@ -96,6 +99,7 @@ class CheckOut extends React.Component {
       permissionsRequired: 'automated-patron-blocks.collection.get',
       accumulate: 'true',
       clear: true,
+      abortOnUnmount: true,
       shouldRefresh: (resource, action, refresh) => {
         return refresh || action.meta.path === 'circulation';
       },
@@ -111,6 +115,7 @@ class CheckOut extends React.Component {
       accumulate: 'true',
       path: 'circulation/requests',
       fetch: false,
+      abortOnUnmount: true,
     },
     proxy: {
       type: 'okapi',
@@ -118,6 +123,7 @@ class CheckOut extends React.Component {
       path: 'proxiesfor',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
     },
     endSession: {
       type: 'okapi',
@@ -210,7 +216,10 @@ class CheckOut extends React.Component {
     }),
     location: PropTypes.shape({
       state: PropTypes.shape({
-        patronBarcode: PropTypes.string.isRequired,
+        patronBarcode: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]).isRequired,
         itemBarcode: PropTypes.string.isRequired,
       })
     }),
@@ -246,6 +255,8 @@ class CheckOut extends React.Component {
     if (!this.shouldSubmitAutomatically) {
       this.patronFormInputRef.current.focus();
     }
+
+    this._mounted = true;
   }
 
   componentDidUpdate(prevProps) {
@@ -317,6 +328,10 @@ class CheckOut extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
   toggleNewFastAddModal = () => {
     this.setState((state) => {
       return { showNewFastAddModal: !state.showNewFastAddModal };
@@ -354,7 +369,10 @@ class CheckOut extends React.Component {
   submitForm = (domId) => {
     const submitEvent = new Event('submit', { cancelable: true });
     const form = document.querySelector(`#${domId}`);
-    form.dispatchEvent(submitEvent);
+
+    if (form) {
+      form.dispatchEvent(submitEvent);
+    }
   };
 
   async onSessionEnd() {
@@ -516,7 +534,10 @@ class CheckOut extends React.Component {
       return { error, patron: selPatron };
     } finally {
       this.shouldSubmitAutomatically = false;
-      this.setState({ loading: false });
+
+      if (this._mounted) {
+        this.setState({ loading: false });
+      }
     }
   }
 
