@@ -272,7 +272,7 @@ class ScanItems extends React.Component {
     } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
-      loanDate: moment().utc().format(),
+      loanDate: moment().utc().toISOString(),
     };
 
     if (!isEmpty(patronBlockOverriddenInfo)) {
