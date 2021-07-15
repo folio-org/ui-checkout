@@ -618,6 +618,7 @@ describe('CheckOut', () => {
         .fillItemBarcode('123')
         .clickItemBtn();
 
+      await checkOut.whenConfirmStatusModalPresent();
       await checkOut.confirmStatusModal.confirmButton.click();
       await checkOut.checkoutNoteModal.clickConfirm();
       await checkOut.multipieceModal.clickConfirm();
@@ -664,11 +665,8 @@ describe('CheckOut', () => {
       await checkOut.whenItemListIsPresent();
     });
 
-    it('should display patron information', () => {
+    it('should display patron information and list of checked out items', () => {
       expect(checkOut.patronFullName).to.equal('Brown, Bob');
-    });
-
-    it('should show a list of checked out items', () => {
       expect(checkOut.scanItems.itemListPresent).to.be.true;
       expect(checkOut.items().length).to.equal(1);
     });
