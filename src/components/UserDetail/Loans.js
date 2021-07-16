@@ -75,7 +75,7 @@ function Loans({
   // but if ui-users happens to be installed and the correct perms happen to be granted,
   // then the loan link is present.
   const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans,ui-users.loans.view') ?
-    <Link to={openLoansPath}><FormattedNumber value={openLoansCount} /></Link> : openLoansCount;
+    <Link to={openLoansPath}>{openLoansCount}</Link> : openLoansCount;
 
   return (
     <div className={css.section}>
