@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
@@ -50,6 +50,7 @@ class ViewItem extends React.Component {
       itemLimitOverridden: PropTypes.bool.isRequired,
       overriddenItemsList: PropTypes.array.isRequired,
     }).isRequired,
+    intl: PropTypes.object,
   };
 
   constructor(props) {
@@ -116,7 +117,9 @@ class ViewItem extends React.Component {
   }
 
   getItemFormatter() {
+    const { intl: { formatNumber } } = this.props;
     return {
+      'no': loan => formatNumber(loan.no),
       'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
       'loanPolicy': loan => {
         const barcode = _.get(loan, ['item', 'barcode']);
@@ -373,4 +376,4 @@ class ViewItem extends React.Component {
   }
 }
 
-export default ViewItem;
+export default injectIntl(ViewItem);

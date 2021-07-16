@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   FormattedMessage,
+  FormattedNumber,
 } from 'react-intl';
 
 import {
@@ -44,16 +45,16 @@ function Loans({
           data-test-open-requests-count
           to={openRequestsPath}
         >
-          {openRequestsCount}
+          <FormattedNumber value={openRequestsCount} />
         </Link>
       );
     }
 
-    return openRequestsCount;
+    return <FormattedNumber value={openRequestsCount} />;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources.openRequests, user.barcode]);
 
-  const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
+  const openLoansCount = <FormattedNumber value={get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0)} />;
   const openLoansPath = `/users/${user.id}/loans/open`;
   const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
   const openAccounts = get(resources, ['openAccounts', 'records'], []);
@@ -61,7 +62,7 @@ function Loans({
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
-  let openAccountsCount = parseFloat(owedAmount).toFixed(2);
+  let openAccountsCount = <FormattedNumber value={parseFloat(owedAmount).toFixed(2)} />;
 
   // "ui-users.accounts" doesn’t make ui-checkout dependent on ui-users,
   // but if ui-users happens to be installed and the correct perms happen to be granted,
@@ -122,4 +123,3 @@ Loans.propTypes = {
 };
 
 export default Loans;
-
