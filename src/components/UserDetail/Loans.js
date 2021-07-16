@@ -68,11 +68,7 @@ function Loans({
   // but if ui-users happens to be installed and the correct perms happen to be granted,
   // then the accounts link is present.
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.accounts')) {
-    openAccountsCount = (
-      <Link to={openAccountsPath}>
-        <FormattedNumber value={openAccountsCount} />
-      </Link>
-    );
+    openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
   }
 
   // "ui-users.loans.view" doesn’t make ui-checkout dependent on ui-users,
