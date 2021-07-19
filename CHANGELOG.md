@@ -3,7 +3,7 @@
 ## [6.1.1](https://github.com/folio-org/ui-checkout/tree/v6.1.1) (2021-07-19)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.1.0...v6.1.1)
 
-* * Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-720.
+* Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-720.
 
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
