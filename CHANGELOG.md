@@ -10,6 +10,7 @@
 * Date picker on circulation override cuts off after 4 weeks. Refs UICHKOUT-731.
 * Always provide ISO-8601 dates in API requests. Refs UICHKOUT-732.
 * Format numbers as numbers, not text. Refs UICHKOUT-734.
+* Validate shape of circulation notes before accessing their optional attributes. Refs UICHKOUT-736.
 
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)

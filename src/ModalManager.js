@@ -166,17 +166,14 @@ class ModalManager extends React.Component {
         note,
         date,
         source: {
-          personal: {
-            firstName,
-            lastName,
-          },
-        },
+          personal
+        } = {},
       } = checkoutNoteObject;
 
       return {
         note,
         date,
-        source: `${lastName}, ${firstName}`,
+        source: personal ? `${personal.lastName}, ${personal.firstName}` : '',
       };
     });
 
