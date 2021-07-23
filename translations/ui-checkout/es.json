@@ -100,7 +100,7 @@
     "fastAddLabel": "New fast add record",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Missing",
-    "statuses.withdrawn": "Withdrawn",
+    "statuses.withdrawn": "Retirado",
     "statuses.lostAndPaid": "Lost and paid",
     "statuses.restricted": "Restricted",
     "statuses.inProcessNonRequestable": "In process (non-requestable)",

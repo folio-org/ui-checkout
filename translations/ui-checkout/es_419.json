@@ -100,7 +100,7 @@
     "fastAddLabel": "Crear un registro rápido",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Missing",
-    "statuses.withdrawn": "Withdrawn",
+    "statuses.withdrawn": "Retirado",
     "statuses.lostAndPaid": "Lost and paid",
     "statuses.restricted": "Restringido",
     "statuses.inProcessNonRequestable": "In process (non-requestable)",

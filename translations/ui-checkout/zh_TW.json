@@ -54,7 +54,7 @@
     "blockModal": "讀者被禁止借閱",
     "detailsButton": "查看冻结详情",
     "blockedLabel": "冻结原因",
-    "awaitingPickupMessage": "Borrower has <strong>{count}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
+    "awaitingPickupMessage": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} awaiting pickup at this service point.",
     "awaitingPickupLabel": "等待取件的单件",
     "multipieceModal.confirm": "借出",
     "multipieceModal.label": "确认多件借出",
