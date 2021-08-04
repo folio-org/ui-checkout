@@ -462,10 +462,6 @@ class CheckOut extends React.Component {
       mutator,
     } = this.props;
 
-    if (!isEmpty(activeRecord)) {
-      this.onSessionEnd();
-    }
-
     mutator.requests.reset();
     const { error, patron } = await this.findPatron(data);
 
