@@ -457,14 +457,7 @@ class CheckOut extends React.Component {
   }
 
   async onPatronLookup(data) {
-    const {
-      resources: { activeRecord },
-      mutator,
-    } = this.props;
-
-    if (!isEmpty(activeRecord)) {
-      this.onSessionEnd();
-    }
+    const { mutator } = this.props;
 
     mutator.requests.reset();
     const { error, patron } = await this.findPatron(data);
