@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## [6.1.2] IN PROGRESS
+## [6.1.2](https://github.com/folio-org/ui-checkout/tree/v6.1.2) (2021-08-06)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.1.1...v6.1.2)
 
 * While checking out items the patron barcode disappears without inactivity. Refs UICHKOUT-730.
 
