@@ -18,7 +18,7 @@
     "loanPolicy": "Política de empréstimos",
     "active": "Ativo",
     "inactive": "Inativo",
-    "totalItemsScanned": "Total de itens escaneados: {total}",
+    "totalItemsScanned": "Total de itens escaneados: {total, number}",
     "sponsorExpired": "O registro do usuário autorizador expirou",
     "proxyExpired": "Relação de autorização expirada",
     "continue": "Continuar",
