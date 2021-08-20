@@ -26,14 +26,18 @@ function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   // delay in future, we could switch to using asynchronous `import`.
 
   if (audioTheme) {
-    // Note that this require explicitly depends on @folio/circulation
-    // -- the sounds belong there so that they can be used by both
-    // checkout and checkin, the two modules whose settings it
-    // handles. If in the future a different circulation-settings
-    // module is used, this will need re-thinking.
-    //
-    // eslint-disable-next-line global-require, import/no-dynamic-require
-    checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
+    try {
+      // Note that this require explicitly depends on @folio/circulation
+      // -- the sounds belong there so that they can be used by both
+      // checkout and checkin, the two modules whose settings it
+      // handles. If in the future a different circulation-settings
+      // module is used, this will need re-thinking.
+      //
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      checkoutSound = require(`@folio/circulation/sound/${audioTheme}/checkout_${soundName}.m4a`);
+    } catch (e) {
+      // module @folio/circulation not found
+    }
   } else {
     // Fall back to old hardwired sound, before themes were introduced
     // eslint-disable-next-line global-require, import/no-dynamic-require
@@ -62,6 +66,7 @@ class ScanItems extends React.Component {
       path: 'loan-policy-storage/loan-policies',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
     },
     checkout: {
       type: 'okapi',
@@ -75,6 +80,7 @@ class ScanItems extends React.Component {
       records: 'items',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
     },
   });
 
@@ -266,7 +272,7 @@ class ScanItems extends React.Component {
     } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
-      loanDate: moment().utc().format(),
+      loanDate: moment().utc().toISOString(),
     };
 
     if (!isEmpty(patronBlockOverriddenInfo)) {
@@ -409,7 +415,6 @@ class ScanItems extends React.Component {
       initialValues,
       patronBlockOverriddenInfo,
     } = this.props;
-
     const {
       checkoutStatus,
       loading,

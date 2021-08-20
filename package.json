@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkout",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Item Check-out",
   "repository": "folio-org/ui-checkout",
   "publishConfig": {
@@ -44,9 +44,6 @@
         "description": "Set of permissions needed to check out circulation items",
         "visible": true,
         "subPermissions": [
-          "circulation.all",
-          "circulation-storage.all",
-          "configuration.all",
           "users.collection.get",
           "usergroups.collection.get",
           "proxiesfor.collection.get",
@@ -54,7 +51,13 @@
           "manualblocks.collection.get",
           "automated-patron-blocks.collection.get",
           "module.checkout.enabled",
-          "circulation.end-patron-action-session.post"
+          "inventory.items.collection.get",
+          "circulation.check-out-by-barcode.post",
+          "circulation.loans.collection.get",
+          "circulation.requests.collection.get",
+          "circulation-storage.loan-policies.collection.get",
+          "configuration.entries.collection.get",
+          "notes.collection.get.by.status"
         ]
       },
       {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   FormattedMessage,
+  FormattedNumber,
 } from 'react-intl';
 
 import {
@@ -24,10 +25,7 @@ function Loans({
   user,
 }) {
   const renderOpenRequests = useMemo(() => {
-    if (!stripes.hasPerm('ui-users.requests.all,ui-requests.all')) return '-';
-
     const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
-
     const openRequestStatuses = [
       'Open - Not yet filled',
       'Open - Awaiting pickup',
@@ -36,23 +34,27 @@ function Loans({
     ]
       .map(status => `requestStatus.${status}`)
       .join(',');
-
     const openRequestsPath = `/requests?query=${user.barcode}&filters=${openRequestStatuses}&sort=Request date`;
-    if (stripes.hasPerm('ui-checkout.viewRequests')) {
+
+    // "ui-requests.view" doesn’t make ui-checkout dependent on ui-requests,
+    // but if ui-requests happens to be installed and the correct perms happen to be granted,
+    // then the requests link is present.
+    if (stripes.hasPerm('ui-checkout.viewRequests,ui-requests.view')) {
       return (
         <Link
           data-test-open-requests-count
           to={openRequestsPath}
         >
-          {openRequestsCount}
+          <FormattedNumber value={openRequestsCount} />
         </Link>
       );
     }
-    return openRequestsCount;
+
+    return <FormattedNumber value={openRequestsCount} />;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources.openRequests, user.barcode]);
 
-  const openLoansCount = get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0);
+  const openLoansCount = <FormattedNumber value={get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0)} />;
   const openLoansPath = `/users/${user.id}/loans/open`;
   const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
   const openAccounts = get(resources, ['openAccounts', 'records'], []);
@@ -60,11 +62,19 @@ function Loans({
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
-  let openAccountsCount = parseFloat(owedAmount).toFixed(2);
-  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines')) {
+  let openAccountsCount = <FormattedNumber value={parseFloat(owedAmount).toFixed(2)} />;
+
+  // "ui-users.accounts" doesn’t make ui-checkout dependent on ui-users,
+  // but if ui-users happens to be installed and the correct perms happen to be granted,
+  // then the accounts link is present.
+  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.accounts')) {
     openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
   }
-  const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans') ?
+
+  // "ui-users.loans.view" doesn’t make ui-checkout dependent on ui-users,
+  // but if ui-users happens to be installed and the correct perms happen to be granted,
+  // then the loan link is present.
+  const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans,ui-users.loans.view') ?
     <Link to={openLoansPath}>{openLoansCount}</Link> : openLoansCount;
 
   return (
@@ -113,4 +123,3 @@ Loans.propTypes = {
 };
 
 export default Loans;
-
