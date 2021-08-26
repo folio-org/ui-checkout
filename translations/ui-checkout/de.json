@@ -11,8 +11,8 @@
     "scanPatronCard": "Personenkarte scannen",
     "scanItems": "Exemplare scannen",
     "openLoans": "Aktuelle Ausleihen",
-    "borrowerProxy": "Borrower's proxy",
-    "borrower": "Entleiher",
+    "borrowerProxy": "Vollmachtnehmer/-in",
+    "borrower": "Entleiher/-in",
     "noItemsEntered": "Keine Exemplare wurden eingegeben",
     "numberAbbreviation": "Nr.",
     "loanPolicy": "Ausleihrichtlinie",
@@ -54,7 +54,7 @@
     "blockModal": "Person für Ausleihen gesperrt",
     "detailsButton": "Details der Sperre anzeigen",
     "blockedLabel": "Grund für Sperre",
-    "awaitingPickupMessage": "Entleiher/-in hat <strong>{count}</strong> {count, plural, one {Exemplar} other {Exemplare}} an dieser Servicestelle im Abholregal.",
+    "awaitingPickupMessage": "Entleiher/-in hat <strong>{count, number}</strong> {count, plural, one {Exemplar} other {Exemplare}} an dieser Servicestelle im Abholregal.",
     "awaitingPickupLabel": "Exemplare im Abholregal",
     "multipieceModal.confirm": "Ausleihe",
     "multipieceModal.label": "Ausleihe von mehrteiligem Medium bestätigen",
@@ -108,6 +108,6 @@
     "statuses.unavailable": "Nicht verfügbar",
     "statuses.unknown": "Unbekannt",
     "overrideItemBlock": "Exemplarsperre umgehen",
-    "item.block.overrided": "(Item limit overridden)",
+    "item.block.overrided": "(Exemplarlimit umgangen)",
     "overridePatronBlock": "Kontosperre umgehen"
 }

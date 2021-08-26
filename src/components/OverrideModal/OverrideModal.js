@@ -8,6 +8,7 @@ import {
   Button,
   Col,
   Modal,
+  ModalFooter,
   Row,
   TextArea,
 } from '@folio/stripes/components';
@@ -23,6 +24,7 @@ import {
   ITEM_NOT_LOANABLE,
   MAX_ITEM_BLOCK_LIMIT,
 } from '../../constants';
+import css from './OverrideModal.css';
 
 function OverrideModal(props) {
   const {
@@ -94,6 +96,27 @@ function OverrideModal(props) {
     </p>
   );
 
+  const footer = (
+    <ModalFooter>
+      <Button
+        data-test-override-modal-save-and-close
+        marginBottom0
+        buttonStyle="primary"
+        disabled={!canBeSubmitted}
+        onClick={onSubmit}
+      >
+        <FormattedMessage id="ui-checkout.saveAndClose" />
+      </Button>
+      <Button
+        marginBottom0
+        onClick={closeOverrideModal}
+        data-test-override-modal-cancel
+      >
+        <FormattedMessage id="ui-checkout.cancel" />
+      </Button>
+    </ModalFooter>
+  );
+
   return (
     <Modal
       size="small"
@@ -102,10 +125,12 @@ function OverrideModal(props) {
       data-test-override-modal
       open
       label={getModalLabel()}
+      footer={footer}
       onClose={closeOverrideModal}
     >
       <form
         id="override-form"
+        className={itemIsNotLoanable ? css.content : null}
         onSubmit={onSubmit}
       >
         <Col xs={12}>
@@ -164,32 +189,6 @@ function OverrideModal(props) {
             value={comment}
             onChange={(e) => { setAdditionalInfo(e.target.value); }}
           />
-        </Col>
-        <Col xs={12}>
-          {itemIsNotLoanable &&
-            <>
-              <br />
-              <br />
-              <br />
-              <br />
-            </>
-          }
-          <Row end="xs">
-            <Button
-              onClick={closeOverrideModal}
-              data-test-override-modal-cancel
-            >
-              <FormattedMessage id="ui-checkout.cancel" />
-            </Button>
-            <Button
-              data-test-override-modal-save-and-close
-              buttonStyle="primary"
-              type="submit"
-              disabled={!canBeSubmitted}
-            >
-              <FormattedMessage id="ui-checkout.saveAndClose" />
-            </Button>
-          </Row>
         </Col>
       </form>
     </Modal>

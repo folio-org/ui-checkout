@@ -51,6 +51,8 @@ export default interactor(class CheckOutInteractor {
   proxyFullName = text('#proxy-detail [data-test-check-out-patron-full-name]');
   itemBarcode = value('#input-item-barcode');
 
+  patronFullNameIsPresent = isPresent('#patron-detail [data-test-check-out-patron-full-name]');
+
   errorModal = new ErrorModal();
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
@@ -74,14 +76,18 @@ export default interactor(class CheckOutInteractor {
   itemListEmptyMessage = text('[data-test-scan-items] [class*=mclEmptyMessage---]');
 
   whenUserIsLoaded() {
-    return this.when(() => this.patronFullName.isPresent);
+    return this.when(() => this.patronFullNameIsPresent, 5000);
   }
 
   whenItemListIsPresent() {
-    return this.when(() => this.itemList.rowCount > 0);
+    return this.when(() => this.itemList.itemListPresent && this.itemList.rowCount > 0);
   }
 
   whenProxyModalIsPresent() {
     return this.when(() => this.proxyModal.isPresent);
+  }
+
+  whenConfirmStatusModalPresent() {
+    return this.when(() => this.confirmStatusModal.isPresent);
   }
 });

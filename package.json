@@ -1,6 +1,6 @@
 {
   "name": "@folio/checkout",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Item Check-out",
   "repository": "folio-org/ui-checkout",
   "publishConfig": {
@@ -28,10 +28,9 @@
     "okapiInterfaces": {
       "circulation": "9.0 10.0 11.0",
       "configuration": "2.0",
-      "item-storage": "8.0",
       "loan-policy-storage": "1.0 2.0",
       "users": "15.0",
-      "inventory": "10.0",
+      "inventory": "10.0 11.0",
       "automated-patron-blocks": "0.1"
     },
     "permissionSets": [
@@ -53,7 +52,6 @@
           "automated-patron-blocks.collection.get",
           "module.checkout.enabled",
           "inventory.items.collection.get",
-          "circulation.end-patron-action-session.post",
           "circulation.check-out-by-barcode.post",
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",

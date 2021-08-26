@@ -7,6 +7,7 @@ import {
   isEmpty,
   get,
   hasIn,
+  noop,
 } from 'lodash';
 
 import {
@@ -16,7 +17,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 import { NotePopupModal } from '@folio/stripes/smart-components';
-import { Pluggable } from '@folio/stripes/core';
+import { Pluggable, IfPermission } from '@folio/stripes/core';
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import PatronForm from './components/PatronForm';
@@ -64,6 +65,7 @@ class CheckOut extends React.Component {
       records: 'users',
       path: 'users',
       accumulate: 'true',
+      abortOnUnmount: true,
       fetch: false,
     },
     settings: {
@@ -75,6 +77,7 @@ class CheckOut extends React.Component {
       type: 'okapi',
       path: 'circulation/loans',
       accumulate: 'true',
+      abortOnUnmount: true,
       fetch: false,
     },
     manualPatronBlocks: {
@@ -83,6 +86,7 @@ class CheckOut extends React.Component {
       path: 'manualblocks?query=userId==%{activeRecord.patronId}',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
       DELETE: {
         path: 'manualblocks/%{activeRecord.blockId}',
       },
@@ -94,7 +98,11 @@ class CheckOut extends React.Component {
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
       accumulate: 'true',
-      fetch: false,
+      clear: true,
+      abortOnUnmount: true,
+      shouldRefresh: (resource, action, refresh) => {
+        return refresh || action.meta.path === 'circulation';
+      },
     },
     patronGroups: {
       type: 'okapi',
@@ -107,6 +115,7 @@ class CheckOut extends React.Component {
       accumulate: 'true',
       path: 'circulation/requests',
       fetch: false,
+      abortOnUnmount: true,
     },
     proxy: {
       type: 'okapi',
@@ -114,6 +123,7 @@ class CheckOut extends React.Component {
       path: 'proxiesfor',
       accumulate: 'true',
       fetch: false,
+      abortOnUnmount: true,
     },
     endSession: {
       type: 'okapi',
@@ -206,7 +216,10 @@ class CheckOut extends React.Component {
     }),
     location: PropTypes.shape({
       state: PropTypes.shape({
-        patronBarcode: PropTypes.string.isRequired,
+        patronBarcode: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]).isRequired,
         itemBarcode: PropTypes.string.isRequired,
       })
     }),
@@ -242,6 +255,8 @@ class CheckOut extends React.Component {
     if (!this.shouldSubmitAutomatically) {
       this.patronFormInputRef.current.focus();
     }
+
+    this._mounted = true;
   }
 
   componentDidUpdate(prevProps) {
@@ -313,6 +328,16 @@ class CheckOut extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this._mounted = false;
+  }
+
+  toggleNewFastAddModal = () => {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
   extractPatronBlocks = () => {
     const { resources } = this.props;
     const manualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
@@ -344,7 +369,10 @@ class CheckOut extends React.Component {
   submitForm = (domId) => {
     const submitEvent = new Event('submit', { cancelable: true });
     const form = document.querySelector(`#${domId}`);
-    form.dispatchEvent(submitEvent);
+
+    if (form) {
+      form.dispatchEvent(submitEvent);
+    }
   };
 
   async onSessionEnd() {
@@ -429,14 +457,7 @@ class CheckOut extends React.Component {
   }
 
   async onPatronLookup(data) {
-    const {
-      resources: { activeRecord },
-      mutator,
-    } = this.props;
-
-    if (!isEmpty(activeRecord)) {
-      this.onSessionEnd();
-    }
+    const { mutator } = this.props;
 
     mutator.requests.reset();
     const { error, patron } = await this.findPatron(data);
@@ -506,7 +527,10 @@ class CheckOut extends React.Component {
       return { error, patron: selPatron };
     } finally {
       this.shouldSubmitAutomatically = false;
-      this.setState({ loading: false });
+
+      if (this._mounted) {
+        this.setState({ loading: false });
+      }
     }
   }
 
@@ -600,6 +624,7 @@ class CheckOut extends React.Component {
       blocked,
       requestsCount,
       overrideModalOpen,
+      showNewFastAddModal,
     } = this.state;
     const isPatronBlockModalOpen = (blocked && isEmpty(patronBlockOverriddenInfo));
 
@@ -660,19 +685,15 @@ class CheckOut extends React.Component {
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={
-              <Pluggable
-                type="create-inventory-records"
-                id="clickable-create-inventory-records"
-                renderTrigger={({ onClick }) => (
-                  <Button
-                    data-test-add-inventory-records
-                    marginBottom0
-                    onClick={onClick}
-                  >
-                    <FormattedMessage id="ui-checkout.fastAddLabel" />
-                  </Button>
-                )}
-              />
+              <IfPermission perm="ui-plugin-create-inventory-records.create">
+                <Button
+                  data-test-add-inventory-records
+                  marginBottom0
+                  onClick={this.toggleNewFastAddModal}
+                >
+                  <FormattedMessage id="ui-checkout.fastAddLabel" />
+                </Button>
+              </IfPermission>
             }
           >
             <this.connectedScanItems
@@ -693,7 +714,7 @@ class CheckOut extends React.Component {
             />
           </Pane>
         </Paneset>
-        {patrons.length > 0 &&
+        {patrons.length > 0 && !showNewFastAddModal &&
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
@@ -736,6 +757,13 @@ class CheckOut extends React.Component {
           entityType="user"
           popUpPropertyName="popUpOnCheckOut"
           entityId={patron?.id}
+        />
+        <Pluggable
+          type="create-inventory-records"
+          id="clickable-create-inventory-records"
+          open={showNewFastAddModal}
+          onClose={this.toggleNewFastAddModal}
+          renderTrigger={noop}
         />
       </div>
     );

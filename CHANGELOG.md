@@ -1,6 +1,22 @@
 # Change history for ui-checkout
 
-## [6.1.0] (IN PROGRESS)
+## [6.2.0] (IN PROGRESS)
+
+* Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
+* Add check for `ui-users.loans.view` permission in order to show link to loans in ui-users. Fixes UICHKOUT-727.
+* Add check for `ui-requests.view` permission in order to show link to requests in ui-requests. Fixes UICHKOUT-728.
+* Add check for `ui-users.accounts` permission in order to show link to fees/fines in ui-users. Fixes UICHKOUT-729.
+* Hide `ScanFooter` when fast add record plugin is open. Fixes UICHKOUT-720.
+* Date picker on circulation override cuts off after 4 weeks. Refs UICHKOUT-731.
+* Always provide ISO-8601 dates in API requests. Refs UICHKOUT-732.
+* Format numbers as numbers, not text. Refs UICHKOUT-734.
+* Validate shape of circulation notes before accessing their optional attributes. Refs UICHKOUT-736.
+* While checking out items the patron barcode disappears without inactivity. Refs UICHKOUT-730.
+* Remove `item-storage` `8.0` dependency that ui-checkout doesn't use directly. Refs UICHKOUT-718.
+* Add alternate `inventory` `11.0` dependency for optimistic locking. Refs UICHKOUT-718.
+
+## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
 
 * Added ability to look-up patron by Custom Fields. Refs UICHKOUT-697
 * Also support `circulation` `10.0`. Refs UICHKOUT-710.
