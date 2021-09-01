@@ -109,5 +109,6 @@
     "statuses.unknown": "Unbekannt",
     "overrideItemBlock": "Exemplarsperre umgehen",
     "item.block.overrided": "(Exemplarlimit umgangen)",
-    "overridePatronBlock": "Kontosperre umgehen"
+    "overridePatronBlock": "Kontosperre umgehen",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }

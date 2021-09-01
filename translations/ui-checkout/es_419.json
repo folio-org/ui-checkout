@@ -109,5 +109,6 @@
     "statuses.unknown": "Desconocido",
     "overrideItemBlock": "Anular bloqueo del ejemplar",
     "item.block.overrided": "(Límite de ejemplares anulado)",
-    "overridePatronBlock": "Anular bloqueo de usuario"
+    "overridePatronBlock": "Anular bloqueo de usuario",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }

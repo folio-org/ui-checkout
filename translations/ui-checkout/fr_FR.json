@@ -109,5 +109,6 @@
     "statuses.unknown": "Inconnu",
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Override patron block",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }
