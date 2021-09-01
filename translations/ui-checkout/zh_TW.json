@@ -109,5 +109,6 @@
     "statuses.unknown": "未知",
     "overrideItemBlock": "越权单件冻结",
     "item.block.overrided": "单件限制被越权",
-    "overridePatronBlock": "越权读者冻结"
+    "overridePatronBlock": "越权读者冻结",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }

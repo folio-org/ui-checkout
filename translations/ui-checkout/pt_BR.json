@@ -54,7 +54,7 @@
     "blockModal": "Usuário suspenso de empréstimos",
     "detailsButton": "Ver detalhes da suspensão",
     "blockedLabel": "Razão para suspensão",
-    "awaitingPickupMessage": "O usuário tem <strong>{count}</strong> {count, plural, one {item} other {itens}} aguardando retirada neste ponto de serviço.",
+    "awaitingPickupMessage": "O usuário tem <strong> {count, number} </strong> {count, plural, one { exemplar } other { exemplares }} aguardando retirada neste ponto de serviço.",
     "awaitingPickupLabel": "Itens aguardando retirada",
     "multipieceModal.confirm": "Emprestar",
     "multipieceModal.label": "Confirmar o empréstimo de obra com multiplas partes",
@@ -68,9 +68,9 @@
     "multipieceModal.cancel": "Cancelar",
     "note": "Nota",
     "checkoutNoteModal.heading": "Confirmar o empréstimo",
-    "checkoutNoteModal.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}} e será <strong>emprestado</strong>",
+    "checkoutNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} )tem <strong> {count, number} </strong> {count, plural, one { nota } other { notas }} e será <strong>emprestado </strong>",
     "checkoutNotes.heading": "Notas de empréstimo",
-    "checkoutNotes.message": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) tem <strong>{count}</strong> {count, plural, one {nota} other {notas}}",
+    "checkoutNotes.message": "<strong> {title} ( {materialType} ) </strong> (Código de barras: {barcode} ) tem <strong> {count, number} </strong> {count, plural, one { nota } other { notas }}",
     "messages.itemIsNotLoanable": "<strong> {title} ({materialType})</strong> (Código de barras: {barcode}) não é <strong>emprestável</strong> de acordo com a política de empréstimo <strong>{loanPolicy}</strong> .",
     "cddd.date": "Data",
     "cddd.time": "Horário",
@@ -109,5 +109,6 @@
     "statuses.unknown": "Desconhecido",
     "overrideItemBlock": "Sobrepor bloqueio de item",
     "item.block.overrided": "(Limite de item sobrescrito)",
-    "overridePatronBlock": "Sobrescrever bloqueio de usuário"
+    "overridePatronBlock": "Sobrescrever bloqueio de usuário",
+    "suspendedAccounts": "({suspendedAccountsCount} suspenso(s))"
 }

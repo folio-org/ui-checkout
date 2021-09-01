@@ -109,5 +109,6 @@
     "statuses.unknown": "Nieznany",
     "overrideItemBlock": "Zastąp blokadę egzemplarza",
     "item.block.overrided": "(Limit egzemplarzy został zastąpiony)",
-    "overridePatronBlock": "Zastąp blokadę czytelnika"
+    "overridePatronBlock": "Zastąp blokadę czytelnika",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }
