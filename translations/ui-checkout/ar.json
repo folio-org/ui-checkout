@@ -110,5 +110,5 @@
     "overrideItemBlock": "تخطي كتلة المادة",
     "item.block.overrided": "(تم تجاوز حد المادة)",
     "overridePatronBlock": "تخطي حظر المستفيد",
-    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
+    "suspendedAccounts": "({suspendedAccountsCount} معلق)"
 }
