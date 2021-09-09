@@ -50,7 +50,7 @@ function Loans({
         </Link>
       );
     }
-                                     
+
     return <FormattedNumber value={openRequestsCount} />;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resources.openRequests, user.barcode]);
@@ -73,11 +73,17 @@ function Loans({
       balanceOutstanding += (parseFloat(a.remaining));
     }
   });
-  let suspended = parseFloat(balanceSuspended).toFixed(2);
+  let suspended = <FormattedNumber
+    value={parseFloat(balanceSuspended).toFixed(2)}
+    minimumFractionDigits={2}
+  />;
   if (balanceSuspended > 0) {
     suspended = <Link data-test-suspended-account to={openAccountsPath}>{suspended}</Link>;
   }
-  let openAccountsCount = <FormattedNumber value={parseFloat(balanceOutstanding).toFixed(2)} />;
+  let openAccountsCount = <FormattedNumber
+    value={parseFloat(balanceOutstanding).toFixed(2)}
+    minimumFractionDigits={2}
+  />;
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.accounts')) {
     openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
   }
