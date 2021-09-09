@@ -2,6 +2,7 @@
 
 ## [6.2.0] (IN PROGRESS)
 
+* Always display fee/fine decimal places on Checkout page. Fixes UIU-2413.
 * Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
 * Add check for `ui-users.loans.view` permission in order to show link to loans in ui-users. Fixes UICHKOUT-727.
 * Add check for `ui-requests.view` permission in order to show link to requests in ui-requests. Fixes UICHKOUT-728.
