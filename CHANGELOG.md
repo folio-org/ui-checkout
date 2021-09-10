@@ -2,6 +2,7 @@
 
 ## [6.2.0] (IN PROGRESS)
 
+* Fix spacing of "Suspended fees/fines" in Borrower section of Checkout page. Fixes UIU-2414.
 * Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
 * Add check for `ui-users.loans.view` permission in order to show link to loans in ui-users. Fixes UICHKOUT-727.
 * Add check for `ui-requests.view` permission in order to show link to requests in ui-requests. Fixes UICHKOUT-728.
