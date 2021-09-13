@@ -108,11 +108,17 @@ function Loans({
         >
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openAccounts" />}
-            value={openAccountsCount}
-          />
-          <FormattedMessage
-            id="ui-checkout.suspendedAccounts"
-            values={{ suspendedAccountsCount: suspended }}
+            value={
+              <>
+                <div>
+                  {openAccountsCount}
+                </div>
+                <FormattedMessage
+                  id="ui-checkout.suspendedAccounts"
+                  values={{ suspendedAccountsCount: suspended }}
+                />
+              </>
+            }
           />
         </Col>
         <Col xs={4}>

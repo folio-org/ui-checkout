@@ -15,6 +15,7 @@
 * Remove `item-storage` `8.0` dependency that ui-checkout doesn't use directly. Refs UICHKOUT-718.
 * Add alternate `inventory` `11.0` dependency for optimistic locking. Refs UICHKOUT-718.
 * Always display fee/fine decimal places on Checkout page. Refs UICHKOUT-742.
+* Fix spacing of "Suspended fees/fines" in Borrower section of Checkout page. Refs UICHKOUT-743.
 
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
