@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## [6.2.0] (IN PROGRESS)
+## [7.0.0] (IN PROGRESS)
 
 * Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
 * Add check for `ui-users.loans.view` permission in order to show link to loans in ui-users. Fixes UICHKOUT-727.
@@ -16,6 +16,7 @@
 * Add alternate `inventory` `11.0` dependency for optimistic locking. Refs UICHKOUT-718.
 * Always display fee/fine decimal places on Checkout page. Refs UICHKOUT-742.
 * Fix spacing of "Suspended fees/fines" in Borrower section of Checkout page. Refs UICHKOUT-743.
+* Increment stripes to v7, react to v17. Refs UICHKOUT-740.
 
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
