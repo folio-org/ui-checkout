@@ -18,7 +18,7 @@
     "loanPolicy": "Кредитная политика",
     "active": "Активный",
     "inactive": "Неактивные",
-    "totalItemsScanned": "Всего отсканированных: {total}",
+    "totalItemsScanned": "Всего отсканированных: {total, number}",
     "sponsorExpired": "Срок действия полномочий спонсора истёк",
     "proxyExpired": "Полномочия представителя истекли",
     "continue": "Продолжить",
