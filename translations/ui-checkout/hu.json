@@ -18,7 +18,7 @@
     "loanPolicy": "Kölcsönzési politika",
     "active": "Aktív",
     "inactive": "Inaktív",
-    "totalItemsScanned": "Az összes neolvasott tétel: {total}",
+    "totalItemsScanned": "Az összes neolvasott tétel: {total, number}",
     "sponsorExpired": "Szponzor felhasználó rekordja lejárt",
     "proxyExpired": "Meghatalmazott kapcsolat lejárata",
     "continue": "Tovább",
