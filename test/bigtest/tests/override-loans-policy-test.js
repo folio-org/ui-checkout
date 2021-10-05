@@ -54,7 +54,8 @@ describe('override loan policy', () => {
 
       await checkOut
         .fillPatronBarcode(userBarcode)
-        .clickPatronBtn();
+        .clickPatronBtn()
+        .whenUserIsLoaded();
     });
 
     describe('non loanable checkout', () => {

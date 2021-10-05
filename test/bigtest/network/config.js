@@ -28,16 +28,6 @@ export default function config() {
     totalRecords: 0,
   });
 
-  this.get('/accounts', {
-    accounts: [],
-    totalRecords: 0,
-    resultInfo: {
-      totalRecords: 0,
-      facets: [],
-      diagnostics: []
-    }
-  });
-
   this.get('/manualblocks', {
     manualblocks: [],
     totalRecords: 0,
@@ -205,8 +195,16 @@ export default function config() {
     accounts: [{
       id: '11111',
       remaining: 15.31,
+      paymentStatus: {
+        name: "placeholder non-null string"
+      }
     }],
-    totalRecords: 1
+    totalRecords: 1,
+    resultInfo: {
+      totalRecords: 1,
+      facets: [],
+      diagnostics: []
+    }
   });
 
   this.get('/alternative-title-types');

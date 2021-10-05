@@ -14,6 +14,7 @@ import {
   barcodeWithLimitLoanPolicy,
   loanPolicyWithLimitId,
   userBarcode,
+  checkoutErrorMessage,
 } from '../constants';
 
 const checkOut = new CheckOutInteractor();
@@ -78,6 +79,7 @@ describe('Override item block', () => {
       await checkOut
         .fillPatronBarcode(user.barcode)
         .clickPatronBtn()
+        .whenUserIsLoaded()
         .fillItemBarcode(item.barcode)
         .clickItemBtn();
     });
