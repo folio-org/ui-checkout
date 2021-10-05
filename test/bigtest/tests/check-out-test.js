@@ -643,8 +643,9 @@ describe('CheckOut', () => {
     });
   });
 
-  // the description here doesn't make any sense whatsoever.
-  // maybe "after checkin in" is a typo for "after checking out"? 
+  // the description here doesn't make sense to me.
+  // maybe "after checking in" is a typo for "after checking out",
+  // and the intent is to show that the app retains state?
   describe.skip('when the app is visited after checking in an item', () => {
     beforeEach(async function () {
       const user = this.server.create('user', {
