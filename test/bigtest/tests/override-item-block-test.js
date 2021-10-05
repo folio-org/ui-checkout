@@ -14,7 +14,6 @@ import {
   barcodeWithLimitLoanPolicy,
   loanPolicyWithLimitId,
   userBarcode,
-  checkoutErrorMessage,
 } from '../constants';
 
 const checkOut = new CheckOutInteractor();
@@ -159,8 +158,8 @@ describe('Override item block', () => {
           });
 
           // IIUC this is supposed to show the loan policy
-          // along with the comment that it was overridden, 
-          // but the comment is missing here in the ui test. 
+          // along with the comment that it was overridden,
+          // but the comment is missing here in the ui test.
           it.skip('should have proper loan policy', () => {
             expect(checkOut.items(0).loanPolicy.text).to.equal(
               `${loanPolicyWithLimitName}${translations['item.block.overrided']}`

@@ -196,7 +196,7 @@ export default function config() {
       id: '11111',
       remaining: 15.31,
       paymentStatus: {
-        name: "placeholder non-null string"
+        name: 'placeholder non-null string'
       }
     }],
     totalRecords: 1,
