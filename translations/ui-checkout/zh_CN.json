@@ -68,9 +68,9 @@
     "multipieceModal.cancel": "取消",
     "note": "附注",
     "checkoutNoteModal.heading": "确认借出",
-    "checkoutNoteModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count} </strong> {count, plural, one {附注} other {附注}}并将<strong>借出</strong>",
+    "checkoutNoteModal.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count, number} </strong> {count, plural, one {附注} other {附注}}并将<strong>借出</strong>",
     "checkoutNotes.heading": "借出附注",
-    "checkoutNotes.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count} </strong> {count, plural, one {附注} other {附注}}",
+    "checkoutNotes.message": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ） 有<strong> {count, number} </strong> {count, plural, one {附注} other {附注}}",
     "messages.itemIsNotLoanable": "根据<strong> {loanPolicy} </strong>借阅政策， <strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）不<strong>可借</strong>。",
     "cddd.date": "日期",
     "cddd.time": "时间",
@@ -109,5 +109,6 @@
     "statuses.unknown": "未知",
     "overrideItemBlock": "越权单件冻结",
     "item.block.overrided": "单件限制被越权",
-    "overridePatronBlock": "越权读者冻结"
+    "overridePatronBlock": "越权读者冻结",
+    "suspendedAccounts": "（ {suspendedAccountsCount}暂停）"
 }

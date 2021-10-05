@@ -18,7 +18,7 @@
     "loanPolicy": "Politica di prestito",
     "active": "Attivo",
     "inactive": "Non attivo",
-    "totalItemsScanned": "Totale item scansionati: {total}",
+    "totalItemsScanned": "Totale item scansionati: {total, number}",
     "sponsorExpired": "Il record utente del garante è scaduto",
     "proxyExpired": "Il proxy è scaduto",
     "continue": "Continua",
@@ -54,7 +54,7 @@
     "blockModal": "Utente bloccato sui prestiti",
     "detailsButton": "Dettagli del blocco",
     "blockedLabel": "Motivo del blocco",
-    "awaitingPickupMessage": "L'utente ha <strong> {count} </strong> {count, plural, one {item} other {items}} in attesa di ritiro in questo punto di distribuzione.",
+    "awaitingPickupMessage": "L'utente ha <strong> {count, number} </strong> {count, plural, one {item} other {items}} in attesa di ritiro in questo punto di distribuzione.",
     "awaitingPickupLabel": "Items in attesa di ritiro",
     "multipieceModal.confirm": "Prestito",
     "multipieceModal.label": "Conferma il prestito di diversi pezzi",
@@ -68,9 +68,9 @@
     "multipieceModal.cancel": "Annulla",
     "note": "Nota",
     "checkoutNoteModal.heading": "Conferma prestito",
-    "checkoutNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) ha <strong> {count} </strong> {count, plural, one { nota } other { note }} e sarà <strong>prestato</strong>",
+    "checkoutNoteModal.message": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) ha <strong> {count, number} </strong> {count, plural, one { nota } other { note }} e sarà <strong>prestato</strong>",
     "checkoutNotes.heading": "Note per il prestito",
-    "checkoutNotes.message": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) ha <strong> {count} </strong> {count, plural, one { nota } other { note }}",
+    "checkoutNotes.message": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) ha <strong> {count, number} </strong> {count, plural, one { nota } other { note }}",
     "messages.itemIsNotLoanable": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) non è <strong> prestabile </strong> secondo la politica di prestito <strong>{loanPolicy}</strong>.",
     "cddd.date": "Data",
     "cddd.time": "Ora",
@@ -109,5 +109,6 @@
     "statuses.unknown": "Unknown",
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Override patron block",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }

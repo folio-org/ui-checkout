@@ -17,6 +17,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
+import { refundClaimReturned } from '../../constants';
 import css from './UserDetail.css';
 
 function Loans({
@@ -62,11 +63,27 @@ function Loans({
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
-  let openAccountsCount = <FormattedNumber value={parseFloat(owedAmount).toFixed(2)} />;
 
-  // "ui-users.accounts" doesn’t make ui-checkout dependent on ui-users,
-  // but if ui-users happens to be installed and the correct perms happen to be granted,
-  // then the accounts link is present.
+  let balanceOutstanding = 0;
+  let balanceSuspended = 0;
+  openAccounts.forEach((a) => {
+    if (a.paymentStatus.name === refundClaimReturned.PAYMENT_STATUS) {
+      balanceSuspended += (parseFloat(a.remaining));
+    } else {
+      balanceOutstanding += (parseFloat(a.remaining));
+    }
+  });
+  let suspended = <FormattedNumber
+    value={parseFloat(balanceSuspended).toFixed(2)}
+    minimumFractionDigits={2}
+  />;
+  if (balanceSuspended > 0) {
+    suspended = <Link data-test-suspended-account to={openAccountsPath}>{suspended}</Link>;
+  }
+  let openAccountsCount = <FormattedNumber
+    value={parseFloat(balanceOutstanding).toFixed(2)}
+    minimumFractionDigits={2}
+  />;
   if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.accounts')) {
     openAccountsCount = <Link to={openAccountsPath}>{openAccountsCount}</Link>;
   }
@@ -86,10 +103,22 @@ function Loans({
             value={openLoansLink}
           />
         </Col>
-        <Col xs={4}>
+        <Col
+          xs={4}
+        >
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openAccounts" />}
-            value={openAccountsCount}
+            value={
+              <>
+                <div>
+                  {openAccountsCount}
+                </div>
+                <FormattedMessage
+                  id="ui-checkout.suspendedAccounts"
+                  values={{ suspendedAccountsCount: suspended }}
+                />
+              </>
+            }
           />
         </Col>
         <Col xs={4}>

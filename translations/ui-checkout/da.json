@@ -18,7 +18,7 @@
     "loanPolicy": "Låneregel",
     "active": "Aktiv",
     "inactive": "Inaktiv",
-    "totalItemsScanned": "Antal registrerede eksemplarer: {total}",
+    "totalItemsScanned": "Antal registrerede eksemplarer: {total, number}",
     "sponsorExpired": "Sponsor user record expired",
     "proxyExpired": "Proxy relationship expired",
     "continue": "Fortsæt",
@@ -54,7 +54,7 @@
     "blockModal": "Patron blocked from borrowing",
     "detailsButton": "View block details",
     "blockedLabel": "Reason for block",
-    "awaitingPickupMessage": "Låner har <strong>{count}</strong> {count, plural, one {item} other {items}} afventer afhentning på dette servicepunkt.",
+    "awaitingPickupMessage": "Låner har <strong>{count, number}</strong> {count, plural, one {item} other {items}} afventer afhentning på dette servicepunkt.",
     "awaitingPickupLabel": "Eksemplarer, der afventer afhentning",
     "multipieceModal.confirm": "Check out",
     "multipieceModal.label": "Confirm multipiece check out",
@@ -109,5 +109,6 @@
     "statuses.unknown": "Ukendt",
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Override patron block",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }

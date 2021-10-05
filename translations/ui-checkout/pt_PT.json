@@ -18,7 +18,7 @@
     "loanPolicy": "Política de empréstimos",
     "active": "Ativo",
     "inactive": "Inativo",
-    "totalItemsScanned": "Total de itens scaneados: {total}",
+    "totalItemsScanned": "Total de itens scaneados: {total, number}",
     "sponsorExpired": "O registo do utilizador patrocinado expirou",
     "proxyExpired": "Relação de autorização expirada",
     "continue": "Continuar",
@@ -54,7 +54,7 @@
     "blockModal": "Empréstimo bloqueado ao utilizador",
     "detailsButton": "View block details",
     "blockedLabel": "Reason for block",
-    "awaitingPickupMessage": "O requerente tem <strong>{count}</strong> {count, plural, one {item} other {itens}} a aguardar recolha neste serviço.",
+    "awaitingPickupMessage": "O requerente tem <strong>{count, number}</strong> {count, plural, one {item} other {itens}} a aguardar recolha neste serviço.",
     "awaitingPickupLabel": "Itens aguardam recolha",
     "multipieceModal.confirm": "Saída",
     "multipieceModal.label": "Confirmar saída de múltiplas partes",
@@ -109,5 +109,6 @@
     "statuses.unknown": "Unknown",
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
-    "overridePatronBlock": "Override patron block"
+    "overridePatronBlock": "Override patron block",
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
 }
