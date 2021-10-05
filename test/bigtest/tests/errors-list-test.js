@@ -53,7 +53,8 @@ describe('Handle list of errors', () => {
 
       await checkOut
         .fillPatronBarcode(userBarcode)
-        .clickPatronBtn();
+        .clickPatronBtn()
+        .whenUserIsLoaded();
     });
 
     describe('try to checkout item', () => {
