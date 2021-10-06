@@ -123,7 +123,7 @@
     "sinon": "^7.2.2"
   },
   "dependencies": {
-    "@folio/react-intl-safe-html": "^3.0.0",
+    "@folio/react-intl-safe-html": "^3.1.0",
     "final-form": "^4.19.1",
     "inactivity-timer": "^1.0.0",
     "lodash": "^4.17.4",
@@ -140,8 +140,8 @@
     "react-router-dom": "^5.2.0"
   },
   "optionalDependencies": {
-    "@folio/circulation": "^5.0.0",
-    "@folio/plugin-create-inventory-records": "^2.0.0",
-    "@folio/plugin-find-user": "^5.0.0"
+    "@folio/circulation": "^6.0.0",
+    "@folio/plugin-create-inventory-records": "^3.0.0",
+    "@folio/plugin-find-user": "^6.0.0"
   }
 }
