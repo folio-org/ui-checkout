@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## [7.0.0] (IN PROGRESS)
+## [7.0.0](https://github.com/folio-org/ui-checkout/tree/v7.0.0) (2021-10-05)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.1.0...v7.0.0)
 
 * Checking out to blocked patron doesn't offer override option. Refs UICHKOUT-725.
 * Add check for `ui-users.loans.view` permission in order to show link to loans in ui-users. Fixes UICHKOUT-727.
