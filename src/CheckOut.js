@@ -97,12 +97,8 @@ class CheckOut extends React.Component {
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
       params: { limit: '100' },
       permissionsRequired: 'automated-patron-blocks.collection.get',
-      accumulate: 'true',
-      clear: true,
+      accumulate: true,
       abortOnUnmount: true,
-      shouldRefresh: (resource, action, refresh) => {
-        return refresh || action.meta.path === 'circulation';
-      },
     },
     patronGroups: {
       type: 'okapi',
@@ -184,7 +180,7 @@ class CheckOut extends React.Component {
         replace: PropTypes.func,
       }),
       activeRecord: PropTypes.shape({
-        update: PropTypes.func
+        update: PropTypes.func,
       }),
       requests: PropTypes.shape({
         GET: PropTypes.func,
@@ -221,7 +217,7 @@ class CheckOut extends React.Component {
           PropTypes.number,
         ]).isRequired,
         itemBarcode: PropTypes.string.isRequired,
-      })
+      }),
     }),
   };
 

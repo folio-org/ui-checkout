@@ -116,6 +116,9 @@ class ScanItems extends React.Component {
       scannedItems: PropTypes.shape({
         replace: PropTypes.func,
       }),
+      automatedPatronBlocks: PropTypes.shape({
+        GET: PropTypes.func,
+      }),
     }),
     patron: PropTypes.object,
     proxy: PropTypes.object,
@@ -177,8 +180,8 @@ class ScanItems extends React.Component {
     if (!barcode) {
       errors.push({
         item: {
-          barcode: <FormattedMessage id="ui-checkout.missingDataError" />
-        }
+          barcode: <FormattedMessage id="ui-checkout.missingDataError" />,
+        },
       });
     }
 
@@ -186,8 +189,8 @@ class ScanItems extends React.Component {
       this.triggerPatronFormSubmit();
       errors.push({
         patron: {
-          identifier: <FormattedMessage id="ui-checkout.missingDataError" />
-        }
+          identifier: <FormattedMessage id="ui-checkout.missingDataError" />,
+        },
       });
     }
 
@@ -195,8 +198,8 @@ class ScanItems extends React.Component {
       openBlockedModal();
       errors.push({
         patron: {
-          blocked: <FormattedMessage id="ui-checkout.blockModal" />
-        }
+          blocked: <FormattedMessage id="ui-checkout.blockModal" />,
+        },
       });
     }
 
@@ -241,7 +244,7 @@ class ScanItems extends React.Component {
     const { item } = loan;
     this.setState({
       checkoutNotesMode: true,
-      item
+      item,
     });
   }
 
@@ -303,7 +306,7 @@ class ScanItems extends React.Component {
         itemLimitOverridden: true,
         overriddenItemsList: [
           ...prevState.overriddenItemsList,
-          barcode
+          barcode,
         ],
       }));
     } else {
@@ -320,12 +323,19 @@ class ScanItems extends React.Component {
     return this.performAction(checkout, overrideData);
   }
 
+  updateAutomatedPatronBlocks = () => {
+    const { parentMutator } = this.props;
+
+    return parentMutator.automatedPatronBlocks.GET();
+  }
+
   performAction(action, data) {
     this.setState({ loading: true, errors: [] });
     return action.POST(data)
       .then(this.fetchLoanPolicy)
       .then(this.addScannedItem)
       .then(this.successfulCheckout)
+      .then(this.updateAutomatedPatronBlocks)
       .catch(this.catchErrors)
       .finally(() => this.setState({ loading: false }));
   }
