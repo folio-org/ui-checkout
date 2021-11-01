@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 * Fix an issue with the number of patron blocks when they were doubled. Refs UICHKOUT-750.
+* Fix auto checkout of items with delivery requests. Fixes UICHKOUT-756.
 
 ## [7.0.0](https://github.com/folio-org/ui-checkout/tree/v7.0.0) (2021-10-05)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.1.0...v7.0.0)

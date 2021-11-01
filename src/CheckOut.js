@@ -240,6 +240,7 @@ class CheckOut extends React.Component {
     this.itemFormRef = React.createRef();
     this.timer = undefined;
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
+
     this.state = {
       submitting: false,
       loading: false,
@@ -363,7 +364,7 @@ class CheckOut extends React.Component {
   };
 
   submitForm = (domId) => {
-    const submitEvent = new Event('submit', { cancelable: true });
+    const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
     const form = document.querySelector(`#${domId}`);
 
     if (form) {
