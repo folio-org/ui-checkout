@@ -1,5 +1,4 @@
 import { beforeEach, describe, it } from '@bigtest/mocha';
-import { always } from '@bigtest/convergence';
 import { expect } from 'chai';
 
 import setupApplication from '../helpers/setup-application';
@@ -32,8 +31,6 @@ describe('checkout session', () => {
         .fillPatronBarcode('123456')
         .clickPatronBtn()
         .whenUserIsLoaded();
-
-      await always(() => true, 8000);
     });
 
     it('resets the app', () => {
