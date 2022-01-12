@@ -4,6 +4,7 @@
 * Add preferred name to check out UI. Refs UICHKOUT-699.
 * Increase mocha version up to `9.0.0`. Refs UICHKOUT-762.
 * Also support `circulation` `12.0`. Refs UICHKOUT-758.
+* Also support `circulation` `13.0`. Refs UICHKOUT-760.
 
 ## [7.1.0](https://github.com/folio-org/ui-checkout/tree/v7.1.0) (2021-11-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v7.0.0...v7.1.0)
