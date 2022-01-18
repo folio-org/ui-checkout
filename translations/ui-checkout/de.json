@@ -110,5 +110,5 @@
     "overrideItemBlock": "Exemplarsperre umgehen",
     "item.block.overrided": "(Exemplarlimit umgangen)",
     "overridePatronBlock": "Kontosperre umgehen",
-    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
+    "suspendedAccounts": "({suspendedAccountsCount} ausgesetzt)"
 }
