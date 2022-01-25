@@ -115,5 +115,14 @@
   "statuses.unavailable": "Unavailable",
   "statuses.unknown": "Unknown",
 
-  "fastAddLabel": "New fast add record"
+  "fastAddLabel": "New fast add record",
+
+  "selectItemModal.heading": "Select item",
+  "selectItemModal.itemsList": "List of items",
+  "selectItemModal.resultCount": "{count} Records found",
+  "selectItemModal.barcode": "Barcode",
+  "selectItemModal.itemStatus": "Item status",
+  "selectItemModal.location": "Location",
+  "selectItemModal.materialType": "Material type",
+  "selectItemModal.loanType": "Loan type"
 }

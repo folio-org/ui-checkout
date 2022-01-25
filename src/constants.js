@@ -10,6 +10,8 @@ export const DATE_PICKER_DEFAULTS = {
   time: '23:59:00.000Z',
 };
 
+export const MAX_RECORDS = 40;
+
 export const INVALID_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'barcode';
