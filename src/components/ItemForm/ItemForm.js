@@ -20,6 +20,7 @@ import {
 
 import ErrorModal from '../ErrorModal';
 import OverrideModal from '../OverrideModal';
+import SelectItemModal from '../SelectItemModal';
 
 class ItemForm extends React.Component {
   static propTypes = {
@@ -27,6 +28,9 @@ class ItemForm extends React.Component {
     shouldSubmitAutomatically: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
     item: PropTypes.object,
+    items: PropTypes.arrayOf(
+      PropTypes.object
+    ).isRequired,
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onOverride: PropTypes.func.isRequired,
@@ -39,6 +43,8 @@ class ItemForm extends React.Component {
     modules: PropTypes.shape({
       app: PropTypes.arrayOf(PropTypes.object),
     }),
+    onItemSelection: PropTypes.func.isRequired,
+    onCloseSelectItemModal: PropTypes.func.isRequired,
     patronBlockOverriddenInfo: PropTypes.object.isRequired,
   };
 
@@ -122,6 +128,17 @@ class ItemForm extends React.Component {
     form.reset();
   };
 
+  handleItemSelection = (_, item) => {
+    this.props.onItemSelection(_, item);
+    this.focusInput();
+  };
+
+  handleCloseSelectItemModal = () => {
+    this.props.onCloseSelectItemModal();
+    this.clearForm();
+    this.focusInput();
+  };
+
   onSubmit = async (event) => {
     const { handleSubmit } = this.props;
     const errors = await handleSubmit(event);
@@ -138,6 +155,7 @@ class ItemForm extends React.Component {
       submitting,
       stripes,
       item,
+      items,
       onOverride,
       patronBlockOverriddenInfo,
     } = this.props;
@@ -212,6 +230,12 @@ class ItemForm extends React.Component {
             patronBlockOverriddenInfo={patronBlockOverriddenInfo}
           />
         }
+        {items &&
+          <SelectItemModal
+            checkoutItems={items}
+            onClose={this.handleCloseSelectItemModal}
+            onSelectItem={this.handleItemSelection}
+          />}
       </>
     );
   }

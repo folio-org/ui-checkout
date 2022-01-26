@@ -14,7 +14,6 @@ import { escapeCqlValue } from '@folio/stripes/util';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
-import SelectItemModal from './components/SelectItemModal';
 import { MAX_RECORDS } from './constants';
 
 function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
@@ -275,17 +274,6 @@ class ScanItems extends React.Component {
     }
   }
 
-  handleItemSelection = (_, item) => {
-    this.setState({
-      items: null,
-      item,
-    });
-  };
-
-  handleCloseSelectItemModal = () => {
-    this.setState({ items: null });
-  };
-
   // Called from ViewItem when the 'show checkout notes' item
   // menu option is clicked. This is distinct from whether notes
   // should be shown as part of the checkout workflow (which is
@@ -447,6 +435,17 @@ class ScanItems extends React.Component {
     this.setState({ errors: [] });
   }
 
+  onItemSelection = (_, item) => {
+    this.setState({
+      items: null,
+      item,
+    });
+  };
+
+  onCloseSelectItemModal = () => {
+    this.setState({ items: null });
+  };
+
   onCancel = () => {
     // if checkoutNotesMode == true, then this is a post-checkout,
     // user-triggered review of the notes modal. We shouldn't try
@@ -499,12 +498,6 @@ class ScanItems extends React.Component {
 
     return (
       <div data-test-scan-items>
-        {items &&
-          <SelectItemModal
-            checkoutItems={items}
-            onClose={this.handleCloseSelectItemModal}
-            onSelectItem={this.handleItemSelection}
-          />}
         { /* manages pre checkout modals */}
         {item &&
           <ModalManager
@@ -521,11 +514,14 @@ class ScanItems extends React.Component {
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
           item={item}
+          items={items}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
           checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
           patronBlockOverriddenInfo={patronBlockOverriddenInfo}
+          onItemSelection={this.onItemSelection}
+          onCloseSelectItemModal={this.onCloseSelectItemModal}
         />
         {loading &&
           <Icon
