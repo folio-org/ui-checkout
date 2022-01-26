@@ -8,6 +8,7 @@ import { Button } from '@folio/stripes/components';
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
 import { loanPolicyId } from '../constants';
+import wait from '../helpers/wait';
 
 const itemModalStatuses = [
   'In process (non-requestable)',
@@ -442,6 +443,40 @@ describe('CheckOut', () => {
 
       it('shows checkout Notes option on the action menu', () => {
         expect(checkOut.checkoutNotes.isPresent).to.be.true;
+      });
+    });
+
+    describe('showing modal with the list of items to select one', () => {
+      beforeEach(async function () {
+        this.server.get('/configurations/entries', {
+          'configs': [{
+            'value': '{"wildcardLookupEnabled":true}',
+          }],
+        });
+        this.server.createList('item', 2, 'withLoan', { barcode: '9676761472500' });
+        await wait();
+        await checkOut.checkoutItem('9676761472500');
+      });
+  
+      it('should be visible when there is more than one item and wildcard is enabled', () => {
+        expect(checkOut.selectItemModal.present).to.be.true;
+      });
+  
+      it('shows two items to select', () => {
+        expect(checkOut.selectItemModal.rowCount).to.equal(2);
+      });
+  
+      describe('select item of the list', () => {
+        beforeEach(async function () {
+          await checkOut.selectItemModal.rowClick();
+        });
+        it('should close modal', () => {
+          expect(checkOut.selectItemModal.present).to.be.false;
+        });
+  
+        it('should add the item to the checked in the items list', () => {
+          expect(checkOut.itemsCount).to.equal(1);
+        });
       });
     });
   });

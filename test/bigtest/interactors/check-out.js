@@ -12,6 +12,7 @@ import {
 
 import MultiColumnListInteractor from '@folio/stripes-components/lib/MultiColumnList/tests/interactor';
 import ConfirmModalInteractor from '@folio/stripes-components/lib/ConfirmationModal/tests/interactor';
+import SelectItemModalInteractor from './select-item-modal';
 
 import ScanItemsInteractor from './scan-items';
 import ItemMenuInteractor from './item-menu';
@@ -57,6 +58,7 @@ export default interactor(class CheckOutInteractor {
   overrideModal = new OverrideModal();
   checkoutNoteModal = new CheckoutNoteModalInteractor();
   confirmStatusModal = new ConfirmModalInteractor('#test-confirm-status-modal');
+  selectItemModal = new SelectItemModalInteractor();
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
   itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
