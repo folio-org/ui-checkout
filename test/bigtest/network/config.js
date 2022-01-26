@@ -10,9 +10,7 @@ import {
 // typical mirage config export
 export default function config() {
   this.get('/configurations/entries', {
-    configs: [
-      'value': '{"wildcardLookupEnabled":false}',
-    ]
+    configs: []
   });
 
   this.get('/circulation/loans', {

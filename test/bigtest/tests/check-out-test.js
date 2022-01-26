@@ -201,6 +201,10 @@ describe('CheckOut', () => {
 
     describe('checking out a single item unsuccessfully', () => {
       beforeEach(async function () {
+        this.server.create('item', {
+          barcode: '123',
+          title: 'Book 1',
+        });
         this.server.post('/circulation/check-out-by-barcode', {}, 500);
         await checkOut.checkoutItem('123');
       });
@@ -231,8 +235,8 @@ describe('CheckOut', () => {
               errors: [{
                 message: errorMessage,
                 parameters: [{
-                  key : 'itemBarcode',
-                  value : params.itemBarcode,
+                  key: 'itemBarcode',
+                  value: params.itemBarcode,
                 }]
               }]
             });
@@ -457,15 +461,15 @@ describe('CheckOut', () => {
         await wait();
         await checkOut.checkoutItem('9676761472500');
       });
-  
+
       it('should be visible when there is more than one item and wildcard is enabled', () => {
         expect(checkOut.selectItemModal.present).to.be.true;
       });
-  
+
       it('shows two items to select', () => {
         expect(checkOut.selectItemModal.rowCount).to.equal(2);
       });
-  
+
       describe('select item of the list', () => {
         beforeEach(async function () {
           await checkOut.selectItemModal.rowClick();
@@ -473,7 +477,7 @@ describe('CheckOut', () => {
         it('should close modal', () => {
           expect(checkOut.selectItemModal.present).to.be.false;
         });
-  
+
         it('should add the item to the checked in the items list', () => {
           expect(checkOut.itemsCount).to.equal(1);
         });

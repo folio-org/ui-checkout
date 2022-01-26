@@ -156,7 +156,6 @@ class ScanItems extends React.Component {
         wildcardLookupEnabled,
       },
     } = this.props;
-    console.log('wildcardLookupEnabled', wildcardLookupEnabled)
     const asterisk = wildcardLookupEnabled ? '*' : '';
     const bcode = `"${escapeCqlValue(barcode)}${asterisk}"`;
     const query = `barcode==${bcode}`;
@@ -167,7 +166,6 @@ class ScanItems extends React.Component {
     mutator.items.reset();
     const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
 
-    console.log('items1', items);
     if (totalRecords > MAX_RECORDS) {
       // Split the request into chunks to avoid a too long response
       const remainingItemsCount = totalRecords - MAX_RECORDS;
@@ -186,7 +184,7 @@ class ScanItems extends React.Component {
 
       return [...items, ...remainingItems];
     }
-    console.log('items', items);
+
     return items;
   }
 
@@ -258,18 +256,14 @@ class ScanItems extends React.Component {
       return;
     }
 
-    let checkoutItems = await this.fetchItems(barcode);
-    let checkoutItem = checkoutItems[0];
+    const checkoutItems = await this.fetchItems(barcode);
+    const checkoutItem = checkoutItems[0];
 
     if (checkoutItems.length > 1) {
-      console.log('items', checkoutItems);
       this.setState({ items: checkoutItems });
     } else if (isEmpty(checkoutItems)) {
-
-      console.log('barcode', checkoutItem.barcode);
       this.checkout(checkoutItem.barcode);
     } else {
-      console.log('item', checkoutItem);
       this.setState({ item: checkoutItem });
     }
   }
@@ -459,7 +453,6 @@ class ScanItems extends React.Component {
   }
 
   onDone = async () => {
-    console.log('done')
     const barcode = get(this.state, 'item.barcode', '');
     this.checkout(barcode);
   }
