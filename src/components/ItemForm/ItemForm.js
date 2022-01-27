@@ -30,7 +30,7 @@ class ItemForm extends React.Component {
     item: PropTypes.object,
     items: PropTypes.arrayOf(
       PropTypes.object
-    ).isRequired,
+    ),
     patron: PropTypes.object,
     handleSubmit: PropTypes.func.isRequired,
     onOverride: PropTypes.func.isRequired,
@@ -51,6 +51,7 @@ class ItemForm extends React.Component {
   static defaultProps = {
     patron: {},
     item: {},
+    items: null,
   };
 
   static getDerivedStateFromProps(props, { errors }) {
