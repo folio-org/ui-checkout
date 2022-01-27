@@ -85,8 +85,6 @@ describe('Override patron block', () => {
 
         describe('checkout item', () => {
           beforeEach(async function () {
-            item = this.server.create('item', { barcode });
-
             await checkOut
               .fillItemBarcode(item.barcode)
               .clickItemBtn();

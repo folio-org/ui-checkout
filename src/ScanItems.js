@@ -14,7 +14,7 @@ import { escapeCqlValue } from '@folio/stripes/util';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
-
+import { MAX_RECORDS } from './constants';
 
 function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
@@ -77,7 +77,6 @@ class ScanItems extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items',
-      records: 'items',
       accumulate: 'true',
       fetch: false,
       abortOnUnmount: true,
@@ -142,6 +141,7 @@ class ScanItems extends React.Component {
     this.state = {
       loading: false,
       checkoutStatus: null,
+      items: null,
       item: null,
       errors: [],
       itemLimitOverridden: false,
@@ -149,15 +149,43 @@ class ScanItems extends React.Component {
     };
   }
 
-  async fetchItem(barcode) {
-    const { mutator } = this.props;
-    const bcode = '"' + escapeCqlValue(barcode) + '"';
+  async fetchItems(barcode) {
+    const {
+      mutator,
+      settings: {
+        wildcardLookupEnabled,
+      },
+    } = this.props;
+    const asterisk = wildcardLookupEnabled ? '*' : '';
+    const bcode = `"${escapeCqlValue(barcode)}${asterisk}"`;
     const query = `barcode==${bcode}`;
-    this.setState({ item: null });
+    this.setState({
+      item: null,
+      items: null,
+    });
     mutator.items.reset();
-    const itemsResp = await mutator.items.GET({ params: { query } });
+    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
 
-    return get(itemsResp, '[0]');
+    if (totalRecords > MAX_RECORDS) {
+      // Split the request into chunks to avoid a too long response
+      const remainingItemsCount = totalRecords - MAX_RECORDS;
+      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS);
+      const requestsForItems = [];
+      let offset = 0;
+
+      for (let i = 0; i < chunksCount; i++) {
+        offset += MAX_RECORDS;
+        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS, offset } });
+        requestsForItems.push(request);
+      }
+
+      let remainingItems = await Promise.all(requestsForItems);
+      remainingItems = remainingItems.map(itemResp => itemResp.items).flat();
+
+      return [...items, ...remainingItems];
+    }
+
+    return items;
   }
 
   // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
@@ -212,6 +240,7 @@ class ScanItems extends React.Component {
       patronBlockOverriddenInfo,
       patronBlocks,
     } = this.props;
+
     const barcode = get(data, 'item.barcode');
     const errors = this.validate(barcode);
 
@@ -227,12 +256,15 @@ class ScanItems extends React.Component {
       return;
     }
 
-    const item = await this.fetchItem(barcode);
+    const checkoutItems = await this.fetchItems(barcode);
+    const checkoutItem = checkoutItems[0];
 
-    if (!item) {
+    if (checkoutItems.length > 1) {
+      this.setState({ items: checkoutItems });
+    } else if (isEmpty(checkoutItems)) {
       this.checkout(barcode);
     } else {
-      this.setState({ item });
+      this.setState({ item: checkoutItem });
     }
   }
 
@@ -397,6 +429,17 @@ class ScanItems extends React.Component {
     this.setState({ errors: [] });
   }
 
+  onItemSelection = (_, item) => {
+    this.setState({
+      items: null,
+      item,
+    });
+  };
+
+  onCloseSelectItemModal = () => {
+    this.setState({ items: null });
+  };
+
   onCancel = () => {
     // if checkoutNotesMode == true, then this is a post-checkout,
     // user-triggered review of the notes modal. We shouldn't try
@@ -419,7 +462,10 @@ class ScanItems extends React.Component {
       parentResources,
       onSessionEnd,
       patron,
-      settings: { audioAlertsEnabled, audioTheme },
+      settings: {
+        audioAlertsEnabled,
+        audioTheme,
+      },
       shouldSubmitAutomatically,
       formRef,
       initialValues,
@@ -429,6 +475,7 @@ class ScanItems extends React.Component {
       checkoutStatus,
       loading,
       item,
+      items,
       errors,
       checkoutNotesMode,
       itemLimitOverridden,
@@ -460,11 +507,14 @@ class ScanItems extends React.Component {
           total={scannedTotal}
           onSessionEnd={onSessionEnd}
           item={item}
+          items={items}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
           checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}
           initialValues={initialValues}
           patronBlockOverriddenInfo={patronBlockOverriddenInfo}
+          onItemSelection={this.onItemSelection}
+          onCloseSelectItemModal={this.onCloseSelectItemModal}
         />
         {loading &&
           <Icon
