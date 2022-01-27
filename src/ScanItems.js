@@ -262,7 +262,7 @@ class ScanItems extends React.Component {
     if (checkoutItems.length > 1) {
       this.setState({ items: checkoutItems });
     } else if (isEmpty(checkoutItems)) {
-      this.checkout(checkoutItem.barcode);
+      this.checkout(checkoutItem?.barcode || barcode);
     } else {
       this.setState({ item: checkoutItem });
     }
