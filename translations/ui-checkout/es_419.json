@@ -110,5 +110,13 @@
     "overrideItemBlock": "Anular bloqueo del ejemplar",
     "item.block.overrided": "(Límite de ejemplares anulado)",
     "overridePatronBlock": "Anular bloqueo de usuario",
-    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.itemsList": "List of items",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.location": "Location",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "Loan type"
 }
