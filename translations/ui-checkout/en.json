@@ -118,7 +118,7 @@
   "fastAddLabel": "New fast add record",
 
   "selectItemModal.heading": "Select item",
-  "selectItemModal.itemsList": "List of items",
+  "selectItemModal.itemListHeader": "List of items: choose one",
   "selectItemModal.resultCount": "{count} Records found",
   "selectItemModal.barcode": "Barcode",
   "selectItemModal.itemStatus": "Item status",
