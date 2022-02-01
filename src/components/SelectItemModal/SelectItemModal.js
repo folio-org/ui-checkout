@@ -11,6 +11,8 @@ import css from './SelectItemModal.css';
 
 const COLUMN_NAMES = [
   'barcode',
+  'title',
+  'callNumber',
   'itemStatus',
   'location',
   'materialType',
@@ -18,15 +20,19 @@ const COLUMN_NAMES = [
 ];
 
 const COLUMN_WIDTHS = {
-  barcode: '20%',
-  itemStatus: '20%',
-  location: '20%',
-  materialType: '20%',
-  loanType: '20%',
+  barcode: '14%',
+  title: '14%',
+  callNumber: '14%',
+  itemStatus: '14%',
+  location: '14%',
+  materialType: '14%',
+  loanType: '14%',
 };
 
 const COLUMN_MAP = {
   barcode: <FormattedMessage id="ui-checkout.selectItemModal.barcode" />,
+  title: <FormattedMessage id="ui-checkout.selectItemModal.title" />,
+  callNumber: <FormattedMessage id="ui-checkout.selectItemModal.callNumber" />,
   itemStatus: <FormattedMessage id="ui-checkout.selectItemModal.itemStatus" />,
   location: <FormattedMessage id="ui-checkout.selectItemModal.location" />,
   materialType: <FormattedMessage id="ui-checkout.selectItemModal.materialType" />,
