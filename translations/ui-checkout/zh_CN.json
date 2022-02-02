@@ -110,5 +110,13 @@
     "overrideItemBlock": "越权单件冻结",
     "item.block.overrided": "单件限制被越权",
     "overridePatronBlock": "越权读者冻结",
-    "suspendedAccounts": "（ {suspendedAccountsCount}暂停）"
+    "suspendedAccounts": "（ {suspendedAccountsCount}暂停）",
+    "selectItemModal.heading": "选择单件",
+    "selectItemModal.itemsList": "单件清单",
+    "selectItemModal.resultCount": "找到{count}条记录",
+    "selectItemModal.barcode": "条码",
+    "selectItemModal.itemStatus": "单件状态",
+    "selectItemModal.location": "馆藏地",
+    "selectItemModal.materialType": "资料类型",
+    "selectItemModal.loanType": "借阅类型"
 }
