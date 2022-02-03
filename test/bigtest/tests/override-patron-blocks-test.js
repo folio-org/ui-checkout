@@ -1,7 +1,7 @@
 import {
   beforeEach,
   describe,
-  it
+  it,
 } from '@bigtest/mocha';
 import { expect } from 'chai';
 import { Response } from 'miragejs';
@@ -25,14 +25,14 @@ describe('Override patron block', () => {
     name: 'Circ Desk 2',
     code: 'cd2',
     discoveryDisplayName: 'Circulation Desk -- Back Entrance',
-    pickupLocation: true
+    pickupLocation: true,
   };
 
   setupApplication({
     scenarios: ['manualPatronBlocks'],
     currentUser: {
       servicePoints: [servicePoint],
-      curServicePoint: servicePoint
+      curServicePoint: servicePoint,
     },
   });
 
@@ -47,7 +47,7 @@ describe('Override patron block', () => {
       item = this.server.create('item', { barcode });
       user = this.server.create('user', {
         barcode: userBarcode,
-        id: 1
+        id: 1,
       });
 
       await checkOut
@@ -107,9 +107,9 @@ describe('Override patron block', () => {
                   message: 'Item is not loanable',
                   parameters: [{
                     key: 'itemBarcode',
-                    value: '123'
-                  }]
-                }]
+                    value: '123',
+                  }],
+                }],
               });
             });
           });
@@ -126,8 +126,14 @@ describe('Override patron block', () => {
 
             it('should show override modal', () => {
               expect(checkOut.overrideModal.isPresent).to.be.true;
-              expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.true;
+            });
+
+            it('modal should have correct comment', () => {
               expect(checkOut.overrideModal.commentTextarea.value).to.equal('Reason');
+            });
+
+            it('"Save & close" button should be active', () => {
+              expect(checkOut.overrideModal.saveAndCloseButtonDisabled).to.be.false;
             });
 
             describe('fill override modal', () => {
