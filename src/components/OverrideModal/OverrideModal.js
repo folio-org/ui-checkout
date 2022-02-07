@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, {
+  useState,
+} from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 import { omit } from 'lodash';
+import moment from 'moment-timezone';
 
 import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
@@ -18,13 +24,33 @@ import {
 import { DueDatePicker } from '@folio/stripes/smart-components';
 
 import { renderOrderedPatronBlocks } from '../../util';
+
 import {
-  DATE_PICKER_DEFAULTS,
   INVALID_DATE_MESSAGE,
   ITEM_NOT_LOANABLE,
   MAX_ITEM_BLOCK_LIMIT,
 } from '../../constants';
+
 import css from './OverrideModal.css';
+
+const getInitialValues = (timeZone) => {
+  const startOfTheDay = {
+    hour: 0,
+    minute: 0,
+    second: 0,
+    millisecond: 0,
+  };
+  const date = moment()
+    .tz(timeZone)
+    .set(startOfTheDay)
+    .tz('UTC', true)
+    .format();
+
+  return {
+    date,
+    time: '23:59:00.000Z',
+  };
+};
 
 function OverrideModal(props) {
   const {
@@ -43,6 +69,7 @@ function OverrideModal(props) {
       barcode,
     },
   } = props;
+  const { timeZone } = useIntl();
   const [comment, setAdditionalInfo] = useState(patronBlockOverriddenComment);
   const [dueDate, setDatetime] = useState('');
 
@@ -159,21 +186,21 @@ function OverrideModal(props) {
         >
           <DueDatePicker
             required
-            initialValues={DATE_PICKER_DEFAULTS}
+            initialValues={getInitialValues(timeZone)}
             stripes={stripes}
             dateProps={{
               label: (
                 <FormattedMessage id="ui-checkout.cddd.date">
                   {label => `${label} *`}
                 </FormattedMessage>
-              )
+              ),
             }}
             timeProps={{
               label: (
                 <FormattedMessage id="ui-checkout.cddd.time">
                   {label => `${label} *`}
                 </FormattedMessage>
-              )
+              ),
             }}
             onChange={handleDateTimeChanged}
           />

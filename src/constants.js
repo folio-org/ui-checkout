@@ -5,11 +5,6 @@ export const errorTypes = {
   ITEM_CHECKED_OUT: 4,
 };
 
-export const DATE_PICKER_DEFAULTS = {
-  date: '',
-  time: '23:59:00.000Z',
-};
-
 export const MAX_RECORDS = 40;
 
 export const INVALID_DATE_MESSAGE = 'Invalid date';
@@ -26,7 +21,7 @@ export const OVERRIDABLE_ERROR_MESSAGES = [
 ];
 
 export const ERRORS_TO_HIDE = [
-  'Cannot check out item that already has an open loan'
+  'Cannot check out item that already has an open loan',
 ];
 
 export const statuses = {
