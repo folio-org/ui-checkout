@@ -110,5 +110,15 @@
     "overrideItemBlock": "Exemplarsperre umgehen",
     "item.block.overrided": "(Exemplarlimit umgangen)",
     "overridePatronBlock": "Kontosperre umgehen",
-    "suspendedAccounts": "({suspendedAccountsCount} ausgesetzt)"
+    "suspendedAccounts": "({suspendedAccountsCount} ausgesetzt)",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.location": "Location",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "Loan type",
+    "selectItemModal.itemListHeader": "List of items: choose one",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number"
 }

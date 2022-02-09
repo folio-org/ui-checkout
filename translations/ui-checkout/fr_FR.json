@@ -110,5 +110,15 @@
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
     "overridePatronBlock": "Override patron block",
-    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)",
+    "selectItemModal.heading": "Select item",
+    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.barcode": "Barcode",
+    "selectItemModal.itemStatus": "Item status",
+    "selectItemModal.location": "Location",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "Type de prêt",
+    "selectItemModal.itemListHeader": "List of items: choose one",
+    "selectItemModal.title": "Titre",
+    "selectItemModal.callNumber": "Cote"
 }
