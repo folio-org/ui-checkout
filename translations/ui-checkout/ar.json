@@ -110,5 +110,15 @@
     "overrideItemBlock": "تخطي كتلة المادة",
     "item.block.overrided": "(تم تجاوز حد المادة)",
     "overridePatronBlock": "تخطي حظر المستفيد",
-    "suspendedAccounts": "({suspendedAccountsCount} معلق)"
+    "suspendedAccounts": "({suspendedAccountsCount} معلق)",
+    "selectItemModal.heading": "تحديد مادة",
+    "selectItemModal.resultCount": "تم العثور على {count} تسجيلة",
+    "selectItemModal.barcode": "الباركود",
+    "selectItemModal.itemStatus": "حالة المادة",
+    "selectItemModal.location": "الموقع",
+    "selectItemModal.materialType": "نوع المادة",
+    "selectItemModal.loanType": "نوع الإعارة",
+    "selectItemModal.itemListHeader": "قائمة المواد: اختر واحدة",
+    "selectItemModal.title": "العنوان",
+    "selectItemModal.callNumber": "رقم الاستدعاء"
 }

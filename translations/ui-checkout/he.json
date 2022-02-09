@@ -110,5 +110,15 @@
     "overrideItemBlock": "Override item block",
     "item.block.overrided": "(Item limit overridden)",
     "overridePatronBlock": "Override patron block",
-    "suspendedAccounts": "({suspendedAccountsCount} suspended)"
+    "suspendedAccounts": "({suspendedAccountsCount} suspended)",
+    "selectItemModal.heading": "בחר פריט",
+    "selectItemModal.resultCount": "{count} נמצאו רשומות",
+    "selectItemModal.barcode": "ברקוד",
+    "selectItemModal.itemStatus": "מצב פריט",
+    "selectItemModal.location": "מקום",
+    "selectItemModal.materialType": "Material type",
+    "selectItemModal.loanType": "סוג הלוואה",
+    "selectItemModal.itemListHeader": "List of items: choose one",
+    "selectItemModal.title": "Title",
+    "selectItemModal.callNumber": "Call number"
 }
