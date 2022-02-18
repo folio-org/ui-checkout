@@ -118,7 +118,7 @@
     "selectItemModal.location": "馆藏地",
     "selectItemModal.materialType": "资料类型",
     "selectItemModal.loanType": "借阅类型",
-    "selectItemModal.itemListHeader": "List of items: choose one",
-    "selectItemModal.title": "Title",
-    "selectItemModal.callNumber": "Call number"
+    "selectItemModal.itemListHeader": "单件清单：选择一个",
+    "selectItemModal.title": "题名",
+    "selectItemModal.callNumber": "索书号"
 }

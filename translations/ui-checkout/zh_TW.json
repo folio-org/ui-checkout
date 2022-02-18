@@ -118,7 +118,7 @@
     "selectItemModal.location": "Location",
     "selectItemModal.materialType": "Material type",
     "selectItemModal.loanType": "Loan type",
-    "selectItemModal.itemListHeader": "List of items: choose one",
-    "selectItemModal.title": "Title",
-    "selectItemModal.callNumber": "Call number"
+    "selectItemModal.itemListHeader": "館藏清單: 請擇一",
+    "selectItemModal.title": "題名",
+    "selectItemModal.callNumber": "索書號"
 }
