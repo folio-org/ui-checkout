@@ -8,6 +8,7 @@
 * Perform Wildcard Item Lookup Before Performing Checkout Transaction in Check Out App. Refs UICHKOUT-752.
 * Update Item List Modal Contents for Wildcard Item Lookup. Refs UICHKOUT-763.
 * DueDatePicker is incorrectly instantiated. Refs UICHKOUT-693.
+* Check possible to run test. Refs UICIRC-764.
 
 ## [7.1.0](https://github.com/folio-org/ui-checkout/tree/v7.1.0) (2021-11-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v7.0.0...v7.1.0)
