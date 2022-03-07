@@ -74,6 +74,7 @@ const SelectItemModal = ({
         static
       >
         <Pane
+          id="items-dialog-items-list"
           paneTitle={<FormattedMessage id="ui-checkout.selectItemModal.itemListHeader" />}
           paneSub={<FormattedMessage id="ui-checkout.selectItemModal.resultCount" values={{ count: checkoutItems.length }} />}
           defaultWidth="fill"

@@ -650,6 +650,7 @@ class CheckOut extends React.Component {
       <div data-test-check-out-scan className={css.container}>
         <Paneset static>
           <Pane
+            id="patron-details"
             defaultWidth="35%"
             paneTitle={<FormattedMessage id="ui-checkout.scanPatronCard" />}
           >
@@ -679,6 +680,7 @@ class CheckOut extends React.Component {
               /> }
           </Pane>
           <Pane
+            id="item-details"
             defaultWidth="65%"
             paneTitle={<FormattedMessage id="ui-checkout.scanItems" />}
             lastMenu={

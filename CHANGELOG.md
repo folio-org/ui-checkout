@@ -1,5 +1,8 @@
 # Change history for ui-checkout
 
+## IN PROGRESS
+* Add id for Pane component. Refs UICHKOUT-768.
+
 ## [8.0.0](https://github.com/folio-org/ui-checkout/tree/v8.0.0) (2022-02-24)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v7.1.0...v8.0.0)
 * Add preferred name to check out UI. Refs UICHKOUT-699.
