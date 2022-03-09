@@ -94,7 +94,7 @@
     "lint": "eslint .",
     "test": "stripes test karma",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
-    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-checkout ./translations/checkout/compiled"
+    "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-checkout ./translations/ui-checkout/compiled"
   },
   "devDependencies": {
     "@bigtest/convergence": "^1.1.1",
