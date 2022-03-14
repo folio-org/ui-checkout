@@ -60,14 +60,6 @@ function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
-    loanPolicies: {
-      type: 'okapi',
-      records: 'loanPolicies',
-      path: 'loan-policy-storage/loan-policies',
-      accumulate: 'true',
-      fetch: false,
-      abortOnUnmount: true,
-    },
     checkout: {
       type: 'okapi',
       path: 'circulation/check-out-by-barcode',
@@ -364,7 +356,6 @@ class ScanItems extends React.Component {
   performAction(action, data) {
     this.setState({ loading: true, errors: [] });
     return action.POST(data)
-      .then(this.fetchLoanPolicy)
       .then(this.addScannedItem)
       .then(this.successfulCheckout)
       .then(this.updateAutomatedPatronBlocks)
@@ -400,21 +391,6 @@ class ScanItems extends React.Component {
     const scannedItems = [loan].concat(parentResources.scannedItems);
 
     return parentMutator.scannedItems.replace(scannedItems);
-  };
-
-  fetchLoanPolicy = async (loan) => {
-    const {
-      mutator: { loanPolicies },
-    } = this.props;
-
-    const query = `(id=="${loan.loanPolicyId}")`;
-
-    loanPolicies.reset();
-
-    const policies = await loanPolicies.GET({ params: { query } });
-    loan.loanPolicy = policies.find(p => p.id === loan.loanPolicyId);
-
-    return loan;
   };
 
   clearField(fieldName) {
