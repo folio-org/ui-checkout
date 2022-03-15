@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import {
   beforeEach,
   describe,
-  it
+  it,
 } from '@bigtest/mocha';
 
 import setupApplication from '../helpers/setup-application';
@@ -62,15 +62,6 @@ describe('override loan policy', () => {
       beforeEach(async function () {
         item = this.server.create('item', { barcode: notLoanableItemBarcode });
 
-        this.server.get('/loan-policy-storage/loan-policies', {
-          loanPolicies: [{
-            id: notLoanablePolicyId,
-            name: notLoanablePolicyName,
-            loanable: false
-          }],
-          totalRecords: 1
-        });
-
         await checkOut
           .fillItemBarcode(notLoanableItemBarcode)
           .clickItemBtn();
@@ -106,12 +97,15 @@ describe('override loan policy', () => {
             userId: user.id,
             itemId: item.id,
             status: {
-              name: 'Open'
+              name: 'Open',
             },
             loanDate: '2017-03-05T18:32:31Z',
             action: 'checkedOutThroughOverride',
             loanPolicyId: notLoanablePolicyId,
-            item
+            item,
+            loanPolicy: {
+              name: notLoanablePolicyName,
+            },
           });
         });
 
