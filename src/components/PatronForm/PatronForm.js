@@ -188,6 +188,7 @@ class PatronForm extends React.Component {
               visibleColumns={['status', 'name', 'patronGroup', 'username', 'barcode']}
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
+              restoreFocus={false}
             />
           </Col>
         </Row>
