@@ -18,7 +18,6 @@ import {
 } from '@folio/stripes/components';
 import { NotePopupModal } from '@folio/stripes/smart-components';
 import { Pluggable, IfPermission } from '@folio/stripes/core';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 
 import PatronForm from './components/PatronForm';
 import ViewPatron from './components/ViewPatron';
@@ -743,7 +742,7 @@ class CheckOut extends React.Component {
           open={!!requestsCount}
           onClose={this.onCloseAwaitingPickupModal}
           message={
-            <SafeHTMLMessage
+            <FormattedMessage
               id="ui-checkout.awaitingPickupMessage"
               values={{ count: requestsCount }}
             />

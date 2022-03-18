@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { omit } from 'lodash';
 import moment from 'moment-timezone';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   Button,
   Col,
@@ -116,7 +115,7 @@ function OverrideModal(props) {
   const renderPatronBlocks = renderOrderedPatronBlocks(patronBlocks);
   const renderItemInfo = () => (
     <p>
-      <SafeHTMLMessage
+      <FormattedMessage
         id="ui-checkout.messages.itemWillBeCheckedOut"
         values={{ title, barcode, name: item?.materialType?.name }}
       />
