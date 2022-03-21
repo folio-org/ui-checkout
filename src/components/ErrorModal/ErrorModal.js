@@ -7,7 +7,6 @@ import {
   split,
 } from 'lodash';
 
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import { stripesShape } from '@folio/stripes/core';
 import {
   Button,
@@ -65,7 +64,7 @@ function ErrorModal(props) {
       if (message === ITEM_NOT_LOANABLE) {
         const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
         notLoanableError = (
-          <SafeHTMLMessage
+          <FormattedMessage
             id="ui-checkout.messages.itemIsNotLoanable"
             values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
           />
