@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SafeHTMLMessage from '@folio/react-intl-safe-html';
 import {
   FormattedMessage,
   injectIntl,
@@ -210,7 +209,7 @@ class ModalManager extends React.Component {
       <FormattedMessage id="ui-checkout.multipieceModal.cancel" />;
 
     const message = (
-      <SafeHTMLMessage
+      <FormattedMessage
         id={id}
         values={{
           title,
@@ -281,7 +280,7 @@ class ModalManager extends React.Component {
         open={showStatusModal}
         item={checkedoutItem}
         heading={heading}
-        message={<SafeHTMLMessage
+        message={<FormattedMessage
           id={messageId}
           values={values}
         />}
