@@ -116,8 +116,9 @@ class ScanItems extends React.Component {
         replace: PropTypes.func,
       }),
       automatedPatronBlocks: PropTypes.shape({
-        GET: PropTypes.func,
-      }),
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }).isRequired,
     }),
     patron: PropTypes.object,
     proxy: PropTypes.object,
@@ -357,6 +358,8 @@ class ScanItems extends React.Component {
 
   updateAutomatedPatronBlocks = () => {
     const { parentMutator } = this.props;
+
+    parentMutator.automatedPatronBlocks.reset();
 
     return parentMutator.automatedPatronBlocks.GET();
   }
