@@ -8,6 +8,10 @@
 * Remove unnecessary request to `loan-policy-storage/loan-policies` end-point within checkout procedure. Refs UICHKOUT-767.
 * Fix focus issue. Refs UICHKOUT-773.
 * Refactor away from react-intl-safe-html. Refs UICHKOUT-721.
+
+## [8.0.1](https://github.com/folio-org/ui-checkout/tree/v8.0.1) (2022-03-28)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.0...v8.0.1)
+
 * Patron block count increases erroneously when override entered at Check-out. Refs UICHKOUT-774.
 * Extend ui-checkout.circulation sub permissions. Refs UICHKOUT-775. 
 
