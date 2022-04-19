@@ -183,7 +183,7 @@ class ScanItems extends React.Component {
 
   // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
   triggerPatronFormSubmit = () => {
-    const submitEvent = new Event('submit', { cancelable: true });
+    const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
     const form = document.querySelector('#patron-form');
     form.dispatchEvent(submitEvent);
   };
