@@ -23,7 +23,7 @@
     "proxyExpired": "Vollmacht ist abgelaufen",
     "continue": "Fortfahren",
     "orActingAsProxy": "handelt im Namen von",
-    "scanOrEnterPatronId": "Personen {identifier} scannen oder eingeben",
+    "scanOrEnterPatronId": "Personen{identifier} scannen oder eingeben",
     "patronLookup": "Personensuche",
     "scanOrEnterItemBarcode": "Exemplarbarcode scannen oder eingeben",
     "user.name": "Name",
