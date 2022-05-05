@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
 import { FormattedMessage } from 'react-intl';
 
 import CheckOut from './CheckOut';
@@ -53,4 +52,4 @@ class CheckOutRouting extends React.Component {
   }
 }
 
-export default hot(module)(CheckOutRouting);
+export default CheckOutRouting;
