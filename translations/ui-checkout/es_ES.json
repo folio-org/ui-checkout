@@ -97,7 +97,7 @@
     "permission.viewLoans": "Check out: View loans",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Check out: View requests",
-    "fastAddLabel": "New fast add record",
+    "fastAddLabel": "Añadir registro al vuelo",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Missing",
     "statuses.withdrawn": "Retirado",
