@@ -12,6 +12,7 @@
 * Enable error message when entering an item barcode without a patron barcode. Refs UICHKOUT-770.
 * Remove react-hot-loader. Refs UICHKOUT-776.
 * Migrate CI to NodeJS v16. Refs UICHKOUT-782.
+* Replace babel-eslint with @babel/eslint-parser. Refs UICHKOUT-779.
 
 ## [8.0.1](https://github.com/folio-org/ui-checkout/tree/v8.0.1) (2022-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.0...v8.0.1)

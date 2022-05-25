@@ -21,7 +21,7 @@ describe('CheckOut With Suspended Accounts', () => {
           buttonStyle="link"
           onClick={() => { selectUser({ id: 1, barcode: '123456' }); }}
         >
-                    Patron look-up
+          Patron look-up
         </Button>
       ),
     }],

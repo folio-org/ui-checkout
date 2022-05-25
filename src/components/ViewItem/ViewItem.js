@@ -48,7 +48,7 @@ class ViewItem extends React.Component {
     showCheckoutNotes: PropTypes.func,
     overriddenItemLimitData: PropTypes.shape({
       itemLimitOverridden: PropTypes.bool.isRequired,
-      overriddenItemsList: PropTypes.array.isRequired,
+      overriddenItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     intl: PropTypes.object,
   };
