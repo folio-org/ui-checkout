@@ -17,6 +17,7 @@ import {
 
 import {
   ITEM_NOT_LOANABLE,
+  USER_HAS_NO_BARCODE,
   OVERRIDABLE_ERROR_MESSAGES,
   ERRORS_TO_HIDE,
 } from '../../constants';
@@ -55,7 +56,7 @@ function ErrorModal(props) {
 
   const renderMessages = () => {
     return map(messages, (message, index) => {
-      let notLoanableError = '';
+      let customMessage = '';
 
       if (ERRORS_TO_HIDE.includes(message)) {
         return null;
@@ -63,17 +64,26 @@ function ErrorModal(props) {
 
       if (message === ITEM_NOT_LOANABLE) {
         const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
-        notLoanableError = (
+        customMessage = (
           <FormattedMessage
             id="ui-checkout.messages.itemIsNotLoanable"
             values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
+          />
+        );
+      } else if (message === USER_HAS_NO_BARCODE) {
+        customMessage = (
+          <FormattedMessage
+            id="ui-checkout.messages.userHasNoBarcode"
+            values={{
+              br: () => <br />,
+            }}
           />
         );
       }
 
       return (
         <p data-test-error-item key={`error-${index}`}>
-          {notLoanableError || message}
+          {customMessage || message}
         </p>
       );
     });
