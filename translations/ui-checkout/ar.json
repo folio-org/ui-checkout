@@ -120,5 +120,6 @@
     "selectItemModal.loanType": "نوع الإعارة",
     "selectItemModal.itemListHeader": "قائمة المواد: اختر واحدة",
     "selectItemModal.title": "العنوان",
-    "selectItemModal.callNumber": "رقم الاستدعاء"
+    "selectItemModal.callNumber": "رقم الاستدعاء",
+    "messages.userHasNoBarcode": "المستخدم ليس لديه باركود. <br></br> باركود المستخدم مطلوب لإعارة المواد."
 }

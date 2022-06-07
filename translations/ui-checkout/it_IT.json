@@ -120,5 +120,6 @@
     "selectItemModal.loanType": "Tipologia prestito",
     "selectItemModal.itemListHeader": "Elenco degli item: scegline uno",
     "selectItemModal.title": "Titolo",
-    "selectItemModal.callNumber": "Collocazione"
+    "selectItemModal.callNumber": "Collocazione",
+    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item."
 }
