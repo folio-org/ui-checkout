@@ -120,5 +120,6 @@
     "selectItemModal.loanType": "סוג הלוואה",
     "selectItemModal.itemListHeader": "List of items: choose one",
     "selectItemModal.title": "Title",
-    "selectItemModal.callNumber": "Call number"
+    "selectItemModal.callNumber": "Call number",
+    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item."
 }

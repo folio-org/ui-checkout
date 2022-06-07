@@ -120,5 +120,6 @@
     "selectItemModal.loanType": "借閱類型",
     "selectItemModal.itemListHeader": "館藏清單: 請擇一",
     "selectItemModal.title": "題名",
-    "selectItemModal.callNumber": "索書號"
+    "selectItemModal.callNumber": "索書號",
+    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item."
 }
