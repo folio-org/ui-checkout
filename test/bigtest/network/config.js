@@ -5,7 +5,7 @@ import {
   blockedUserId1,
   blockedUserId2,
   blockedMessage,
-} from '../constants';
+} from '../constants/mockData';
 
 // typical mirage config export
 export default function config() {
@@ -103,7 +103,6 @@ export default function config() {
     totalRecords: 4
   });
 
-  // requests
   this.get('/circulation/requests', ({ requests }, request) => {
     if (request.queryParams.query) {
       return requests.all();
@@ -115,7 +114,6 @@ export default function config() {
     }
   });
 
-  // users
   this.get('/users', ({ users }, request) => {
     if (request.queryParams.query) {
       const cqlParser = new CQLParser();

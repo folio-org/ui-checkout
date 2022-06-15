@@ -6,7 +6,7 @@ import {
   blockedUserId2,
   blockedMessage,
   manualBlockMessage,
-} from '../constants';
+} from '../constants/mockData';
 
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';

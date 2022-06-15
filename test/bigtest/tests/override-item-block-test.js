@@ -14,7 +14,7 @@ import {
   barcodeWithLimitLoanPolicy,
   loanPolicyWithLimitId,
   userBarcode,
-} from '../constants';
+} from '../constants/mockData';
 
 const checkOut = new CheckOutInteractor();
 

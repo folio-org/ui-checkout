@@ -7,8 +7,7 @@ import { Button } from '@folio/stripes/components';
 
 import setupApplication from '../helpers/setup-application';
 import CheckOutInteractor from '../interactors/check-out';
-import { loanPolicyId } from '../constants';
-import wait from '../helpers/wait';
+import { loanPolicyId } from '../constants/mockData';
 
 const itemModalStatuses = [
   'In process (non-requestable)',
@@ -458,7 +457,6 @@ describe('CheckOut', () => {
           }],
         });
         this.server.createList('item', 2, 'withLoan', { barcode: '9676761472500' });
-        await wait();
         await checkOut.checkoutItem('9676761472500');
       });
 

@@ -24,20 +24,22 @@ import OverrideModal from './override-modal';
 import Item from './item';
 import ProxyModalInteractor from './proxy-modal';
 
+import { DEFAULT_TIMEOUT } from '../constants/config';
+
 export default interactor(class CheckOutInteractor {
   static defaultScope = '[data-test-check-out-scan]';
 
-  scanItems = new ScanItemsInteractor('[data-test-scan-items]');
-  itemMenu = new ItemMenuInteractor();
-  blockModal = new BlockModalInteractor();
-  proxyModal = new ProxyModalInteractor();
+  scanItems = new ScanItemsInteractor({ scope: '[data-test-scan-items]', timeout: DEFAULT_TIMEOUT });
+  itemMenu = new ItemMenuInteractor({ timeout: DEFAULT_TIMEOUT });
+  blockModal = new BlockModalInteractor({ timeout: DEFAULT_TIMEOUT });
+  proxyModal = new ProxyModalInteractor({ timeout: DEFAULT_TIMEOUT });
 
-  suspendedAccount = new Interactor('[data-test-suspended-account]');
-  openRequestsCount = new Interactor('[data-test-open-requests-count]');
+  suspendedAccount = new Interactor({ scope: '[data-test-suspended-account]', timeout: DEFAULT_TIMEOUT });
+  openRequestsCount = new Interactor({ scope: '[data-test-open-requests-count]', timeout: DEFAULT_TIMEOUT });
   patronIdentifierPresent = isPresent('#input-patron-identifier');
   patronEnterBtnPresent = isPresent('#clickable-find-patron');
   createInventoryEnterBtnPresent = isPresent('#clickable-create-inventory-records');
-  checkoutNotes = new Interactor('[data-test-checkout-notes]');
+  checkoutNotes = new Interactor({ scope: '[data-test-checkout-notes]', timeout: DEFAULT_TIMEOUT });
   fillPatronBarcode = fillable('#input-patron-identifier');
   clickPatronBtn = clickable('#clickable-find-patron');
   selectElipse = clickable('[data-test-elipse-select] button');
@@ -54,11 +56,11 @@ export default interactor(class CheckOutInteractor {
 
   patronFullNameIsPresent = isPresent('#patron-detail [data-test-check-out-patron-full-name]');
 
-  errorModal = new ErrorModal();
-  overrideModal = new OverrideModal();
-  checkoutNoteModal = new CheckoutNoteModalInteractor();
-  confirmStatusModal = new ConfirmModalInteractor('#test-confirm-status-modal');
-  selectItemModal = new SelectItemModalInteractor();
+  errorModal = new ErrorModal({ timeout: DEFAULT_TIMEOUT });
+  overrideModal = new OverrideModal({ timeout: DEFAULT_TIMEOUT });
+  checkoutNoteModal = new CheckoutNoteModalInteractor({ timeout: DEFAULT_TIMEOUT });
+  confirmStatusModal = new ConfirmModalInteractor({ scope: '#test-confirm-status-modal', timeout: DEFAULT_TIMEOUT });
+  selectItemModal = new SelectItemModalInteractor({ timeout: DEFAULT_TIMEOUT });
   items = collection('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
   itemsCount = count('#list-items-checked-out [class*=mclRowContainer---] [class^="mclRow---"]', Item);
 
@@ -73,8 +75,8 @@ export default interactor(class CheckOutInteractor {
       .clickItemBtn();
   }
 
-  multipieceModal = new MultipieceModalInteractor('#multipiece-modal');
-  itemList = new MultiColumnListInteractor('#list-items-checked-out');
+  multipieceModal = new MultipieceModalInteractor({ scope: '#multipiece-modal', timeout: DEFAULT_TIMEOUT });
+  itemList = new MultiColumnListInteractor({ scope: '#list-items-checked-out', timeout: DEFAULT_TIMEOUT });
   itemListEmptyMessage = text('[data-test-scan-items] [class*=mclEmptyMessage---]');
 
   whenUserIsLoaded() {
