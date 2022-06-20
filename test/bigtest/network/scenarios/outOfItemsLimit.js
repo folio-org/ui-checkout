@@ -1,5 +1,5 @@
 import { Response } from 'miragejs';
-import { barcodeWithLimitLoanPolicy } from '../../constants';
+import { barcodeWithLimitLoanPolicy } from '../../constants/mockData';
 
 export default (server) => {
   server.post('circulation/check-out-by-barcode', () => {

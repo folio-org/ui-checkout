@@ -10,7 +10,7 @@ import CheckOutInteractor from '../interactors/check-out';
 
 import {
   blockedUserId1,
-} from '../constants';
+} from '../constants/mockData';
 
 const checkOut = new CheckOutInteractor();
 

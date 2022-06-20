@@ -1,6 +1,6 @@
 import faker from 'faker';
 
-import { manualBlockMessage } from '../../constants';
+import { manualBlockMessage } from '../../constants/mockData';
 
 export default function patronBlocks(server) {
   server.del('/manualblocks/:id');

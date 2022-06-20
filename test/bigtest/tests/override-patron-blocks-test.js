@@ -12,7 +12,7 @@ import translations from '../../../translations/ui-checkout/en';
 import {
   barcode,
   userBarcode,
-} from '../constants';
+} from '../constants/mockData';
 
 const checkOut = new CheckOutInteractor();
 

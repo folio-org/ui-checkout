@@ -5,7 +5,7 @@ import {
   notLoanablePolicyName,
   checkoutErrorMessage,
   itemHasOpenLoanError,
-} from '../../constants';
+} from '../../constants/mockData';
 
 export default (server) => {
   server.post('circulation/check-out-by-barcode', () => {

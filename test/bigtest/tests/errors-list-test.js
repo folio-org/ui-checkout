@@ -12,7 +12,7 @@ import {
   notLoanableItemBarcode,
   notLoanablePolicyName,
   checkoutErrorMessage,
-} from '../constants';
+} from '../constants/mockData';
 
 const userBarcode = '123456';
 const checkOut = new CheckOutInteractor();
