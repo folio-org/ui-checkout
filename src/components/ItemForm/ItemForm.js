@@ -66,7 +66,6 @@ class ItemForm extends React.Component {
     this.state = {
       overrideModalOpen: false,
       errors: [],
-      message: '',
     };
   }
 
@@ -105,7 +104,7 @@ class ItemForm extends React.Component {
   openOverrideModal = () => {
     const { errors } = this.state;
     this.setState({
-      message: errors[0].message,
+      overrideError: errors[0],
       overrideModalOpen: true
     });
   };
@@ -163,7 +162,7 @@ class ItemForm extends React.Component {
 
     const {
       errors,
-      message,
+      overrideError,
       overrideModalOpen,
     } = this.state;
     const validationEnabled = false;
@@ -224,7 +223,7 @@ class ItemForm extends React.Component {
         {overrideModalOpen &&
           <OverrideModal
             item={item}
-            message={message}
+            overrideError={overrideError}
             stripes={stripes}
             onOverride={onOverride}
             closeOverrideModal={this.closeOverrideModal}

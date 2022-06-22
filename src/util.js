@@ -51,19 +51,6 @@ export function getPatronBlocks(manualBlocks, automatedBlocks) {
   return [...automatedPatronBlocks, ...manualPatronBlocks];
 }
 
-export function getAllErrorMessages(errors = []) {
-  const errorMessages = [];
-  errors.forEach(({ message }) => errorMessages.push(message));
-
-  return errorMessages.join(';');
-}
-
-export function extractErrorDetails(errors, errorMessage) {
-  const singleError = errors.find(({ message }) => message === errorMessage);
-
-  return singleError || {};
-}
-
 export function shouldStatusModalBeShown(item) {
   return [
     statuses.IN_PROCESS_NON_REQUESTABLE,

@@ -5,6 +5,7 @@ export default (server) => {
     return new Response(422, { 'Content-Type': 'application/json' }, {
       'errors': [{
         'message': 'Item is not loanable',
+        'code': 'ITEM_NOT_LOANABLE',
         'parameters': [{
           'key': 'itemBarcode',
           'value': '123'
