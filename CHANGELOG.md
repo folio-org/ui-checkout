@@ -15,6 +15,7 @@
 * Replace babel-eslint with @babel/eslint-parser. Refs UICHKOUT-779.
 * Warn when selected user lacks a barcode. Refs UICHKOUT-737.
 * Improvement for bigtest running. Refs UICHKOUT-785.
+* Test UICHKOUT-786-test.
 
 ## [8.0.1](https://github.com/folio-org/ui-checkout/tree/v8.0.1) (2022-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.0...v8.0.1)
