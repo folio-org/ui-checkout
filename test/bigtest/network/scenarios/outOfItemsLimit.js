@@ -6,6 +6,7 @@ export default (server) => {
     return new Response(422, { 'Content-Type': 'application/json' }, {
       'errors': [{
         'message': 'Patron has reached maximum limit of 1 items for material type',
+        'code': 'ITEM_LIMIT_MATERIAL_TYPE',
         'parameters': [{
           'key': 'itemBarcode',
           'value': barcodeWithLimitLoanPolicy

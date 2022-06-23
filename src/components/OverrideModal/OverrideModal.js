@@ -26,8 +26,8 @@ import { renderOrderedPatronBlocks } from '../../util';
 
 import {
   INVALID_DATE_MESSAGE,
-  ITEM_NOT_LOANABLE,
-  MAX_ITEM_BLOCK_LIMIT,
+  BACKEND_ERROR_CODES,
+  ITEM_LIMIT_BACKEND_ERROR_CODES,
 } from '../../constants';
 
 import css from './OverrideModal.css';
@@ -56,7 +56,7 @@ function OverrideModal(props) {
     stripes,
     closeOverrideModal,
     onOverride,
-    message,
+    overrideError,
     overridePatronBlock,
     patronBlockOverriddenInfo: {
       comment: patronBlockOverriddenComment = '',
@@ -72,8 +72,18 @@ function OverrideModal(props) {
   const [comment, setAdditionalInfo] = useState(patronBlockOverriddenComment);
   const [dueDate, setDatetime] = useState('');
 
-  const itemIsNotLoanable = message.includes(ITEM_NOT_LOANABLE);
-  const blockLimitIsReached = message.includes(MAX_ITEM_BLOCK_LIMIT);
+  let itemIsNotLoanable = false;
+  let blockLimitIsReached = false;
+
+  if (overrideError) {
+    if (overrideError.code === BACKEND_ERROR_CODES.itemNotLoanable) {
+      itemIsNotLoanable = true;
+    }
+
+    if (ITEM_LIMIT_BACKEND_ERROR_CODES.includes(overrideError.code)) {
+      blockLimitIsReached = true;
+    }
+  }
 
   const handleDateTimeChanged = (newDateTime) => {
     setDatetime(newDateTime);
@@ -227,7 +237,10 @@ OverrideModal.propTypes = {
   onOverride: PropTypes.func.isRequired,
   closeOverrideModal: PropTypes.func.isRequired,
   overridePatronBlock: PropTypes.bool,
-  message: PropTypes.string,
+  overrideError: PropTypes.shape({
+    message: PropTypes.string.isRequired,
+    code: PropTypes.string,
+  }),
   patronBlocks: PropTypes.arrayOf(PropTypes.object),
   patronBlockOverriddenInfo: PropTypes.object,
 };
@@ -237,6 +250,5 @@ OverrideModal.defaultProps = {
   overridePatronBlock: false,
   patronBlocks: [],
   patronBlockOverriddenInfo: {},
-  message: '',
 };
 export default OverrideModal;

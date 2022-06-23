@@ -1,3 +1,45 @@
+export const BACKEND_ERROR_CODES = {
+  userHasNoBarcode: 'USER_BARCODE_NOT_FOUND',
+  itemNotLoanable: 'ITEM_NOT_LOANABLE',
+  itemHasOpenLoan: 'ITEM_HAS_OPEN_LOAN',
+  itemLimitPatronGroupMaterialTypeLoanType: 'ITEM_LIMIT_PATRON_GROUP_MATERIAL_TYPE_LOAN_TYPE',
+  itemLimitPatronGroupMaterialType: 'ITEM_LIMIT_PATRON_GROUP_MATERIAL_TYPE',
+  itemLimitPatronGroupLoanType: 'ITEM_LIMIT_PATRON_GROUP_LOAN_TYPE',
+  itemLimitMaterialTypeLoanType: 'ITEM_LIMIT_MATERIAL_TYPE_LOAN_TYPE',
+  itemLimitMaterialType: 'ITEM_LIMIT_MATERIAL_TYPE',
+  itemLimitLoanType: 'ITEM_LIMIT_LOAN_TYPE',
+};
+
+export const ITEM_LIMIT_BACKEND_ERROR_CODES = [
+  BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialTypeLoanType,
+  BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialType,
+  BACKEND_ERROR_CODES.itemLimitPatronGroupLoanType,
+  BACKEND_ERROR_CODES.itemLimitMaterialTypeLoanType,
+  BACKEND_ERROR_CODES.itemLimitMaterialType,
+  BACKEND_ERROR_CODES.itemLimitLoanType,
+];
+
+export const OVERRIDABLE_BACKEND_ERROR_CODES = [
+  BACKEND_ERROR_CODES.itemNotLoanable,
+  ...ITEM_LIMIT_BACKEND_ERROR_CODES,
+];
+
+export const BACKEND_ERRORS_CODES_TO_HIDE = [
+  BACKEND_ERROR_CODES.itemHasOpenLoan,
+];
+
+export const ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE = {
+  [BACKEND_ERROR_CODES.userHasNoBarcode]: 'ui-checkout.messages.userHasNoBarcode',
+  [BACKEND_ERROR_CODES.itemNotLoanable]: 'ui-checkout.messages.itemIsNotLoanable',
+  [BACKEND_ERROR_CODES.itemHasOpenLoan]: 'ui-checkout.messages.itemHasOpenLoan',
+  [BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialTypeLoanType]: 'ui-checkout.messages.itemLimitPatronGroupMaterialTypeLoanType',
+  [BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialType]: 'ui-checkout.messages.itemLimitPatronGroupMaterialType',
+  [BACKEND_ERROR_CODES.itemLimitPatronGroupLoanType]: 'ui-checkout.messages.itemLimitPatronGroupLoanType',
+  [BACKEND_ERROR_CODES.itemLimitMaterialTypeLoanType]: 'ui-checkout.messages.itemLimitMaterialTypeLoanType',
+  [BACKEND_ERROR_CODES.itemLimitMaterialType]: 'ui-checkout.messages.itemLimitMaterialType',
+  [BACKEND_ERROR_CODES.itemLimitLoanType]: 'ui-checkout.messages.itemLimitLoanType',
+};
+
 export const errorTypes = {
   INVALID_SCHEDULE: 1,
   INVALID_ITEM: 2,
@@ -10,21 +52,6 @@ export const MAX_RECORDS = 40;
 export const INVALID_DATE_MESSAGE = 'Invalid date';
 
 export const defaultPatronIdentifier = 'barcode';
-
-export const ITEM_NOT_LOANABLE = 'Item is not loanable';
-
-export const USER_HAS_NO_BARCODE = 'Could not find user with matching barcode';
-
-export const MAX_ITEM_BLOCK_LIMIT = 'Patron has reached maximum limit of';
-
-export const OVERRIDABLE_ERROR_MESSAGES = [
-  ITEM_NOT_LOANABLE,
-  MAX_ITEM_BLOCK_LIMIT,
-];
-
-export const ERRORS_TO_HIDE = [
-  'Cannot check out item that already has an open loan',
-];
 
 export const statuses = {
   CHECK_OUT: 'Check out',

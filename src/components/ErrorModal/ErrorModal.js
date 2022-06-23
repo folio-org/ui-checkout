@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  noop,
-  map,
-  split,
-} from 'lodash';
+import { noop } from 'lodash';
 
 import { stripesShape } from '@folio/stripes/core';
 import {
@@ -16,15 +12,11 @@ import {
 } from '@folio/stripes/components';
 
 import {
-  ITEM_NOT_LOANABLE,
-  USER_HAS_NO_BARCODE,
-  OVERRIDABLE_ERROR_MESSAGES,
-  ERRORS_TO_HIDE,
+  BACKEND_ERROR_CODES,
+  OVERRIDABLE_BACKEND_ERROR_CODES,
+  ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE,
+  BACKEND_ERRORS_CODES_TO_HIDE,
 } from '../../constants';
-import {
-  getAllErrorMessages,
-  extractErrorDetails,
-} from '../../util';
 
 function ErrorModal(props) {
   const {
@@ -39,55 +31,75 @@ function ErrorModal(props) {
       materialType: { name: materialType } = {},
     } = {},
   } = props;
-  const allErrors = getAllErrorMessages(errors);
-  const messages = split(allErrors, ';');
-
   const handleOverrideClick = () => {
     onClose();
     openOverrideModal();
   };
 
-  const containsOverrideErrorMessage = messages.every((message) => {
-    return OVERRIDABLE_ERROR_MESSAGES.find(error => message.includes(error));
+  const errorsToDisplay = [];
+  let containsOverrideErrorMessage = false;
+
+  errors.forEach((error, index) => {
+    const {
+      code,
+      message,
+    } = error;
+    let messageToDisplay;
+
+    if (code) {
+      if (!containsOverrideErrorMessage && OVERRIDABLE_BACKEND_ERROR_CODES.includes(code)) {
+        containsOverrideErrorMessage = true;
+      }
+
+      if (!BACKEND_ERRORS_CODES_TO_HIDE.includes(code)) {
+        const translationId = ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE[code];
+
+        if (translationId) {
+          let values;
+
+          switch (code) {
+            case BACKEND_ERROR_CODES.itemNotLoanable:
+              values = {
+                title,
+                barcode,
+                materialType,
+                loanPolicy: error?.parameters[0]?.value,
+              };
+              break;
+            case BACKEND_ERROR_CODES.userHasNoBarcode:
+              values = {
+                br: () => <br />,
+              };
+              break;
+            default:
+              break;
+          }
+
+          messageToDisplay = (
+            <FormattedMessage
+              id={translationId}
+              {...(values ? { values } : {})}
+            />
+          );
+        } else {
+          messageToDisplay = message;
+        }
+      }
+    } else {
+      messageToDisplay = message;
+    }
+
+    if (messageToDisplay) {
+      errorsToDisplay.push(
+        <p data-test-error-item key={`error-${index}`}>
+          {messageToDisplay}
+        </p>
+      );
+    }
   });
 
   const canBeOverridden = stripes.hasPerm('ui-users.overrideItemBlock')
     && containsOverrideErrorMessage;
-
-  const renderMessages = () => {
-    return map(messages, (message, index) => {
-      let customMessage = '';
-
-      if (ERRORS_TO_HIDE.includes(message)) {
-        return null;
-      }
-
-      if (message === ITEM_NOT_LOANABLE) {
-        const errorDetails = extractErrorDetails(errors, ITEM_NOT_LOANABLE);
-        customMessage = (
-          <FormattedMessage
-            id="ui-checkout.messages.itemIsNotLoanable"
-            values={{ title, barcode, materialType, loanPolicy: errorDetails?.parameters[0]?.value }}
-          />
-        );
-      } else if (message === USER_HAS_NO_BARCODE) {
-        customMessage = (
-          <FormattedMessage
-            id="ui-checkout.messages.userHasNoBarcode"
-            values={{
-              br: () => <br />,
-            }}
-          />
-        );
-      }
-
-      return (
-        <p data-test-error-item key={`error-${index}`}>
-          {customMessage || message}
-        </p>
-      );
-    });
-  };
 
   return (
     <Modal
@@ -98,7 +110,7 @@ function ErrorModal(props) {
       label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
       dismissible
     >
-      {renderMessages()}
+      {errorsToDisplay}
       <Col xs={12}>
         <Row end="xs">
           {canBeOverridden &&

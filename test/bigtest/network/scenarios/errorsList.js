@@ -20,6 +20,7 @@ export default (server) => {
         },
         {
           'message': 'Item is not loanable',
+          'code': 'ITEM_NOT_LOANABLE',
           'parameters': [{
             'key': 'loanPolicyName',
             'value': notLoanablePolicyName
@@ -33,6 +34,7 @@ export default (server) => {
         },
         {
           'message': itemHasOpenLoanError,
+          'code': 'ITEM_HAS_OPEN_LOAN',
           'parameters': [{
             'key': 'itemBarcode',
             'value': notLoanableItemBarcode,
