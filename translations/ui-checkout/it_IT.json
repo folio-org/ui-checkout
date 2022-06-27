@@ -121,5 +121,12 @@
     "selectItemModal.itemListHeader": "Elenco degli item: scegline uno",
     "selectItemModal.title": "Titolo",
     "selectItemModal.callNumber": "Collocazione",
-    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item."
+    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item.",
+    "messages.itemHasOpenLoan": "Cannot check out item that already has an open loan.",
+    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of patron group, material type and loan type.",
+    "messages.itemLimitPatronGroupMaterialType": "Patron has reached maximum limit of 1 items for combination of patron group and material type.",
+    "messages.itemLimitPatronGroupLoanType": "Patron has reached maximum limit of 1 items for combination of patron group and loan type.",
+    "messages.itemLimitMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of material type and loan type.",
+    "messages.itemLimitMaterialType": "Patron has reached maximum limit of 1 items for material type.",
+    "messages.itemLimitLoanType": "Patron has reached maximum limit of 1 items for loan type."
 }
