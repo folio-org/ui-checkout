@@ -106,6 +106,7 @@
     "@babel/plugin-proposal-decorators": "^7.18.2",
     "@babel/plugin-transform-runtime": "^7.18.5",
     "@bigtest/interactor": "^0.9.1",
+    "@bigtest/mirage": "^0.0.1",
     "@bigtest/mocha": "^0.5.2",
     "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^6.0.0",

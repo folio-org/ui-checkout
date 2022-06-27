@@ -1,4 +1,4 @@
-export const componentPropsCheck = (Component, testId, expectedProps, partialCompare = false) => {
+const componentPropsCheck = (Component, testId, expectedProps, partialCompare = false) => {
   const propertiesForCompare = Component.mock.calls
     .reverse()
     .find(item => item?.[0]?.['data-testid'] === testId);
@@ -12,3 +12,5 @@ export const componentPropsCheck = (Component, testId, expectedProps, partialCom
 
   expect(propertiesForCompare[0]).toStrictEqual(resultExpectedProps);
 };
+
+export default componentPropsCheck;
