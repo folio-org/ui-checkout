@@ -16,6 +16,7 @@
 * Warn when selected user lacks a barcode. Refs UICHKOUT-737.
 * Improvement for bigtest running. Refs UICHKOUT-785.
 * Use permanent error key instead of error message. Refs UICHKOUT-783.
+* Set up Jest/RTL tests. Refs UICHKOUT-786.
 
 ## [8.0.1](https://github.com/folio-org/ui-checkout/tree/v8.0.1) (2022-03-28)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.0...v8.0.1)
