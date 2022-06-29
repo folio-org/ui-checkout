@@ -2,6 +2,9 @@
 
 ## IN PROGRESS
 
+## [8.1.0](https://github.com/folio-org/ui-checkout/tree/v8.1.0) (2022-06-29)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.1...v8.1.0)
+
 * Add id for Pane component. Refs UICHKOUT-768.
 * Add pull request template. Refs UICHKOUT-771.
 * Compile Translation Files into AST Format. Refs UICHKOUT-708.
