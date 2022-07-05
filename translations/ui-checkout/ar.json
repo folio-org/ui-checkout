@@ -122,11 +122,11 @@
     "selectItemModal.title": "العنوان",
     "selectItemModal.callNumber": "رقم الاستدعاء",
     "messages.userHasNoBarcode": "المستخدم ليس لديه باركود. <br></br> باركود المستخدم مطلوب لإعارة المواد.",
-    "messages.itemHasOpenLoan": "Cannot check out item that already has an open loan.",
+    "messages.itemHasOpenLoan": "لا يمكن إعارة مادة ذات استعارة مفتوحة بالفعل.",
     "messages.itemLimitPatronGroupMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of patron group, material type and loan type.",
     "messages.itemLimitPatronGroupMaterialType": "Patron has reached maximum limit of 1 items for combination of patron group and material type.",
     "messages.itemLimitPatronGroupLoanType": "Patron has reached maximum limit of 1 items for combination of patron group and loan type.",
     "messages.itemLimitMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of material type and loan type.",
-    "messages.itemLimitMaterialType": "Patron has reached maximum limit of 1 items for material type.",
-    "messages.itemLimitLoanType": "Patron has reached maximum limit of 1 items for loan type."
+    "messages.itemLimitMaterialType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع المادة.",
+    "messages.itemLimitLoanType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع الاستعارة."
 }

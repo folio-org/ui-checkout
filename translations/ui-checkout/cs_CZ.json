@@ -122,11 +122,11 @@
     "selectItemModal.title": "Titul",
     "selectItemModal.callNumber": "Signatura",
     "messages.userHasNoBarcode": "Uživatel nemá čárový kód. <br></br>K vypůjčení jednotky je vyžadován uživatelský čárový kód.",
-    "messages.itemHasOpenLoan": "Cannot check out item that already has an open loan.",
-    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of patron group, material type and loan type.",
-    "messages.itemLimitPatronGroupMaterialType": "Patron has reached maximum limit of 1 items for combination of patron group and material type.",
-    "messages.itemLimitPatronGroupLoanType": "Patron has reached maximum limit of 1 items for combination of patron group and loan type.",
-    "messages.itemLimitMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of material type and loan type.",
-    "messages.itemLimitMaterialType": "Patron has reached maximum limit of 1 items for material type.",
-    "messages.itemLimitLoanType": "Patron has reached maximum limit of 1 items for loan type."
+    "messages.itemHasOpenLoan": "Nelze vybrat položku, která již má otevřenou výpůjčku.",
+    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů, typu materiálu a typu výpůjčky.",
+    "messages.itemLimitPatronGroupMaterialType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů a typu materiálu.",
+    "messages.itemLimitPatronGroupLoanType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů a typu výpůjčky.",
+    "messages.itemLimitMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro kombinaci typu materiálu a typu výpůjčky.",
+    "messages.itemLimitMaterialType": "Čtenář dosáhl maximálního limitu 1 položek pro typ materiálu.",
+    "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro typ výpůjčky."
 }
