@@ -122,11 +122,11 @@
     "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Número de chamada",
     "messages.userHasNoBarcode": "O usuário não possui um código de barras.<br></br>É necessário um código de barras do usuário para empestar um exemplar.",
-    "messages.itemHasOpenLoan": "Cannot check out item that already has an open loan.",
-    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of patron group, material type and loan type.",
-    "messages.itemLimitPatronGroupMaterialType": "Patron has reached maximum limit of 1 items for combination of patron group and material type.",
-    "messages.itemLimitPatronGroupLoanType": "Patron has reached maximum limit of 1 items for combination of patron group and loan type.",
-    "messages.itemLimitMaterialTypeLoanType": "Patron has reached maximum limit of 1 items for combination of material type and loan type.",
-    "messages.itemLimitMaterialType": "Patron has reached maximum limit of 1 items for material type.",
-    "messages.itemLimitLoanType": "Patron has reached maximum limit of 1 items for loan type."
+    "messages.itemHasOpenLoan": "Não é possível emprestar exemplar que já tem um empréstimo em aberto.",
+    "messages.itemLimitPatronGroupMaterialTypeLoanType": "O usuário atingiu o limite máximo de 1 item para combinação de grupo de usuário, tipo de material e tipo de empréstimo.",
+    "messages.itemLimitPatronGroupMaterialType": "O usuário atingiu o limite máximo de 1 item para combinação de grupo de usuário e tipo de material.",
+    "messages.itemLimitPatronGroupLoanType": "O usuário atingiu o limite máximo de 1 item para combinação de grupo de usuário e tipo de empréstimo.",
+    "messages.itemLimitMaterialTypeLoanType": "O usuário atingiu o limite máximo de 1 item para combinação de tipo de material e tipo de empréstimo.",
+    "messages.itemLimitMaterialType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo.",
+    "messages.itemLimitLoanType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo."
 }
