@@ -52,5 +52,16 @@ describe('util', () => {
         },
       })).toEqual('LastName, PreferredFirstName MiddleName');
     });
+
+    it('should handle empty preferred first name', () => {
+      const preferredFirstName = '';
+      expect(getFullName({
+        personal: {
+          ...personal,
+          middleName,
+          preferredFirstName,
+        },
+      })).toEqual('LastName, FirstName MiddleName');
+    });
   });
 });
