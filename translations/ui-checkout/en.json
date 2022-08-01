@@ -134,5 +134,6 @@
   "selectItemModal.materialType": "Material type",
   "selectItemModal.loanType": "Loan type",
   "selectItemModal.title": "Title",
-  "selectItemModal.callNumber": "Call number"
+  "selectItemModal.callNumber": "Call number",
+  "notes.popupModal.label": "User note"
 }
