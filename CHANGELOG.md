@@ -2,6 +2,8 @@
 
 ## IN PROGRESS
 
+* Handle empty values like other falsy values when formatting names. Refs UICHKOUT-792.
+
 ## [8.1.0](https://github.com/folio-org/ui-checkout/tree/v8.1.0) (2022-06-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.1...v8.1.0)
 
@@ -25,7 +27,7 @@
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.0...v8.0.1)
 
 * Patron block count increases erroneously when override entered at Check-out. Refs UICHKOUT-774.
-* Extend ui-checkout.circulation sub permissions. Refs UICHKOUT-775. 
+* Extend ui-checkout.circulation sub permissions. Refs UICHKOUT-775.
 
 ## [8.0.0](https://github.com/folio-org/ui-checkout/tree/v8.0.0) (2022-02-24)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v7.1.0...v8.0.0)
