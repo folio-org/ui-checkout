@@ -7,7 +7,7 @@ import { Col, Row } from '@folio/stripes/components';
 import { defaultPatronIdentifier, statuses } from './constants';
 
 export function getFullName(user) {
-  return `${user?.personal?.lastName ?? ''}, ${user?.personal?.preferredFirstName ?? user?.personal?.firstName ?? ''} ${user?.personal?.middleName ?? ''}`;
+  return `${user?.personal?.lastName || ''}, ${user?.personal?.preferredFirstName || user?.personal?.firstName || ''} ${user?.personal?.middleName || ''}`;
 }
 
 export function getCheckoutSettings(checkoutSettings) {
