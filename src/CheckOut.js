@@ -218,7 +218,6 @@ class CheckOut extends React.Component {
         itemBarcode: PropTypes.string.isRequired,
       }),
     }),
-    intl: PropTypes.object.isRequired,
   };
 
   constructor(props) {
