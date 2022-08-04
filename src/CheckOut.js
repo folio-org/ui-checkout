@@ -755,6 +755,7 @@ class CheckOut extends React.Component {
           entityType="user"
           popUpPropertyName="popUpOnCheckOut"
           entityId={patron?.id}
+          label={<FormattedMessage id="ui-checkout.notes.popupModal.label" />}
         />
         <Pluggable
           type="create-inventory-records"
