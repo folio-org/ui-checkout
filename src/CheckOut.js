@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import createInactivityTimer from 'inactivity-timer';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import {
   isEmpty,
@@ -601,7 +601,6 @@ class CheckOut extends React.Component {
       mutator,
       stripes,
       location,
-      intl,
     } = this.props;
 
     const patronInitialValue = this.shouldSubmitAutomatically ? { patron: { identifier: location.state.patronBarcode } } : {};
@@ -757,7 +756,7 @@ class CheckOut extends React.Component {
           entityType="user"
           popUpPropertyName="popUpOnCheckOut"
           entityId={patron?.id}
-          label={intl.formatMessage({ id: 'ui-checkout.notes.popupModal.label' })}
+          label={<FormattedMessage id="ui-checkout.notes.popupModal.label" />}
         />
         <Pluggable
           type="create-inventory-records"
@@ -771,4 +770,4 @@ class CheckOut extends React.Component {
   }
 }
 
-export default injectIntl(CheckOut);
+export default CheckOut;
