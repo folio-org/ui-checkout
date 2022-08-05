@@ -128,5 +128,6 @@
     "messages.itemLimitPatronGroupLoanType": "Patron has reached maximum limit of 1 items for combination of patron group and loan type.",
     "messages.itemLimitMaterialTypeLoanType": "بلغ المستفيد الحد الأقصى وهو مادة  واحدة لمزيج من نوع المادة ونوع الإعارة.",
     "messages.itemLimitMaterialType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع المادة.",
-    "messages.itemLimitLoanType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع الاستعارة."
+    "messages.itemLimitLoanType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع الاستعارة.",
+    "notes.popupModal.label": "ملاحظة المستخدم"
 }

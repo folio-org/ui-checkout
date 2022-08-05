@@ -128,5 +128,6 @@
     "messages.itemLimitPatronGroupLoanType": "O usuário atingiu o limite máximo de 1 item para combinação de grupo de usuário e tipo de empréstimo.",
     "messages.itemLimitMaterialTypeLoanType": "O usuário atingiu o limite máximo de 1 item para combinação de tipo de material e tipo de empréstimo.",
     "messages.itemLimitMaterialType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo.",
-    "messages.itemLimitLoanType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo."
+    "messages.itemLimitLoanType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo.",
+    "notes.popupModal.label": "User note"
 }
