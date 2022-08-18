@@ -1,6 +1,6 @@
 {
-    "externalSystemId": "external system id",
-    "folioRecordNumber": "folio record number",
+    "externalSystemId": "ID externího systému",
+    "folioRecordNumber": "číslo záznamu folio",
     "missingDataError": "Please fill this out to continue",
     "checkoutDateRangeError": "Jednotku nelze vypůjčit, protože datum výpůjčky spadá mimo rozsah dat v zásadách výpůjček. Před opětovným pokusem vypůjčení zkontrolujte {name}.",
     "itemNotFoundError": "Jednotka s tímto čárovým kódem neexistuje",
@@ -17,7 +17,7 @@
     "numberAbbreviation": "No.",
     "loanPolicy": "Zásada výpůjček",
     "active": "Aktivní",
-    "inactive": "Inactive",
+    "inactive": "Neaktivní",
     "totalItemsScanned": "Celkový počet načtených jednotek: {total, number}",
     "sponsorExpired": "Platnost záznamu uživatele sponzora vypršela",
     "proxyExpired": "Platnost vztahu proxy serveru vypršela",
@@ -97,7 +97,7 @@
     "permission.viewLoans": "Výpůjčky: zobrazit výpůjčky",
     "permission.viewFeeFines": "Check out: View fees/fines",
     "permission.viewRequests": "Výpůjčky: Zobrazit žádanky",
-    "fastAddLabel": "New fast add record",
+    "fastAddLabel": "Nový záznam rychlého přidání",
     "confirmStatusModal.heading": "Vypůjčit jednotku {status}?",
     "statuses.missing": "Missing",
     "statuses.withdrawn": "Staženo",
@@ -129,5 +129,5 @@
     "messages.itemLimitMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro kombinaci typu materiálu a typu výpůjčky.",
     "messages.itemLimitMaterialType": "Čtenář dosáhl maximálního limitu 1 položek pro typ materiálu.",
     "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro typ výpůjčky.",
-    "notes.popupModal.label": "User note"
+    "notes.popupModal.label": "Poznámka uživatele"
 }
