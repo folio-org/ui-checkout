@@ -48,13 +48,13 @@ const MultipieceModal = (props) => {
         <Col xs={6}>
           <KeyValue
             label={<FormattedMessage id="ui-checkout.multipieceModal.item.numberOfPieces" />}
-            value={get(item, 'numberOfPieces', '-')}
+            value={get(item, 'numberOfPieces', '')}
           />
         </Col>
         <Col xs={6}>
           <KeyValue
             label={<FormattedMessage id="ui-checkout.multipieceModal.item.descriptionOfPieces" />}
-            value={get(item, 'descriptionOfPieces', '-')}
+            value={get(item, 'descriptionOfPieces', '')}
           />
         </Col>
         {
@@ -63,13 +63,13 @@ const MultipieceModal = (props) => {
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.multipieceModal.item.numberOfMissingPieces" />}
-                value={get(item, 'numberOfMissingPieces', '-')}
+                value={get(item, 'numberOfMissingPieces', '')}
               />
             </Col>
             <Col xs={6}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.multipieceModal.item.descriptionOfmissingPieces" />}
-                value={get(item, 'missingPieces', '-')}
+                value={get(item, 'missingPieces', '')}
               />
             </Col>
           </>

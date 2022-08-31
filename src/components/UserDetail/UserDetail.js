@@ -16,6 +16,7 @@ import {
   KeyValue,
   Row,
   FormattedDate,
+  NoValue,
 } from '@folio/stripes/components';
 
 import { getFullName } from '../../util';
@@ -88,7 +89,7 @@ class UserDetail extends React.Component {
           tagName="strong"
         />
         {' '}
-        {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : '-'}
+        {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : <NoValue />}
       </span>
     );
   };
@@ -147,7 +148,7 @@ class UserDetail extends React.Component {
             <Col xs={4}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.user.expiration" />}
-                value={user.expirationDate ? <FormattedDate value={user.expirationDate} /> : '-'}
+                value={user.expirationDate ? <FormattedDate value={user.expirationDate} /> : ''}
               />
             </Col>
           </Row>
