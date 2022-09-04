@@ -129,5 +129,5 @@
     "messages.itemLimitMaterialTypeLoanType": "读者已达到资料类型和借阅类型组合 1 项的最大限制。",
     "messages.itemLimitMaterialType": "读者已达到资料类型1项的最大限制。",
     "messages.itemLimitLoanType": "读者已达到借阅类型1项的最大限制。",
-    "notes.popupModal.label": "User note"
+    "notes.popupModal.label": "用户附注"
 }
