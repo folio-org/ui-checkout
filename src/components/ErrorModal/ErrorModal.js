@@ -37,12 +37,14 @@ function ErrorModal(props) {
   };
 
   const errorsToDisplay = [];
+  const itemLimitKey = 'itemLimit';
   let containsOverrideErrorMessage = false;
 
   errors.forEach((error, index) => {
     const {
       code,
       message,
+      parameters,
     } = error;
     let messageToDisplay;
 
@@ -55,7 +57,7 @@ function ErrorModal(props) {
         const translationId = ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE[code];
 
         if (translationId) {
-          let values;
+          let values = {};
 
           switch (code) {
             case BACKEND_ERROR_CODES.itemNotLoanable:
@@ -71,14 +73,16 @@ function ErrorModal(props) {
                 br: () => <br />,
               };
               break;
-            default:
+            default: {
+              values.itemLimit = parameters.find(item => item.key === itemLimitKey)?.value;
               break;
+            }
           }
 
           messageToDisplay = (
             <FormattedMessage
               id={translationId}
-              {...(values ? { values } : {})}
+              values={values}
             />
           );
         } else {

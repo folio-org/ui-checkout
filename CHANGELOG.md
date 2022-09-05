@@ -5,6 +5,7 @@
 * Handle empty values like other falsy values when formatting names. Refs UICHKOUT-792.
 * Remove hardcoded empty values. Refs UICHKOUT-799.
 * Also support `inventory` `12.0`. Refs UICHKOUT-800.
+* Show correct limit of item block message. Refs UICHKOUT-801.
 
 ## [8.1.0](https://github.com/folio-org/ui-checkout/tree/v8.1.0) (2022-06-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.0.1...v8.1.0)
