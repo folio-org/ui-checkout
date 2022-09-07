@@ -74,7 +74,7 @@ function ErrorModal(props) {
               };
               break;
             default: {
-              values.itemLimit = parameters.find(item => item.key === ITEM_LIMIT_KEY)?.value;
+              values.itemLimit = parameters.find(item => item.key === ITEM_LIMIT_KEY)?.value || 0;
               break;
             }
           }
