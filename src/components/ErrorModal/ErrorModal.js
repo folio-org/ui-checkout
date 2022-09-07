@@ -37,7 +37,7 @@ function ErrorModal(props) {
   };
 
   const errorsToDisplay = [];
-  const itemLimitKey = 'itemLimit';
+  const ITEM_LIMIT_KEY = 'itemLimit';
   let containsOverrideErrorMessage = false;
 
   errors.forEach((error, index) => {
@@ -74,7 +74,7 @@ function ErrorModal(props) {
               };
               break;
             default: {
-              values.itemLimit = parameters.find(item => item.key === itemLimitKey)?.value;
+              values.itemLimit = parameters.find(item => item.key === ITEM_LIMIT_KEY)?.value;
               break;
             }
           }
