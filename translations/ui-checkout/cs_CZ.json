@@ -123,11 +123,11 @@
     "selectItemModal.callNumber": "Signatura",
     "messages.userHasNoBarcode": "Uživatel nemá čárový kód. <br></br>K vypůjčení jednotky je vyžadován uživatelský čárový kód.",
     "messages.itemHasOpenLoan": "Nelze vybrat položku, která již má otevřenou výpůjčku.",
-    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů, typu materiálu a typu výpůjčky.",
-    "messages.itemLimitPatronGroupMaterialType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů a typu materiálu.",
-    "messages.itemLimitPatronGroupLoanType": "Čtenář dosáhl maximálního limitu 1 jednotek pro kombinaci skupiny čtenářů a typu výpůjčky.",
-    "messages.itemLimitMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro kombinaci typu materiálu a typu výpůjčky.",
-    "messages.itemLimitMaterialType": "Čtenář dosáhl maximálního limitu 1 položek pro typ materiálu.",
-    "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu 1 položek pro typ výpůjčky.",
+    "messages.itemLimitPatronGroupMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů, typu materiálu a typu výpůjčky.",
+    "messages.itemLimitPatronGroupMaterialType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů a typu materiálu.",
+    "messages.itemLimitPatronGroupLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů a typu výpůjčky.",
+    "messages.itemLimitMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci typu materiálu a typu výpůjčky.",
+    "messages.itemLimitMaterialType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro typ materiálu.",
+    "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotek}} pro typ výpůjčky.",
     "notes.popupModal.label": "Poznámka uživatele"
 }
