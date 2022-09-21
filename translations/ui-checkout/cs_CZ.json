@@ -122,7 +122,7 @@
     "selectItemModal.title": "Název",
     "selectItemModal.callNumber": "Signatura",
     "messages.userHasNoBarcode": "Uživatel nemá čárový kód. <br></br>K vypůjčení jednotky je vyžadován uživatelský čárový kód.",
-    "messages.itemHasOpenLoan": "Nelze vybrat položku, která již má otevřenou výpůjčku.",
+    "messages.itemHasOpenLoan": "Nelze vypůjčit jednotku, která již má otevřenou výpůjčku.",
     "messages.itemLimitPatronGroupMaterialTypeLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů, typu materiálu a typu výpůjčky.",
     "messages.itemLimitPatronGroupMaterialType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů a typu materiálu.",
     "messages.itemLimitPatronGroupLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro kombinaci skupiny čtenářů a typu výpůjčky.",
