@@ -2,6 +2,7 @@
 
 ## IN PROGRESS
 
+* Also support `users` `16.0`. Refs UICHKOUT-791.
 * Handle empty values like other falsy values when formatting names. Refs UICHKOUT-792.
 * Remove hardcoded empty values. Refs UICHKOUT-799.
 * Also support `inventory` `12.0`. Refs UICHKOUT-800.
