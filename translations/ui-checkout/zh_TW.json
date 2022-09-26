@@ -96,7 +96,7 @@
     "actions.moreDetails": "获取此单件的更多详情",
     "permission.viewLoans": "借出：查看借閱",
     "permission.viewFeeFines": "借出：查看费用/罚款",
-    "permission.viewRequests": "借出：查看请求",
+    "permission.viewRequests": "借出：查看請求",
     "fastAddLabel": "新建快速添加记录",
     "confirmStatusModal.heading": "借出 {status} 單件？",
     "statuses.missing": "遗失",
