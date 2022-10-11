@@ -23,7 +23,7 @@
     "proxyExpired": "Il proxy è scaduto",
     "continue": "Continua",
     "orActingAsProxy": "O sta agendo come proxy per",
-    "scanOrEnterPatronId": "Scan or enter patron {identifier}",
+    "scanOrEnterPatronId": "Scansiona o digita l'identificatore dell'utente",
     "patronLookup": "Ricerca utente",
     "scanOrEnterItemBarcode": "Scansiona o digita il barcode dell'item",
     "user.name": "Nome",
