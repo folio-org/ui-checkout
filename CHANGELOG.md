@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## IN PROGRESS
+## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.1.0...v8.2.0)
 
 * Handle empty values like other falsy values when formatting names. Refs UICHKOUT-792.
 * Remove hardcoded empty values. Refs UICHKOUT-799.
