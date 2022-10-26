@@ -19,7 +19,7 @@
     "active": "Attivo",
     "inactive": "Non attivo",
     "totalItemsScanned": "Totale item scansionati: {total, number}",
-    "sponsorExpired": "Il record utente del garante è scaduto",
+    "sponsorExpired": "Il record utente del sponsor è scaduto",
     "proxyExpired": "Il proxy è scaduto",
     "continue": "Continua",
     "orActingAsProxy": "O sta agendo come proxy per",

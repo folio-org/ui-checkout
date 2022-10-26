@@ -25,7 +25,7 @@
     "orActingAsProxy": "或作為此人的代理：",
     "scanOrEnterPatronId": "掃描或輸入讀者識別證號碼",
     "patronLookup": "查詢讀者",
-    "scanOrEnterItemBarcode": "掃描或輸入單件條碼",
+    "scanOrEnterItemBarcode": "掃描或輸入館藏條碼",
     "user.name": "名稱",
     "user.username": "使用者名稱",
     "user.barcode": "使用者條碼",
