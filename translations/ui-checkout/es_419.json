@@ -54,7 +54,7 @@
     "blockModal": "Usuario bloqueado para hacer prestamos",
     "detailsButton": "Ver detalles del bloqueo",
     "blockedLabel": "Motivo del bloqueo",
-    "awaitingPickupMessage": "Usuario tiene  <strong>{count, number}</strong> {count, plural, one {item} other {items}} esperando hacer recogido en el punto de servicio.",
+    "awaitingPickupMessage": "Usuario tiene  <strong>{count, number}</strong> {count, plural, one {item} other {items}} esperando para ser recogido(s) en el punto de servicio.",
     "awaitingPickupLabel": "Ejemplares en espera de ser recogidos",
     "multipieceModal.confirm": "Préstamos",
     "multipieceModal.label": "Confirmar el préstamo de múltiples piezas",

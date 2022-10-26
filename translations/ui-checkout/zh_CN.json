@@ -123,11 +123,11 @@
     "selectItemModal.callNumber": "索书号",
     "messages.userHasNoBarcode": "用户没有条码。 <br> </br>借出单件需要用户条码。",
     "messages.itemHasOpenLoan": "无法借出已有未结借阅的单件。",
-    "messages.itemLimitPatronGroupMaterialTypeLoanType": "读者已达到读者组、资料类型和借阅类型组合 1 项的最大限制。",
-    "messages.itemLimitPatronGroupMaterialType": "读者已达到读者组和资料类型组合1 项的最大限制。",
-    "messages.itemLimitPatronGroupLoanType": "读者已达到读者组和借阅类型组合1 项的最大限制。",
-    "messages.itemLimitMaterialTypeLoanType": "读者已达到资料类型和借阅类型组合 1 项的最大限制。",
-    "messages.itemLimitMaterialType": "读者已达到资料类型1项的最大限制。",
-    "messages.itemLimitLoanType": "读者已达到借阅类型1项的最大限制。",
+    "messages.itemLimitPatronGroupMaterialTypeLoanType": "读者已达到读者组、资料类型和借阅类型组合的{itemLimit, plural, one { 1单件} other {{itemLimit}单件}}的最大限制。",
+    "messages.itemLimitPatronGroupMaterialType": "读者已达到读者组和资料类型组合的{itemLimit, plural, one { 1 单件} other {{itemLimit}单件}}的最大限制。",
+    "messages.itemLimitPatronGroupLoanType": "读者组和借阅类型的组合已达到{itemLimit, plural, one { 1单件} other {{itemLimit}单件}}的最大限制。",
+    "messages.itemLimitMaterialTypeLoanType": "读者已达到资料类型和借阅类型组合的{itemLimit, plural, one { 1单件} other {{itemLimit}单件}}的最大限制。",
+    "messages.itemLimitMaterialType": "读者已达到资料类型的{itemLimit, plural, one { 1 单件 } other {{itemLimit} 单件 }}的最大限制。",
+    "messages.itemLimitLoanType": "读者已达到借阅类型的{itemLimit, plural, one { 1 单件 } other {{itemLimit} 单件 }}的最大限制。",
     "notes.popupModal.label": "用户附注"
 }
