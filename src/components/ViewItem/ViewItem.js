@@ -132,7 +132,21 @@ class ViewItem extends React.Component {
         );
       },
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
-      'dueDate': loan => (<div data-test-item-due-date><FormattedDate value={loan.dueDate} /></div>),
+      'dueDate': loan => (
+        <div data-test-item-due-date>
+          <FormattedDate value={loan.dueDate} />
+          {
+            (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
+              <Tooltip
+                id="due-date-change-tooltip"
+                text={<FormattedMessage id="ui-checkout.due.date.change" />}
+              >
+                <Icon icon="flag" size="small" />
+              </Tooltip>
+            )
+          }
+        </div>
+      ),
       'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
       ' ': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
