@@ -31,7 +31,7 @@ const columnWidths = {
   'barcode': { max: 140 },
   'title': { max: 180 },
   'loanPolicy': { max: 150 },
-  'dueDate': { max: 90 },
+  'dueDate': { max: 100 },
   'time': { max: 75 },
   ' ': { max: 75 },
 };
