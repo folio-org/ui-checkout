@@ -1,5 +1,11 @@
 # Change history for ui-checkout
 
+## in progress
+
+* Visual indicator in checkout due date column for shortened loan period - part1. Refs UICHKOUT-806
+* Visual indicator in checkout due date column for shortened loan period - part1. Refs UICHKOUT-809
+* Visual indicator in checkout due date column for shortened loan period - part1. Refs UICHKOUT-810
+
 ## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.1.0...v8.2.0)
 
