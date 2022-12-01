@@ -129,5 +129,6 @@
     "messages.itemLimitMaterialTypeLoanType": "O usuário atingiu o limite máximo de {itemLimit, plural, one {1 item} other {{itemLimit} items }} para combinação de tipo de material e tipo de empréstimo.",
     "messages.itemLimitMaterialType": "O usuário atingiu o limite máximo de {itemLimit, plural, one {1 item} other {{itemLimit} items }} para o tipo de material.",
     "messages.itemLimitLoanType": "O usuário atingiu o limite máximo de 1 item para o tipo de empréstimo.",
-    "notes.popupModal.label": "Nota do usuário"
+    "notes.popupModal.label": "Nota do usuário",
+    "due.date.change": "Ajuste de data de vencimento calculado pelo sistema"
 }

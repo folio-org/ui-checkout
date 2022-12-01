@@ -129,5 +129,6 @@
     "messages.itemLimitMaterialTypeLoanType": "Ausleihlimit für {itemLimit, plural, one {1 item} other {{itemLimit} items}} für die Kombination aus Materialart und Ausleihtyp erreicht.",
     "messages.itemLimitMaterialType": "Ausleihlimit von {itemLimit, plural, one {1 item} other {{itemLimit} items}} für die Materialart erreicht.",
     "messages.itemLimitLoanType": "Ausleihlimit von {itemLimit, plural, one {1 item} other {{itemLimit} items}} für den Ausleihtyp erreicht.",
-    "notes.popupModal.label": "User note"
+    "notes.popupModal.label": "User note",
+    "due.date.change": "System calculated due date adjustment"
 }
