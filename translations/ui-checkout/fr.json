@@ -129,5 +129,6 @@
     "messages.itemLimitMaterialTypeLoanType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for combination of material type and loan type.",
     "messages.itemLimitMaterialType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for material type.",
     "messages.itemLimitLoanType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for loan type.",
-    "notes.popupModal.label": "User note"
+    "notes.popupModal.label": "User note",
+    "due.date.change": "System calculated due date adjustment"
 }
