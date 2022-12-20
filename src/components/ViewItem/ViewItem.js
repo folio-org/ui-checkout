@@ -16,6 +16,8 @@ import {
   FormattedTime,
 } from '@folio/stripes/components';
 
+import css from './ViewItem.css';
+
 const sortMap = {
   no: loan => loan.no,
   title: loan => _.get(loan, ['item', 'title']),
@@ -133,28 +135,28 @@ class ViewItem extends React.Component {
       },
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => {
-        console.log('loan ', loan);
         return (
           <div data-test-item-due-date>
             <FormattedDate value={loan.dueDate} />
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
-                <>
-                  <Icon icon="flag" size="small" />
-                  <Tooltip
-                    id="due-date-change-tooltip"
-                    text={<FormattedMessage id="ui-checkout.due.date.change" />}
-                  >
-                    { ({ ref, ariaIds }) => (
-                      <div
-                        ref={ref} /* can't pass ref directly to Icon without issues */
-                        aria-labelledby={ariaIds.text}
-                      >
-                        <Icon icon="flag" size="small" />
-                      </div>
-                    )}
-                  </Tooltip>
-                </>
+                <Tooltip
+                  id="due-date-change-tooltip"
+                  text={<FormattedMessage id="ui-checkout.due.date.change" />}
+                >
+                  { ({ ref, ariaIds }) => (
+                    <div
+                      ref={ref} /* can't pass ref directly to Icon without issues */
+                      aria-labelledby={ariaIds.text}
+                    >
+                      <Icon
+                        icon="flag"
+                        size="small"
+                        iconClassName={css.tooltipIcon}
+                      />
+                    </div>
+                  )}
+                </Tooltip>
               )
             }
           </div>
