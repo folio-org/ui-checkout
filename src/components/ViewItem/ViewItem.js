@@ -145,7 +145,14 @@ class ViewItem extends React.Component {
                     id="due-date-change-tooltip"
                     text={<FormattedMessage id="ui-checkout.due.date.change" />}
                   >
-                    <Icon icon="flag" size="small" />
+                    { ({ ref, ariaIds }) => (
+                      <div
+                        ref={ref} /* can't pass ref directly to Icon without issues */
+                        aria-labelledby={ariaIds.text}
+                      >
+                        <Icon icon="flag" size="small" />
+                      </div>
+                    )}
                   </Tooltip>
                 </>
               )
