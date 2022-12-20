@@ -139,12 +139,15 @@ class ViewItem extends React.Component {
             <FormattedDate value={loan.dueDate} />
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
-                <Tooltip
-                  id="due-date-change-tooltip"
-                  text={<FormattedMessage id="ui-checkout.due.date.change" />}
-                >
+                <>
                   <Icon icon="flag" size="small" />
-                </Tooltip>
+                  <Tooltip
+                    id="due-date-change-tooltip"
+                    text={<FormattedMessage id="ui-checkout.due.date.change" />}
+                  >
+                    <Icon icon="flag" size="small" />
+                  </Tooltip>
+                </>
               )
             }
           </div>
