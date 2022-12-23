@@ -33,7 +33,7 @@ const columnWidths = {
   'barcode': { max: 140 },
   'title': { max: 180 },
   'loanPolicy': { max: 150 },
-  'dueDate': { max: 100 },
+  'dueDate': { max: 120 },
   'time': { max: 75 },
   ' ': { max: 75 },
 };
@@ -136,8 +136,8 @@ class ViewItem extends React.Component {
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => {
         return (
-          <div data-test-item-due-date>
-            <FormattedDate value={loan.dueDate} />
+          <div data-test-item-due-date style={{ display: 'flex', alignItems: 'center' }}>
+            <div><FormattedDate value={loan.dueDate} /></div>
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
                 <Tooltip
