@@ -27,7 +27,7 @@ const sortMap = {
   time: loan => moment(loan.dueDate).format('hh:mm a'),
 };
 
-const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', ' '];
+const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', 'details'];
 
 const columnWidths = {
   'barcode': { max: 140 },
