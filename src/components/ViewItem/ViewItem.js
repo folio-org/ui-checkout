@@ -35,7 +35,7 @@ const columnWidths = {
   'loanPolicy': { max: 150 },
   'dueDate': { max: 120 },
   'time': { max: 75 },
-  ' ': { max: 75 },
+  'details': { max: 75 },
 };
 
 class ViewItem extends React.Component {
@@ -77,6 +77,7 @@ class ViewItem extends React.Component {
       no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
       time: <FormattedMessage id="ui-checkout.time" />,
       title: <FormattedMessage id="ui-checkout.title" />,
+      details: <FormattedMessage id="ui-checkout.details" />,
     };
   }
 
@@ -163,7 +164,7 @@ class ViewItem extends React.Component {
         );
       },
       'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
-      ' ': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
+      'details': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }
 
