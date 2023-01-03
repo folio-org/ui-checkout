@@ -30,17 +30,11 @@ const sortMap = {
 const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', 'details'];
 
 const columnWidths = {
-  // 'barcode': { max: 140 },
-  // 'title': { max: 180 },
-  // 'loanPolicy': { max: 150 },
-  // 'dueDate': { max: 120 },
-  // 'time': { max: 75 },
-  // 'details': { max: 75 },
   no: '5%',
   barcode: '10%',
   title: '30%',
-  loanPolicy: '30%',
-  dueDate: '10%',
+  loanPolicy: '20%',
+  dueDate: '20%',
   time: '10%',
   details: '5%'
 };
