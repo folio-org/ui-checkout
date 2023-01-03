@@ -31,9 +31,9 @@ const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time
 
 const columnWidths = {
   barcode: '10%',
-  title: '25%',
+  title: '30%',
   loanPolicy: '20%',
-  dueDate: '20%',
+  dueDate: '15%',
   time: '8%',
   details: '10%'
 };
