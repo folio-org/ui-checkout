@@ -136,7 +136,7 @@ class ViewItem extends React.Component {
       'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
       'dueDate': loan => {
         return (
-          <div data-test-item-due-date style={{ display: 'flex', alignItems: 'center' }}>
+          <div data-test-item-due-date className={css.loanDueDate}>
             <div><FormattedDate value={loan.dueDate} /></div>
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
