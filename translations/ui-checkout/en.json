@@ -24,6 +24,7 @@
   "numberAbbreviation": "No.",
   "title": "Title",
   "loanPolicy": "Loan policy",
+  "details": "Details",
   "due.date": "Due date",
   "due.date.change": "System calculated due date adjustment",
   "time": "Time",

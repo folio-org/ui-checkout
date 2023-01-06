@@ -27,15 +27,34 @@ const sortMap = {
   time: loan => moment(loan.dueDate).format('hh:mm a'),
 };
 
-const visibleColumns = ['no', 'barcode', 'title', 'loanPolicy', 'dueDate', 'time', ' '];
+const COLUMNS_NAME = {
+  NO: 'no',
+  BARCODE: 'barcode',
+  TITLE: 'title',
+  LOAN_POLICY: 'loanPolicy',
+  DUE_DATE: 'dueDate',
+  TIME: 'time',
+  DETAILS: 'details',
+};
+
+const visibleColumns = [
+  COLUMNS_NAME.NO,
+  COLUMNS_NAME.BARCODE,
+  COLUMNS_NAME.TITLE,
+  COLUMNS_NAME.LOAN_POLICY,
+  COLUMNS_NAME.DUE_DATE,
+  COLUMNS_NAME.TIME,
+  COLUMNS_NAME.DETAILS
+];
 
 const columnWidths = {
-  'barcode': { max: 140 },
-  'title': { max: 180 },
-  'loanPolicy': { max: 150 },
-  'dueDate': { max: 100 },
-  'time': { max: 75 },
-  ' ': { max: 75 },
+  barcode: '10%',
+  title: '27%',
+  loanPolicy: '20%',
+  dueDate: '13%',
+  time: '10%',
+  details: '10%',
+  no: '8%'
 };
 
 class ViewItem extends React.Component {
@@ -77,6 +96,7 @@ class ViewItem extends React.Component {
       no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
       time: <FormattedMessage id="ui-checkout.time" />,
       title: <FormattedMessage id="ui-checkout.title" />,
+      details: <FormattedMessage id="ui-checkout.details" />,
     };
   }
 
@@ -121,9 +141,9 @@ class ViewItem extends React.Component {
   getItemFormatter() {
     const { intl: { formatNumber } } = this.props;
     return {
-      'no': loan => formatNumber(loan.no),
-      'title': loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
-      'loanPolicy': loan => {
+      [COLUMNS_NAME.NO]: loan => formatNumber(loan.no),
+      [COLUMNS_NAME.TITLE]: loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
+      [COLUMNS_NAME.LOAN_POLICY]: loan => {
         const barcode = _.get(loan, ['item', 'barcode']);
 
         return (
@@ -133,11 +153,11 @@ class ViewItem extends React.Component {
           </div>
         );
       },
-      'barcode': loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
-      'dueDate': loan => {
+      [COLUMNS_NAME.BARCODE]: loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
+      [COLUMNS_NAME.DUE_DATE]: loan => {
         return (
-          <div data-test-item-due-date>
-            <FormattedDate value={loan.dueDate} />
+          <div data-test-item-due-date className={css.loanDueDate}>
+            <div><FormattedDate value={loan.dueDate} /></div>
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
                 <Tooltip
@@ -162,8 +182,8 @@ class ViewItem extends React.Component {
           </div>
         );
       },
-      'time': loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
-      ' ': loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
+      [COLUMNS_NAME.TIME]: loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
+      [COLUMNS_NAME.DETAILS]: loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }
 

@@ -1,3 +1,10 @@
+.loanDueDate {
+  display: flex;
+  align-items: center;
+}
+.tooltipIcon {
+  margin-left: 5px;
+}
 .tooltipIcon:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
