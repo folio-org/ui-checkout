@@ -130,5 +130,6 @@
     "messages.itemLimitMaterialType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotky}} pro typ materiálu.",
     "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotek}} pro typ výpůjčky.",
     "notes.popupModal.label": "Poznámka uživatele",
-    "due.date.change": "Systém vypočítal úpravu data splatnosti"
+    "due.date.change": "Systém vypočítal úpravu data splatnosti",
+    "details": "Detaily"
 }
