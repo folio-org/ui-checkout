@@ -130,5 +130,6 @@
     "messages.itemLimitMaterialType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع المادة.",
     "messages.itemLimitLoanType": "وصل المستفيد إلى الحد الأقصى البالغ مادة واحدة لنوع الاستعارة.",
     "notes.popupModal.label": "ملاحظة المستخدم",
-    "due.date.change": "System calculated due date adjustment"
+    "due.date.change": "System calculated due date adjustment",
+    "details": "Details"
 }

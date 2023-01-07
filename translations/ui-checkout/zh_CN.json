@@ -130,5 +130,6 @@
     "messages.itemLimitMaterialType": "读者已达到资料类型的{itemLimit, plural, one { 1 单件 } other {{itemLimit} 单件 }}的最大限制。",
     "messages.itemLimitLoanType": "读者已达到借阅类型的{itemLimit, plural, one { 1 单件 } other {{itemLimit} 单件 }}的最大限制。",
     "notes.popupModal.label": "用户附注",
-    "due.date.change": "系统计算的到期日调整"
+    "due.date.change": "系统计算的到期日调整",
+    "details": "Details"
 }
