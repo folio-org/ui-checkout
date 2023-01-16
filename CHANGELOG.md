@@ -7,6 +7,7 @@
 * Visual indicator in checkout due date column for shortened loan period - part1. Refs UICHKOUT-810
 * Fix Due date in Check out: Last number goes to the next line. Refs UICHKOUT-811.
 * Checkout table usability improvements. Ref UICHKOUT-805.
+* Support `inventory` `13.0` interface version. Refs UICHKOUT-814.
 
 ## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.1.0...v8.2.0)
