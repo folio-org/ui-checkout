@@ -139,7 +139,7 @@ class ViewItem extends React.Component {
   }
 
   getItemFormatter() {
-    const { intl: { formatNumber } } = this.props;
+    const { intl: { formatNumber, formatMessage } } = this.props;
     return {
       [COLUMNS_NAME.NO]: loan => formatNumber(loan.no),
       [COLUMNS_NAME.TITLE]: loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
@@ -173,6 +173,7 @@ class ViewItem extends React.Component {
                         icon="flag"
                         size="small"
                         iconClassName={css.tooltipIcon}
+                        aria-label={formatMessage({ id: 'ui-checkout.due.date.change' })}
                       />
                     </div>
                   )}
