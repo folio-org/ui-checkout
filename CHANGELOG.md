@@ -9,6 +9,7 @@
 * Checkout table usability improvements. Ref UICHKOUT-805.
 * Bump major versions of several @folio/stripes-* packages. Refs UICHKOUT-818.
 * Remove unneeded `react-redux` dependency. Refs UICHKOUT-841.
+* Support `inventory` `13.0` interface version. Refs UICHKOUT-814.
 * Add screen reader accessibility to checkout flag. Refs UICHKOUT-842
 
 ## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
