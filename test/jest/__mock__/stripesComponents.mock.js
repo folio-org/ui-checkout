@@ -3,15 +3,10 @@ import React from 'react';
 jest.mock('@folio/stripes/components', () => ({
   Button: jest.fn(({
     children,
-    onClick,
-    'data-testid': testId,
     ...rest
   }) => (
     <button
-      data-test-button
-      data-testid={testId}
       type="button"
-      onClick={onClick}
       {...rest}
     >
       <span>
@@ -52,10 +47,16 @@ jest.mock('@folio/stripes/components', () => ({
       {value}
     </div>
   )),
-  Modal: jest.fn(({ children, label, footer, id }) => (
+  Modal: jest.fn(({
+    children,
+    label,
+    footer,
+    id,
+    'data-testid': testId,
+  }) => (
     <div
       id={id}
-      data-testid="modal-window"
+      data-testid={testId ?? 'modal-window'}
     >
       <p>{label}</p>
       {children}
