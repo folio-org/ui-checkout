@@ -7,10 +7,17 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-const NotificationModal = (props) => {
+const NotificationModal = ({
+  message,
+  onClose,
+  ...rest
+}) => {
   const footer = (
     <ModalFooter>
-      <Button onClick={props.onClose}>
+      <Button
+        data-testid="footer-close-button"
+        onClick={onClose}
+      >
         <FormattedMessage id="ui-checkout.close" />
       </Button>
     </ModalFooter>
@@ -21,9 +28,11 @@ const NotificationModal = (props) => {
       size="small"
       footer={footer}
       dismissible
-      {...props}
+      data-testid="notification-modal"
+      onClose={onClose}
+      {...rest}
     >
-      <p>{props.message}</p>
+      <p>{message}</p>
     </Modal>
   );
 };
