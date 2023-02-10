@@ -11,7 +11,8 @@
 * Remove unneeded `react-redux` dependency. Refs UICHKOUT-841.
 * Support `inventory` `13.0` interface version. Refs UICHKOUT-814.
 * Add screen reader accessibility to checkout flag. Refs UICHKOUT-842
-* UI tests replacement with RTL/Jest for NotificationModal. Refs UIREQ-829.
+* UI tests replacement with RTL/Jest for `NotificationModal`. Refs UICHKOUT-829.
+* `PickupModal`: Show count of items awaiting pickup based on `totalRecords` API response field. Refs UICHKOUT-846.
 
 ## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.1.0...v8.2.0)
