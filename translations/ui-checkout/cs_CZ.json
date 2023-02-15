@@ -84,7 +84,7 @@
     "date": "Datum",
     "source": "Zdroj",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong> a je potlačen z objevování.",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong> a je potlačena z vyhledávání.",
     "permission.circulation": "Výpůjčky: Kontrola jednotek výpůjček",
     "permission.all": "Výpůjčky: Všechna oprávnění",
     "proxy.expiration": "Vypršení platnosti proxy",
