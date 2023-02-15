@@ -80,4 +80,11 @@ export const refundClaimReturned = {
   PAYMENT_STATUS: 'Suspended claim returned',
 };
 
+export const OPEN_REQUEST_STATUSES = {
+  OPEN_NOT_YET_FILLED: 'Open - Not yet filled',
+  OPEN_AWAITING_PICKUP: 'Open - Awaiting pickup',
+  OPEN_IN_TRANSIT: 'Open - In transit',
+  OPEN_AWAITING_DELIVERY: 'Open - Awaiting delivery',
+};
+
 export default '';
