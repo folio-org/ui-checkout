@@ -63,7 +63,7 @@ const CheckoutNoteModal = ({
         !hideConfirm &&
         <Button
           data-test-checkoutnotemodal-confirm-button
-          data-testid="confirm-button"
+          data-testid="confirmButton"
           buttonStyle="primary"
           id={`clickable-${testId}-confirm`}
           onClick={onConfirm}
@@ -75,7 +75,7 @@ const CheckoutNoteModal = ({
         !hideCancel &&
         <Button
           data-test-checkoutnotemodal-cancel-button
-          data-testid="cancel-button"
+          data-testid="cancelButton"
           buttonStyle="default"
           id={`clickable-${testId}-cancel`}
           onClick={onCancel}
@@ -89,7 +89,7 @@ const CheckoutNoteModal = ({
 
   return (
     <Modal
-      data-testid="checkout-note-modal"
+      data-testid="checkoutNoteModal"
       open={open}
       id={testId}
       dismissible

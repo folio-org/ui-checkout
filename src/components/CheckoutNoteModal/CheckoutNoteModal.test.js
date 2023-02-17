@@ -20,9 +20,9 @@ jest.mock('lodash', () => ({
 }));
 
 const testIds = {
-  nodeModal: 'checkout-note-modal',
-  confirmButton: 'confirm-button',
-  cancelButton: 'cancel-button',
+  nodeModal: 'checkoutNoteModal',
+  confirmButton: 'confirmButton',
+  cancelButton: 'cancelButton',
 };
 const messageIds = {
   cancelLabel: 'ui-checkout.multipieceModal.cancel',
