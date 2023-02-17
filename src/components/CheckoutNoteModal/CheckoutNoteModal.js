@@ -37,33 +37,50 @@ const defaultProps = {
   hideCancel: false,
 };
 
-const CheckoutNoteModal = (props) => {
-  const cancelLabel = props.cancelLabel || <FormattedMessage id="ui-checkout.multipieceModal.cancel" />;
-  const confirmLabel = props.confirmLabel || <FormattedMessage id="ui-checkout.multipieceModal.confirm" />;
-  const testId = props.id || uniqueId('confirmation-');
-  const { notes, formatter, columnMapping, visibleColumns, columnWidths, hideConfirm, hideCancel } = props;
+const CheckoutNoteModal = ({
+  notes,
+  formatter,
+  columnMapping,
+  visibleColumns,
+  columnWidths,
+  hideConfirm,
+  hideCancel,
+  cancelLabel,
+  confirmLabel,
+  id,
+  onConfirm,
+  onCancel,
+  open,
+  heading,
+  message,
+}) => {
+  const cancelButtonLabel = cancelLabel || <FormattedMessage id="ui-checkout.multipieceModal.cancel" />;
+  const confirmButtonLabel = confirmLabel || <FormattedMessage id="ui-checkout.multipieceModal.confirm" />;
+  const testId = id || uniqueId('confirmation-');
   const footer = (
     <ModalFooter>
       {
         !hideConfirm &&
         <Button
           data-test-checkoutnotemodal-confirm-button
+          data-testid="confirm-button"
           buttonStyle="primary"
           id={`clickable-${testId}-confirm`}
-          onClick={props.onConfirm}
+          onClick={onConfirm}
         >
-          {confirmLabel}
+          {confirmButtonLabel}
         </Button>
       }
       {
         !hideCancel &&
         <Button
           data-test-checkoutnotemodal-cancel-button
+          data-testid="cancel-button"
           buttonStyle="default"
           id={`clickable-${testId}-cancel`}
-          onClick={props.onCancel}
+          onClick={onCancel}
         >
-          {cancelLabel}
+          {cancelButtonLabel}
         </Button>
       }
 
@@ -72,15 +89,16 @@ const CheckoutNoteModal = (props) => {
 
   return (
     <Modal
-      open={props.open}
+      data-testid="checkout-note-modal"
+      open={open}
       id={testId}
       dismissible
-      label={props.heading}
+      label={heading}
       size="small"
       footer={footer}
-      onClose={props.onCancel}
+      onClose={onCancel}
     >
-      <p>{props.message}</p>
+      <p>{message}</p>
       <div className={css.root}>
         <MultiColumnList
           visibleColumns={visibleColumns}

@@ -12,6 +12,7 @@
 * Support `inventory` `13.0` interface version. Refs UICHKOUT-814.
 * Add screen reader accessibility to checkout flag. Refs UICHKOUT-842
 * UI tests replacement with RTL/Jest for NotificationModal. Refs UIREQ-829.
+* UI tests replacement with RTL/Jest for src/components/CheckoutNoteModal/CheckoutNoteModal.js. Refs UICHKOUT-825.
 
 ## [8.2.0](https://github.com/folio-org/ui-checkout/tree/v8.2.0) (2022-10-20)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.1.0...v8.2.0)
