@@ -106,7 +106,6 @@ class CheckOut extends React.Component {
     },
     requests: {
       type: 'okapi',
-      records: 'requests',
       accumulate: 'true',
       path: 'circulation/requests',
       fetch: false,
@@ -547,8 +546,8 @@ class CheckOut extends React.Component {
     const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
     const query = buildRequestQuery(patron.id, servicePointId);
     mutator.requests.reset();
-    const requests = await mutator.requests.GET({ params: { query } });
-    this.setState({ requestsCount: requests.length });
+    const { totalRecords } = await mutator.requests.GET({ params: { query } });
+    this.setState({ requestsCount: totalRecords });
   }
 
   onCloseBlockedModal = () => this.setState({ blocked: false });
