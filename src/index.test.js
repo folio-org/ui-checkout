@@ -45,7 +45,7 @@ describe('UI CheckOut', () => {
     return render(component);
   };
 
-  it('should render', () => {
+  it('should render error page', () => {
     renderCheckOut();
 
     expect(screen.getByTestId(testIds.noMatch)).toBeInTheDocument();
