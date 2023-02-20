@@ -12,15 +12,33 @@ import {
 } from '@folio/stripes/components';
 
 const MultipieceModal = (props) => {
-  const { item, open, onClose, onConfirm } = props;
-  const { title, barcode, materialType } = item;
-
+  const {
+    item,
+    open,
+    onClose,
+    onConfirm,
+  } = props;
+  const {
+    title,
+    barcode,
+    materialType,
+  } = item;
+  const handleConfirmClick = () => onConfirm(item);
   const footer = (
     <ModalFooter>
-      <Button data-test-multipiece-modal-confirm-btn buttonStyle="primary" onClick={() => onConfirm(item)}>
+      <Button
+        data-test-multipiece-modal-confirm-btn
+        data-testid="confirmButton"
+        buttonStyle="primary"
+        onClick={handleConfirmClick}
+      >
         <FormattedMessage id="ui-checkout.multipieceModal.confirm" />
       </Button>
-      <Button data-test-multipiece-modal-cancel-btn onClick={onClose}>
+      <Button
+        data-test-multipiece-modal-cancel-btn
+        data-testid="cancelButton"
+        onClick={onClose}
+      >
         <FormattedMessage id="ui-checkout.multipieceModal.cancel" />
       </Button>
     </ModalFooter>
@@ -28,6 +46,7 @@ const MultipieceModal = (props) => {
 
   return (
     <Modal
+      data-testid="multipieceModal"
       id="multipiece-modal"
       size="small"
       footer={footer}
@@ -41,7 +60,11 @@ const MultipieceModal = (props) => {
       <p>
         <FormattedMessage
           id="ui-checkout.multipieceModal.message"
-          values={{ title, barcode, materialType: materialType.name }}
+          values={{
+            title,
+            barcode,
+            materialType: materialType.name,
+          }}
         />
       </p>
       <Row>
