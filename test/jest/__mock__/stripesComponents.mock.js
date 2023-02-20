@@ -74,5 +74,14 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
-  KeyValue: jest.fn(({ 'data-testid': testId }) => <div data-testid={testId} />),
+  KeyValue: jest.fn(({
+    'data-testid': testId,
+    label,
+    value,
+  }) =>
+    <div data-testid={testId}>
+      <span>{label}</span>
+      <span>{value}</span>
+    </div>
+  ),
 }));
