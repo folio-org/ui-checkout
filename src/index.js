@@ -21,7 +21,7 @@ class CheckOutRouting extends React.Component {
 
   noMatch = () => {
     return (
-      <div>
+      <div data-testid="noMatch">
         <h2>
           <FormattedMessage id="ui-checkout.error.oops" />
         </h2>
