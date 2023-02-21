@@ -78,10 +78,10 @@ jest.mock('@folio/stripes/components', () => ({
     'data-testid': testId,
     label,
     value,
-  }) =>
+  }) => (
     <div data-testid={testId}>
       <span>{label}</span>
       <span>{value}</span>
     </div>
-  ),
+  )),
 }));
