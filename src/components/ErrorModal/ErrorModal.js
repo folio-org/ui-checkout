@@ -16,28 +16,27 @@ import {
   OVERRIDABLE_BACKEND_ERROR_CODES,
   ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE,
   BACKEND_ERRORS_CODES_TO_HIDE,
+  ITEM_LIMIT_KEY,
 } from '../../constants';
 
-function ErrorModal(props) {
-  const {
-    open,
-    onClose,
-    errors,
-    openOverrideModal,
-    stripes,
-    item: {
-      title,
-      barcode,
-      materialType: { name: materialType } = {},
-    } = {},
-  } = props;
+function ErrorModal({
+  open,
+  onClose,
+  errors,
+  openOverrideModal,
+  stripes,
+  item: {
+    title,
+    barcode,
+    materialType: { name: materialType } = {},
+  } = {},
+}) {
   const handleOverrideClick = () => {
     onClose();
     openOverrideModal();
   };
 
   const errorsToDisplay = [];
-  const ITEM_LIMIT_KEY = 'itemLimit';
   let containsOverrideErrorMessage = false;
 
   errors.forEach((error, index) => {
@@ -82,6 +81,7 @@ function ErrorModal(props) {
           messageToDisplay = (
             <FormattedMessage
               id={translationId}
+              data-testid="messageToDisplay"
               values={values}
             />
           );
@@ -95,7 +95,11 @@ function ErrorModal(props) {
 
     if (messageToDisplay) {
       errorsToDisplay.push(
-        <p data-test-error-item key={`error-${index}`}>
+        <p
+          data-test-error-item
+          data-testid="errorItem"
+          key={`error-${index}`}
+        >
           {messageToDisplay}
         </p>
       );
@@ -109,6 +113,7 @@ function ErrorModal(props) {
     <Modal
       onClose={onClose}
       data-test-error-modal
+      data-testid="errorModal"
       open={open}
       size="small"
       label={<FormattedMessage id="ui-checkout.itemNotCheckedOut" />}
@@ -120,6 +125,7 @@ function ErrorModal(props) {
           {canBeOverridden &&
             <Button
               data-test-override-button
+              data-testid="overrideButton"
               onClick={handleOverrideClick}
             >
               <FormattedMessage id="ui-checkout.override" />
@@ -127,6 +133,7 @@ function ErrorModal(props) {
           }
           <Button
             data-test-close-button
+            data-testid="closeButton"
             buttonStyle="primary"
             onClick={onClose}
           >

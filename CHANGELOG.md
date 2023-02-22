@@ -3,6 +3,7 @@
 ## IN PROGRESS
 
 * UI tests replacement with RTL/Jest for src/components/PatronBlock/PatronBlockModal.js. Refs UICHKOUT-832.
+* UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826
 
 ## [9.0.0](https://github.com/folio-org/ui-checkout/tree/v9.0.0) (2023-02-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.2.0...v9.0.0)
@@ -92,6 +93,7 @@
 * Increment stripes to v7, react to v17. Refs UICHKOUT-740.
 * UI tests replacement with RTL/Jest for `src/util.js`. Refs UICHKOUT-824.
 * UI tests replacement with RTL/Jest for `src/index.js`. Refs UICHKOUT-823.
+* UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826.
 
 ## [6.1.0](https://github.com/folio-org/ui-checkout/tree/v6.1.0) (2021-06-18)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v6.0.0...v6.1.0)
