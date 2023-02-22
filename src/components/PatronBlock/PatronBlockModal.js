@@ -23,6 +23,7 @@ const PatronBlockModal = ({
   return (
     <Modal
       data-test-block-modal
+      data-testid="patronBlockModal"
       open={open}
       onClose={onClose}
       label={<b><FormattedMessage id="ui-checkout.blockModal" /></b>}
@@ -44,6 +45,7 @@ const PatronBlockModal = ({
               <IfPermission perm="ui-users.overridePatronBlock">
                 <Button
                   data-test-override-patron-block-button
+                  data-testid="overrideButton"
                   onClick={openOverrideModal}
                 >
                   <FormattedMessage id="ui-checkout.override" />
@@ -51,11 +53,18 @@ const PatronBlockModal = ({
               </IfPermission>
               <Button
                 data-test-close-patron-block-modal
+                data-testid="closeButton"
                 onClick={onClose}
               >
                 <FormattedMessage id="ui-checkout.close" />
               </Button>
-              <Button buttonStyle="primary" onClick={viewUserPath}><FormattedMessage id="ui-checkout.detailsButton" /></Button>
+              <Button
+                data-testid="detailsButton"
+                buttonStyle="primary"
+                onClick={viewUserPath}
+              >
+                <FormattedMessage id="ui-checkout.detailsButton" />
+              </Button>
             </Col>
           </Row>
         </Col>
