@@ -10,6 +10,8 @@ export const BACKEND_ERROR_CODES = {
   itemLimitLoanType: 'ITEM_LIMIT_LOAN_TYPE',
 };
 
+export const ITEM_LIMIT_KEY = 'itemLimit';
+
 export const ITEM_LIMIT_BACKEND_ERROR_CODES = [
   BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialTypeLoanType,
   BACKEND_ERROR_CODES.itemLimitPatronGroupMaterialType,
