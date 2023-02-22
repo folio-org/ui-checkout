@@ -147,7 +147,7 @@ describe('PatronBlockModal', () => {
     const props = {
       ...basicProps,
       patronBlocks: [],
-    }
+    };
 
     beforeEach(() => {
       render(
