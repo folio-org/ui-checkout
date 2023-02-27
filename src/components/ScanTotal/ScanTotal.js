@@ -20,7 +20,10 @@ class ScanTotal extends React.Component {
     } = this.props;
 
     return (
-      <div className={css.root}>
+      <div
+        data-testid="scanTotal"
+        className={css.root}
+      >
         {total > 0 &&
           <div className={css.label}>
             <FormattedMessage
@@ -30,6 +33,7 @@ class ScanTotal extends React.Component {
           </div>}
         <div>
           <Button
+            data-testid="endSessionButton"
             id={buttonId}
             buttonStyle="primary mega"
             onClick={onSessionEnd}

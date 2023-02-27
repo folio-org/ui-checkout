@@ -4,6 +4,7 @@
 
 * UI tests replacement with RTL/Jest for src/components/PatronBlock/PatronBlockModal.js. Refs UICHKOUT-832.
 * UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826
+* UI tests replacement with RTL/Jest for src/components/ScanTotal/ScanTotal.js. Refs UICHKOUT-835.
 
 ## [9.0.0](https://github.com/folio-org/ui-checkout/tree/v9.0.0) (2023-02-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.2.0...v9.0.0)
