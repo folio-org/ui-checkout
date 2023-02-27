@@ -56,7 +56,7 @@ jest.mock('@folio/stripes/components', () => ({
   }) => (
     <div
       id={id}
-      data-testid={testId ?? 'modal-window'}
+      data-testid={testId ?? 'modalWindow'}
     >
       <p>{label}</p>
       {children}
