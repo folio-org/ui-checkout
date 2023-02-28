@@ -9,7 +9,10 @@ import ScanTotal from '../ScanTotal';
 import css from './ScanFooter.css';
 
 const ScanFooter = props => (
-  <div className={css.root}>
+  <div
+    data-testid="scanFooter"
+    className={css.root}
+  >
     <Row>
       <Col
         xsOffset={8}
