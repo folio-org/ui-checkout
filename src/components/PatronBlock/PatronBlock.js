@@ -27,19 +27,22 @@ class PatronBlock extends React.Component {
     const viewUserPath = `/users/view/${user.id}`;
     const patronMessage = <FormattedMessage id="ui-checkout.patronBlocksCount" values={{ count: patronBlocksCount }} />;
     const viewUserLink = (
-      <div>
+      <div data-testid="patronBlockLink">
         <Link to={viewUserPath}>{patronBlocksCount}</Link>
         <span className={css.warnMessage}>{patronMessage}</span>
       </div>
     );
 
     const label = (
-      <div>
+      <div data-testid="patronBlockLabel">
         <Row>
           <Col xs>
             <FormattedMessage id="ui-checkout.patronBlocks" />
             {(patronBlocksCount > 0) ?
-              <span className={css.warnIcon}>
+              <span
+                data-testid="warnIcon"
+                className={css.warnIcon}
+              >
                 <Icon size="medium" icon="exclamation-circle" status="error" />
               </span>
               : ''
@@ -50,7 +53,10 @@ class PatronBlock extends React.Component {
     );
 
     return (
-      <div className={css.section}>
+      <div
+        data-testid="patronBlock"
+        className={css.section}
+      >
         <Row>
           <Col xs>
             <KeyValue
