@@ -47,6 +47,11 @@ jest.mock('@folio/stripes/components', () => ({
       {value}
     </div>
   )),
+  Icon: jest.fn(({ icon }) => (
+    <div>
+      {icon}
+    </div>
+  )),
   Modal: jest.fn(({
     children,
     label,
