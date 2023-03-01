@@ -83,7 +83,7 @@ export function renderOrderedPatronBlocks(patronBlocks) {
         <Col xs>
           <b
             data-test-block-message
-            data-testid="block-message"
+            data-testid="blockMessage"
           >
             {content}
           </b>

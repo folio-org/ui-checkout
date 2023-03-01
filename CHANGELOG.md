@@ -3,8 +3,12 @@
 ## IN PROGRESS
 
 * UI tests replacement with RTL/Jest for src/components/PatronBlock/PatronBlockModal.js. Refs UICHKOUT-832.
-* UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826
-* UI tests replacement with RTL/Jest for src/components/SelectItemModal/SelectItemModal.js. Refs UICHKOUT-836.
+* UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826.
+* UI tests replacement with RTL/Jest for src/components/ScanFooter/ScanFooter.js. Refs UICHKOUT-834.
+* UI tests replacement with RTL/Jest for src/components/ScanTotal/ScanTotal.js. Refs UICHKOUT-835.
+* Use camel case notation for all data-testid. Refs UICHKOUT-848.
+* UI tests replacement with RTL/Jest for `PatronBlock.js`. Refs UICHKOUT-831
+* UI tests replacement with RTL/Jest for `SelectItemModal.js`. Refs UICHKOUT-836.
 
 ## [9.0.0](https://github.com/folio-org/ui-checkout/tree/v9.0.0) (2023-02-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.2.0...v9.0.0)
