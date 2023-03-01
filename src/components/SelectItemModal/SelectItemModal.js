@@ -9,7 +9,7 @@ import {
 
 import css from './SelectItemModal.css';
 
-const COLUMN_NAMES = [
+export const COLUMN_NAMES = [
   'barcode',
   'title',
   'callNumber',
@@ -19,7 +19,7 @@ const COLUMN_NAMES = [
   'loanType',
 ];
 
-const COLUMN_WIDTHS = {
+export const COLUMN_WIDTHS = {
   barcode: '14%',
   title: '14%',
   callNumber: '14%',
@@ -29,7 +29,7 @@ const COLUMN_WIDTHS = {
   loanType: '14%',
 };
 
-const COLUMN_MAP = {
+export const COLUMN_MAP = {
   barcode: <FormattedMessage id="ui-checkout.selectItemModal.barcode" />,
   title: <FormattedMessage id="ui-checkout.selectItemModal.title" />,
   callNumber: <FormattedMessage id="ui-checkout.selectItemModal.callNumber" />,
@@ -39,14 +39,14 @@ const COLUMN_MAP = {
   loanType: <FormattedMessage id="ui-checkout.selectItemModal.loanType" />,
 };
 
-const formatter = {
+export const formatter = {
   itemStatus: item => item.status.name,
   location: item => item.effectiveLocation?.name ?? '',
   materialType: item => item.materialType.name,
   loanType: item => (item.temporaryLoanType?.name || item.permanentLoanType?.name || ''),
 };
 
-const MAX_HEIGHT = 500;
+export const MAX_HEIGHT = 500;
 
 const propTypes = {
   checkoutItems: PropTypes.arrayOf(PropTypes.object),
@@ -62,6 +62,7 @@ const SelectItemModal = ({
   return (
     <Modal
       data-test-select-item-modal
+      data-testid="selectItemModal"
       label={<FormattedMessage id="ui-checkout.selectItemModal.heading" />}
       open
       contentClass={css.content}
