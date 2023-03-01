@@ -13,8 +13,8 @@ import NotificationModal from '.';
 describe('NotificationModal', () => {
   const closeModal = jest.fn();
   const testIds = {
-    notificationModal: 'notification-modal',
-    footerCloseButton: 'footer-close-button',
+    notificationModal: 'notificationModal',
+    footerCloseButton: 'footerCloseButton',
   };
   const labelIds = {
     footerMessageId: 'ui-checkout.close',

@@ -20,6 +20,10 @@ import {
   OPEN_REQUEST_STATUSES,
 } from './constants';
 
+const testIds = {
+  blockMessage: 'blockMessage',
+};
+
 describe('util', () => {
   const lastName = 'LastName';
   const firstName = 'FirstName';
@@ -64,6 +68,7 @@ describe('util', () => {
 
     it('should return last name, preferred first name and middle name', () => {
       const preferredFirstName = 'PreferredFirstName';
+
       expect(getFullName({
         personal: {
           ...personal,
@@ -75,6 +80,7 @@ describe('util', () => {
 
     it('should handle empty preferred first name', () => {
       const preferredFirstName = '';
+
       expect(getFullName({
         personal: {
           ...personal,
@@ -162,21 +168,25 @@ describe('util', () => {
 
   describe('renderOrderedPatronBlocks', () => {
     it('should render patron blocks with desc field content', () => {
-      render(renderOrderedPatronBlocks([{ id: 0, desc: 'Description' }]));
+      const description = 'Description';
 
-      expect(screen.getByText('Description')).toBeInTheDocument();
+      render(renderOrderedPatronBlocks([{ id: 0, desc: description }]));
+
+      expect(screen.getByText(description)).toBeInTheDocument();
     });
 
     it('should render patron blocks with message field content as fallback', () => {
-      render(renderOrderedPatronBlocks([{ id: 0, message: 'Message' }]));
+      const message = 'Message';
 
-      expect(screen.getByText('Message')).toBeInTheDocument();
+      render(renderOrderedPatronBlocks([{ id: 0, message }]));
+
+      expect(screen.getByText(message)).toBeInTheDocument();
     });
 
     it('should render patron blocks empty if no fallbacks are present', () => {
       render(renderOrderedPatronBlocks([{ id: 0 }]));
 
-      expect(screen.getByTestId('block-message')).toBeEmptyDOMElement();
+      expect(screen.getByTestId(testIds.blockMessage)).toBeEmptyDOMElement();
     });
   });
 });

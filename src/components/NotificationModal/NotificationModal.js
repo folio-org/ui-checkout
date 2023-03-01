@@ -15,7 +15,7 @@ const NotificationModal = ({
   const footer = (
     <ModalFooter>
       <Button
-        data-testid="footer-close-button"
+        data-testid="footerCloseButton"
         onClick={onClose}
       >
         <FormattedMessage id="ui-checkout.close" />
@@ -28,7 +28,7 @@ const NotificationModal = ({
       size="small"
       footer={footer}
       dismissible
-      data-testid="notification-modal"
+      data-testid="notificationModal"
       onClose={onClose}
       {...rest}
     >
