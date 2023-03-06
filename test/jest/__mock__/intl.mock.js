@@ -21,6 +21,16 @@ jest.mock('react-intl', () => {
 
       return value;
     }),
+    FormattedNumber: jest.fn(({ value, children }) => {
+      if (children) {
+        return children([value]);
+      }
+
+      return value;
+    }),
+    IntlProvider: jest.fn(({ children, ...rest }) => (
+      <div {...rest}>{children}</div>
+    )),
     useIntl: () => intl,
     injectIntl: (Component) => (props) => <Component {...props} intl={intl} />,
   };
