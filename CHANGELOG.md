@@ -10,6 +10,7 @@
 * UI tests replacement with RTL/Jest for `PatronBlock.js`. Refs UICHKOUT-831
 * UI tests replacement with RTL/Jest for `SelectItemModal.js`. Refs UICHKOUT-836.
 * UI tests replacement with RTL/Jest for src/components/UserDetail/Loans.js. Refs UICHKOUT-837
+* Update `@folio/circulation` to `8.0.1`. Refs UICHKOUT-849.
 
 ## [9.0.0](https://github.com/folio-org/ui-checkout/tree/v9.0.0) (2023-02-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v8.2.0...v9.0.0)
