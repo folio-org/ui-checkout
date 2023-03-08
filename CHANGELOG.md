@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## IN PROGRESS
+## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
 
 * Update `@folio/circulation` to `8.0.1`. Refs UICHKOUT-849.
 
