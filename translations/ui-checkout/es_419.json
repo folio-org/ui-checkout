@@ -121,7 +121,7 @@
     "selectItemModal.itemListHeader": "Lista de ejemplares: selecciona uno",
     "selectItemModal.title": "Título",
     "selectItemModal.callNumber": "Call number",
-    "messages.userHasNoBarcode": "User does not have a barcode.<br></br>A user barcode is required to check out an item.",
+    "messages.userHasNoBarcode": "El usuario no tiene un código de barras. <br> </br> Se requiere un código de barras de usuario para prestar un ítem.",
     "messages.itemHasOpenLoan": "Cannot check out item that already has an open loan.",
     "messages.itemLimitPatronGroupMaterialTypeLoanType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for combination of patron group, material type and loan type.",
     "messages.itemLimitPatronGroupMaterialType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for combination of patron group and material type.",
@@ -131,5 +131,5 @@
     "messages.itemLimitLoanType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for loan type.",
     "notes.popupModal.label": "User note",
     "due.date.change": "Ajuste del vencimiento calculado por el sistema",
-    "details": "Details"
+    "details": "Detalles"
 }
