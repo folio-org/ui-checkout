@@ -23,6 +23,10 @@ import { getFullName } from '../../util';
 import userPlaceholder from '../../../icons/user-placeholder.png';
 import Loans from './Loans';
 
+import {
+  MAX_RECORDS,
+} from '../../constants';
+
 import css from './UserDetail.css';
 
 class UserDetail extends React.Component {
@@ -39,12 +43,12 @@ class UserDetail extends React.Component {
     openAccounts: {
       type: 'okapi',
       records: 'accounts',
-      path: 'accounts?query=(userId==!{user.id} and status.name<>Closed)&limit=100',
+      path: `accounts?query=(userId==!{user.id} and status.name<>Closed)&limit=${MAX_RECORDS}`,
     },
     openRequests: {
       type: 'okapi',
       throwErrors: false,
-      path: 'circulation/requests?query=(requesterId==!{user.id} and status=="Open*")&limit=100',
+      path: `circulation/requests?query=(requesterId==!{user.id} and status=="Open*")&limit=${MAX_RECORDS}`,
     },
   });
 
