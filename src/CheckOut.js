@@ -27,7 +27,10 @@ import PatronBlockModal from './components/PatronBlock/PatronBlockModal';
 import OverrideModal from './components/OverrideModal';
 import NotificationModal from './components/NotificationModal';
 
-import { errorTypes } from './constants';
+import {
+  errorTypes,
+  MAX_RECORDS,
+} from './constants';
 
 import {
   getPatronIdentifiers,
@@ -94,7 +97,7 @@ class CheckOut extends React.Component {
       type: 'okapi',
       records: 'automatedPatronBlocks',
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
-      params: { limit: '100' },
+      params: { limit: MAX_RECORDS },
       permissionsRequired: 'automated-patron-blocks.collection.get',
       accumulate: true,
       abortOnUnmount: true,

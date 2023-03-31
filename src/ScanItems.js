@@ -14,7 +14,7 @@ import { escapeCqlValue } from '@folio/stripes/util';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
-import { MAX_RECORDS } from './constants';
+import { MAX_RECORDS_FOR_CHUNK } from './constants';
 
 function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
@@ -157,18 +157,18 @@ class ScanItems extends React.Component {
       items: null,
     });
     mutator.items.reset();
-    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS } });
+    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS_FOR_CHUNK } });
 
-    if (totalRecords > MAX_RECORDS) {
+    if (totalRecords > MAX_RECORDS_FOR_CHUNK) {
       // Split the request into chunks to avoid a too long response
-      const remainingItemsCount = totalRecords - MAX_RECORDS;
-      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS);
+      const remainingItemsCount = totalRecords - MAX_RECORDS_FOR_CHUNK;
+      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS_FOR_CHUNK);
       const requestsForItems = [];
       let offset = 0;
 
       for (let i = 0; i < chunksCount; i++) {
-        offset += MAX_RECORDS;
-        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS, offset } });
+        offset += MAX_RECORDS_FOR_CHUNK;
+        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS_FOR_CHUNK, offset } });
         requestsForItems.push(request);
       }
 

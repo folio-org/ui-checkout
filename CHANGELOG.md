@@ -10,6 +10,7 @@
 * UI tests replacement with RTL/Jest for `PatronBlock.js`. Refs UICHKOUT-831
 * UI tests replacement with RTL/Jest for `SelectItemModal.js`. Refs UICHKOUT-836.
 * UI tests replacement with RTL/Jest for src/components/UserDetail/Loans.js. Refs UICHKOUT-837
+* Reassign limit variable from hardcoded value to MAX_RECORDS constant for `CheckOut.js`. Refs UICHKOUT-850.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
