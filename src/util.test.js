@@ -132,7 +132,7 @@ describe('util', () => {
 
     it('should convert requesterId and servicePointId to a CQL query', () => {
       expect(buildRequestQuery(mockId, mockId))
-        .toEqual(`(requesterId==${mockId} and pickupServicePointId=${mockId} and status=="${OPEN_AWAITING_PICKUP}")`);
+        .toEqual(`(requesterId==${mockId} and pickupServicePointId==${mockId} and status=="${OPEN_AWAITING_PICKUP}")`);
     });
   });
 

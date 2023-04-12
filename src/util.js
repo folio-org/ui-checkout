@@ -46,7 +46,7 @@ export function buildIdentifierQuery(patron, idents) {
 }
 
 export function buildRequestQuery(requesterId, servicePointId) {
-  const servicePointClause = servicePointId ? `pickupServicePointId=${servicePointId} and ` : '';
+  const servicePointClause = servicePointId ? `pickupServicePointId==${servicePointId} and ` : '';
   return `(requesterId==${requesterId} and ${servicePointClause}status=="${OPEN_REQUEST_STATUSES.OPEN_AWAITING_PICKUP}")`;
 }
 

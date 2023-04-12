@@ -12,6 +12,7 @@
 * UI tests replacement with RTL/Jest for src/components/UserDetail/Loans.js. Refs UICHKOUT-837
 * Reassign limit variable from hardcoded value to MAX_RECORDS constant for `CheckOut.js`. Refs UICHKOUT-850.
 * Reassign limit variable from hardcoded value to MAX_RECORDS constant for `UserDetail.js`. Refs UICHKOUT-851.
+* Use == instead of = for CQL service point filtering. Refs UICHKOUT-853.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
