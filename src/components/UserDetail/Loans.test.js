@@ -23,7 +23,7 @@ describe('Loans', () => {
   };
   const permissions = {
     viewRequests: 'ui-checkout.viewRequests,ui-requests.view',
-    viewFeeFines: 'ui-checkout.viewFeeFines,ui-users.accounts',
+    viewFeeFines: 'ui-checkout.viewFeeFines,ui-users.feesfines.view',
     viewLoans: 'ui-checkout.viewLoans,ui-users.loans.view',
   };
   const accountEntry = {
