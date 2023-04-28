@@ -58,9 +58,8 @@ function Loans({
 
   const openLoansCount = <FormattedNumber value={get(resources.openLoansCount, ['records', '0', 'totalRecords'], 0)} />;
   const openLoansPath = `/users/${user.id}/loans/open`;
-  const patronGroups = get(resources, ['patronGroups', 'records', 0, 'group'], '');
   const openAccounts = get(resources, ['openAccounts', 'records'], []);
-  const openAccountsPath = `/users/view/${user.id}?layer=open-accounts&filters=pg.${patronGroups}`;
+  const openAccountsPath = `/users/${user.id}/accounts/open`;
   const owedAmount = openAccounts.reduce((owed, { remaining }) => {
     return owed + parseFloat(remaining);
   }, 0);
@@ -85,7 +84,7 @@ function Loans({
     value={parseFloat(balanceOutstanding).toFixed(2)}
     minimumFractionDigits={2}
   />;
-  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.accounts')) {
+  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.feesfines.view')) {
     openAccountsCount =
       <Link
         data-testid="openAccountsCountLink"
