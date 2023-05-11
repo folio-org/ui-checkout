@@ -32,7 +32,7 @@ import {
 
 import css from './OverrideModal.css';
 
-const getInitialValues = (timeZone) => {
+export const getInitialValues = (timeZone) => {
   const startOfTheDay = {
     hour: 0,
     minute: 0,
@@ -136,6 +136,7 @@ function OverrideModal(props) {
     <ModalFooter>
       <Button
         data-test-override-modal-save-and-close
+        data-testid="saveAndCloseButton"
         marginBottom0
         buttonStyle="primary"
         disabled={!canBeSubmitted}
@@ -144,6 +145,7 @@ function OverrideModal(props) {
         <FormattedMessage id="ui-checkout.saveAndClose" />
       </Button>
       <Button
+        data-testid="cancelButton"
         marginBottom0
         onClick={closeOverrideModal}
         data-test-override-modal-cancel
@@ -165,6 +167,7 @@ function OverrideModal(props) {
       onClose={closeOverrideModal}
     >
       <form
+        data-testid="overrideForm"
         id="override-form"
         className={itemIsNotLoanable ? css.content : null}
         onSubmit={onSubmit}
@@ -220,6 +223,7 @@ function OverrideModal(props) {
           xs={12}
         >
           <TextArea
+            data-testid="comment"
             required
             label={<FormattedMessage id="ui-checkout.comment" />}
             value={comment}
