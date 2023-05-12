@@ -19,7 +19,7 @@ import OverrideModal, {
 } from './OverrideModal';
 import { renderOrderedPatronBlocks } from '../../util';
 
-const testDate = 'test date';
+const testDate = '02/02/2023';
 const mockTz = jest.fn(function tz() {
   return this;
 });
