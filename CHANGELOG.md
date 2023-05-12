@@ -14,6 +14,7 @@
 * Reassign limit variable from hardcoded value to MAX_RECORDS constant for `UserDetail.js`. Refs UICHKOUT-851.
 * Use == instead of = for CQL service point filtering. Refs UICHKOUT-853.
 * If the user has fines, they can click the fine amount as a link and have it open the fine information in the Users app. Refs UICHKOUT-802.
+* UI tests replacement with RTL/Jest for src/components/OverrideModal/OverrideModal.js. Refs UICHKOUT-830.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
