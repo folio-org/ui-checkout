@@ -51,10 +51,11 @@ jest.mock('@folio/stripes/components', () => ({
     'data-testid': testId,
     label,
     value,
+    children,
   }) => (
     <div data-testid={testId}>
       <span>{label}</span>
-      <span>{value}</span>
+      <span data-testid="keyValue">{value || children}</span>
     </div>
   )),
   Icon: jest.fn(({ icon }) => (
