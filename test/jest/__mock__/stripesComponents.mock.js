@@ -20,7 +20,9 @@ jest.mock('@folio/stripes/components', () => ({
       <input id="id" type="checkbox" {...props} />
     </label>
   )),
-  Col: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  Col: jest.fn(({ children, ...rest }) => (
+    <div {...rest}>{typeof children === 'function' ? children() : children}</div>
+  )),
   ConfirmationModal: jest.fn(({
     heading,
     message,
@@ -106,4 +108,19 @@ jest.mock('@folio/stripes/components', () => ({
     </div>
   )),
   Row: jest.fn(({ children, ...rest }) => <div {...rest}>{children}</div>),
+  TextArea: jest.fn(({
+    label,
+    onChange,
+    value,
+    'data-testid': testId,
+  }) => (
+    <>
+      {label}
+      <textarea
+        data-testid={testId}
+        onChange={onChange}
+        value={value}
+      />
+    </>
+  )),
 }));
