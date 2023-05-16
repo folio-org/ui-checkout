@@ -12,4 +12,5 @@ jest.mock('@folio/stripes/smart-components', () => ({
       <input type="date" />
     </>
   )),
+  ProxyManager: jest.fn(() => <div />),
 }));
