@@ -16,6 +16,7 @@
 * If the user has fines, they can click the fine amount as a link and have it open the fine information in the Users app. Refs UICHKOUT-802.
 * UI tests replacement with RTL/Jest for src/components/OverrideModal/OverrideModal.js. Refs UICHKOUT-830.
 * Also support `circulation` `14.0`. Refs UICHKOUT-854.
+* UI tests replacement with RTL/Jest for `src/components/UserDetail/UserDetail.js`. Refs-UICHKOUT-838.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
