@@ -73,6 +73,12 @@ class ScanItems extends React.Component {
       fetch: false,
       abortOnUnmount: true,
     },
+    loanId: {},
+    loan: {
+      type: 'okapi',
+      path: 'circulation/loans/%{loanId}',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -95,6 +101,12 @@ class ScanItems extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loanId: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }).isRequired,
+      loan: PropTypes.shape({
+        PUT: PropTypes.func,
+      }).isRequired,
     }),
     parentResources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
@@ -359,6 +371,7 @@ class ScanItems extends React.Component {
   performAction(action, data) {
     this.setState({ loading: true, errors: [] });
     return action.POST(data)
+      .then(this.addPatronNote)
       .then(this.addScannedItem)
       .then(this.successfulCheckout)
       .then(this.updateAutomatedPatronBlocks)
@@ -382,6 +395,18 @@ class ScanItems extends React.Component {
 
     this.setState({ errors });
   }
+
+  addPatronNote = (loan) => {
+    const { mutator } = this.props;
+
+    const loanWithPatronNote = {
+      ...loan,
+      action: 'patronInfo', // XXX or staffInfo
+      actionComment: 'XXX This is a patron note',
+    };
+    mutator.loanId.replace(loan.id);
+    return mutator.loan.PUT(loanWithPatronNote);
+  };
 
   addScannedItem = (loan) => {
     const {
