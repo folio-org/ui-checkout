@@ -371,7 +371,6 @@ class ScanItems extends React.Component {
   performAction(action, data) {
     this.setState({ loading: true, errors: [] });
     return action.POST(data)
-      .then(this.addPatronNote)
       .then(this.addScannedItem)
       .then(this.successfulCheckout)
       .then(this.updateAutomatedPatronBlocks)
@@ -396,16 +395,17 @@ class ScanItems extends React.Component {
     this.setState({ errors });
   }
 
-  addPatronNote = (loan) => {
+  addPatronOrStaffInfo = (loan, action, actionComment) => {
     const { mutator } = this.props;
 
-    const loanWithPatronNote = {
-      ...loan,
-      action: 'patronInfo', // XXX or staffInfo
-      actionComment: 'XXX This is a patron note',
-    };
+    const loanWithInfo = { ...loan, action, actionComment };
+
+    // I think <MultiColumnList> inserts these spurious fields
+    delete loanWithInfo.no;
+    delete loanWithInfo.rowIndex;
+
     mutator.loanId.replace(loan.id);
-    return mutator.loan.PUT(loanWithPatronNote);
+    return mutator.loan.PUT(loanWithInfo);
   };
 
   addScannedItem = (loan) => {
@@ -530,6 +530,7 @@ class ScanItems extends React.Component {
           loading={loading}
           showCheckoutNotes={this.showCheckoutNotes}
           overriddenItemLimitData={overriddenItemLimitData}
+          addPatronOrStaffInfo={this.addPatronOrStaffInfo}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus && playSound(checkoutStatus, audioTheme, this.onFinishedPlaying)}

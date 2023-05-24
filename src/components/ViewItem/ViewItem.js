@@ -71,6 +71,7 @@ class ViewItem extends React.Component {
       itemLimitOverridden: PropTypes.bool.isRequired,
       overriddenItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
+    addPatronOrStaffInfo: PropTypes.func.isRequired,
     intl: PropTypes.object,
   };
 
@@ -267,7 +268,7 @@ class ViewItem extends React.Component {
   }
 
   renderActions(loan) {
-    const { stripes } = this.props;
+    const { stripes, addPatronOrStaffInfo } = this.props;
     const isCheckOutNote = element => element.noteType === 'Check out';
     const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
 
@@ -343,7 +344,7 @@ class ViewItem extends React.Component {
             <Button
               data-test-add-patron-info
               buttonStyle="dropdownItem"
-              onClick={(e) => alert('Add patron info')}
+              onClick={() => addPatronOrStaffInfo(loan, 'patronInfo', 'XXX hardwired patron info')}
             >
               <FormattedMessage id="ui-checkout.checkout.addPatronInfo" />
             </Button>}
@@ -351,7 +352,7 @@ class ViewItem extends React.Component {
             <Button
               data-test-add-staff-info
               buttonStyle="dropdownItem"
-              onClick={(e) => alert('Add staff info')}
+              onClick={() => addPatronOrStaffInfo(loan, 'staffInfo', 'XXX hardwired staff info')}
             >
               <FormattedMessage id="ui-checkout.checkout.addStaffInfo" />
             </Button>}
