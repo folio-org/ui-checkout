@@ -339,6 +339,22 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.notes" />
             </Button>}
+          { stripes.hasPerm('ui-users.loans.add-patron-info') &&
+            <Button
+              data-test-add-patron-info
+              buttonStyle="dropdownItem"
+              onClick={(e) => alert('Add patron info')}
+            >
+              <FormattedMessage id="ui-checkout.checkout.addPatronInfo" />
+            </Button>}
+          { stripes.hasPerm('ui-users.loans.add-staff-info') &&
+            <Button
+              data-test-add-staff-info
+              buttonStyle="dropdownItem"
+              onClick={(e) => alert('Add staff info')}
+            >
+              <FormattedMessage id="ui-checkout.checkout.addStaffInfo" />
+            </Button>}
         </DropdownMenu>
       );
     };

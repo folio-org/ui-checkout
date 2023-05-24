@@ -74,6 +74,8 @@
   "date": "Date",
   "source": "Source",
   "checkout.notes": "Check out notes",
+  "checkout.addPatronInfo": "Add patron info",
+  "checkout.addStaffInfo": "Add staff info",
   "checkoutNotes.heading": "Check out notes",
   "checkoutNotes.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has <strong>{count, number}</strong> {count, plural, one {note} other {notes}}",
   "checkoutNoteModal.heading": "Confirm check out",
