@@ -16,6 +16,7 @@ import {
   FormattedTime,
 } from '@folio/stripes/components';
 
+import AddInfoDialog from './AddInfoDialog';
 import css from './ViewItem.css';
 
 const sortMap = {
@@ -87,6 +88,8 @@ class ViewItem extends React.Component {
       sortDirection: ['desc', 'asc'],
       activeLoan: {},
       changeDueDateDialogOpen: false,
+      infoType: undefined, // may be set to 'patronInfo' or 'staffInfo' to display modal
+      loanForInfo: undefined, // significant only when infoType is defined
     };
 
     this.columnMapping = {
@@ -268,7 +271,7 @@ class ViewItem extends React.Component {
   }
 
   renderActions(loan) {
-    const { stripes, addPatronOrStaffInfo } = this.props;
+    const { stripes } = this.props;
     const isCheckOutNote = element => element.noteType === 'Check out';
     const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
 
@@ -344,17 +347,17 @@ class ViewItem extends React.Component {
             <Button
               data-test-add-patron-info
               buttonStyle="dropdownItem"
-              onClick={() => addPatronOrStaffInfo(loan, 'patronInfo', 'XXX hardwired patron info')}
+              onClick={() => this.setState({ infoType: 'patronInfo', loanForInfo: loan })}
             >
-              <FormattedMessage id="ui-checkout.checkout.addPatronInfo" />
+              <FormattedMessage id="ui-checkout.checkout.addInfo.patronInfo.button" />
             </Button>}
           { stripes.hasPerm('ui-users.loans.add-staff-info') &&
             <Button
               data-test-add-staff-info
               buttonStyle="dropdownItem"
-              onClick={() => addPatronOrStaffInfo(loan, 'staffInfo', 'XXX hardwired staff info')}
+              onClick={() => this.setState({ infoType: 'staffInfo', loanForInfo: loan })}
             >
-              <FormattedMessage id="ui-checkout.checkout.addStaffInfo" />
+              <FormattedMessage id="ui-checkout.checkout.addInfo.staffInfo.button" />
             </Button>}
         </DropdownMenu>
       );
@@ -403,6 +406,20 @@ class ViewItem extends React.Component {
     );
   }
 
+  renderAddInfoDialog() {
+    const { infoType, loanForInfo } = this.state;
+    if (!infoType) return undefined;
+
+    return (
+      <AddInfoDialog
+        loan={loanForInfo}
+        infoType={infoType}
+        addPatronOrStaffInfo={this.props.addPatronOrStaffInfo}
+        onClose={() => this.setState({ infoType: undefined })}
+      />
+    );
+  }
+
   render() {
     const {
       scannedItems,
@@ -438,6 +455,7 @@ class ViewItem extends React.Component {
           onHeaderClick={this.onSort}
         />
         {this.renderChangeDueDateDialog()}
+        {this.renderAddInfoDialog()}
       </>
     );
   }
