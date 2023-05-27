@@ -39,13 +39,23 @@ jest.mock('@folio/stripes/components', () => ({
       <button type="button" onClick={onConfirm}>{confirmLabel || 'Confirm'}</button>
     </div>
   )),
+  Dropdown: jest.fn(({
+    renderTrigger,
+    renderMenu,
+  }) => (
+    <div>
+      {renderTrigger({ getTriggerProps: jest.fn() })}
+      {renderMenu({ onToggle: jest.fn() })}
+    </div>
+  )),
+  DropdownMenu: jest.fn(({ children, ...rest }) => <div {...rest}>{ children }</div>),
   FormattedDate: jest.fn(({ value }) => (
-    <div data-testid>
+    <div data-testid="formattedDate">
       {value}
     </div>
   )),
   FormattedTime: jest.fn(({ value }) => (
-    <div>
+    <div data-testid="formattedTime">
       {value}
     </div>
   )),
@@ -91,11 +101,24 @@ jest.mock('@folio/stripes/components', () => ({
       {children}
     </div>
   )),
-  MultiColumnList: jest.fn(({ children }) => (
-    <div>
-      {children}
-    </div>
-  )),
+  MultiColumnList: jest.fn(({
+    children,
+    formatter,
+    contentData,
+  }) => {
+    return (
+      <div>
+        {
+          contentData.map(item => (
+            Object.keys(formatter).map(key => {
+              return formatter[key](item);
+            })
+          ))
+        }
+        {children}
+      </div>
+    );
+  }),
   Pane: jest.fn(({
     paneTitle,
     paneSub,
@@ -127,5 +150,15 @@ jest.mock('@folio/stripes/components', () => ({
         value={value}
       />
     </>
+  )),
+  Tooltip: jest.fn(({
+    children,
+    text,
+    ...rest
+  }) => (
+    <div {...rest}>
+      {text}
+      {children}
+    </div>
   )),
 }));
