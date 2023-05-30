@@ -73,6 +73,12 @@ class ScanItems extends React.Component {
       fetch: false,
       abortOnUnmount: true,
     },
+    loanId: {},
+    loan: {
+      type: 'okapi',
+      path: 'circulation/loans/%{loanId}',
+      fetch: false,
+    },
   });
 
   static propTypes = {
@@ -95,6 +101,12 @@ class ScanItems extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loanId: PropTypes.shape({
+        replace: PropTypes.func.isRequired,
+      }).isRequired,
+      loan: PropTypes.shape({
+        PUT: PropTypes.func,
+      }).isRequired,
     }),
     parentResources: PropTypes.shape({
       scannedItems: PropTypes.arrayOf(
@@ -383,6 +395,19 @@ class ScanItems extends React.Component {
     this.setState({ errors });
   }
 
+  addPatronOrStaffInfo = (loan, action, actionComment) => {
+    const { mutator } = this.props;
+
+    const loanWithInfo = { ...loan, action, actionComment };
+
+    // I think <MultiColumnList> inserts these spurious fields
+    delete loanWithInfo.no;
+    delete loanWithInfo.rowIndex;
+
+    mutator.loanId.replace(loan.id);
+    return mutator.loan.PUT(loanWithInfo);
+  };
+
   addScannedItem = (loan) => {
     const {
       parentResources,
@@ -505,6 +530,7 @@ class ScanItems extends React.Component {
           loading={loading}
           showCheckoutNotes={this.showCheckoutNotes}
           overriddenItemLimitData={overriddenItemLimitData}
+          addPatronOrStaffInfo={this.addPatronOrStaffInfo}
           {...this.props}
         />
         {audioAlertsEnabled && checkoutStatus && playSound(checkoutStatus, audioTheme, this.onFinishedPlaying)}
