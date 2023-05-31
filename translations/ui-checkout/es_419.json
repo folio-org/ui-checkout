@@ -131,5 +131,13 @@
     "messages.itemLimitLoanType": "El usuario ha alcanzado el límite máximo de {itemLimit, plural, one {1 artículo} other {{itemLimit} artículos}} para el tipo de préstamo.",
     "notes.popupModal.label": "Nota del usuario",
     "due.date.change": "Ajuste del vencimiento calculado por el sistema",
-    "details": "Detalles"
+    "details": "Detalles",
+    "checkout.addInfo.patronInfo.button": "Agregar información del usuario",
+    "checkout.addInfo.patronInfo.header": "Añadir información sobre los usuarios",
+    "checkout.addInfo.patronInfo.body": "Añadir información del cliente para <strong>{title}</strong> ({materialType}) <strong>({tipo de material})</strong> (Código de barras: {barcode}).",
+    "checkout.addInfo.patronInfo.completed": "Añadida información sobre el cliente para <strong>{title}</strong> ({materialType}) <strong>({tipo de material})</strong> (código de barras: {barcode}): {texto}",
+    "checkout.addInfo.staffInfo.button": "Añadir información del personal",
+    "checkout.addInfo.staffInfo.header": "Add staff information",
+    "checkout.addInfo.staffInfo.body": "Añadir información de personal para <strong>{title} ({tipo de material})</strong> (código de barras: {barcode}).",
+    "checkout.addInfo.staffInfo.completed": "Añadir nueva información de personal para <strong>{title}</strong> ({materialType}) <strong>({tipo de material})</strong> (código de barras: {barcode}). Esto reemplazará cualquier información de personal añadida anteriormente."
 }
