@@ -18,6 +18,7 @@
 * Also support `circulation` `14.0`. Refs UICHKOUT-854.
 * UI tests replacement with RTL/Jest for `src/components/UserDetail/UserDetail.js`. Refs-UICHKOUT-838.
 * UI tests replacement with RTL/Jest for src/components/ViewPatron/ViewPatron.js. Refs UICHKOUT-840.
+* Add two new options (Add patron info, Add staff info) to item action menu. Fixes UICHKOUT-855.
 * UI tests replacement with RTL/Jest for src/components/ViewItem/ViewItem.js. Refs UICHKOUT-839.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
