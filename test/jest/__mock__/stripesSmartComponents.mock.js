@@ -1,6 +1,22 @@
 import React from 'react';
 
 jest.mock('@folio/stripes/smart-components', () => ({
+  ChangeDueDateDialog: jest.fn(({
+    onClose,
+    children,
+    ...rest
+  }) => (
+    <div {...rest}>
+      <button
+        data-testid="closeDueDateDialog"
+        type="button"
+        onClick={onClose}
+      >
+        Close
+      </button>
+      {children}
+    </div>
+  )),
   DueDatePicker: jest.fn(({
     dateProps,
     timeProps,
