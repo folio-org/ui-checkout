@@ -132,12 +132,12 @@
     "notes.popupModal.label": "Poznámka uživatele",
     "due.date.change": "Systém vypočítal úpravu termínu vrácení",
     "details": "Detaily",
-    "checkout.addInfo.patronInfo.button": "Add patron info",
-    "checkout.addInfo.patronInfo.header": "Add patron information",
-    "checkout.addInfo.patronInfo.body": "Add patron information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
-    "checkout.addInfo.patronInfo.completed": "Added patron information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "checkout.addInfo.staffInfo.button": "Add staff info",
-    "checkout.addInfo.staffInfo.header": "Add staff information",
-    "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
-    "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}"
+    "checkout.addInfo.patronInfo.button": "Přidat informace pro čtenáře",
+    "checkout.addInfo.patronInfo.header": "Přidat informace pro čtenáře",
+    "checkout.addInfo.patronInfo.body": "Přidat informace pro čtenáře pro <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}).",
+    "checkout.addInfo.patronInfo.completed": "Přidány informace pro čtenáře pro <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}): {text}",
+    "checkout.addInfo.staffInfo.button": "Přidat informace pro zaměstnance",
+    "checkout.addInfo.staffInfo.header": "Přidat informace pro zaměstnance",
+    "checkout.addInfo.staffInfo.body": "Přidat informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}).",
+    "checkout.addInfo.staffInfo.completed": "Přidány informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}): {text}"
 }
