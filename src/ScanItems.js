@@ -74,9 +74,9 @@ class ScanItems extends React.Component {
       abortOnUnmount: true,
     },
     loanId: {},
-    loan: {
+    addInfo: {
       type: 'okapi',
-      path: 'circulation/loans/%{loanId}',
+      path: 'circulation/loans/%{loanId}/add-info',
       fetch: false,
     },
   });
@@ -104,8 +104,8 @@ class ScanItems extends React.Component {
       loanId: PropTypes.shape({
         replace: PropTypes.func.isRequired,
       }).isRequired,
-      loan: PropTypes.shape({
-        PUT: PropTypes.func,
+      addInfo: PropTypes.shape({
+        POST: PropTypes.func,
       }).isRequired,
     }),
     parentResources: PropTypes.shape({
@@ -398,14 +398,8 @@ class ScanItems extends React.Component {
   addPatronOrStaffInfo = (loan, action, actionComment) => {
     const { mutator } = this.props;
 
-    const loanWithInfo = { ...loan, action, actionComment };
-
-    // I think <MultiColumnList> inserts these spurious fields
-    delete loanWithInfo.no;
-    delete loanWithInfo.rowIndex;
-
     mutator.loanId.replace(loan.id);
-    return mutator.loan.PUT(loanWithInfo);
+    return mutator.addInfo.POST({ action: `${action}Added`, actionComment });
   };
 
   addScannedItem = (loan) => {
