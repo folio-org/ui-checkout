@@ -19,7 +19,7 @@ import {
 import AddInfoDialog from './AddInfoDialog';
 import css from './ViewItem.css';
 
-const sortMap = {
+export const sortMap = {
   no: loan => loan.no,
   title: loan => _.get(loan, ['item', 'title']),
   loanPolicy: () => '-',
@@ -38,7 +38,7 @@ const COLUMNS_NAME = {
   DETAILS: 'details',
 };
 
-const visibleColumns = [
+export const visibleColumns = [
   COLUMNS_NAME.NO,
   COLUMNS_NAME.BARCODE,
   COLUMNS_NAME.TITLE,
@@ -48,7 +48,7 @@ const visibleColumns = [
   COLUMNS_NAME.DETAILS
 ];
 
-const columnWidths = {
+export const columnWidths = {
   barcode: '10%',
   title: '27%',
   loanPolicy: '20%',
