@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## IN PROGRESS
+## 10.0.0 IN PROGRESS
 
 * UI tests replacement with RTL/Jest for src/components/PatronBlock/PatronBlockModal.js. Refs UICHKOUT-832.
 * UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826.
@@ -20,7 +20,7 @@
 * UI tests replacement with RTL/Jest for src/components/ViewPatron/ViewPatron.js. Refs UICHKOUT-840.
 * Add two new options (Add patron info, Add staff info) to item action menu. Fixes UICHKOUT-855.
 * UI tests replacement with RTL/Jest for src/components/ViewItem/ViewItem.js. Refs UICHKOUT-839.
-* Use new WSAPI for adding patron/staff notes to loans. Fixes UICHKOUT-857.
+* Use new WSAPI for adding patron/staff notes to loans. Fixes UICHKOUT-857. **Note.** The new requirement of the `add-info` interface is a breaking change.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
