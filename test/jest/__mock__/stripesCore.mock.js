@@ -12,5 +12,14 @@ jest.mock('@folio/stripes/core', () => ({
   stripesShape: {},
   withStripes: (Component) => (props) => <Component {...props} />,
   withModules: (Component) => (props) => <Component {...props} />,
+  Pluggable: jest.fn((props) => (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
+    <div
+      {...props}
+      onClick={typeof props.selectUser === 'function' && props.user ? props.selectUser(props.user) : () => {}}
+    >
+      {props.children}
+    </div>
+  )),
   IfPermission: jest.fn(({ children }) => <div>{children}</div>),
 }));

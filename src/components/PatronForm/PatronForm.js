@@ -20,6 +20,8 @@ import { FormattedMessage } from 'react-intl';
 
 import css from './PatronForm.css';
 
+export const getIdentifier = (userIdentifiers) => (userIdentifiers.length > 1 ? 'id' : userIdentifiers[0]);
+
 class PatronForm extends React.Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -124,12 +126,13 @@ class PatronForm extends React.Component {
 
     const validationEnabled = false;
     const disableRecordCreation = true;
-    const identifier = (userIdentifiers.length > 1) ? 'id' : userIdentifiers[0];
+    const identifier = getIdentifier(userIdentifiers);
     const formState = form.getState();
 
     return (
       <form
         id="patron-form"
+        data-testid="patronForm"
         onSubmit={this.onSubmit}
       >
         <Row id="section-patron">
@@ -142,6 +145,7 @@ class PatronForm extends React.Component {
                 <FormattedMessage id="ui-checkout.patron.identifier">
                   {ariaLabel => (
                     <Field
+                      data-testid="patronIdentifier"
                       name="patron.identifier"
                       placeholder={placeholder}
                       aria-label={ariaLabel}
@@ -165,6 +169,7 @@ class PatronForm extends React.Component {
           <Col xs={3}>
             <Button
               id="clickable-find-patron"
+              data-testid="clickableFindPatronButton"
               type="submit"
               buttonStyle="default"
               disabled={submitting}
@@ -176,6 +181,7 @@ class PatronForm extends React.Component {
         <Row>
           <Col xs={12}>
             <Pluggable
+              data-testid="clickableFindPatronPluggable"
               aria-haspopup="true"
               type="find-user"
               id="clickable-find-user"
