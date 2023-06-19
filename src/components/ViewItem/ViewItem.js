@@ -1,8 +1,11 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 import _ from 'lodash';
 import moment from 'moment';
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import {
@@ -17,16 +20,8 @@ import {
 } from '@folio/stripes/components';
 
 import AddInfoDialog from './AddInfoDialog';
-import css from './ViewItem.css';
 
-export const sortMap = {
-  no: loan => loan.no,
-  title: loan => _.get(loan, ['item', 'title']),
-  loanPolicy: () => '-',
-  barcode: loan => _.get(loan, ['item', 'barcode']),
-  dueDate: loan => loan.dueDate.substr(0, 10),
-  time: loan => moment(loan.dueDate).format('hh:mm a'),
-};
+import css from './ViewItem.css';
 
 const COLUMNS_NAME = {
   NO: 'no',
@@ -35,7 +30,16 @@ const COLUMNS_NAME = {
   LOAN_POLICY: 'loanPolicy',
   DUE_DATE: 'dueDate',
   TIME: 'time',
-  DETAILS: 'details',
+  ACTION: 'action',
+};
+
+export const sortMap = {
+  [COLUMNS_NAME.NO]: loan => loan.no,
+  [COLUMNS_NAME.TITLE]: loan => _.get(loan, ['item', 'title']),
+  [COLUMNS_NAME.LOAN_POLICY]: () => '-',
+  [COLUMNS_NAME.BARCODE]: loan => _.get(loan, ['item', 'barcode']),
+  [COLUMNS_NAME.DUE_DATE]: loan => loan.dueDate.substr(0, 10),
+  [COLUMNS_NAME.TIME]: loan => moment(loan.dueDate).format('hh:mm a'),
 };
 
 export const visibleColumns = [
@@ -45,17 +49,17 @@ export const visibleColumns = [
   COLUMNS_NAME.LOAN_POLICY,
   COLUMNS_NAME.DUE_DATE,
   COLUMNS_NAME.TIME,
-  COLUMNS_NAME.DETAILS
+  COLUMNS_NAME.ACTION
 ];
 
 export const columnWidths = {
-  barcode: '10%',
-  title: '27%',
-  loanPolicy: '20%',
-  dueDate: '13%',
-  time: '10%',
-  details: '10%',
-  no: '8%'
+  [COLUMNS_NAME.BARCODE]: '10%',
+  [COLUMNS_NAME.TITLE]: '27%',
+  [COLUMNS_NAME.LOAN_POLICY]: '20%',
+  [COLUMNS_NAME.DUE_DATE]: '13%',
+  [COLUMNS_NAME.TIME]: '10%',
+  [COLUMNS_NAME.ACTION]: '10%',
+  [COLUMNS_NAME.NO]: '8%'
 };
 
 class ViewItem extends React.Component {
@@ -78,6 +82,7 @@ class ViewItem extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.handleOptionsChange = this.handleOptionsChange.bind(this);
     this.connectedChangeDueDateDialog = props.stripes.connect(ChangeDueDateDialog);
     this.onSort = this.onSort.bind(this);
@@ -93,14 +98,13 @@ class ViewItem extends React.Component {
     };
 
     this.columnMapping = {
-      barcode: <FormattedMessage id="ui-checkout.barcode" />,
-      dueDate: <FormattedMessage id="ui-checkout.due.date" />,
-      loanDate: <FormattedMessage id="ui-checkout.time" />,
-      loanPolicy: <FormattedMessage id="ui-checkout.loanPolicy" />,
-      no: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
-      time: <FormattedMessage id="ui-checkout.time" />,
-      title: <FormattedMessage id="ui-checkout.title" />,
-      details: <FormattedMessage id="ui-checkout.details" />,
+      [COLUMNS_NAME.BARCODE]: <FormattedMessage id="ui-checkout.barcode" />,
+      [COLUMNS_NAME.DUE_DATE]: <FormattedMessage id="ui-checkout.due.date" />,
+      [COLUMNS_NAME.LOAN_POLICY]: <FormattedMessage id="ui-checkout.loanPolicy" />,
+      [COLUMNS_NAME.NO]: <FormattedMessage id="ui-checkout.numberAbbreviation" />,
+      [COLUMNS_NAME.TIME]: <FormattedMessage id="ui-checkout.time" />,
+      [COLUMNS_NAME.TITLE]: <FormattedMessage id="ui-checkout.title" />,
+      [COLUMNS_NAME.ACTION]: <FormattedMessage id="ui-checkout.action" />,
     };
   }
 
@@ -144,6 +148,7 @@ class ViewItem extends React.Component {
 
   getItemFormatter() {
     const { intl: { formatNumber, formatMessage } } = this.props;
+
     return {
       [COLUMNS_NAME.NO]: loan => formatNumber(loan.no),
       [COLUMNS_NAME.TITLE]: loan => (<div data-test-item-title>{_.get(loan, ['item', 'title'])}</div>),
@@ -188,7 +193,7 @@ class ViewItem extends React.Component {
         );
       },
       [COLUMNS_NAME.TIME]: loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
-      [COLUMNS_NAME.DETAILS]: loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
+      [COLUMNS_NAME.ACTION]: loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }
 
@@ -246,21 +251,30 @@ class ViewItem extends React.Component {
   }
 
   showItemDetails(loan, e) {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     this.props.parentMutator.query.update({
       _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
     });
   }
 
   showLoanDetails(loan, e) {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     this.props.parentMutator.query.update({
       _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
     });
   }
 
   showLoanPolicy(loan, e) {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     this.props.parentMutator.query.update({
       _path: `/settings/circulation/loan-policies/${loan.loanPolicyId}`,
     });
@@ -407,8 +421,14 @@ class ViewItem extends React.Component {
   }
 
   renderAddInfoDialog() {
-    const { infoType, loanForInfo } = this.state;
-    if (!infoType) return undefined;
+    const {
+      infoType,
+      loanForInfo,
+    } = this.state;
+
+    if (!infoType) {
+      return undefined;
+    }
 
     return (
       <AddInfoDialog
@@ -433,8 +453,7 @@ class ViewItem extends React.Component {
 
     const size = scannedItems.length;
     const items = scannedItems.map((it, index) => ({ ...it, no: size - index }));
-    const contentData = _.orderBy(items,
-      [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
+    const contentData = _.orderBy(items, [sortMap[sortOrder[0]], sortMap[sortOrder[1]]], sortDirection);
     const emptyMessage = !loading ? <FormattedMessage id="ui-checkout.noItemsEntered" /> : null;
 
     return (
