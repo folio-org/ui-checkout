@@ -131,7 +131,6 @@
     "messages.itemLimitLoanType": "Čtenář dosáhl maximálního limitu {itemLimit, plural, one {1 jednotka} other {{itemLimit} jednotek}} pro typ výpůjčky.",
     "notes.popupModal.label": "Poznámka uživatele",
     "due.date.change": "Systém vypočítal úpravu termínu vrácení",
-    "details": "Detaily",
     "checkout.addInfo.patronInfo.button": "Přidat informace pro čtenáře",
     "checkout.addInfo.patronInfo.header": "Přidat informace pro čtenáře",
     "checkout.addInfo.patronInfo.body": "Přidat informace pro čtenáře pro <strong>{title} ({materialType})</strong> (Čárový kód: {barcode}).",
@@ -139,5 +138,6 @@
     "checkout.addInfo.staffInfo.button": "Přidat informace pro zaměstnance",
     "checkout.addInfo.staffInfo.header": "Přidat informace pro zaměstnance",
     "checkout.addInfo.staffInfo.body": "Přidat informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}).",
-    "checkout.addInfo.staffInfo.completed": "Přidány informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}): {text}"
+    "checkout.addInfo.staffInfo.completed": "Přidány informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}): {text}",
+    "action": "Akce"
 }
