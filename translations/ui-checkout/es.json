@@ -131,7 +131,6 @@
     "messages.itemLimitLoanType": "Patron has reached maximum limit of {itemLimit, plural, one {1 item} other {{itemLimit} items}} for loan type.",
     "notes.popupModal.label": "User note",
     "due.date.change": "Ajuste del vencimiento calculado por el sistema",
-    "details": "Details",
     "checkout.addInfo.patronInfo.button": "Add patron info",
     "checkout.addInfo.patronInfo.header": "Add patron information",
     "checkout.addInfo.patronInfo.body": "Add patron information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
@@ -139,5 +138,6 @@
     "checkout.addInfo.staffInfo.button": "Add staff info",
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
-    "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}"
+    "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
+    "action": "Action"
 }
