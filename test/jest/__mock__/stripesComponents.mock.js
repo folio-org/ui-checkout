@@ -151,6 +151,7 @@ jest.mock('@folio/stripes/components', () => ({
       />
     </>
   )),
+  TextField: jest.fn((props) => <input {...props} />),
   Tooltip: jest.fn(({
     children,
     text,

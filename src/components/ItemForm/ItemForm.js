@@ -171,6 +171,7 @@ class ItemForm extends React.Component {
       <>
         <form
           id="item-form"
+          data-testid="itemForm"
           onSubmit={this.onSubmit}
         >
           <Row id="section-item">
@@ -181,6 +182,7 @@ class ItemForm extends React.Component {
                     {ariaLabel => (
                       <TitleManager prefix={(this.readyPrefix && this.state.readyToScan) ? this.readyPrefix : undefined}>
                         <Field
+                          data-testid="itemBarcodeField"
                           fullWidth
                           name="item.barcode"
                           component={TextField}
@@ -200,6 +202,7 @@ class ItemForm extends React.Component {
             </Col>
             <Col xs={2}>
               <Button
+                data-testid="addItemButton"
                 id="clickable-add-item"
                 type="submit"
                 buttonStyle="default"
@@ -212,6 +215,7 @@ class ItemForm extends React.Component {
         </form>
         {!isEmpty(errors) &&
           <ErrorModal
+            data-testid="errorModal"
             stripes={stripes}
             item={item || {}}
             errors={errors}
@@ -222,6 +226,7 @@ class ItemForm extends React.Component {
         }
         {overrideModalOpen &&
           <OverrideModal
+            data-testid="overrideModal"
             item={item}
             overrideError={overrideError}
             stripes={stripes}
@@ -232,6 +237,7 @@ class ItemForm extends React.Component {
         }
         {items &&
           <SelectItemModal
+            data-testid="selectItemModal"
             checkoutItems={items}
             onClose={this.handleCloseSelectItemModal}
             onSelectItem={this.handleItemSelection}
