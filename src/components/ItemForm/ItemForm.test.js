@@ -10,13 +10,6 @@ import buildStripes from '@folio/circulation/test/jest/__mock__/stripes.mock';
 
 import ItemForm from './ItemForm';
 
-jest.mock('react-final-form', () => ({
-  ...jest.requireActual('react-final-form'),
-  // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-  Field: jest.fn(({ onChange, ...rest }) => <div onClick={onChange} {...rest} />),
-}));
-jest.mock('@folio/stripes/final-form', () => () => jest.fn((component) => component));
-
 const testIds = {
   itemForm: 'itemForm',
   itemBarcodeField: 'itemBarcodeField',
