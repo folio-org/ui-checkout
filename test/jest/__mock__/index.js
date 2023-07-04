@@ -1,7 +1,9 @@
+import './finalFormComponents.mock';
 import './reactRouterDom.mock';
 import './stripesConfig.mock';
 import './stripes.mock';
 import './intl.mock';
 import './stripesComponents.mock';
 import './stripesCore.mock';
+import './stripesFinalForm.mock';
 import './stripesSmartComponents.mock';

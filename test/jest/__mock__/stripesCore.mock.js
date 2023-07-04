@@ -12,6 +12,9 @@ jest.mock('@folio/stripes/core', () => ({
   stripesShape: {},
   withStripes: (Component) => (props) => <Component {...props} />,
   withModules: (Component) => (props) => <Component {...props} />,
+  TitleManager: jest.fn(({ children, ...rest }) => (
+    <span {...rest}>{children}</span>
+  )),
   Pluggable: jest.fn((props) => (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
