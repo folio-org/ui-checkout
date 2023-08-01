@@ -6,7 +6,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import PatronBlock from '.';
+import PatronBlock from './PatronBlock';
 
 describe('PatronBlock', () => {
   const testIds = {
