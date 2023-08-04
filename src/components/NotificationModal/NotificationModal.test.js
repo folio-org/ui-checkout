@@ -8,7 +8,8 @@ import {
 import '../../../test/jest/__mock__';
 
 import { FormattedMessage } from 'react-intl';
-import NotificationModal from '.';
+
+import NotificationModal from './NotificationModal';
 
 describe('NotificationModal', () => {
   const closeModal = jest.fn();

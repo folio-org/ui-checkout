@@ -6,6 +6,8 @@ import {
   cleanup
 } from '@testing-library/react';
 
+import { runAxeTest } from '@folio/stripes-testing';
+
 import '../../../test/jest/__mock__';
 
 import { FormattedMessage } from 'react-intl';
@@ -18,7 +20,7 @@ import {
   ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE,
 } from '../../constants';
 
-import ErrorModal from '.';
+import ErrorModal from './ErrorModal';
 
 describe('ErrorModal', () => {
   const onClose = jest.fn();
@@ -52,6 +54,14 @@ describe('ErrorModal', () => {
   };
 
   afterEach(cleanup);
+
+  it('should render with no axe errors', async () => {
+    renderComponent();
+
+    await runAxeTest({
+      rootNode: document.body,
+    });
+  });
 
   it('should render error modal', () => {
     renderComponent();

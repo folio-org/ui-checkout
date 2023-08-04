@@ -25,6 +25,7 @@
 * Update check out ellipses UX for consistency. Refs UICHKOUT-856.
 * UI tests replacement with RTL/Jest for src/components/ItemForm/ItemForm.js. Refs UICHKOUT-827.
 * Upgrade babel config. Refs UICHKOUT-861.
+* Add possible for run axe tests. Refs UICHKOUT-858.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
