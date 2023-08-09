@@ -26,6 +26,7 @@
 * UI tests replacement with RTL/Jest for src/components/ItemForm/ItemForm.js. Refs UICHKOUT-827.
 * Upgrade babel config. Refs UICHKOUT-861.
 * Add possible for run axe tests. Refs UICHKOUT-858.
+* Update Node.js to v18 in GitHub Actions. Refs UICHKOUT-862.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
