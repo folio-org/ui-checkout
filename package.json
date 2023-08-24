@@ -90,9 +90,8 @@
   },
   "scripts": {
     "start": "stripes serve",
-    "test:bigtest": "stripes test karma",
     "test:jest": "jest --ci --coverage --colors",
-    "test": "yarn run test:jest && yarn run test:bigtest ",
+    "test": "yarn run test:jest",
     "lint": "eslint .",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "formatjs compile-folder --ast --format simple ./translations/ui-checkout ./translations/ui-checkout/compiled"
@@ -100,10 +99,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.12",
     "@babel/eslint-parser": "^7.17.0",
-    "@bigtest/interactor": "^0.9.1",
-    "@bigtest/mirage": "^0.0.1",
-    "@bigtest/mocha": "^0.5.2",
-    "@bigtest/react": "^0.1.2",
     "@folio/eslint-config-stripes": "^7.0.0",
     "@folio/jest-config-stripes": "^2.0.0",
     "@folio/stripes": "^9.0.0",
@@ -112,23 +107,18 @@
     "@folio/stripes-core": "^10.0.0",
     "@folio/stripes-testing": "^4.4.0",
     "@formatjs/cli": "^4.2.20",
-    "chai": "^4.2.0",
     "core-js": "^3.6.4",
     "eslint": "7.32.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "faker": "^4.1.0",
     "identity-obj-proxy": "^3.0.0",
     "inflected": "^2.0.4",
-    "miragejs": "^0.1.40",
-    "mocha": "^9.0.0",
     "moment": "^2.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^5.8.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.0",
-    "regenerator-runtime": "^0.13.3",
-    "sinon": "^7.2.2"
+    "regenerator-runtime": "^0.13.3"
   },
   "dependencies": {
     "final-form": "^4.19.1",
