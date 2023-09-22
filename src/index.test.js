@@ -1,59 +1,72 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
+
 import {
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { stripes } from '../package';
-
-import '../test/jest/__mock__';
-
 import CheckOutRouting from './index';
 
-const { route } = stripes;
 const testIds = {
-  checkOutComponent: 'checkOutComponent',
+  checkOut: 'checkOut',
   noMatch: 'noMatch',
 };
+const checkoutRoute = '/checkout';
+const basicProps = {
+  stripes: {
+    connect: (component) => component,
+  },
+  match: {
+    path: checkoutRoute,
+  },
+  location: {
+    pathname: checkoutRoute,
+  },
+};
+
+jest.mock('./CheckOut', () => () => <div data-testid={testIds.checkOut}>CheckOut</div>);
 
 describe('UI CheckOut', () => {
-  const renderCheckOut = () => {
-    const component = (
-      <Router>
-        <CheckOutRouting
-          stripes={{
-            connect: (item) => item,
-          }}
-          match={{
-            path: route,
-            url: route,
-            isExact: true,
-            params: {},
-          }}
-          location={{
-            pathname: route,
-            search: '',
-            hash: '',
-          }}
-        />
-      </Router>
-    );
+  describe('When route is matched', () => {
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={[checkoutRoute]}>
+          <CheckOutRouting
+            {...basicProps}
+          />
+        </MemoryRouter>
+      );
+    });
 
-    return render(component);
-  };
-
-  it('should render error page', () => {
-    renderCheckOut();
-
-    expect(screen.getByTestId(testIds.noMatch)).toBeInTheDocument();
+    it('should render "CheckOut" component', () => {
+      expect(screen.getByTestId(testIds.checkOut)).toBeInTheDocument();
+    });
   });
 
-  it.skip('should render on component route', () => {
-    window.history.pushState({}, '', route);
+  describe('When route is not matched', () => {
+    const badRoute = '/bad-route';
+    const props = {
+      ...basicProps,
+      match: {
+        path: badRoute,
+      },
+      location: {
+        pathname: badRoute,
+      },
+    };
 
-    renderCheckOut();
+    beforeEach(() => {
+      render(
+        <MemoryRouter initialEntries={[checkoutRoute]}>
+          <CheckOutRouting
+            {...props}
+          />
+        </MemoryRouter>
+      );
+    });
 
-    expect(screen.getByTestId(testIds.checkOutComponent)).toBeInTheDocument();
+    it('should render "NoMatch" component', () => {
+      expect(screen.getByTestId(testIds.noMatch)).toBeInTheDocument();
+    });
   });
 });
