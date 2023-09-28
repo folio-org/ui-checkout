@@ -1,13 +1,12 @@
-import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { BrowserRouter as Router } from 'react-router-dom';
+
 import {
   render,
   screen,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
 import buildStripes from '../../../test/jest/__mock__/stripes.mock';
 
 import { refundClaimReturned } from '../../constants';

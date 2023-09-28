@@ -30,6 +30,7 @@
 * *BREAKING* Upgrade React to v18. Refs UICHKOUT-860.
 * *BREAKING* bump `react-intl` to `v6.4.4`. Refs UICHKOUT-865.
 * Fix issues with skipped tests. Refs UICHKOUT-864.
+* Remove outdated imports. Refs UICHKOUT-867.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.0...v9.0.1)
