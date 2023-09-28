@@ -5,8 +5,6 @@ import {
   cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
-
 import { Modal } from '@folio/stripes/components';
 
 import MultipieceModal from './MultipieceModal';

@@ -1,4 +1,5 @@
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import {
   fireEvent,
   render,
@@ -7,10 +8,6 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import { runAxeTest } from '@folio/stripes-testing';
-
-import '../../../test/jest/__mock__';
-
-import { FormattedMessage } from 'react-intl';
 
 import buildStripes from '../../../test/jest/__mock__/stripes.mock';
 import componentPropsCheck from '../../../test/jest/helpers/utils';
