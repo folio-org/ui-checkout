@@ -239,7 +239,6 @@ class CheckOut extends React.Component {
     this.patronFormInputRef = React.createRef();
     this.patronFormRef = React.createRef();
     this.itemFormRef = React.createRef();
-    this.timer = undefined;
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
 
     this.state = {
@@ -298,7 +297,7 @@ class CheckOut extends React.Component {
       });
     }
 
-    if (this.timer) {
+    if (window.checkOutSessionEndTimer) {
       return;
     }
 
@@ -308,26 +307,43 @@ class CheckOut extends React.Component {
     const parsed = getCheckoutSettings(settings.records);
 
     if (!parsed.checkoutTimeout) {
-      this.timer = null; // so we don't keep trying
+      window.checkOutSessionEndTimer = null; // so we don't keep trying
       return;
     }
     if (!resources.activeRecord.hasTimer && resources.activeRecord.patronId) {
       mutator.activeRecord.update({ hasTimer: true });
-      this.timer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
-        this.onSessionEnd();
+      window.checkOutSessionEndTimer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
+        if (window.location.pathname !== '/') {
+          this.onSessionEnd();
+        } else {
+          window.checkOutSessionEndTimer.clear();
+          window.checkOutSessionEndTimer = null;
+        }
       });
       ['keydown', 'mousedown'].forEach((event) => {
-        document.addEventListener(event, () => {
-          if (this.timer) {
-            this.timer.signal();
-          }
-        });
+        document.addEventListener(event, this.listenUserActivities);
       });
     }
   }
 
   componentWillUnmount() {
     this._mounted = false;
+
+    if (window.location.pathname === '/') {
+      this.removeEventListeners();
+    }
+  }
+
+  listenUserActivities = () => {
+    if (window.checkOutSessionEndTimer) {
+      window.checkOutSessionEndTimer.signal();
+    }
+  }
+
+  removeEventListeners = () => {
+    ['keydown', 'mousedown'].forEach((event) => {
+      document.removeEventListener(event, this.listenUserActivities);
+    });
   }
 
   toggleNewFastAddModal = () => {
@@ -404,7 +420,8 @@ class CheckOut extends React.Component {
     if (patronId) {
       await endSession({ endSessions : [{ actionType: 'Check-out', patronId }] });
       update({ patronId: null, hasTimer: false });
-      this.timer = null;
+      window.checkOutSessionEndTimer = null;
+      this.removeEventListeners();
       this.setState({
         blocked: false,
       });
