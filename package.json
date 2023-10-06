@@ -138,8 +138,8 @@
     "react-router-dom": "^5.2.0"
   },
   "optionalDependencies": {
-    "@folio/circulation": "^8.0.1",
-    "@folio/plugin-create-inventory-records": "^3.0.0",
-    "@folio/plugin-find-user": "^6.0.0"
+    "@folio/circulation": "^9.0.0",
+    "@folio/plugin-create-inventory-records": "^4.0.0",
+    "@folio/plugin-find-user": "^7.0.0"
   }
 }
