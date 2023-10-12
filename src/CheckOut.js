@@ -307,7 +307,6 @@ class CheckOut extends React.Component {
     const parsed = getCheckoutSettings(settings.records);
 
     if (!parsed.checkoutTimeout) {
-      window.checkOutSessionEndTimer = null; // so we don't keep trying
       return;
     }
     if (!resources.activeRecord.hasTimer && resources.activeRecord.patronId) {
