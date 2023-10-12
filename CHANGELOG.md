@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 10.0.0 IN PROGRESS
+## [10.0.0](https://github.com/folio-org/ui-checkout/tree/v10.0.0) (2023-10-12)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v9.0.1...v10.0.0)
 
 * UI tests replacement with RTL/Jest for src/components/PatronBlock/PatronBlockModal.js. Refs UICHKOUT-832.
 * UI tests replacement with RTL/Jest for `ErrorModal.js`. Refs UICHKOUT-826.
