@@ -6,8 +6,6 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
-
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import {
   MultiColumnList,

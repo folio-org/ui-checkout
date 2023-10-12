@@ -313,12 +313,12 @@ class CheckOut extends React.Component {
     if (!resources.activeRecord.hasTimer && resources.activeRecord.patronId) {
       mutator.activeRecord.update({ hasTimer: true });
       window.checkOutSessionEndTimer = createInactivityTimer(`${parsed.checkoutTimeoutDuration}m`, () => {
-        if (window.location.pathname !== '/') {
-          this.removeEventListeners();
-          this.onSessionEnd();
-        } else {
+        if (window.location.pathname === '/') {
           this.clearTimer();
           this.removeEventListeners();
+        } else {
+          this.removeEventListeners();
+          this.onSessionEnd();
         }
       });
       ['keydown', 'mousedown'].forEach((event) => {

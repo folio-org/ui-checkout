@@ -1,13 +1,10 @@
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import {
   render,
   screen,
   fireEvent
 } from '@folio/jest-config-stripes/testing-library/react';
-
-import '../../../test/jest/__mock__';
-
-import { FormattedMessage } from 'react-intl';
 
 import NotificationModal from './NotificationModal';
 

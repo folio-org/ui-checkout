@@ -4,8 +4,6 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
-
 import PatronForm, {
   getIdentifier,
 } from './PatronForm';

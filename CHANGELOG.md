@@ -29,6 +29,9 @@
 * Update Node.js to v18 in GitHub Actions. Refs UICHKOUT-862.
 * *BREAKING* Upgrade React to v18. Refs UICHKOUT-860.
 * *BREAKING* bump `react-intl` to `v6.4.4`. Refs UICHKOUT-865.
+* Fix issues with skipped tests. Refs UICHKOUT-864.
+* Remove outdated imports. Refs UICHKOUT-867.
+* Use current optional dependencies. Refs UICHKOUT-870.
 * Fix circulation timeout issue. Refs UICHKOUT-869.
 
 ## [9.0.1](https://github.com/folio-org/ui-checkout/tree/v9.0.1) (2023-03-08)

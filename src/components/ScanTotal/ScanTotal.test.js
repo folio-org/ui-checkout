@@ -5,8 +5,6 @@ import {
   cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../test/jest/__mock__';
-
 import ScanTotal from './ScanTotal';
 
 const testIds = {
