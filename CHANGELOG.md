@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 10.0.1 IN PROGRESS
+## [10.0.1](https://github.com/folio-org/ui-checkout/tree/v10.0.1) (2023-10-23)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.0...v10.0.1)
 * Fix circulation timeout issue. Refs UICHKOUT-869.
 
 ## [10.0.0](https://github.com/folio-org/ui-checkout/tree/v10.0.0) (2023-10-12)
