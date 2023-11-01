@@ -28,6 +28,12 @@ jest.mock('@folio/stripes/smart-components', () => ({
       <input type="date" />
     </>
   )),
-  NotePopupModal: jest.fn(() => <div />),
+  NotePopupModal: jest.fn(({
+    label,
+  }) => (
+    <div>
+      <span>{label}</span>
+    </div>
+  )),
   ProxyManager: jest.fn(() => <div />),
 }));
