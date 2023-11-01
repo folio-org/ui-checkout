@@ -151,6 +151,7 @@ const createRefMock = {
   },
 };
 const identifierQuery = 'identifierQuery';
+const userIdentifiers = 'userIdentifiers';
 const locationWithState = {
   state: {
     patronBarcode: 'patronBarcode',
@@ -192,7 +193,7 @@ jest.mock('./components/NotificationModal', () => jest.fn(({
   </div>
 )));
 jest.mock('./util', () => ({
-  getPatronIdentifiers: jest.fn(() => 11),
+  getPatronIdentifiers: jest.fn(() => userIdentifiers),
   buildIdentifierQuery: jest.fn(() => identifierQuery),
   buildRequestQuery: jest.fn(),
   getCheckoutSettings: jest.fn(),
@@ -203,7 +204,6 @@ jest.spyOn(React, 'createRef').mockReturnValue(createRefMock);
 jest.useFakeTimers();
 
 describe('CheckOut', () => {
-  const userIdentifiers = 'userIdentifiers';
   const patronBlocks = 'patronBlocks';
   const settings = {};
   const signal = jest.fn();
@@ -1257,7 +1257,7 @@ describe('CheckOut', () => {
         expect(basicProps.mutator.activeRecord.update).toHaveBeenCalledWith(expectedArg);
       });
 
-      it('should trigger timer "addEventListeners"', () => {
+      it('should trigger "addEventListeners"', () => {
         expect(addEventListenersSpy).toHaveBeenCalled();
       });
 
@@ -1267,7 +1267,7 @@ describe('CheckOut', () => {
         expect(clear).toHaveBeenCalled();
       });
 
-      it('should trigger timer "removeEventListeners"', () => {
+      it('should trigger "removeEventListeners"', () => {
         jest.runAllTimers();
 
         expect(removeEventListenersSpy).toHaveBeenCalled();
@@ -1290,17 +1290,17 @@ describe('CheckOut', () => {
         rerender(<CheckOut {...newProps} />);
       });
 
-      it('should trigger timer "current.getState"', () => {
+      it('should trigger "current.getState"', () => {
         jest.runAllTimers();
 
         expect(createRefMock.current.getState).toHaveBeenCalled();
       });
 
-      it('should trigger timer "addEventListeners"', () => {
+      it('should trigger "addEventListeners"', () => {
         expect(addEventListenersSpy).toHaveBeenCalled();
       });
 
-      it('should trigger timer "removeEventListeners"', () => {
+      it('should trigger "removeEventListeners"', () => {
         jest.runAllTimers();
 
         expect(removeEventListenersSpy).toHaveBeenCalled();
@@ -1336,7 +1336,7 @@ describe('CheckOut', () => {
         expect(basicProps.mutator.activeRecord.update).not.toHaveBeenCalled();
       });
 
-      it('should not trigger timer "addEventListeners"', () => {
+      it('should not trigger "createInactivityTimer"', () => {
         expect(createInactivityTimer).not.toHaveBeenCalled();
       });
     });
