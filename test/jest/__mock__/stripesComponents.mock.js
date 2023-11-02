@@ -122,11 +122,13 @@ jest.mock('@folio/stripes/components', () => ({
   Pane: jest.fn(({
     paneTitle,
     paneSub,
+    lastMenu,
     children,
   }) => (
     <div>
       <span>{paneTitle}</span>
       <span>{paneSub}</span>
+      <span>{lastMenu}</span>
       {children}
     </div>
   )),

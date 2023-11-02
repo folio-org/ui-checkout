@@ -392,7 +392,7 @@ class CheckOut extends React.Component {
     }
   }
 
-  async onSessionEnd() {
+  onSessionEnd = async () => {
     const {
       resources: { activeRecord: { patronId } },
       mutator: {
@@ -706,6 +706,7 @@ class CheckOut extends React.Component {
             lastMenu={
               <IfPermission perm="ui-plugin-create-inventory-records.create">
                 <Button
+                  data-testid="fastAddButton"
                   data-test-add-inventory-records
                   marginBottom0
                   onClick={this.toggleNewFastAddModal}
@@ -726,7 +727,7 @@ class CheckOut extends React.Component {
               patronBlockOverriddenInfo={patronBlockOverriddenInfo}
               proxy={proxy}
               settings={getCheckoutSettings(checkoutSettings)}
-              onSessionEnd={() => this.onSessionEnd()}
+              onSessionEnd={this.onSessionEnd}
               shouldSubmitAutomatically={this.shouldSubmitAutomatically}
               formRef={this.itemFormRef}
               initialValues={itemInitialValue}
@@ -737,7 +738,7 @@ class CheckOut extends React.Component {
           <ScanFooter
             buttonId="clickable-done-footer"
             total={scannedTotal}
-            onSessionEnd={() => this.onSessionEnd()}
+            onSessionEnd={this.onSessionEnd}
           />
         }
         <PatronBlockModal
