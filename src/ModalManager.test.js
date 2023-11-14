@@ -3,7 +3,6 @@ import {
   render,
   screen,
   waitFor,
-  cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { ConfirmationModal } from '@folio/stripes/components';
 
