@@ -125,8 +125,6 @@ jest.mock('./components/MultipieceModal', () => jest.fn(({
 )));
 
 describe('ModalManager', () => {
-  afterEach(cleanup);
-
   describe('ConfirmationModal', () => {
     afterEach(jest.clearAllMocks);
 
