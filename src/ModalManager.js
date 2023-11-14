@@ -24,6 +24,29 @@ import {
 } from './constants';
 import { shouldStatusModalBeShown } from './util';
 
+export const formatter = {
+  date: checkoutItem => (
+    <div data-test-check-out-date>
+      <FormattedDate value={checkoutItem.date} />
+      <br />
+      <FormattedTime value={checkoutItem.date} />
+    </div>
+  ),
+  note: checkoutItem => <div data-test-check-out-note-message>{checkoutItem.note}</div>,
+  source: checkoutItem => <div data-test-check-in-note-source>{checkoutItem.source}</div>,
+};
+export const columnMapping = {
+  date: <FormattedMessage id="ui-checkout.date" />,
+  note: <FormattedMessage id="ui-checkout.note" />,
+  source: <FormattedMessage id="ui-checkout.source" />,
+};
+export const visibleColumns = ['date', 'note', 'source'];
+export const columnWidths = {
+  date: '30%',
+  note : '40%',
+  source: '30%',
+};
+
 class ModalManager extends React.Component {
   static propTypes = {
     intl: PropTypes.object,
@@ -176,28 +199,6 @@ class ModalManager extends React.Component {
       };
     });
 
-    const formatter = {
-      date: checkoutItem => (
-        <div data-test-check-out-date>
-          <FormattedDate value={checkoutItem.date} />
-          <br />
-          <FormattedTime value={checkoutItem.date} />
-        </div>
-      ),
-      note: checkoutItem => <div data-test-check-out-note-message>{checkoutItem.note}</div>,
-      source: checkoutItem => <div data-test-check-in-note-source>{checkoutItem.source}</div>,
-    };
-    const columnMapping = {
-      date: <FormattedMessage id="ui-checkout.date" />,
-      note: <FormattedMessage id="ui-checkout.note" />,
-      source: <FormattedMessage id="ui-checkout.source" />,
-    };
-    const visibleColumns = ['date', 'note', 'source'];
-    const columnWidths = {
-      date: '30%',
-      note : '40%',
-      source: '30%',
-    };
     const id = checkoutNotesMode ?
       'ui-checkout.checkoutNotes.message' :
       'ui-checkout.checkoutNoteModal.message';
