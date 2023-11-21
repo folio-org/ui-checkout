@@ -317,7 +317,7 @@ describe('ScanItems', () => {
       });
     });
 
-    it('should trigger "openBlockedModal"', () => {
+    it('should trigger openBlockedModal', () => {
       renderScanItems(propsWithPatronBlock, dataWithItem, 'patron.blocked');
 
       const itemForm = screen.getByTestId(testIds.itemForm);
@@ -327,7 +327,7 @@ describe('ScanItems', () => {
       expect(propsWithPatronBlock.openBlockedModal).toHaveBeenCalled();
     });
 
-    it('should trigger "dispatchEvent"', () => {
+    it('should dispatch event', () => {
       const props = {
         ...basicProps,
         patron: null,
@@ -370,7 +370,7 @@ describe('ScanItems', () => {
       });
     });
 
-    it('should trigger "loanId.replace" after clicking of Add patron info button', () => {
+    it('should replace loanId after clicking of Add patron info button', () => {
       renderScanItems();
 
       const addPatronInfoButton = screen.getByTestId(testIds.addPatronInfoButton);
@@ -380,7 +380,7 @@ describe('ScanItems', () => {
       expect(basicProps.mutator.loanId.replace).toHaveBeenCalledWith(mockedLoan.id);
     });
 
-    it('should trigger "addInfo.POST" after clicking of Add patron info button', () => {
+    it('should send patron info after clicking of Add patron info button', () => {
       renderScanItems();
 
       const expectedArg = {
@@ -409,7 +409,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "items.reset"', async () => {
+      it('should reset items', async () => {
         renderScanItems(basicProps, dataWithItem);
 
         const itemForm = screen.getByTestId(testIds.itemForm);
@@ -421,7 +421,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "items.GET" with correct argument if "wildcardLookupEnabled" is false', async () => {
+      it('should retrieve items if "wildcardLookupEnabled" is false', async () => {
         const expectedArg = {
           params: {
             query: `barcode=="${dataWithItem.item.barcode}"`,
@@ -440,7 +440,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "items.GET" with correct argument if "wildcardLookupEnabled" is true', async () => {
+      it('should retrieve items if "wildcardLookupEnabled" is true', async () => {
         const expectedArg = {
           params: {
             query: `barcode=="${dataWithItem.item.barcode}*"`,
@@ -495,7 +495,7 @@ describe('ScanItems', () => {
     });
 
     describe('When "totalRecords" of items is more than "MAX_RECORDS_FOR_CHUNK"', () => {
-      it('should trigger "items.GET" twice', async () => {
+      it('should get items twice', async () => {
         const totalRecords = MAX_RECORDS_FOR_CHUNK + 1;
         basicProps.mutator.items.GET
           .mockResolvedValueOnce({
@@ -536,7 +536,7 @@ describe('ScanItems', () => {
         renderScanItems(basicProps, dataWithItem);
       });
 
-      it('should trigger "scannedItems.replace"', async () => {
+      it('should replace scannedItems', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
 
         fireEvent.submit(itemForm);
@@ -546,7 +546,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "automatedPatronBlocks.reset"', async () => {
+      it('should reset automatedPatronBlocks', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
 
         fireEvent.submit(itemForm);
@@ -556,7 +556,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "automatedPatronBlocks.GET"', async () => {
+      it('should get automatedPatronBlocks', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
 
         fireEvent.submit(itemForm);
@@ -641,7 +641,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "checkout.POST" with correct argument after clicking on confirmation button', async () => {
+      it('should checkout item after clicking on confirmation button', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
 
         fireEvent.submit(itemForm);
@@ -665,7 +665,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "formRef.current.change" after clicking on cancel button', async () => {
+      it('should clear item barcode field after clicking on cancel button', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
 
         fireEvent.submit(itemForm);
@@ -706,7 +706,7 @@ describe('ScanItems', () => {
         renderScanItems(props, dataWithItem);
       });
 
-      it('should trigger "resp.json" if response type is "application/json"', async () => {
+      it('should handle error if response type is "application/json"', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
         const response = {
           status: 500,
@@ -728,7 +728,7 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should trigger "resp.text" if response type is "text/html"', async () => {
+      it('should handle error if response type is "text/html"', async () => {
         const itemForm = screen.getByTestId(testIds.itemForm);
         const response = {
           status: 500,
@@ -770,7 +770,7 @@ describe('ScanItems', () => {
           dueDate: 'some date',
         };
 
-        it('should trigger "checkout.POST" with correct data', () => {
+        it('should checkout item with correct information', () => {
           renderScanItems(basicProps, {}, '', data);
 
           const expectedArg = {
@@ -792,7 +792,7 @@ describe('ScanItems', () => {
       });
 
       describe('When "dueDate" is not presented', () => {
-        it('should trigger "checkout.POST" with correct data', () => {
+        it('should checkout item with correct information', () => {
           renderScanItems(basicProps, {}, '', basicData);
 
           const expectedArg = {
@@ -812,7 +812,7 @@ describe('ScanItems', () => {
       });
 
       describe('When "patronBlockOverriddenInfo" is not empty', () => {
-        it('should trigger "checkout.POST" with correct data', () => {
+        it('should checkout item with correct information', () => {
           const props = {
             ...basicProps,
             patronBlockOverriddenInfo: {
