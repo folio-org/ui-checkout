@@ -86,7 +86,7 @@ describe('PatronForm', () => {
       });
     });
 
-    it('should not reset form on form submit', async () => {
+    it('should not reset form if error happens', async () => {
       mockedHandleSubmit.mockResolvedValueOnce({
         message: 'error',
       });
