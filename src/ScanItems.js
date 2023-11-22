@@ -16,7 +16,7 @@ import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
 import { MAX_RECORDS_FOR_CHUNK } from './constants';
 
-function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
+export function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
 
   let checkoutSound;
@@ -56,7 +56,6 @@ function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
     />
   );
 }
-
 
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
