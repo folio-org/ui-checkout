@@ -76,7 +76,7 @@ describe('PatronForm', () => {
       expect(mockedHandleSubmit).toHaveBeenCalled();
     });
 
-    it('should trigger reset form on form submit', async () => {
+    it('should reset form on form submit', async () => {
       mockedHandleSubmit.mockResolvedValueOnce(null);
 
       await waitFor(() => {
