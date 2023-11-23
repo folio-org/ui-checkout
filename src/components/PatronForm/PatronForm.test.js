@@ -2,6 +2,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import PatronForm, {
@@ -50,7 +51,7 @@ describe('PatronForm', () => {
     });
 
     afterEach(() => {
-      mockedHandleSubmit.mockClear();
+      jest.clearAllMocks();
     });
 
     it('should render patron form', () => {
@@ -73,6 +74,28 @@ describe('PatronForm', () => {
       fireEvent.submit(screen.getByTestId(testIds.patronForm));
 
       expect(mockedHandleSubmit).toHaveBeenCalled();
+    });
+
+    it('should reset form on form submit', async () => {
+      mockedHandleSubmit.mockResolvedValueOnce(null);
+
+      await waitFor(() => {
+        fireEvent.submit(screen.getByTestId(testIds.patronForm));
+
+        expect(props.form.reset).toHaveBeenCalled();
+      });
+    });
+
+    it('should not reset form if error happens', async () => {
+      mockedHandleSubmit.mockResolvedValueOnce({
+        message: 'error',
+      });
+
+      await waitFor(() => {
+        fireEvent.submit(screen.getByTestId(testIds.patronForm));
+
+        expect(props.form.reset).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -185,6 +208,63 @@ describe('PatronForm', () => {
 
     it('should return id', () => {
       expect(getIdentifier(identifier)).toEqual('id');
+    });
+  });
+
+  describe('Updating', () => {
+    let wrapper;
+
+    beforeEach(() => {
+      jest.useFakeTimers();
+
+      wrapper = render(
+        <PatronForm
+          {...props}
+        />
+      );
+    });
+
+    it('should focus on patron field if "submitFailed" is true', () => {
+      const newProps = {
+        ...props,
+        forwardedRef: {
+          current: {
+            focus: jest.fn(),
+          },
+        },
+        submitFailed: true,
+      };
+
+      wrapper.rerender(
+        <PatronForm
+          {...newProps}
+        />
+      );
+
+      jest.runAllTimers();
+
+      expect(newProps.forwardedRef.current.focus).toHaveBeenCalled();
+    });
+
+    it('should not focus on patron field if "submitFailed" is false', () => {
+      const newProps = {
+        ...props,
+        forwardedRef: {
+          current: {
+            focus: jest.fn(),
+          },
+        },
+      };
+
+      wrapper.rerender(
+        <PatronForm
+          {...newProps}
+        />
+      );
+
+      jest.runAllTimers();
+
+      expect(newProps.forwardedRef.current.focus).not.toHaveBeenCalled();
     });
   });
 });

@@ -4,6 +4,7 @@
 * UI tests replacement with RTL/Jest for src/CheckOut.js. Refs UICHKOUT-820.
 * UI tests replacement with RTL/Jest for src/ModalManager.js. Refs UICHKOUT-821.
 * UI tests replacement with RTL/Jest for src/ScanItems.js. Refs UICHKOUT-822.
+* Increase code coverage for PatronForm.js. Refs UICHKOUT-879.
 
 ## [10.0.1](https://github.com/folio-org/ui-checkout/tree/v10.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.0...v10.0.1)
