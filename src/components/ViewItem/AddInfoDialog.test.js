@@ -107,7 +107,7 @@ describe('AddInfoDialog', () => {
       fireEvent.click(saveAndCloseButton);
     });
 
-    it('should save patron and staff info', () => {
+    it('should trigger addPatronOrStaffInfo with correct arguments', () => {
       const expectedArgs = [props.loan, props.infoType, elementValue.value];
 
       expect(props.addPatronOrStaffInfo).toHaveBeenCalledWith(...expectedArgs);
