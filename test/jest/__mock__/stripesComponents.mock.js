@@ -9,9 +9,7 @@ jest.mock('@folio/stripes/components', () => ({
       type="button"
       {...rest}
     >
-      <span>
-        {children}
-      </span>
+      {children}
     </button>
   )),
   Checkbox: jest.fn((props) => (
