@@ -64,6 +64,7 @@ function AddInfoDialog({ loan, infoType, addPatronOrStaffInfo, onClose }) {
         />
       </p>
       <TextArea
+        data-testid="addInfoDialogField"
         id="checkout-addInfo-text"
         autoFocus
         onChange={e => setTextEntered(e.target.value !== '')}
