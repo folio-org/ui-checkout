@@ -14,6 +14,8 @@ import {
   defaultPatronIdentifier,
   statuses,
   OPEN_REQUEST_STATUSES,
+  DCB_HOLDINGS_RECORD_ID,
+  DCB_INSTANCE_ID,
 } from './constants';
 
 export function getFullName(user) {
@@ -92,3 +94,5 @@ export function renderOrderedPatronBlocks(patronBlocks) {
     );
   });
 }
+
+export const isDCBItem = (item) => item.instanceId === DCB_INSTANCE_ID && item.holdingsRecordId === DCB_HOLDINGS_RECORD_ID;
