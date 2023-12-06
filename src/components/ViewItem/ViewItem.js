@@ -19,6 +19,8 @@ import {
   FormattedTime,
 } from '@folio/stripes/components';
 
+import { isDCBItem } from '../../util';
+
 import AddInfoDialog from './AddInfoDialog';
 
 import css from './ViewItem.css';
@@ -288,6 +290,9 @@ class ViewItem extends React.Component {
     const { stripes } = this.props;
     const isCheckOutNote = element => element.noteType === 'Check out';
     const checkoutNotePresent = _.get(loan.item, ['circulationNotes'], []).some(isCheckOutNote);
+    const instanceId = _.get(loan.item, 'instanceId');
+    const holdingsRecordId = _.get(loan.item, 'holdingsRecordId');
+    const isVirtualItem = isDCBItem({ instanceId, holdingsRecordId });
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
@@ -316,14 +321,18 @@ class ViewItem extends React.Component {
           aria-label="available actions"
           onToggle={onToggle}
         >
-          <Button
-            data-test-show-item-details
-            buttonStyle="dropdownItem"
-            href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
-            onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
-          >
-            <FormattedMessage id="ui-checkout.itemDetails" />
-          </Button>
+          {
+            !isVirtualItem && (
+              <Button
+                data-test-show-item-details
+                buttonStyle="dropdownItem"
+                href={`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}?query=`}
+                onClick={(e) => this.handleOptionsChange({ loan, action: 'showItemDetails' }, e)}
+              >
+                <FormattedMessage id="ui-checkout.itemDetails" />
+              </Button>
+            )
+          }
           <Button
             data-test-show-loan-details
             buttonStyle="dropdownItem"
