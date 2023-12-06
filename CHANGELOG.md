@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+# [IN PROGRESS]
+
+* Hide 'Item details' in Action menu when item is virtual. Refs. UICHKOUT-871.
+
 ## [10.0.1](https://github.com/folio-org/ui-checkout/tree/v10.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.0...v10.0.1)
 * Fix circulation timeout issue. Refs UICHKOUT-869.
