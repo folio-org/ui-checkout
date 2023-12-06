@@ -12,6 +12,11 @@ import {
   Tooltip,
 } from '@folio/stripes/components';
 
+import {
+  DCB_INSTANCE_ID,
+  DCB_HOLDINGS_RECORD_ID,
+} from '../../constants';
+
 import ViewItem, {
   visibleColumns,
   columnWidths,
@@ -71,6 +76,16 @@ const basicProps = {
     overriddenItemsList: ['itemBarcode'],
   },
   intl: {},
+};
+const basicPropsWithDCBItem = {
+  ...basicProps,
+  scannedItems: [{
+    ...receivedLoans[0],
+    item: {
+      instanceId: DCB_INSTANCE_ID,
+      holdingsRecordId: DCB_HOLDINGS_RECORD_ID,
+    },
+  }],
 };
 const labelIds = {
   overrided: 'ui-checkout.item.block.overrided',
@@ -650,6 +665,15 @@ describe('ViewItem', () => {
 
     it('should return formatted time', () => {
       expect(sortMap.time(loan)).toBe(testDate);
+    });
+  });
+
+  describe('ViewItem with DCB Item', () => {
+    it('should not render item details button label', () => {
+      render(
+        <ViewItem {...basicPropsWithDCBItem} />
+      );
+      expect(screen.queryByText(labelIds.itemDetailsButton)).toBeNull();
     });
   });
 });
