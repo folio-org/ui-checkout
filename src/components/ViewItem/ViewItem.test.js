@@ -15,7 +15,6 @@ import {
 import {
   DCB_INSTANCE_ID,
   DCB_HOLDINGS_RECORD_ID,
-  DCB_HOLDINGS_RECORD_ID,
   DCB_USER_LASTNAME,
 } from '../../constants';
 
