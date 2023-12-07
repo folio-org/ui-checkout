@@ -15,6 +15,7 @@ import {
 import {
   DCB_INSTANCE_ID,
   DCB_HOLDINGS_RECORD_ID,
+  DCB_USER_LASTNAME,
 } from '../../constants';
 
 import ViewItem, {
@@ -87,6 +88,15 @@ const basicPropsWithDCBItem = {
     },
   }],
 };
+const basicPropsWithDCBUser = {
+  ...basicProps,
+  scannedItems: [{
+    ...receivedLoans[0],
+    borrower: {
+      lastName: DCB_USER_LASTNAME,
+    },
+  }],
+};
 const labelIds = {
   overrided: 'ui-checkout.item.block.overrided',
   dueDateChange: 'ui-checkout.due.date.change',
@@ -96,6 +106,8 @@ const labelIds = {
   loanPolicyButton: 'ui-checkout.loanPolicy',
   changeDueDateButton: 'stripes-smart-components.cddd.changeDueDate',
   notesButton: 'ui-checkout.checkout.notes',
+  patronInfoButton: 'ui-checkout.checkout.addInfo.patronInfo.button',
+  staffInfoButton: 'ui-checkout.checkout.addInfo.staffInfo.button'
 };
 const testIds = {
   formattedDate: 'formattedDate',
@@ -674,6 +686,21 @@ describe('ViewItem', () => {
         <ViewItem {...basicPropsWithDCBItem} />
       );
       expect(screen.queryByText(labelIds.itemDetailsButton)).toBeNull();
+    });
+  });
+
+  describe('ViewItem with DCB User', () => {
+    it('should not render Add patron info button label', () => {
+      render(
+        <ViewItem {...basicPropsWithDCBUser} />
+      );
+      expect(screen.queryByText(labelIds.patronInfoButton)).toBeNull();
+    });
+    it('should not render Add staff info button label', () => {
+      render(
+        <ViewItem {...basicPropsWithDCBUser} />
+      );
+      expect(screen.queryByText(labelIds.staffInfoButton)).toBeNull();
     });
   });
 });
