@@ -7,6 +7,7 @@
 * Increase code coverage for PatronForm.js. Refs UICHKOUT-879.
 * UI tests replacement with RTL/Jest for AddInfoDialog.js. Refs UICHKOUT-878.
 * Hide 'Item details' in Action menu when item is virtual. Refs. UICHKOUT-871.
+* Hide Patron and Staff Info in Action menu when DCB patron. Refs. UICHKOUT-872.
 
 ## [10.0.1](https://github.com/folio-org/ui-checkout/tree/v10.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.0...v10.0.1)

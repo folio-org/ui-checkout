@@ -13,12 +13,14 @@ import {
   shouldStatusModalBeShown,
   renderOrderedPatronBlocks,
   isDCBItem,
+  isDCBUser,
 } from './util';
 import {
   defaultPatronIdentifier,
   OPEN_REQUEST_STATUSES,
   DCB_HOLDINGS_RECORD_ID,
   DCB_INSTANCE_ID,
+  DCB_USER_LASTNAME,
 } from './constants';
 
 const testIds = {
@@ -222,6 +224,15 @@ describe('util', () => {
         holdingsRecordId: 'test',
       };
       expect(isDCBItem(item)).toBeFalsy();
+    });
+  });
+
+  describe('isDCBUser', () => {
+    it('should return true when user last name is "DcbSystem"', () => {
+      expect(isDCBUser({ lastName: DCB_USER_LASTNAME })).toBeTruthy();
+    });
+    it('should return true when user last name is "DcbSystem"', () => {
+      expect(isDCBUser({ lastName: 'lastName' })).toBeFalsy();
     });
   });
 });

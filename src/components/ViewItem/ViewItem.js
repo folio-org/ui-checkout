@@ -19,7 +19,10 @@ import {
   FormattedTime,
 } from '@folio/stripes/components';
 
-import { isDCBItem } from '../../util';
+import {
+  isDCBItem,
+  isDCBUser,
+} from '../../util';
 
 import AddInfoDialog from './AddInfoDialog';
 
@@ -293,6 +296,7 @@ class ViewItem extends React.Component {
     const instanceId = _.get(loan.item, 'instanceId');
     const holdingsRecordId = _.get(loan.item, 'holdingsRecordId');
     const isVirtualItem = isDCBItem({ instanceId, holdingsRecordId });
+    const isVirtualUser = isDCBUser(loan.borrower);
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
@@ -366,7 +370,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.notes" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.add-patron-info') &&
+          { stripes.hasPerm('ui-users.loans.add-patron-info') && !isVirtualUser &&
             <Button
               data-test-add-patron-info
               buttonStyle="dropdownItem"
@@ -374,7 +378,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.addInfo.patronInfo.button" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.add-staff-info') &&
+          { stripes.hasPerm('ui-users.loans.add-staff-info') && !isVirtualUser &&
             <Button
               data-test-add-staff-info
               buttonStyle="dropdownItem"
