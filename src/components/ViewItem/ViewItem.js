@@ -296,7 +296,7 @@ class ViewItem extends React.Component {
     const instanceId = _.get(loan.item, 'instanceId');
     const holdingsRecordId = _.get(loan.item, 'holdingsRecordId');
     const isVirtualItem = isDCBItem({ instanceId, holdingsRecordId });
-    const isVirtualUser = isDCBUser(loan.borrower);
+    const isVirtualUser = isDCBUser(loan?.borrower);
 
     const trigger = ({ getTriggerProps, triggerRef }) => {
       return (
