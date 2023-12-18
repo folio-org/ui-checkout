@@ -25,7 +25,7 @@
     "orActingAsProxy": "O actuando como proxy para:",
     "scanOrEnterPatronId": "Escanear o introducir al usuario {identifier}",
     "patronLookup": "Búsqueda de usuario",
-    "scanOrEnterItemBarcode": "Escanear o introducir el código de barras del artículo",
+    "scanOrEnterItemBarcode": "Escanear o introducir el código de barras ítem",
     "user.name": "Nombre",
     "user.username": "Nombre de usuario",
     "user.barcode": "Código de barras",
