@@ -41,7 +41,7 @@ function AddInfoDialog({ loan, infoType, addPatronOrStaffInfo, onClose }) {
           disabled={!textEntered}
           onClick={submitInfo}
         >
-          <FormattedMessage id="ui-checkout.saveAndClose" />
+          <FormattedMessage id="stripes-components.saveAndClose" />
         </Button>
       </div>
     </ModalFooter>

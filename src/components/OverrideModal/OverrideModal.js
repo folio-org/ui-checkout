@@ -142,7 +142,7 @@ function OverrideModal(props) {
         disabled={!canBeSubmitted}
         onClick={onSubmit}
       >
-        <FormattedMessage id="ui-checkout.saveAndClose" />
+        <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
       <Button
         data-testid="cancelButton"
