@@ -64,7 +64,7 @@ const labelIds = {
   overrideItemBlock: 'ui-checkout.overrideItemBlock',
   additionalReasons: 'ui-checkout.additionalReasons',
   itemWillBeCheckedOut: 'ui-checkout.messages.itemWillBeCheckedOut',
-  saveAndClose: 'ui-checkout.saveAndClose',
+  saveAndClose: /saveAndClose/,
   cancel: 'ui-checkout.cancel',
   comment: 'ui-checkout.comment',
   date: 'ui-checkout.cddd.date',

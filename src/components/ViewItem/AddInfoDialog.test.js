@@ -10,7 +10,7 @@ import AddInfoDialog from './AddInfoDialog';
 const infoType = 'infoType';
 const labelIds = {
   cancelButton: 'ui-checkout.cancel',
-  saveAndCloseButton: 'ui-checkout.saveAndClose',
+  saveAndCloseButton: /saveAndClose/,
   modalLabel: `ui-checkout.checkout.addInfo.${infoType}.header`,
   modalBody: `ui-checkout.checkout.addInfo.${infoType}.body`,
 };
