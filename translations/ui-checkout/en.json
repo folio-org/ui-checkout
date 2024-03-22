@@ -111,7 +111,6 @@
   "cddd.time": "Time",
   "comment": "Comment",
   "override": "Override",
-  "saveAndClose": "Save & close",
   "overrideLoanPolicy": "Override loan policy",
   "overrideItemBlock": "Override item block",
   "overridePatronBlock": "Override patron block",
