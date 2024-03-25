@@ -76,7 +76,6 @@
     "cddd.time": "Čas",
     "comment": "Komentář",
     "override": "Přepsat",
-    "saveAndClose": "Uložit a zavřít",
     "overrideLoanPolicy": "Přepsat výpůjčkové pravidlo",
     "confirm": "Potvrdit",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) bude <strong>vypůjčen</strong>.",

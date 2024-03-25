@@ -76,7 +76,6 @@
     "cddd.time": "시각",
     "comment": "설명",
     "override": "재정의",
-    "saveAndClose": "저장 후 닫기",
     "overrideLoanPolicy": "대출 정책 재정의",
     "confirm": "확인",
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (바코드 : {barcode} )가 대출됩니다.",

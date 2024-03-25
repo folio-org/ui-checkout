@@ -76,7 +76,6 @@
     "cddd.time": "Zeit",
     "comment": "Kommentar",
     "override": "Spezielle Zustimmung",
-    "saveAndClose": "Speichern & schließen",
     "overrideLoanPolicy": "Ausleihrichtlinie umgehen",
     "confirm": "Bestätigen",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) wird <strong>ausgeliehen</strong>.",

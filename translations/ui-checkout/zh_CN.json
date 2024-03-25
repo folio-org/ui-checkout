@@ -76,7 +76,6 @@
     "cddd.time": "时间",
     "comment": "备注",
     "override": "越权",
-    "saveAndClose": "保存并关闭",
     "overrideLoanPolicy": "越权借阅政策",
     "confirm": "确认",
     "messages.itemWillBeCheckedOut": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）将<strong>借出</strong> 。",

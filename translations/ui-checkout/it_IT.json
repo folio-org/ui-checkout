@@ -76,7 +76,6 @@
     "cddd.time": "Ora",
     "comment": "Commento",
     "override": "Scavalcare",
-    "saveAndClose": "Salva e chiudi",
     "overrideLoanPolicy": "Scavalcare la politca di prestito",
     "confirm": "Confermare",
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (Barcode: {barcode} ) verrà <strong> prestato </strong> .",

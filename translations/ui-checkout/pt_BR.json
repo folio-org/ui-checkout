@@ -76,7 +76,6 @@
     "cddd.time": "Horário",
     "comment": "Comentário",
     "override": "Sobrepor",
-    "saveAndClose": "Salvar e fechar",
     "overrideLoanPolicy": "Sobrepor política de empréstimo",
     "confirm": "Confirmar",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType}) </strong> (Código de barras: {barcode}) será <strong>emprestado</strong>.",
