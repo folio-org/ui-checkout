@@ -76,7 +76,6 @@
     "cddd.time": "Time",
     "comment": "Комментарий",
     "override": "Override",
-    "saveAndClose": "Сохранить и закрыть",
     "overrideLoanPolicy": "Override loan policy",
     "confirm": "Подтвердить",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) will be <strong>checked out</strong>.",

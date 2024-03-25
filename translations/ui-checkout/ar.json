@@ -76,7 +76,6 @@
     "cddd.time": "الوقت",
     "comment": "تعليق",
     "override": "تخطي",
-    "saveAndClose": "حفظ وإغلاق",
     "overrideLoanPolicy": "تخطي سياسة الإعارة",
     "confirm": "تأكيد",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (الباركود: {barcode}) سيتم <strong> إعارتها</strong>.",

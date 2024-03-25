@@ -76,7 +76,6 @@
     "cddd.time": "Heure",
     "comment": "Commentaire",
     "override": "Substituer",
-    "saveAndClose": "Sauvegarder et fermer",
     "overrideLoanPolicy": "Remplacer la règle de prêt",
     "confirm": "Confirmer",
     "messages.itemWillBeCheckedOut": "<strong> {title} ( {materialType} ) </strong> (Le code-barres: {barcode} ) sera <strong> emprunté </strong> .",

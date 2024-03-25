@@ -76,7 +76,6 @@
     "cddd.time": "Czas",
     "comment": "Komentarz",
     "override": "Nadpisz",
-    "saveAndClose": "Zapisz i zamknij",
     "overrideLoanPolicy": "Zastąpione zasady wpożyczania",
     "confirm": "Potwierdź",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) zostanie <strong>wypożyczony</strong>.",
