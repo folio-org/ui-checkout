@@ -83,7 +83,7 @@
     "date": "Data",
     "source": "Fonte",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é ocultado na descoberta.",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é oculto na descoberta.",
     "permission.circulation": "Empréstimo: Emprestar itens",
     "permission.all": "Empréstimo: Todas as permissões",
     "proxy.expiration": "Expiração do procurador",

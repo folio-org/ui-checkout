@@ -1,6 +1,6 @@
 {
     "externalSystemId": "ID externího systému",
-    "folioRecordNumber": "číslo záznamu folio",
+    "folioRecordNumber": "číslo záznamu FOLIO",
     "missingDataError": "Chcete-li pokračovat, vyplňte prosím toto",
     "checkoutDateRangeError": "Jednotku nelze vypůjčit, protože datum výpůjčky spadá mimo datumový interval ve výpůjčkovém pravidlu. Před opětovným pokusem vypůjčení prosím zkontrolujte {name}.",
     "itemNotFoundError": "Jednotka s tímto čárovým kódem neexistuje",
