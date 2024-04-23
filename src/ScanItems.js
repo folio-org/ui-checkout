@@ -245,7 +245,7 @@ class ScanItems extends React.Component {
       patronBlocks,
     } = this.props;
 
-    const barcode = get(data, 'item.barcode');
+    const barcode = get(data, 'item.barcode', '').trim();
     const errors = this.validate(barcode);
 
     if (!isEmpty(errors)) {
@@ -292,7 +292,7 @@ class ScanItems extends React.Component {
     const { stripes, patron, proxy } = this.props;
     const servicePointId = get(stripes, 'user.user.curServicePoint.id', '');
     const data = {
-      itemBarcode: barcode.trim(),
+      itemBarcode: barcode,
       userBarcode: patron.barcode,
       servicePointId,
     };
