@@ -5,13 +5,11 @@ import {
 
 import Loans from './Loans';
 import UserDetail from './UserDetail';
+import '../../../test/jest/__mock__/stripesSmartComponents.mock';
 
 jest.mock('./Loans', () => jest.fn(() => <div />));
 jest.mock('../../util', () => ({
   getFullName: jest.fn((user) => user.personal.lastName),
-}));
-jest.mock('@folio/stripes/smart-components', () => ({
-  ProfilePicture: () => <div>ProfilePicture</div>,
 }));
 
 const STRIPES = {
