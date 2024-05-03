@@ -10,6 +10,7 @@ import {
   withStripes,
   stripesShape,
 } from '@folio/stripes/core';
+import { ProfilePicture } from '@folio/stripes/smart-components';
 
 import {
   Col,
@@ -20,7 +21,6 @@ import {
 } from '@folio/stripes/components';
 
 import { getFullName } from '../../util';
-import userPlaceholder from '../../../icons/user-placeholder.png';
 import Loans from './Loans';
 
 import {
@@ -111,14 +111,17 @@ class UserDetail extends React.Component {
 
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
-    const hasProfilePicture = !!(settings.length && settings[0].value === 'true');
     const statusVal = (get(user, ['active'], '') ? 'ui-checkout.active' : 'ui-checkout.inactive');
 
+    const profilePictureLink = user?.personal?.profilePictureLink;
+    const profilePicturesEnabled = Boolean(settings.length) && settings[0].enabled;
+    const hasViewProfilePicturePerm = stripes.hasPerm('ui-users.profile-pictures.view');
+    const displayProfilePicture = profilePicturesEnabled && hasViewProfilePicturePerm;
     return (
       <div id={id}>
         <div>
           <Row>
-            <Col xs={hasProfilePicture ? 10 : 12}>
+            <Col xs={displayProfilePicture ? 9 : 12}>
               <div className={`${css.section} ${css.active}`}>
                 <KeyValue
                   label={label}
@@ -126,9 +129,9 @@ class UserDetail extends React.Component {
                 />
               </div>
             </Col>
-            {hasProfilePicture &&
-              <Col xs={2}>
-                <img className={`floatEnd ${css.userPlaceholder}`} src={userPlaceholder} alt="presentation" />
+            {displayProfilePicture &&
+              <Col xs={3}>
+                <ProfilePicture profilePictureLink={profilePictureLink} />
               </Col> }
           </Row>
         </div>

@@ -5,12 +5,16 @@ import {
 
 import Loans from './Loans';
 import UserDetail from './UserDetail';
+import '../../../test/jest/__mock__/stripesSmartComponents.mock';
 
 jest.mock('./Loans', () => jest.fn(() => <div />));
-jest.mock('../../../icons/user-placeholder.png', () => jest.fn(() => 'image_path'));
 jest.mock('../../util', () => ({
   getFullName: jest.fn((user) => user.personal.lastName),
 }));
+
+const STRIPES = {
+  hasPerm: jest.fn().mockReturnValue(true),
+};
 
 const basicProps = {
   user: {
@@ -18,6 +22,7 @@ const basicProps = {
     barcode: 'userBarcode',
     personal: {
       lastName: 'lastName',
+      profilePictureLink: 'profilePictureLink',
     },
     active: true,
     expirationDate: '01/01/2023',
@@ -26,6 +31,7 @@ const basicProps = {
   label: 'label',
   settings: [{
     value: 'true',
+    enabled: true,
   }],
   resources: {
     patronGroups: {
@@ -44,7 +50,7 @@ const basicProps = {
     },
   },
   renderLoans: true,
-  stripes: {},
+  stripes: STRIPES,
 };
 const labelIds = {
   patronGroup: 'ui-checkout.user.patronGroup',
@@ -94,8 +100,8 @@ describe('UserDetail', () => {
       expect(userBarcode).toBeVisible();
     });
 
-    it('should render image', () => {
-      const image = screen.getByAltText('presentation');
+    it('should render Profile Picture', () => {
+      const image = screen.getByText('ProfilePicture');
 
       expect(image).toBeVisible();
     });

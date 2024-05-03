@@ -36,4 +36,5 @@ jest.mock('@folio/stripes/smart-components', () => ({
     </div>
   )),
   ProxyManager: jest.fn(() => <div />),
+  ProfilePicture: () => <div>ProfilePicture</div>,
 }));
