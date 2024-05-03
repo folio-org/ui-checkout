@@ -2,7 +2,7 @@
 
 ## 10.2.0 IN PROGRESS
 * Remove bigtests from github actions. Refs UICHKOUT-908.
-* *BREAKING* users okapi interface version bump-up. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
+* *BREAKING* bump okapiInterfaces `users` to `16.1`. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 
 ## [10.1.0](https://github.com/folio-org/ui-checkout/tree/v10.1.0) (2024-03-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.1...v10.1.0)
