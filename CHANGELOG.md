@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
 ## 10.2.0 IN PROGRESS
+* Remove bigtests from github actions. Refs UICHKOUT-908.
 * Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 
 ## [10.1.0](https://github.com/folio-org/ui-checkout/tree/v10.1.0) (2024-03-22)
