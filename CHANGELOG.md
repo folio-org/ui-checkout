@@ -1,6 +1,6 @@
 # Change history for ui-checkout
 
-## 10.2.0 IN PROGRESS
+## 11.0.0 IN PROGRESS
 * Remove bigtests from github actions. Refs UICHKOUT-908.
 * *BREAKING* bump okapiInterfaces `users` to `16.1`. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 
