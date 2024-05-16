@@ -58,13 +58,13 @@ export const visibleColumns = [
 ];
 
 export const columnWidths = {
-  [COLUMNS_NAME.BARCODE]: '10%',
-  [COLUMNS_NAME.TITLE]: '27%',
-  [COLUMNS_NAME.LOAN_POLICY]: '20%',
-  [COLUMNS_NAME.DUE_DATE]: '13%',
-  [COLUMNS_NAME.TIME]: '10%',
-  [COLUMNS_NAME.ACTION]: '10%',
-  [COLUMNS_NAME.NO]: '8%'
+  [COLUMNS_NAME.NO]: { max: 80 },
+  [COLUMNS_NAME.BARCODE]: { max: 150 },
+  [COLUMNS_NAME.TITLE]: { max: 250 },
+  [COLUMNS_NAME.LOAN_POLICY]: { max: 180 },
+  [COLUMNS_NAME.DUE_DATE]: { max: 100 },
+  [COLUMNS_NAME.TIME]: { max: 80 },
+  [COLUMNS_NAME.ACTION]: { max: 80 },
 };
 
 class ViewItem extends React.Component {
