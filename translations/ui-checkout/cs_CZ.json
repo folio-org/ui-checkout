@@ -8,7 +8,7 @@
     "itemNotCheckedOut": "Jednotka není vypůjčena",
     "userNotFoundError": "Uživatel s tímto {identifier} neexistuje",
     "missingIdentifierError": "Uživatel {username} nemá {identifier}",
-    "scanPatronCard": "Naskenujte průkaz čtenáře",
+    "scanPatronCard": "Naskenovat průkaz čtenáře",
     "scanItems": "Načíst jednotky",
     "openLoans": "Otevřené výpůjčky",
     "borrowerProxy": "Zástupce vypůjčitele",
