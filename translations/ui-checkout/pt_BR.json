@@ -12,7 +12,7 @@
     "scanItems": "Escanear itens",
     "openLoans": "Empréstimos ativos",
     "borrowerProxy": "Procurador do usuário",
-    "borrower": "Usuário que está emprestando",
+    "borrower": "Usuário com empréstimo",
     "noItemsEntered": "Nenhum item foi inserido ainda",
     "numberAbbreviation": "Núm.",
     "loanPolicy": "Política de empréstimos",
