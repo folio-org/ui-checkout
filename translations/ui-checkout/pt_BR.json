@@ -57,7 +57,7 @@
     "awaitingPickupMessage": "O usuário tem <strong> {count, number} </strong> {count, plural, one {exemplar} other {exemplares}} aguardando retirada neste ponto de serviço.",
     "awaitingPickupLabel": "Itens aguardando retirada",
     "multipieceModal.confirm": "Emprestar",
-    "multipieceModal.label": "Confirmar o empréstimo de obra com multiplas partes",
+    "multipieceModal.label": "Confirmar o empréstimo de obra com múltiplas partes",
     "multipieceModal.item.numberOfPieces": "Número de partes",
     "multipieceModal.message": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) será emprestado.",
     "multipieceModal.item.descriptionOfPieces": "Descrição das partes",
