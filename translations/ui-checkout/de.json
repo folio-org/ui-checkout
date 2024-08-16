@@ -27,7 +27,7 @@
     "patronLookup": "Personensuche",
     "scanOrEnterItemBarcode": "Exemplarbarcode scannen oder eingeben",
     "user.name": "Name",
-    "user.username": "Personenname",
+    "user.username": "Systemkennung",
     "user.barcode": "Barcode",
     "user.patronGroup": "Personengruppe",
     "close": "Schließen",
