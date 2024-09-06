@@ -138,5 +138,5 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Akcja"
 }
