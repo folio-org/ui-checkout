@@ -4,6 +4,7 @@
 * Remove bigtests from github actions. Refs UICHKOUT-908.
 * *BREAKING* bump okapiInterfaces `users` to `16.1`. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 * Update upload-artifact actions from v1 and v2 to v4. Refs UICHKOUT-917.
+* Remove barcode trimming before it is sent to backend for processing. Refs - UICHKOUT-903.
 
 ## [10.1.0](https://github.com/folio-org/ui-checkout/tree/v10.1.0) (2024-03-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.1...v10.1.0)
