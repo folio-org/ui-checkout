@@ -59,7 +59,7 @@
     "multipieceModal.confirm": "Bevestigen",
     "multipieceModal.label": "Meervoudig inchecken bevestigen",
     "multipieceModal.item.numberOfPieces": "Aantal stuks",
-    "multipieceModal.message": "<strong>{title}</strong> <strong>({materialType})</strong> (Barcode: {barcode}) wordt uitgecheckt.",
+    "multipieceModal.message": "<strong>{title}({materialType})</strong> (Barcode: {barcode}) wordt uitgecheckt.",
     "multipieceModal.item.descriptionOfPieces": "Omschrijving stukken",
     "multipieceModal.item.numberOfMissingPieces": "Aantal ontbrekende stukken",
     "multipieceModal.item.descriptionOfmissingPieces": "Omschrijving van ontbrekende stukken",
