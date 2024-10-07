@@ -56,7 +56,7 @@
           "circulation-storage.loan-policies.collection.get",
           "circulation.end-patron-action-session.post",
           "configuration.entries.collection.get",
-          "notes.collection.get.by.status"
+          "note.links.collection.get"
         ]
       },
       {
