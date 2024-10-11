@@ -6,6 +6,7 @@
 * Update upload-artifact actions from v1 and v2 to v4. Refs UICHKOUT-917.
 * Remove barcode trimming before it is sent to backend for processing. Refs - UICHKOUT-903.
 * Update notes permission. Refs - UICHKOUT-920.
+* Also support okapiInterfaces `inventory` `14.0`. Refs UICHKOUT-922.
 
 ## [10.1.0](https://github.com/folio-org/ui-checkout/tree/v10.1.0) (2024-03-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.1...v10.1.0)
