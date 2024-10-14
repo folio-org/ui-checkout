@@ -29,7 +29,8 @@
       "loan-policy-storage": "1.0 2.0",
       "users": "16.1",
       "inventory": "10.0 11.0 12.0 13.0 14.0",
-      "automated-patron-blocks": "0.1"
+      "automated-patron-blocks": "0.1",
+      "notes": "4.0"
     },
     "permissionSets": [
       {
@@ -56,7 +57,7 @@
           "circulation-storage.loan-policies.collection.get",
           "circulation.end-patron-action-session.post",
           "configuration.entries.collection.get",
-          "notes.collection.get.by.status"
+          "note.links.collection.get"
         ]
       },
       {
