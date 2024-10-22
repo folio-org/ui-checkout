@@ -38,8 +38,9 @@
         "displayName": "UI: Check out module is enabled"
       },
       {
-        "permissionName": "ui-checkout.circulation",
+        "permissionName": "ui-checkout.circulation.execute",
         "displayName": "Check out: Check out circulating items",
+        "replaces": ["ui-checkout.circulation"],
         "description": "Set of permissions needed to check out circulation items",
         "visible": true,
         "subPermissions": [
@@ -66,24 +67,27 @@
         "description": "Entire set of permissions needed to use Check out",
         "visible": true,
         "subPermissions": [
-          "ui-checkout.circulation"
+          "ui-checkout.circulation.execute"
         ]
       },
       {
-        "permissionName": "ui-checkout.viewLoans",
+        "permissionName": "ui-checkout.viewLoans.view",
         "displayName": "Check out: View loans",
+        "replaces": ["ui-checkout.viewLoans"],
         "description": "Entire set of permissions needed to view loans",
         "visible": true
       },
       {
-        "permissionName": "ui-checkout.viewFeeFines",
+        "permissionName": "ui-checkout.viewFeeFines.view",
         "displayName": "Check out: View fees/fines",
+        "replaces": ["ui-checkout.viewFeeFines"],
         "description": "Entire set of permissions needed to view fees/fines",
         "visible": true
       },
       {
-        "permissionName": "ui-checkout.viewRequests",
+        "permissionName": "ui-checkout.viewRequests.view",
         "displayName": "Check out: View requests",
+        "replaces": ["ui-checkout.viewRequests"],
         "description": "Entire set of permissions needed to view requests",
         "visible": true
       }
