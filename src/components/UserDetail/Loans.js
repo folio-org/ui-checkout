@@ -40,7 +40,7 @@ function Loans({
     // "ui-requests.view" doesn’t make ui-checkout dependent on ui-requests,
     // but if ui-requests happens to be installed and the correct perms happen to be granted,
     // then the requests link is present.
-    if (stripes.hasPerm('ui-checkout.viewRequests,ui-requests.view')) {
+    if (stripes.hasPerm('ui-checkout.viewRequests.view,ui-requests.view')) {
       return (
         <Link
           data-test-open-requests-count
@@ -84,7 +84,7 @@ function Loans({
     value={parseFloat(balanceOutstanding).toFixed(2)}
     minimumFractionDigits={2}
   />;
-  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines,ui-users.feesfines.view')) {
+  if (owedAmount && stripes.hasPerm('ui-checkout.viewFeeFines.view,ui-users.feesfines.view')) {
     openAccountsCount =
       <Link
         data-testid="openAccountsCountLink"
@@ -97,7 +97,7 @@ function Loans({
   // "ui-users.loans.view" doesn’t make ui-checkout dependent on ui-users,
   // but if ui-users happens to be installed and the correct perms happen to be granted,
   // then the loan link is present.
-  const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans,ui-users.loans.view') ?
+  const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans.view,ui-users.loans.view') ?
     <Link
       data-testid="openLoansLink"
       to={openLoansPath}

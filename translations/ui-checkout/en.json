@@ -117,11 +117,11 @@
   "item.block.overrided": "(Item limit overridden)",
   "actions.moreDetails": "Get more details about this item",
 
-  "permission.circulation": "Check out: Check out circulating items",
+  "permission.circulation.execute": "Check out: Check out circulating items",
   "permission.all": "Check out: All permissions",
-  "permission.viewLoans": "Check out: View loans",
-  "permission.viewFeeFines": "Check out: View fees/fines",
-  "permission.viewRequests": "Check out: View requests",
+  "permission.viewLoans.view": "Check out: View loans",
+  "permission.viewFeeFines.view": "Check out: View fees/fines",
+  "permission.viewRequests.view": "Check out: View requests",
 
   "statuses.missing": "Missing",
   "statuses.withdrawn": "Withdrawn",
