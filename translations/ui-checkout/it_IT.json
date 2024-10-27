@@ -84,7 +84,6 @@
     "source": "Fonte",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
-    "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "Check out: tutte le autorizzazioni",
     "proxy.expiration": "Scadenza proxy",
     "due.date": "Data di scadenza",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identificatore dell'utente",
     "checkout.notes": "Note per il prestito",
     "actions.moreDetails": "Ottieni maggiori dettagli su questo item",
-    "permission.viewLoans": "Check out: View loans",
-    "permission.viewFeeFines": "Check out: View fees/fines",
-    "permission.viewRequests": "Check out: View requests",
     "fastAddLabel": "Aggiunta rapida nuovo record",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Smarrito",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

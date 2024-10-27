@@ -84,7 +84,6 @@
     "source": "Quelle",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType}) </strong>(Barcode: {barcode}) hat den Exemplarstatus <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) hat den Exemplarstatus <strong>{status}</strong> und Nachweis ist unterdrückt.",
-    "permission.circulation": "Ausleihe: zirkulierende Exemplare ausleihen",
     "permission.all": "Ausleihe: Alle Berechtigungen",
     "proxy.expiration": "Ablauf der Vollmacht",
     "due.date": "Fälligkeitsdatum",
@@ -93,9 +92,6 @@
     "patron.identifier": "Personen Identifier",
     "checkout.notes": "Ausleih-Notizen",
     "actions.moreDetails": "Mehr Details über dieses Exemplar",
-    "permission.viewLoans": "Ausleihe: Ausleihen anzeigen",
-    "permission.viewFeeFines": "Ausleihe: Forderungen anzeigen",
-    "permission.viewRequests": "Ausleihe: Bestandsanfragen anzeigen",
     "fastAddLabel": "Neue Kurzaufnahme",
     "confirmStatusModal.heading": "{status} Exemplar ausleihen?",
     "statuses.missing": "Vermisst",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Personalinformation hinzufügen",
     "checkout.addInfo.staffInfo.body": "Personalfinformation zu <strong>\n{title} ({materialType})</strong> (Barcode: {barcode}) hinzufügen.",
     "checkout.addInfo.staffInfo.completed": "Personalfinformation zu <strong>{title} ({materialType})\n</strong> (Barcode: {barcode}) hinzugefügt: {text}",
-    "action": "Aktion"
+    "action": "Aktion",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

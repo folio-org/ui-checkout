@@ -84,7 +84,6 @@
     "source": "المصدر",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة <strong>{status}</strong>",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (باركود:{barcode}) لها حالة المادة <strong>{status}</strong> ومحجوبة من الاكتشاف.",
-    "permission.circulation": "الإعارة: أعر مواد الإعارة",
     "permission.all": "الإعارة: كل الصلاحيات",
     "proxy.expiration": "انتهاء صلاحية الوكيل",
     "due.date": "تاريخ الاستحقاق",
@@ -93,9 +92,6 @@
     "patron.identifier": "معرّف المستفيد",
     "checkout.notes": "ملاحظات الإعارة",
     "actions.moreDetails": "الحصول على المزيد من التفاصيل حول هذه المادة",
-    "permission.viewLoans": "الإعارة: اعرض الإعارات",
-    "permission.viewFeeFines": "الإعارة: اعرض الرسوم/الغرامات",
-    "permission.viewRequests": "الإعارة: اعرض الطلبات",
     "fastAddLabel": "إضافة تسجيلة سريعة جديدة",
     "confirmStatusModal.heading": "إعارة المادة {status}؟",
     "statuses.missing": "مفقودة",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

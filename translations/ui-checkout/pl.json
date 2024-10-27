@@ -84,7 +84,6 @@
     "source": "Źródło",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) egzemplarz ma status <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) egzemplarza ma status <strong>{status}</strong> i jest wyłączony z wyszukiwania.",
-    "permission.circulation": "Wypożyczenia: uprawnienie do wypożyczenia",
     "permission.all": "Wypożyczenia: wszystkie uprawnienia",
     "proxy.expiration": "Ważność pełnomocnika",
     "due.date": "Termin zwrotu",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identyfikator czytelnika",
     "checkout.notes": "Notatki do wypożyczenia",
     "actions.moreDetails": "Dowiedz się więcej o tym egzemplarzu",
-    "permission.viewLoans": "Wypożyczenia: zobacz wypożyczenia",
-    "permission.viewFeeFines": "Wypożyczenia: zobacz opłaty/kary",
-    "permission.viewRequests": "Wypożyczenia: pokaż rezerwacje",
     "fastAddLabel": "Nowy skrócony rekord ",
     "confirmStatusModal.heading": "Zarejestrować {status} egzemplarz?",
     "statuses.missing": "Brakujący",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Akcja"
+    "action": "Akcja",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

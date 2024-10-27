@@ -84,7 +84,6 @@
     "source": "來源",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} ( {materialType} ) </strong> （條碼： {barcode} ）的館藏狀態為<strong> {status} </strong> 。",
     "confirmStatusModal.suppressedMessage": "<strong> {title} ( {materialType} ) </strong> （條碼： {barcode} ）的館藏狀態為<strong> {status} </strong> ，並從探索服務中隱藏。",
-    "permission.circulation": "借出：借出流通館藏",
     "permission.all": "借出：所有權限",
     "proxy.expiration": "代理到期",
     "due.date": "到期日",
@@ -93,9 +92,6 @@
     "patron.identifier": "讀者識別號",
     "checkout.notes": "借出附註",
     "actions.moreDetails": "獲取有關此館藏的更多細節",
-    "permission.viewLoans": "借出：檢視借閱",
-    "permission.viewFeeFines": "借出：檢視 費用/罰款",
-    "permission.viewRequests": "借出：檢視預約",
     "fastAddLabel": "快速新增記錄",
     "confirmStatusModal.heading": "借出 {status} 館藏？",
     "statuses.missing": "遺失",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "新增館員資訊",
     "checkout.addInfo.staffInfo.body": "新增<strong> {title} ( {materialType} ) </strong>的館員資訊（條碼： {barcode} ）。",
     "checkout.addInfo.staffInfo.completed": "新增了<strong> {title} ( {materialType} ) </strong>的館員資訊（條碼： {barcode} ）： {text}",
-    "action": "操作"
+    "action": "操作",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

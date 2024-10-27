@@ -84,7 +84,6 @@
     "source": "ソース",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} ( {materialType} ) </strong> (バーコード: {barcode} ) の資料ステータスは<strong> {status} </strong>です",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) has the item status <strong>{status}</strong> and is suppressed from discovery.",
-    "permission.circulation": "Check out: Check out circulating items",
     "permission.all": "貸出：すべての権限",
     "proxy.expiration": "Proxy expiration",
     "due.date": "期限",
@@ -93,9 +92,6 @@
     "patron.identifier": "利用者ID",
     "checkout.notes": "Check out notes",
     "actions.moreDetails": "Get more details about this item",
-    "permission.viewLoans": "Check out: View loans",
-    "permission.viewFeeFines": "貸出: 手数料/罰金 表示",
-    "permission.viewRequests": "貸出: リクエストの表示",
     "fastAddLabel": "New fast add record",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "不明",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "スタッフ情報の追加",
     "checkout.addInfo.staffInfo.body": "<strong> {title} ( {materialType} ) </strong> (バーコード: {barcode} ) のスタッフ情報を追加します。",
     "checkout.addInfo.staffInfo.completed": "<strong> {title} ( {materialType} ) </strong> (バーコード: {barcode} ) のスタッフ情報を追加しました: {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

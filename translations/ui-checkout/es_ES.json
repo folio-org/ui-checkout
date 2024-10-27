@@ -84,7 +84,6 @@
     "source": "Fuente",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tiene el estatus de item <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tiene el estado de item <strong>{status}</strong> y será oculto en el discovery.",
-    "permission.circulation": "Préstamo: préstamo de ítems que pueden circular",
     "permission.all": "Préstamo: Todos los permisos",
     "proxy.expiration": "Vencimiento del proxy",
     "due.date": "Fecha de vencimiento",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identificador de usuario",
     "checkout.notes": "Notas de préstamo",
     "actions.moreDetails": "Obtenga más detalles sobre este artículo",
-    "permission.viewLoans": "Consulte: Ver préstamos",
-    "permission.viewFeeFines": "Préstamos: Ver tarifas/multas",
-    "permission.viewRequests": "Préstamos: Ver solicitudes",
     "fastAddLabel": "Crear un registro rápido",
     "confirmStatusModal.heading": "¿Prestar ítem {status}?",
     "statuses.missing": "Desaparecido",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Añadir información sobre el personal",
     "checkout.addInfo.staffInfo.body": "Añadir información de personal para <strong>{title} ({materialType})</strong> (código de barras: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Añadir nueva información de personal para <strong>{title} ({materialType})</strong> (código de barras: {barcode}): {text}",
-    "action": "Acción"
+    "action": "Acción",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }
