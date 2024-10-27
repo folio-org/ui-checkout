@@ -84,7 +84,6 @@
     "source": "Bron",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) heeft de itemstatus <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) heeft de itemstatus <strong>{status}</strong> en wordt verborgen in discovery.",
-    "permission.circulation": "Uitchecken: Uitchecken van circulerende items.",
     "permission.all": "Uitchecken: Alle machtigingen",
     "proxy.expiration": "Vervaldatum van machtiging",
     "due.date": "Vervaldatum",
@@ -93,9 +92,6 @@
     "patron.identifier": "Gebruikers-ID",
     "checkout.notes": "Opmerking bij uitchecken",
     "actions.moreDetails": "Meer informatie over dit item",
-    "permission.viewLoans": "Uitchecken: Uitleningen bekijken",
-    "permission.viewFeeFines": "Uitchecken: Kosten/boetes bekijken",
-    "permission.viewRequests": "Uitchecken: Aanvragen bekijken",
     "fastAddLabel": "Snel nieuw record toevoegen",
     "confirmStatusModal.heading": "Item {status} uitchecken?",
     "statuses.missing": "Ontbrekend",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Medewerkersinformatie toevoegen",
     "checkout.addInfo.staffInfo.body": "Titelinformatie toevoegen voor <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Titelinformatie toegevoegd voor <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Actie"
+    "action": "Actie",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

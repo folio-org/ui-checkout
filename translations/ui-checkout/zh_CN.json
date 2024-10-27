@@ -84,7 +84,6 @@
     "source": "来源",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong> {status} </strong> 。",
     "confirmStatusModal.suppressedMessage": "<strong> {title} （ {materialType} ） </strong> （条码： {barcode} ）的单件状态为<strong> {status} </strong>并且被禁止发现。",
-    "permission.circulation": "借出：借出流通单件",
     "permission.all": "借出：所有权限",
     "proxy.expiration": "代理到期",
     "due.date": "到期日",
@@ -93,9 +92,6 @@
     "patron.identifier": "读者标识符",
     "checkout.notes": "借出附注",
     "actions.moreDetails": "获取此单件的更多详情",
-    "permission.viewLoans": "借出：查看借阅",
-    "permission.viewFeeFines": "借出：查看费用/罚款",
-    "permission.viewRequests": "借出：查看请求",
     "fastAddLabel": "新建快速添加记录",
     "confirmStatusModal.heading": "借出{status}单件？",
     "statuses.missing": "遗失",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "添加员工信息",
     "checkout.addInfo.staffInfo.body": "添加<strong> {title} ( {materialType} ) </strong>的员工信息（条码： {barcode} ）。",
     "checkout.addInfo.staffInfo.completed": "添加了<strong> {title} ( {materialType} ) </strong>的员工信息（条码： {barcode} ）： {text}",
-    "action": "操作"
+    "action": "操作",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

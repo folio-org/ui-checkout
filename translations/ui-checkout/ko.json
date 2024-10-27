@@ -84,7 +84,6 @@
     "source": "출처",
     "confirmStatusModal.notSuppressedMessage": "<strong> {title} ( {materialType} ) </strong> (바코드 : {barcode} )의 항목 상태는 <strong> {status} </strong> 입니다.",
     "confirmStatusModal.suppressedMessage": "<strong> {title} ( {materialType} ) </strong> (바코드 : {barcode} )의 항목 상태는 <strong> {status} </strong> 이며 검색되지 않습니다.",
-    "permission.circulation": "대출: 대출 품목 확인 ",
     "permission.all": "대출 : 모든 권한",
     "proxy.expiration": "대리 만료",
     "due.date": "마감일",
@@ -93,9 +92,6 @@
     "patron.identifier": "이용자 식별자",
     "checkout.notes": "대출 노트",
     "actions.moreDetails": "이 항목에 대한 자세한 내용보기",
-    "permission.viewLoans": "Check out: View loans",
-    "permission.viewFeeFines": "Check out: View fees/fines",
-    "permission.viewRequests": "Check out: View requests",
     "fastAddLabel": "New fast add record",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Missing",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

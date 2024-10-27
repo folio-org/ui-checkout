@@ -84,7 +84,6 @@
     "source": "Источник",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) имеет статус экземпляра <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) имеет статус экземпляра <strong>{status}</strong> и исключен из поиска.",
-    "permission.circulation": "Выдать: Выдача экземпляров по абонементу",
     "permission.all": "Выдача: Все разрешения",
     "proxy.expiration": "Истечение полномочий представителя",
     "due.date": "Due date",
@@ -93,9 +92,6 @@
     "patron.identifier": "Patron identifier",
     "checkout.notes": "Check out notes",
     "actions.moreDetails": "Get more details about this item",
-    "permission.viewLoans": "Check out: View loans",
-    "permission.viewFeeFines": "Check out: View fees/fines",
-    "permission.viewRequests": "Check out: View requests",
     "fastAddLabel": "New fast add record",
     "confirmStatusModal.heading": "Check out {status} item?",
     "statuses.missing": "Missing",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

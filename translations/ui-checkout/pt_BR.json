@@ -84,7 +84,6 @@
     "source": "Fonte",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) tem o status do item <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Código de barras: {barcode}) possui o status do item <strong>{status}</strong> e é oculto na descoberta.",
-    "permission.circulation": "Empréstimo: Emprestar itens",
     "permission.all": "Empréstimo: Todas as permissões",
     "proxy.expiration": "Expiração do procurador",
     "due.date": "Data de vencimento",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identificador de usuário",
     "checkout.notes": "Notas de empréstimo",
     "actions.moreDetails": "Obtenha mais detalhes sobre este item",
-    "permission.viewLoans": "Empréstimos: Ver empréstimos",
-    "permission.viewFeeFines": "Empréstimos: Ver taxas/multas",
-    "permission.viewRequests": "Empréstimos: Ver requisições",
     "fastAddLabel": "Novo registro rápido",
     "confirmStatusModal.heading": "Emprestar item com status {status}?",
     "statuses.missing": "Desaparecido",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Adicionar informações da equipe",
     "checkout.addInfo.staffInfo.body": "Adicionar informações de equipe para <strong>{title} ({materialType})</strong> (Código de barras: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Adicionadas informações de equipe para <strong>{title} ({materialType})</strong> (Código de barras: {barcode}): {text}",
-    "action": "Ação"
+    "action": "Ação",
+    "permission.circulation.execute": "Empréstimo: Emprestar itens",
+    "permission.viewLoans.view": "Empréstimos: Ver empréstimos",
+    "permission.viewFeeFines.view": "Empréstimos: Ver taxas/multas",
+    "permission.viewRequests.view": "Empréstimos: Ver requisições"
 }

@@ -84,7 +84,6 @@
     "source": "Source",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Code-barres : {barcode}) a le statut du document <strong>{status}</strong>.",
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType}) </strong> (Code-barres : {barcode}) a pour statut <strong>{status}</strong> et est masqué dans l'outil de découverte.",
-    "permission.circulation": "Prêts : Prêter les exemplaires en circulation",
     "permission.all": "Prêts : toutes les autorisations",
     "proxy.expiration": "Expiration de la procuration",
     "due.date": "Date d'échéance",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identifiant usager",
     "checkout.notes": "Notes d'emprunt",
     "actions.moreDetails": "Obtenez plus de détails sur cet exemplaire",
-    "permission.viewLoans": "Prêts : Voir les emprunts",
-    "permission.viewFeeFines": "Prêts : Voir les frais/amendes",
-    "permission.viewRequests": "Prêts : Afficher les demandes de réservations",
     "fastAddLabel": "Nouvel ajout rapide",
     "confirmStatusModal.heading": "Emprunter l'exemplaire {status} ?",
     "statuses.missing": "Manquant",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Add staff information",
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
-    "action": "Action"
+    "action": "Action",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }

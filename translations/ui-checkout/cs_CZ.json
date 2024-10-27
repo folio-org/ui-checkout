@@ -83,8 +83,7 @@
     "date": "Datum",
     "source": "Zdroj",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong>.",
-    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong> a je potlačena z vyhledávání.",
-    "permission.circulation": "Výpůjčky: Podívat se na jednotky v cirkulaci",
+    "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Čárový kód: {barcode}) má stav jednotky <strong>{status}</strong> a je vyřazena z vyhledávání.",
     "permission.all": "Výpůjčky: Všechna oprávnění",
     "proxy.expiration": "Vypršení platnosti zástupce",
     "due.date": "Termín vrácení",
@@ -93,9 +92,6 @@
     "patron.identifier": "Identifikátor čtenáře",
     "checkout.notes": "Poznámky Výpůjčky",
     "actions.moreDetails": "Získat další detaily o této jednotce",
-    "permission.viewLoans": "Výpůjčky: zobrazit výpůjčky",
-    "permission.viewFeeFines": "Výpůjčky: Zobrazit poplatky/pokuty",
-    "permission.viewRequests": "Výpůjčky: Zobrazit žádanky",
     "fastAddLabel": "Nový záznam rychlého přidání",
     "confirmStatusModal.heading": "Vypůjčit jednotku {status}?",
     "statuses.missing": "Chybějící",
@@ -138,5 +134,9 @@
     "checkout.addInfo.staffInfo.header": "Přidat informace pro zaměstnance",
     "checkout.addInfo.staffInfo.body": "Přidat informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Přidány informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}): {text}",
-    "action": "Akce"
+    "action": "Akce",
+    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.viewLoans.view": "Check out: View loans",
+    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewRequests.view": "Check out: View requests"
 }
