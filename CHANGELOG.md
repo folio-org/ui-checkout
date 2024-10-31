@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## 11.0.0 IN PROGRESS
+## [11.0.0](https://github.com/folio-org/ui-checkout/tree/v11.0.0) (2024-10-31)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.1.0...v11.0.0)
 * Remove bigtests from github actions. Refs UICHKOUT-908.
 * *BREAKING* bump okapiInterfaces `users` to `16.1`. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 * Update upload-artifact actions from v1 and v2 to v4. Refs UICHKOUT-917.
