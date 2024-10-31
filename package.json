@@ -144,7 +144,7 @@
   },
   "optionalDependencies": {
     "@folio/circulation": "^9.0.0",
-    "@folio/plugin-create-inventory-records": "^4.0.0",
+    "@folio/plugin-create-inventory-records": "^5.0.0",
     "@folio/plugin-find-user": "^7.0.0"
   }
 }
