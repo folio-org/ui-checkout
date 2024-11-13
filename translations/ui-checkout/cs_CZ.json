@@ -135,8 +135,8 @@
     "checkout.addInfo.staffInfo.body": "Přidat informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Přidány informace pro zaměstnance pro <strong>{title}({materialType})</strong> (Čárový kód: {barcode}): {text}",
     "action": "Akce",
-    "permission.circulation.execute": "Check out: Check out circulating items",
-    "permission.viewLoans.view": "Check out: View loans",
-    "permission.viewFeeFines.view": "Check out: View fees/fines",
-    "permission.viewRequests.view": "Check out: View requests"
+    "permission.circulation.execute": "Výpůjčky: Podívat se na jednotky v cirkulaci",
+    "permission.viewLoans.view": "Výpůjčky: zobrazit výpůjčky",
+    "permission.viewFeeFines.view": "Výpůjčky: Zobrazit poplatky/pokuty",
+    "permission.viewRequests.view": "Výpůjčky: Zobrazit žádanky"
 }
