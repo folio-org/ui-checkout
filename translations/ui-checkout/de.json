@@ -135,8 +135,8 @@
     "checkout.addInfo.staffInfo.body": "Personalfinformation zu <strong>\n{title} ({materialType})</strong> (Barcode: {barcode}) hinzufügen.",
     "checkout.addInfo.staffInfo.completed": "Personalfinformation zu <strong>{title} ({materialType})\n</strong> (Barcode: {barcode}) hinzugefügt: {text}",
     "action": "Aktion",
-    "permission.circulation.execute": "Check out: Check out circulating items",
-    "permission.viewLoans.view": "Check out: View loans",
-    "permission.viewFeeFines.view": "Check out: View fees/fines",
-    "permission.viewRequests.view": "Check out: View requests"
+    "permission.circulation.execute": "Ausleihe: ausleihbare Exemplare entleihen",
+    "permission.viewLoans.view": "Ausleihe: Ausleihen anzeigen",
+    "permission.viewFeeFines.view": "Ausleihe: Forderungen anzeigen",
+    "permission.viewRequests.view": "Ausleihe: Bestandsanfragen anzeigen"
 }
