@@ -1,5 +1,8 @@
 # Change history for ui-checkout
 
+## [11.0.1] In progress
+* Update permission checks of ui-users
+
 ## [11.0.0](https://github.com/folio-org/ui-checkout/tree/v11.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.1.0...v11.0.0)
 * Remove bigtests from github actions. Refs UICHKOUT-908.
