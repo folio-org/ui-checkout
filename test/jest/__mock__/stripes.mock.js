@@ -2,6 +2,7 @@ import { noop } from 'lodash';
 
 const buildStripes = (otherProperties = {}) => ({
   hasPerm: noop,
+  hasAnyPerm: noop,
   hasInterface: noop,
   clone: noop,
   logger: { log: noop },

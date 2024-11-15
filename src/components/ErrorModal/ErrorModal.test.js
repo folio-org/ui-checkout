@@ -22,7 +22,7 @@ import ErrorModal from './ErrorModal';
 describe('ErrorModal', () => {
   const onClose = jest.fn();
   const openOverrideModal = jest.fn();
-  const hasAnyPerm = (arg) => arg === 'ui-users.overrideItemBlock' || arg === 'ui-users.override-item-block.execute';
+  const hasAnyPerm = (arg) => arg === 'ui-users.overrideItemBlock,ui-users.override-item-block.execute';
   const testIds = {
     errorModal: 'errorModal',
     errorItem: 'errorItem',
@@ -108,7 +108,7 @@ describe('ErrorModal', () => {
         }],
         stripes: {
           ...buildStripes(),
-          hasPerm,
+          hasAnyPerm,
         }
       });
 
@@ -123,7 +123,7 @@ describe('ErrorModal', () => {
         }],
         stripes: {
           ...buildStripes(),
-          hasPerm,
+          hasAnyPerm,
         },
         openOverrideModal,
       });
