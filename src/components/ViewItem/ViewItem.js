@@ -370,7 +370,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.notes" />
             </Button>}
-          { stripes.hasAnyPerm('ui-users.loans.add-patron-info,ui-users.loans-add-info.create') && !isVirtualUser && // stripes.hasAnyPerm('ui-users.loans.add-patron-info,ui-users.loans-add-info.create')
+          { stripes.hasAnyPerm('ui-users.loans.add-patron-info,ui-users.loans-add-info.create') && !isVirtualUser &&
             <Button
               data-test-add-patron-info
               buttonStyle="dropdownItem"
