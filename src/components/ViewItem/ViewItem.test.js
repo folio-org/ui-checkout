@@ -52,6 +52,7 @@ const basicProps = {
   stripes: {
     connect: jest.fn(Component => Component),
     hasPerm: () => true,
+    hasAnyPerm: () => true,
   },
   patron: {
     id: 'patronId',

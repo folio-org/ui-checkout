@@ -106,7 +106,7 @@ function ErrorModal({
     }
   });
 
-  const canBeOverridden = stripes.hasPerm('ui-users.overrideItemBlock')
+  const canBeOverridden = stripes.hasAnyPerm('ui-users.overrideItemBlock,ui-users.override-item-block.execute')
     && containsOverrideErrorMessage;
 
   return (

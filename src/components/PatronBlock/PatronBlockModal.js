@@ -7,7 +7,7 @@ import {
   Modal,
   Row
 } from '@folio/stripes/components';
-import { IfPermission } from '@folio/stripes/core';
+import { IfAnyPermission } from '@folio/stripes/core';
 
 import { renderOrderedPatronBlocks } from '../../util';
 
@@ -42,7 +42,7 @@ const PatronBlockModal = ({
         <Col xs={6}>
           <Row end="xs">
             <Col>
-              <IfPermission perm="ui-users.overridePatronBlock">
+              <IfAnyPermission perm="ui-users.overridePatronBlock,ui-users.override-patron-block.execute">
                 <Button
                   data-test-override-patron-block-button
                   data-testid="overrideButton"
@@ -50,7 +50,7 @@ const PatronBlockModal = ({
                 >
                   <FormattedMessage id="ui-checkout.override" />
                 </Button>
-              </IfPermission>
+              </IfAnyPermission>
               <Button
                 data-test-close-patron-block-modal
                 data-testid="closeButton"

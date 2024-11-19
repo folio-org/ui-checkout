@@ -25,4 +25,5 @@ jest.mock('@folio/stripes/core', () => ({
     </div>
   )),
   IfPermission: jest.fn(({ children }) => <div>{children}</div>),
+  IfAnyPermission: jest.fn(({ children }) => <div>{children}</div>),
 }));

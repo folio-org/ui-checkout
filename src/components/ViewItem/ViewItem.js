@@ -354,7 +354,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.loanPolicy" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.change-due-date') &&
+          { stripes.hasAnyPerm('ui-users.loans.change-due-date,ui-users.loans-due-date.edit') &&
             <Button
               data-test-date-picker
               buttonStyle="dropdownItem"
@@ -370,7 +370,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.notes" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.add-patron-info') && !isVirtualUser &&
+          { stripes.hasAnyPerm('ui-users.loans.add-patron-info,ui-users.loans-add-info.create') && !isVirtualUser &&
             <Button
               data-test-add-patron-info
               buttonStyle="dropdownItem"
@@ -378,7 +378,7 @@ class ViewItem extends React.Component {
             >
               <FormattedMessage id="ui-checkout.checkout.addInfo.patronInfo.button" />
             </Button>}
-          { stripes.hasPerm('ui-users.loans.add-staff-info') && !isVirtualUser &&
+          { stripes.hasAnyPerm('ui-users.loans.add-staff-info,ui-users.loans-add-info.create') && !isVirtualUser &&
             <Button
               data-test-add-staff-info
               buttonStyle="dropdownItem"
