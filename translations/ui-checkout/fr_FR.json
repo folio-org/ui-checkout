@@ -5,7 +5,7 @@
     "checkoutDateRangeError": "L'exemplaire ne peut être emprunté car la date du prêt ne correspond pas aux dates indiquées dans la règle de prêt. Merci de vérifier {name} avant de retenter.",
     "itemNotFoundError": "L'exemplaire avec ce code-barres n'existe pas",
     "itemNotAvailableError": "L'exemplaire n'est pas disponible à l'emprunt",
-    "itemNotCheckedOut": "Exemplaire non emprunté",
+    "itemNotCheckedOut": "L'exemplaire n'a pas pu être emprunté",
     "userNotFoundError": "L'utilisateur avec l'identifiant {identifier} n'existe pas",
     "missingIdentifierError": "L'utilisateur {username} n'a pas de {identifier}",
     "scanPatronCard": "Scanner la carte de l'usager",
