@@ -97,7 +97,7 @@ class CheckOut extends React.Component {
       records: 'automatedPatronBlocks',
       path: 'automated-patron-blocks/%{activeRecord.patronId}',
       params: { limit: MAX_RECORDS },
-      permissionsRequired: 'automated-patron-blocks.collection.get',
+      permissionsRequired: 'patron-blocks.automated-patron-blocks.collection.get',
       accumulate: true,
       abortOnUnmount: true,
     },
