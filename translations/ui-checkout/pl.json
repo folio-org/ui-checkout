@@ -24,7 +24,7 @@
     "continue": "Kontynuuj",
     "orActingAsProxy": "Lub działa jako pełnomocnik dla",
     "scanOrEnterPatronId": "Zeskanuj lub prowadź czytelnika {identifier}",
-    "patronLookup": "Wyszukiwanie czytelnika",
+    "patronLookup": "Znajdź czytelnika",
     "scanOrEnterItemBarcode": "Zeskanuj lub wprowadź kod kreskowy egzemplarza",
     "user.name": "Nazwa",
     "user.username": "Nazwa użytkownika",
@@ -79,7 +79,7 @@
     "overrideLoanPolicy": "Zastąpione zasady wpożyczania",
     "confirm": "Potwierdź",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) zostanie <strong>wypożyczony</strong>.",
-    "openRequests": "Otwarte zamówienia",
+    "openRequests": "Otwarte rezerwacje",
     "date": "Data",
     "source": "Źródło",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Kod kreskowy: {barcode}) egzemplarz ma status <strong>{status}</strong>.",
@@ -137,6 +137,6 @@
     "action": "Akcja",
     "permission.circulation.execute": "Check out: Check out circulating items",
     "permission.viewLoans.view": "Check out: View loans",
-    "permission.viewFeeFines.view": "Check out: View fees/fines",
+    "permission.viewFeeFines.view": "Wypożyczenia: wyświetlanie opłat/kar",
     "permission.viewRequests.view": "Check out: View requests"
 }
