@@ -1,6 +1,10 @@
 # Change history for ui-checkout
 
 ## [11.1.0] In progress
+
+
+## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
 * Update permission after mod-patron-blocks permission changes. Refs UICHKOUT-930.
 
 ## [11.0.1](https://github.com/folio-org/ui-checkout/tree/v11.0.1) (2024-11-22)
