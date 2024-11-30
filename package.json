@@ -49,7 +49,7 @@
           "proxiesfor.collection.get",
           "accounts.collection.get",
           "manualblocks.collection.get",
-          "automated-patron-blocks.collection.get",
+          "patron-blocks.automated-patron-blocks.collection.get",
           "module.checkout.enabled",
           "inventory.items.collection.get",
           "circulation.check-out-by-barcode.post",
