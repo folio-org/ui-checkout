@@ -57,16 +57,16 @@ function OverrideModal(props) {
     closeOverrideModal,
     onOverride,
     overrideError,
-    overridePatronBlock,
+    overridePatronBlock = false,
     patronBlockOverriddenInfo: {
       comment: patronBlockOverriddenComment = '',
-    },
-    patronBlocks,
-    item,
+    } = {},
+    patronBlocks = [],
+    item = {},
     item: {
       title,
       barcode,
-    },
+    } = {},
   } = props;
   const { timeZone } = useIntl();
   const [comment, setAdditionalInfo] = useState(patronBlockOverriddenComment);
@@ -249,10 +249,4 @@ OverrideModal.propTypes = {
   patronBlockOverriddenInfo: PropTypes.object,
 };
 
-OverrideModal.defaultProps = {
-  item: {},
-  overridePatronBlock: false,
-  patronBlocks: [],
-  patronBlockOverriddenInfo: {},
-};
 export default OverrideModal;

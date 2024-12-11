@@ -23,7 +23,7 @@ function ErrorModal({
   open,
   onClose,
   errors,
-  openOverrideModal,
+  openOverrideModal = noop,
   stripes,
   item: {
     title,
@@ -154,11 +154,6 @@ ErrorModal.propTypes = {
     PropTypes.object
   ).isRequired,
   openOverrideModal: PropTypes.func,
-};
-
-ErrorModal.defaultProps = {
-  item: {},
-  openOverrideModal: noop,
 };
 
 export default ErrorModal;
