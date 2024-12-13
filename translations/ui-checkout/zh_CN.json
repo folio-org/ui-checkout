@@ -135,8 +135,8 @@
     "checkout.addInfo.staffInfo.body": "添加<strong> {title} ( {materialType} ) </strong>的员工信息（条码： {barcode} ）。",
     "checkout.addInfo.staffInfo.completed": "添加了<strong> {title} ( {materialType} ) </strong>的员工信息（条码： {barcode} ）： {text}",
     "action": "操作",
-    "permission.circulation.execute": "Check out: Check out circulating items",
-    "permission.viewLoans.view": "Check out: View loans",
-    "permission.viewFeeFines.view": "Check out: View fees/fines",
-    "permission.viewRequests.view": "Check out: View requests"
+    "permission.circulation.execute": "借出：借出流通单件",
+    "permission.viewLoans.view": "借出：查看借阅",
+    "permission.viewFeeFines.view": "借出：查看费用/罚款",
+    "permission.viewRequests.view": "借出：查看请求"
 }
