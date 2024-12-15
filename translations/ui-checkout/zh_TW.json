@@ -23,7 +23,7 @@
     "proxyExpired": "代理關係已過期",
     "continue": "繼續",
     "orActingAsProxy": "或作為此人的代理",
-    "scanOrEnterPatronId": "掃描或輸入讀者證號{identifier}",
+    "scanOrEnterPatronId": "掃描或輸入讀者證號 {identifier}",
     "patronLookup": "查詢讀者",
     "scanOrEnterItemBarcode": "掃描或輸入館藏條碼",
     "user.name": "名稱",
