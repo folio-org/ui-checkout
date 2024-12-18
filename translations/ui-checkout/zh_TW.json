@@ -8,7 +8,7 @@
     "itemNotCheckedOut": "館藏未被借出",
     "userNotFoundError": "具有此{identifier}的使用者不存在",
     "missingIdentifierError": "使用者 {username} 没有 {identifier}",
-    "scanPatronCard": "掃描讀者證",
+    "scanPatronCard": "掃描讀者借書憑證",
     "scanItems": "掃描館藏",
     "openLoans": "未歸還借閱",
     "borrowerProxy": "借閱者的代理",
