@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   FormattedMessage,
-  injectIntl,
 } from 'react-intl';
 
 import {
@@ -58,9 +57,6 @@ class UserDetail extends React.Component {
     id: PropTypes.string.isRequired,
     label: PropTypes.node,
     settings: PropTypes.arrayOf(PropTypes.object).isRequired,
-    intl: PropTypes.shape({
-      formatMessage: PropTypes.func.isRequired,
-    }).isRequired,
     ariaLabel: PropTypes.node,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({
@@ -81,20 +77,14 @@ class UserDetail extends React.Component {
   };
 
   getUserValue = (user) => {
-    const {
-      ariaLabel,
-      intl: {
-        formatMessage,
-      },
-    } = this.props;
-    const userAriaLabel = ariaLabel || formatMessage({ id: 'ui-checkout.borrower.ariaLabel' });
+    const { ariaLabel } = this.props;
     const path = `/users/view/${user.id}`;
 
     return (
       <span>
         <Link
           className={css.marginRight}
-          aria-label={userAriaLabel}
+          aria-label={ariaLabel}
           to={path}
         >
           <strong data-test-check-out-patron-full-name>
@@ -109,7 +99,7 @@ class UserDetail extends React.Component {
         {
           user.barcode ?
             <Link
-              aria-label={userAriaLabel}
+              aria-label={ariaLabel}
               to={path}
             >
               {user.barcode}
@@ -129,9 +119,6 @@ class UserDetail extends React.Component {
       settings,
       renderLoans,
       stripes,
-      intl: {
-        formatMessage,
-      },
     } = this.props;
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
@@ -190,7 +177,6 @@ class UserDetail extends React.Component {
             resources={resources}
             stripes={stripes}
             user={user}
-            formatMessage={formatMessage}
           />
         )}
       </div>
@@ -198,4 +184,4 @@ class UserDetail extends React.Component {
   }
 }
 
-export default withStripes(injectIntl(UserDetail));
+export default withStripes(UserDetail);

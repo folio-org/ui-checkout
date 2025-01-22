@@ -40,7 +40,6 @@ describe('Loans', () => {
       barcode: 0,
       id: 0,
     },
-    formatMessage: jest.fn(),
   };
   const renderComponent = (props) => {
     const combined = {

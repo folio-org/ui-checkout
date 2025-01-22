@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import {
   FormattedMessage,
   FormattedNumber,
+  useIntl,
 } from 'react-intl';
 
 import {
@@ -24,8 +25,8 @@ function Loans({
   resources,
   stripes,
   user,
-  formatMessage,
 }) {
+  const { formatMessage } = useIntl();
   const renderOpenRequests = useMemo(() => {
     const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
     const openRequestStatuses = [
@@ -165,7 +166,6 @@ Loans.propTypes = {
     }),
   }),
   stripes: stripesShape.isRequired,
-  formatMessage: PropTypes.func.isRequired,
   user: PropTypes.object,
 };
 

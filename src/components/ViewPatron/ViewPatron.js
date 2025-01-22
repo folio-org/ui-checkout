@@ -65,6 +65,7 @@ class ViewPatron extends React.Component {
           user={patron}
           renderLoans
           settings={settings}
+          ariaLabel={formatMessage({ id: 'ui-checkout.borrower.ariaLabel' })}
           {...this.props}
         />
       </div>
