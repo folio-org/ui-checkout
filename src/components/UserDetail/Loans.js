@@ -24,6 +24,7 @@ function Loans({
   resources,
   stripes,
   user,
+  formatMessage,
 }) {
   const renderOpenRequests = useMemo(() => {
     const openRequestsCount = get(resources.openRequests, ['records', '0', 'totalRecords'], 0);
@@ -45,6 +46,7 @@ function Loans({
         <Link
           data-test-open-requests-count
           data-testid="openRequestsCountLink"
+          aria-label={formatMessage({ id: 'ui-checkout.openRequests.ariaLabel' })}
           to={openRequestsPath}
         >
           <FormattedNumber value={openRequestsCount} />
@@ -100,6 +102,7 @@ function Loans({
   const openLoansLink = stripes.hasPerm('ui-checkout.viewLoans.view,ui-users.loans.view') ?
     <Link
       data-testid="openLoansLink"
+      aria-label={formatMessage({ id: 'ui-checkout.loanDetails.ariaLabel' })}
       to={openLoansPath}
     >
       {openLoansCount}
@@ -162,6 +165,7 @@ Loans.propTypes = {
     }),
   }),
   stripes: stripesShape.isRequired,
+  formatMessage: PropTypes.func.isRequired,
   user: PropTypes.object,
 };
 

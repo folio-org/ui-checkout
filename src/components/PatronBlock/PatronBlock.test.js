@@ -22,6 +22,7 @@ describe('PatronBlock', () => {
       user: {
         id: 0,
       },
+      formatMessage: jest.fn(),
       ...props,
     };
 

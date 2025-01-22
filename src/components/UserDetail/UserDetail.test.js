@@ -51,6 +51,9 @@ const basicProps = {
   },
   renderLoans: true,
   stripes: STRIPES,
+  intl: {
+    formatMessage: jest.fn(),
+  },
 };
 const labelIds = {
   patronGroup: 'ui-checkout.user.patronGroup',

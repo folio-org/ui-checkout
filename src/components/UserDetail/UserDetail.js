@@ -2,9 +2,7 @@ import { get } from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import {
   withStripes,
@@ -57,6 +55,7 @@ class UserDetail extends React.Component {
     id: PropTypes.string.isRequired,
     label: PropTypes.node,
     settings: PropTypes.arrayOf(PropTypes.object).isRequired,
+    ariaLabel: PropTypes.node,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -76,12 +75,16 @@ class UserDetail extends React.Component {
   };
 
   getUserValue = (user) => {
+    const {
+      ariaLabel,
+    } = this.props;
     const path = `/users/view/${user.id}`;
 
     return (
       <span>
         <Link
           className={css.marginRight}
+          aria-label={ariaLabel}
           to={path}
         >
           <strong data-test-check-out-patron-full-name>
@@ -93,7 +96,16 @@ class UserDetail extends React.Component {
           tagName="strong"
         />
         {' '}
-        {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : <NoValue />}
+        {
+          user.barcode ?
+            <Link
+              aria-label={ariaLabel}
+              to={path}
+            >
+              {user.barcode}
+            </Link> :
+            <NoValue />
+        }
       </span>
     );
   };
@@ -107,16 +119,18 @@ class UserDetail extends React.Component {
       settings,
       renderLoans,
       stripes,
+      intl: {
+        formatMessage,
+      },
     } = this.props;
-
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
     const statusVal = (get(user, ['active'], '') ? 'ui-checkout.active' : 'ui-checkout.inactive');
-
     const profilePictureLink = user?.personal?.profilePictureLink;
     const profilePicturesEnabled = Boolean(settings.length) && settings[0].enabled;
     const hasViewProfilePicturePerm = stripes.hasPerm('ui-users.profile-pictures.view');
     const displayProfilePicture = profilePicturesEnabled && hasViewProfilePicturePerm;
+
     return (
       <div id={id}>
         <div>
@@ -166,6 +180,7 @@ class UserDetail extends React.Component {
             resources={resources}
             stripes={stripes}
             user={user}
+            formatMessage={formatMessage}
           />
         )}
       </div>
