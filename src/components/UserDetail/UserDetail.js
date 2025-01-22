@@ -57,6 +57,7 @@ class UserDetail extends React.Component {
     id: PropTypes.string.isRequired,
     label: PropTypes.node,
     settings: PropTypes.arrayOf(PropTypes.object).isRequired,
+    ariaLabel: PropTypes.node,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),
@@ -76,12 +77,14 @@ class UserDetail extends React.Component {
   };
 
   getUserValue = (user) => {
+    const { ariaLabel } = this.props;
     const path = `/users/view/${user.id}`;
 
     return (
       <span>
         <Link
           className={css.marginRight}
+          aria-label={ariaLabel}
           to={path}
         >
           <strong data-test-check-out-patron-full-name>
@@ -93,7 +96,16 @@ class UserDetail extends React.Component {
           tagName="strong"
         />
         {' '}
-        {user.barcode ? (<Link to={path}>{user.barcode}</Link>) : <NoValue />}
+        {
+          user.barcode ?
+            <Link
+              aria-label={ariaLabel}
+              to={path}
+            >
+              {user.barcode}
+            </Link> :
+            <NoValue />
+        }
       </span>
     );
   };
@@ -108,15 +120,14 @@ class UserDetail extends React.Component {
       renderLoans,
       stripes,
     } = this.props;
-
     const patronGroups = (resources.patronGroups || {}).records || [];
     const patronGroup = patronGroups[0] || {};
     const statusVal = (get(user, ['active'], '') ? 'ui-checkout.active' : 'ui-checkout.inactive');
-
     const profilePictureLink = user?.personal?.profilePictureLink;
     const profilePicturesEnabled = Boolean(settings.length) && settings[0].enabled;
     const hasViewProfilePicturePerm = stripes.hasPerm('ui-users.profile-pictures.view');
     const displayProfilePicture = profilePicturesEnabled && hasViewProfilePicturePerm;
+
     return (
       <div id={id}>
         <div>

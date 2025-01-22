@@ -104,6 +104,7 @@ describe('ViewPatron', () => {
       const expectedProps = {
         patronBlocksCount: basicProps.patronBlocks.length,
         user: basicProps.patron,
+        formatMessage: expect.any(Function),
       };
 
       expect(PatronBlock).toHaveBeenCalledWith(expectedProps, {});
@@ -166,6 +167,7 @@ describe('ViewPatron', () => {
       const expectedProps = {
         patronBlocksCount: 0,
         user: basicProps.patron,
+        formatMessage: expect.any(Function),
       };
 
       expect(PatronBlock).toHaveBeenCalledWith(expectedProps, {});
