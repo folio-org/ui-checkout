@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+} from 'react-intl';
 
 import {
   Col,
@@ -22,6 +25,9 @@ class ViewPatron extends React.Component {
     proxy: PropTypes.object.isRequired,
     onSelectPatron: PropTypes.func.isRequired,
     onClearPatron: PropTypes.func.isRequired,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
     settings: PropTypes.arrayOf(PropTypes.object),
   };
@@ -42,6 +48,9 @@ class ViewPatron extends React.Component {
       onClearPatron,
       patronBlocks,
       settings,
+      intl: {
+        formatMessage,
+      },
     } = this.props;
 
     const patronDetail = (
@@ -68,6 +77,7 @@ class ViewPatron extends React.Component {
           label={<FormattedMessage id="ui-checkout.borrowerProxy" />}
           user={proxy}
           settings={settings}
+          ariaLabel={formatMessage({ id: 'ui-checkout.proxy.ariaLabel' })}
         />
         <div className={css.section}>
           <Row>
@@ -88,6 +98,7 @@ class ViewPatron extends React.Component {
         <PatronBlock
           patronBlocksCount={patronBlocks.length || 0}
           user={patron}
+          formatMessage={formatMessage}
         />
         {proxy.id && proxy.id !== patron.id && proxyDetail}
         <this.connectedProxyManager
@@ -101,4 +112,4 @@ class ViewPatron extends React.Component {
   }
 }
 
-export default ViewPatron;
+export default injectIntl(ViewPatron);

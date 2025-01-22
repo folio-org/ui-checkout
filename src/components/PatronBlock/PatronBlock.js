@@ -14,6 +14,7 @@ import css from './PatronBlock.css';
 
 class PatronBlock extends React.Component {
   static propTypes = {
+    formatMessage: PropTypes.func.isRequired,
     patronBlocksCount: PropTypes.number,
     user: PropTypes.object,
   };
@@ -22,13 +23,19 @@ class PatronBlock extends React.Component {
     const {
       patronBlocksCount,
       user,
+      formatMessage,
     } = this.props;
 
     const viewUserPath = `/users/view/${user.id}`;
     const patronMessage = <FormattedMessage id="ui-checkout.patronBlocksCount" values={{ count: patronBlocksCount }} />;
     const viewUserLink = (
       <div data-testid="patronBlockLink">
-        <Link to={viewUserPath}>{patronBlocksCount}</Link>
+        <Link
+          to={viewUserPath}
+          aria-label={formatMessage({ id: 'ui-checkout.patronBlocks.ariaLabel' })}
+        >
+          {patronBlocksCount}
+        </Link>
         <span className={css.warnMessage}>{patronMessage}</span>
       </div>
     );

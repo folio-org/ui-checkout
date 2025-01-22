@@ -89,6 +89,12 @@
   "error.oops": "Uh-oh!",
   "error.routing": "How did you get to {pathname}?",
 
+  "borrower.ariaLabel": "View borrower record",
+  "proxy.ariaLabel": "View borrower's proxy record",
+  "loanDetails.ariaLabel": "View open loan details",
+  "openRequests.ariaLabel": "View open requests",
+  "patronBlocks.ariaLabel": "View patron blocks",
+
   "user.name": "Name",
   "user.username": "Username",
   "user.barcode": "Barcode",
