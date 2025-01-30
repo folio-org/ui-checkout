@@ -138,5 +138,10 @@
     "permission.circulation.execute": "借出：借出流通单件",
     "permission.viewLoans.view": "借出：查看借阅",
     "permission.viewFeeFines.view": "借出：查看费用/罚款",
-    "permission.viewRequests.view": "借出：查看请求"
+    "permission.viewRequests.view": "借出：查看请求",
+    "borrower.ariaLabel": "View borrower record",
+    "proxy.ariaLabel": "View borrower's proxy record",
+    "loanDetails.ariaLabel": "View open loan details",
+    "openRequests.ariaLabel": "View open requests",
+    "patronBlocks.ariaLabel": "View patron blocks"
 }

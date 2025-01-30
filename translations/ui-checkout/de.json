@@ -138,5 +138,10 @@
     "permission.circulation.execute": "Ausleihe: ausleihbare Exemplare entleihen",
     "permission.viewLoans.view": "Ausleihe: Ausleihen anzeigen",
     "permission.viewFeeFines.view": "Ausleihe: Forderungen anzeigen",
-    "permission.viewRequests.view": "Ausleihe: Bestandsanfragen anzeigen"
+    "permission.viewRequests.view": "Ausleihe: Bestandsanfragen anzeigen",
+    "borrower.ariaLabel": "View borrower record",
+    "proxy.ariaLabel": "View borrower's proxy record",
+    "loanDetails.ariaLabel": "View open loan details",
+    "openRequests.ariaLabel": "View open requests",
+    "patronBlocks.ariaLabel": "View patron blocks"
 }

@@ -138,5 +138,10 @@
     "permission.circulation.execute": "Výpůjčky: Podívat se na jednotky v cirkulaci",
     "permission.viewLoans.view": "Výpůjčky: zobrazit výpůjčky",
     "permission.viewFeeFines.view": "Výpůjčky: Zobrazit poplatky/pokuty",
-    "permission.viewRequests.view": "Výpůjčky: Zobrazit žádanky"
+    "permission.viewRequests.view": "Výpůjčky: Zobrazit žádanky",
+    "borrower.ariaLabel": "View borrower record",
+    "proxy.ariaLabel": "View borrower's proxy record",
+    "loanDetails.ariaLabel": "View open loan details",
+    "openRequests.ariaLabel": "View open requests",
+    "patronBlocks.ariaLabel": "View patron blocks"
 }

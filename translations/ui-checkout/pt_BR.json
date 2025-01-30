@@ -138,5 +138,10 @@
     "permission.circulation.execute": "Empréstimo: Emprestar itens",
     "permission.viewLoans.view": "Empréstimos: Ver empréstimos",
     "permission.viewFeeFines.view": "Empréstimos: Ver taxas/multas",
-    "permission.viewRequests.view": "Empréstimos: Ver requisições"
+    "permission.viewRequests.view": "Empréstimos: Ver requisições",
+    "borrower.ariaLabel": "Ver registro do usuário",
+    "proxy.ariaLabel": "Ver registro de procuração do usuário",
+    "loanDetails.ariaLabel": "Ver detalhes do empréstimo em aberto",
+    "openRequests.ariaLabel": "Ver requisições abertas",
+    "patronBlocks.ariaLabel": "Ver suspensão do usuário"
 }
