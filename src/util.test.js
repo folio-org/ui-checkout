@@ -14,6 +14,7 @@ import {
   renderOrderedPatronBlocks,
   isDCBItem,
   isDCBUser,
+  getFormattedPronouns,
 } from './util';
 import {
   defaultPatronIdentifier,
@@ -31,9 +32,11 @@ describe('util', () => {
   const lastName = 'LastName';
   const firstName = 'FirstName';
   const middleName = 'MiddleName';
+  const pronouns = 'xy/yx';
   const personal = {
     lastName,
     firstName,
+    pronouns,
   };
   const user = {
     personal,
@@ -91,6 +94,12 @@ describe('util', () => {
           preferredFirstName,
         },
       })).toEqual('LastName, FirstName MiddleName');
+    });
+  });
+
+  describe('getFormattedPronouns', () => {
+    it('returns formatted pronouns', () => {
+      expect(getFormattedPronouns(user)).toEqual('(xy/yx)');
     });
   });
 

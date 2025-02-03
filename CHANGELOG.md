@@ -1,8 +1,9 @@
 # Change history for ui-checkout
 
-## [11.1.0] In progress
+## [12.0.0] In progress
 * React v19: refactor away from default props for functional components. Refs UICHKOUT-909.
 * Fix accessibility issues. Refs UICHKOUT-933.
+* *BREAKING* Display user pronouns at check out. Refs UICHKOUT-932.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)

@@ -23,6 +23,12 @@ export function getFullName(user) {
   return `${user?.personal?.lastName || ''}, ${user?.personal?.preferredFirstName || user?.personal?.firstName || ''} ${user?.personal?.middleName || ''}`;
 }
 
+export function getFormattedPronouns(user) {
+  const pronouns = user?.personal?.pronouns;
+
+  return pronouns ? `(${pronouns})` : undefined;
+}
+
 export function getCheckoutSettings(checkoutSettings) {
   if (!checkoutSettings.length) return undefined;
 

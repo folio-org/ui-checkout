@@ -9,6 +9,7 @@ import '../../../test/jest/__mock__/stripesSmartComponents.mock';
 
 jest.mock('./Loans', () => jest.fn(() => <div />));
 jest.mock('../../util', () => ({
+  ...jest.requireActual('../../util'),
   getFullName: jest.fn((user) => user.personal.lastName),
 }));
 
@@ -23,6 +24,7 @@ const basicProps = {
     personal: {
       lastName: 'lastName',
       profilePictureLink: 'profilePictureLink',
+      pronouns: 'xe/xi',
     },
     active: true,
     expirationDate: '01/01/2023',
@@ -86,6 +88,12 @@ describe('UserDetail', () => {
       const userName = screen.getByText(basicProps.user.personal.lastName);
 
       expect(userName).toBeVisible();
+    });
+
+    it('should render user pronouns', () => {
+      const pronouns = screen.getByText(`(${basicProps.user.personal.pronouns})`);
+
+      expect(pronouns).toBeVisible();
     });
 
     it('should render barcode label', () => {
