@@ -19,8 +19,20 @@ import {
   DCB_USER_LASTNAME,
 } from './constants';
 
+/**
+ * getFullName
+ * Format a name like "Last, First Middle" or "Last, Preferred Middle" or
+ * "Last, First" or ... you get the idea.
+ * @param {*} user
+ * @returns {string}
+ */
 export function getFullName(user) {
-  return `${user?.personal?.lastName || ''}, ${user?.personal?.preferredFirstName || user?.personal?.firstName || ''} ${user?.personal?.middleName || ''}`;
+  const parts = [
+    user?.personal?.preferredFirstName ? user?.personal?.preferredFirstName : user?.personal?.firstName,
+    user?.personal?.middleName,
+  ];
+
+  return [user?.personal?.lastName, parts.filter(Boolean).join(' ')].filter(Boolean).join(', ');
 }
 
 export function getFormattedPronouns(user) {

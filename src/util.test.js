@@ -47,23 +47,23 @@ describe('util', () => {
   const { OPEN_AWAITING_PICKUP } = OPEN_REQUEST_STATUSES;
 
   describe('getFullName', () => {
-    it('should not return user personal data', () => {
-      expect(getFullName({})).toEqual(',  ');
+    it('handles empty personal data', () => {
+      expect(getFullName({})).toEqual('');
     });
 
-    it('should return last name', () => {
+    it('handles { last }', () => {
       expect(getFullName({
         personal: {
           lastName,
         },
-      })).toEqual('LastName,  ');
+      })).toEqual('LastName');
     });
 
-    it('should return last name and first name', () => {
-      expect(getFullName(user)).toEqual('LastName, FirstName ');
+    it('handles {last, first}', () => {
+      expect(getFullName(user)).toEqual('LastName, FirstName');
     });
 
-    it('should return last name, first name and middle name', () => {
+    it('handles { last, first, middle }', () => {
       expect(getFullName({
         personal: {
           ...personal,
@@ -72,7 +72,7 @@ describe('util', () => {
       })).toEqual('LastName, FirstName MiddleName');
     });
 
-    it('should return last name, preferred first name and middle name', () => {
+    it('handles preferred', () => {
       const preferredFirstName = 'PreferredFirstName';
 
       expect(getFullName({
@@ -84,7 +84,7 @@ describe('util', () => {
       })).toEqual('LastName, PreferredFirstName MiddleName');
     });
 
-    it('should handle empty preferred first name', () => {
+    it('handles empty preferred value', () => {
       const preferredFirstName = '';
 
       expect(getFullName({
