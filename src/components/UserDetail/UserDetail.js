@@ -20,7 +20,7 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
-import { getFullName } from '../../util';
+import { getFormattedPronouns, getFullName } from '../../util';
 import Loans from './Loans';
 
 import {
@@ -79,18 +79,30 @@ class UserDetail extends React.Component {
   getUserValue = (user) => {
     const { ariaLabel } = this.props;
     const path = `/users/view/${user.id}`;
+    const pronouns = getFormattedPronouns(user);
 
     return (
       <span>
-        <Link
-          className={css.marginRight}
-          aria-label={ariaLabel}
-          to={path}
-        >
-          <strong data-test-check-out-patron-full-name>
-            {getFullName(user)}
-          </strong>
-        </Link>
+        <span className={css.marginRight}>
+          <Link
+            aria-label={ariaLabel}
+            to={path}
+          >
+            <strong
+              data-test-check-out-patron-full-name
+              className={css.fullName}
+            >
+              {getFullName(user)}
+            </strong>
+          </Link>
+          {
+            pronouns && (
+              <span>
+                {pronouns}
+              </span>
+            )
+          }
+        </span>
         <FormattedMessage
           id="ui-checkout.user.detail.barcode"
           tagName="strong"
