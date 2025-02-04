@@ -88,7 +88,10 @@ class UserDetail extends React.Component {
             aria-label={ariaLabel}
             to={path}
           >
-            <strong data-test-check-out-patron-full-name>
+            <strong
+              data-test-check-out-patron-full-name
+              className={css.fullName}
+            >
               {getFullName(user)}
             </strong>
           </Link>
