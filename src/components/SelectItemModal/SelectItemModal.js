@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+
 import {
   Modal,
   Paneset,
   Pane,
   MultiColumnList,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
+
+import { MAX_ITEMS_RECORDS } from '../../constants';
 
 import css from './SelectItemModal.css';
 
@@ -58,7 +62,18 @@ const SelectItemModal = ({
   checkoutItems,
   onClose,
   onSelectItem,
+  totalRecords,
+  onNeedMoreData,
+  barcode,
+  pagingOffset,
 }) => {
+  const getMoreData = (askAmount, index, firstIndex, direction) => {
+    // console.log('ARGS: (askAmount, index, firstIndex, direction)', askAmount, index, firstIndex, direction);
+    onNeedMoreData(barcode, index);
+  };
+  const pagingCanGoPrevious = pagingOffset > 0;
+  const pagingCanGoNext = pagingOffset < totalRecords && totalRecords - pagingOffset > MAX_ITEMS_RECORDS;
+
   return (
     <Modal
       data-test-select-item-modal
@@ -77,7 +92,7 @@ const SelectItemModal = ({
         <Pane
           id="items-dialog-items-list"
           paneTitle={<FormattedMessage id="ui-checkout.selectItemModal.itemListHeader" />}
-          paneSub={<FormattedMessage id="ui-checkout.selectItemModal.resultCount" values={{ count: checkoutItems.length }} />}
+          paneSub={<FormattedMessage id="ui-checkout.selectItemModal.resultCount" values={{ count: totalRecords }} />}
           defaultWidth="fill"
         >
           <MultiColumnList
@@ -90,6 +105,13 @@ const SelectItemModal = ({
             formatter={formatter}
             maxHeight={MAX_HEIGHT}
             onRowClick={onSelectItem}
+            totalCount={totalRecords}
+            onNeedMoreData={getMoreData}
+            pageAmount={MAX_ITEMS_RECORDS}
+            pagingType={MCLPagingTypes.PREV_NEXT}
+            pagingCanGoPrevious={pagingCanGoPrevious}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingOffset={pagingOffset}
           />
         </Pane>
       </Paneset>
