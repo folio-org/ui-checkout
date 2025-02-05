@@ -79,7 +79,7 @@ class UserDetail extends React.Component {
   getUserValue = (user) => {
     const { ariaLabel } = this.props;
     const path = `/users/view/${user.id}`;
-    const pronouns = getFormattedPronouns(user);
+    const pronouns = getFormattedPronouns(user, true);
 
     return (
       <span>
@@ -88,10 +88,7 @@ class UserDetail extends React.Component {
             aria-label={ariaLabel}
             to={path}
           >
-            <strong
-              data-test-check-out-patron-full-name
-              className={css.fullName}
-            >
+            <strong data-test-check-out-patron-full-name>
               {getFullName(user)}
             </strong>
           </Link>

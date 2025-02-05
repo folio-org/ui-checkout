@@ -35,10 +35,10 @@ export function getFullName(user) {
   return [user?.personal?.lastName, parts.filter(Boolean).join(' ')].filter(Boolean).join(', ');
 }
 
-export function getFormattedPronouns(user) {
+export function getFormattedPronouns(user, withPrefixSpace = false) {
   const pronouns = user?.personal?.pronouns;
 
-  return pronouns ? `(${pronouns})` : undefined;
+  return pronouns ? `${withPrefixSpace ? ' ' : ''}(${pronouns})` : undefined;
 }
 
 export function getCheckoutSettings(checkoutSettings) {
