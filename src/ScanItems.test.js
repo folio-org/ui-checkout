@@ -10,7 +10,7 @@ import ScanItems, {
   playSound,
 } from './ScanItems';
 import ItemForm from './components/ItemForm';
-import { MAX_RECORDS_FOR_CHUNK } from './constants';
+import { MAX_ITEMS_RECORDS } from './constants';
 
 const basicProps = {
   stripes: {
@@ -394,7 +394,7 @@ describe('ScanItems', () => {
       expect(basicProps.mutator.addInfo.POST).toHaveBeenCalledWith(expectedArg);
     });
 
-    describe('When "totalRecords" of items is less than "MAX_RECORDS_FOR_CHUNK"', () => {
+    describe('When "totalRecords" of items more than one', () => {
       beforeEach(() => {
         basicProps.mutator.items.GET.mockResolvedValueOnce({
           totalRecords: 2,
@@ -421,49 +421,16 @@ describe('ScanItems', () => {
         });
       });
 
-      it('should retrieve items if "wildcardLookupEnabled" is false', async () => {
+      it('should retrieve items', async () => {
         const expectedArg = {
           params: {
             query: `barcode=="${dataWithItem.item.barcode}"`,
-            limit: MAX_RECORDS_FOR_CHUNK,
+            limit: MAX_ITEMS_RECORDS,
+            offset: 0,
           },
         };
 
         renderScanItems(basicProps, dataWithItem);
-
-        const itemForm = screen.getByTestId(testIds.itemForm);
-
-        fireEvent.submit(itemForm);
-
-        await waitFor(() => {
-          expect(basicProps.mutator.items.GET).toHaveBeenCalledWith(expectedArg);
-        });
-      });
-
-      it('should retrieve items if "wildcardLookupEnabled" is true', async () => {
-        const expectedArg = {
-          params: {
-            query: `barcode=="${dataWithItem.item.barcode}*"`,
-            limit: MAX_RECORDS_FOR_CHUNK,
-          },
-        };
-        const props = {
-          ...basicProps,
-          settings: {
-            ...basicProps.settings,
-            wildcardLookupEnabled: true,
-          },
-          patronBlocks: [
-            {
-              id: 'patronBlocksId',
-            }
-          ],
-          patronBlockOverriddenInfo: {
-            patronId: 'patronId',
-          },
-        };
-
-        renderScanItems(props, dataWithItem);
 
         const itemForm = screen.getByTestId(testIds.itemForm);
 
@@ -490,30 +457,6 @@ describe('ScanItems', () => {
           fireEvent.click(closeSelectModalButton);
 
           expect(ItemForm).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
-        });
-      });
-    });
-
-    describe('When "totalRecords" of items is more than "MAX_RECORDS_FOR_CHUNK"', () => {
-      it('should get items twice', async () => {
-        const totalRecords = MAX_RECORDS_FOR_CHUNK + 1;
-        basicProps.mutator.items.GET
-          .mockResolvedValueOnce({
-            totalRecords,
-            items: new Array(totalRecords).fill({}),
-          })
-          .mockResolvedValueOnce({
-            items: [{}],
-          });
-
-        renderScanItems(basicProps, dataWithItem);
-
-        const itemForm = screen.getByTestId(testIds.itemForm);
-
-        fireEvent.submit(itemForm);
-
-        await waitFor(() => {
-          expect(basicProps.mutator.items.GET).toHaveBeenCalledTimes(2);
         });
       });
     });
