@@ -49,7 +49,7 @@ export const errorTypes = {
   ITEM_CHECKED_OUT: 4,
 };
 
-export const MAX_RECORDS_FOR_CHUNK = 40;
+export const MAX_ITEMS_RECORDS = 100;
 export const MAX_RECORDS = '10000';
 
 export const INVALID_DATE_MESSAGE = 'Invalid date';
