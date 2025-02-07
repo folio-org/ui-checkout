@@ -56,6 +56,12 @@ const propTypes = {
   checkoutItems: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
+  totalRecords: PropTypes.number.isRequired,
+  pagingOffset: PropTypes.number.isRequired,
+  onNeedMoreData: PropTypes.func.isRequired,
+  barcode: PropTypes.oneOfType([
+    PropTypes.oneOf([null, PropTypes.string])
+  ]).isRequired,
 };
 
 const SelectItemModal = ({
