@@ -1,11 +1,13 @@
 import {
   render,
   screen,
+  fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import {
   Modal,
   MultiColumnList,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
 
 import SelectItemModal, {
@@ -15,9 +17,11 @@ import SelectItemModal, {
   COLUMN_MAP,
   MAX_HEIGHT,
 } from './SelectItemModal';
+import { MAX_ITEMS_RECORDS } from '../../constants';
 
 const testIds = {
   selectItemModal: 'selectItemModal',
+  loadMoreButton: 'loadMoreButton',
 };
 const messageIds = {
   modalHeading: 'ui-checkout.selectItemModal.heading',
@@ -30,6 +34,10 @@ describe('SelectItemModal', () => {
     checkoutItems: [],
     onClose: jest.fn(),
     onSelectItem: jest.fn(),
+    onNeedMoreData: jest.fn(),
+    totalRecords: 110,
+    pagingOffset: 0,
+    barcode: 'barcode',
   };
 
   describe('component', () => {
@@ -86,9 +94,24 @@ describe('SelectItemModal', () => {
         formatter,
         maxHeight: MAX_HEIGHT,
         onRowClick: props.onSelectItem,
+        totalCount: props.totalRecords,
+        pagingOffset: props.pagingOffset,
+        onNeedMoreData: expect.any(Function),
+        pageAmount: MAX_ITEMS_RECORDS,
+        pagingType: MCLPagingTypes.PREV_NEXT,
+        pagingCanGoPrevious: false,
+        pagingCanGoNext: true,
       };
 
       expect(MultiColumnList).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+    });
+
+    it('should get more data', () => {
+      const loadMoreButton = screen.getByTestId(testIds.loadMoreButton);
+
+      fireEvent.click(loadMoreButton);
+
+      expect(props.onNeedMoreData).toHaveBeenCalled();
     });
   });
 

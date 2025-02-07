@@ -93,6 +93,10 @@ describe('ItemForm', () => {
     onItemSelection,
     onCloseSelectItemModal,
     patronBlockOverriddenInfo: {},
+    onNeedMoreData: jest.fn(),
+    totalRecords: 0,
+    pagingOffset: 0,
+    barcode: null,
   };
   const createRefMock = {
     current: {

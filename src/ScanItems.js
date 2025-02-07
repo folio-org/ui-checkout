@@ -14,7 +14,7 @@ import { escapeCqlValue } from '@folio/stripes/util';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
-import { MAX_RECORDS_FOR_CHUNK } from './constants';
+import { MAX_ITEMS_RECORDS } from './constants';
 
 export function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
@@ -150,44 +150,47 @@ class ScanItems extends React.Component {
       errors: [],
       itemLimitOverridden: false,
       overriddenItemsList: [],
+      totalRecords: 0,
+      offset: 0,
+      selectedBarcode: null,
     };
   }
 
-  async fetchItems(barcode) {
+  fetchItems = async (barcode, offset = 0) => {
     const {
       mutator,
       settings: {
         wildcardLookupEnabled,
       },
     } = this.props;
+    const { selectedBarcode } = this.state;
     const asterisk = wildcardLookupEnabled ? '*' : '';
-    const bcode = `"${escapeCqlValue(barcode)}${asterisk}"`;
+    const itemBarcode = barcode || selectedBarcode;
+    const bcode = `"${escapeCqlValue(itemBarcode)}${asterisk}"`;
     const query = `barcode==${bcode}`;
     this.setState({
       item: null,
-      items: null,
     });
+
     mutator.items.reset();
-    const { items, totalRecords } = await mutator.items.GET({ params: { query, limit: MAX_RECORDS_FOR_CHUNK } });
 
-    if (totalRecords > MAX_RECORDS_FOR_CHUNK) {
-      // Split the request into chunks to avoid a too long response
-      const remainingItemsCount = totalRecords - MAX_RECORDS_FOR_CHUNK;
-      const chunksCount = Math.ceil(remainingItemsCount / MAX_RECORDS_FOR_CHUNK);
-      const requestsForItems = [];
-      let offset = 0;
+    const {
+      items,
+      totalRecords,
+    } = await mutator.items.GET({
+      params: {
+        limit: MAX_ITEMS_RECORDS,
+        query,
+        offset,
+      },
+    });
 
-      for (let i = 0; i < chunksCount; i++) {
-        offset += MAX_RECORDS_FOR_CHUNK;
-        const request = mutator.items.GET({ params: { query, limit: MAX_RECORDS_FOR_CHUNK, offset } });
-        requestsForItems.push(request);
-      }
-
-      let remainingItems = await Promise.all(requestsForItems);
-      remainingItems = remainingItems.map(itemResp => itemResp.items).flat();
-
-      return [...items, ...remainingItems];
-    }
+    this.setState({
+      selectedBarcode: itemBarcode,
+      items: isEmpty(items) || items.length <= 1 ? null : items,
+      totalRecords,
+      offset,
+    });
 
     return items;
   }
@@ -477,6 +480,9 @@ class ScanItems extends React.Component {
       checkoutNotesMode,
       itemLimitOverridden,
       overriddenItemsList,
+      totalRecords,
+      selectedBarcode,
+      offset,
     } = this.state;
 
     const overriddenItemLimitData = {
@@ -505,6 +511,10 @@ class ScanItems extends React.Component {
           onSessionEnd={onSessionEnd}
           item={item}
           items={items}
+          pagingOffset={offset}
+          totalRecords={totalRecords}
+          barcode={selectedBarcode}
+          onNeedMoreData={this.fetchItems}
           shouldSubmitAutomatically={shouldSubmitAutomatically}
           checkoutError={errors}
           onClearCheckoutErrors={this.onClearCheckoutErrors}

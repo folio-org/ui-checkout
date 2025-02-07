@@ -46,6 +46,12 @@ class ItemForm extends React.Component {
     onItemSelection: PropTypes.func.isRequired,
     onCloseSelectItemModal: PropTypes.func.isRequired,
     patronBlockOverriddenInfo: PropTypes.object.isRequired,
+    totalRecords: PropTypes.number.isRequired,
+    onNeedMoreData: PropTypes.func.isRequired,
+    barcode: PropTypes.oneOfType([
+      PropTypes.oneOf([null, PropTypes.string])
+    ]).isRequired,
+    pagingOffset: PropTypes.number.isRequired,
   };
 
   static defaultProps = {
@@ -158,6 +164,10 @@ class ItemForm extends React.Component {
       items,
       onOverride,
       patronBlockOverriddenInfo,
+      totalRecords,
+      onNeedMoreData,
+      barcode,
+      pagingOffset,
     } = this.props;
 
     const {
@@ -239,6 +249,10 @@ class ItemForm extends React.Component {
           <SelectItemModal
             data-testid="selectItemModal"
             checkoutItems={items}
+            totalRecords={totalRecords}
+            onNeedMoreData={onNeedMoreData}
+            barcode={barcode}
+            pagingOffset={pagingOffset}
             onClose={this.handleCloseSelectItemModal}
             onSelectItem={this.handleItemSelection}
           />}

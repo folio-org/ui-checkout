@@ -78,6 +78,9 @@ jest.mock('@folio/stripes/components', () => ({
       {icon}
     </div>
   )),
+  MCLPagingTypes: {
+    PREV_NEXT: 'prev-next',
+  },
   Modal: jest.fn(({
     children,
     label,
@@ -103,6 +106,7 @@ jest.mock('@folio/stripes/components', () => ({
     children,
     formatter,
     contentData,
+    onNeedMoreData,
   }) => {
     return (
       <div>
@@ -113,6 +117,13 @@ jest.mock('@folio/stripes/components', () => ({
             })
           ))
         }
+        <button
+          type="button"
+          data-testid="loadMoreButton"
+          onClick={onNeedMoreData}
+        >
+          Load more
+        </button>
         {children}
       </div>
     );
