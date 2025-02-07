@@ -184,10 +184,11 @@ class ScanItems extends React.Component {
         offset,
       },
     });
+    const itemsList = isEmpty(items) || items.length <= 1 ? null : items;
 
     this.setState({
       selectedBarcode: itemBarcode,
-      items: isEmpty(items) || items.length <= 1 ? null : items,
+      items: itemsList,
       totalRecords,
       offset,
     });

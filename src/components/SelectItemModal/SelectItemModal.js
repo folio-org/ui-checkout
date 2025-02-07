@@ -56,6 +56,12 @@ const propTypes = {
   checkoutItems: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func.isRequired,
   onSelectItem: PropTypes.func.isRequired,
+  totalRecords: PropTypes.number.isRequired,
+  pagingOffset: PropTypes.number.isRequired,
+  onNeedMoreData: PropTypes.func.isRequired,
+  barcode: PropTypes.oneOfType([
+    PropTypes.oneOf([null, PropTypes.string])
+  ]).isRequired,
 };
 
 const SelectItemModal = ({
@@ -67,8 +73,7 @@ const SelectItemModal = ({
   barcode,
   pagingOffset,
 }) => {
-  const getMoreData = (askAmount, index, firstIndex, direction) => {
-    // console.log('ARGS: (askAmount, index, firstIndex, direction)', askAmount, index, firstIndex, direction);
+  const getMoreData = (askAmount, index) => {
     onNeedMoreData(barcode, index);
   };
   const pagingCanGoPrevious = pagingOffset > 0;
