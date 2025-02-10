@@ -9,7 +9,7 @@ import {
   MCLPagingTypes,
 } from '@folio/stripes/components';
 
-import { MAX_ITEMS_RECORDS } from '../../constants';
+import { PAGE_AMOUNT } from '../../constants';
 
 import css from './SelectItemModal.css';
 
@@ -77,7 +77,7 @@ const SelectItemModal = ({
     onNeedMoreData(barcode, index);
   };
   const pagingCanGoPrevious = pagingOffset > 0;
-  const pagingCanGoNext = pagingOffset < totalRecords && totalRecords - pagingOffset > MAX_ITEMS_RECORDS;
+  const pagingCanGoNext = pagingOffset < totalRecords && totalRecords - pagingOffset > PAGE_AMOUNT;
 
   return (
     <Modal
@@ -112,7 +112,7 @@ const SelectItemModal = ({
             onRowClick={onSelectItem}
             totalCount={totalRecords}
             onNeedMoreData={getMoreData}
-            pageAmount={MAX_ITEMS_RECORDS}
+            pageAmount={PAGE_AMOUNT}
             pagingType={MCLPagingTypes.PREV_NEXT}
             pagingCanGoPrevious={pagingCanGoPrevious}
             pagingCanGoNext={pagingCanGoNext}

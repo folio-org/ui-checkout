@@ -14,7 +14,7 @@ import { escapeCqlValue } from '@folio/stripes/util';
 import ItemForm from './components/ItemForm';
 import ViewItem from './components/ViewItem';
 import ModalManager from './ModalManager';
-import { MAX_ITEMS_RECORDS } from './constants';
+import { PAGE_AMOUNT } from './constants';
 
 export function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   const soundName = (checkoutStatus === 'success') ? 'success' : 'error';
@@ -179,7 +179,7 @@ class ScanItems extends React.Component {
       totalRecords,
     } = await mutator.items.GET({
       params: {
-        limit: MAX_ITEMS_RECORDS,
+        limit: PAGE_AMOUNT,
         query,
         offset,
       },
