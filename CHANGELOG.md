@@ -1,21 +1,26 @@
 # Change history for ui-checkout
 
 ## [12.0.0] In progress
+
 * React v19: refactor away from default props for functional components. Refs UICHKOUT-909.
 * Fix accessibility issues. Refs UICHKOUT-933.
 * *BREAKING* Display user pronouns at check out. Refs UICHKOUT-932.
 * Omit trailing whitespace when formatting names. Refs UICHKOUT-941.
+* *BREAKING* Update `react-intl` to `^7`. Refs UICHKOUT-944.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
+
 * Update permission after mod-patron-blocks permission changes. Refs UICHKOUT-930.
 
 ## [11.0.1](https://github.com/folio-org/ui-checkout/tree/v11.0.1) (2024-11-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.0...v11.0.1)
+
 * Update permission checks of ui-users. Refs UICHKOUT-927.
 
 ## [11.0.0](https://github.com/folio-org/ui-checkout/tree/v11.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.1.0...v11.0.0)
+
 * Remove bigtests from github actions. Refs UICHKOUT-908.
 * *BREAKING* bump okapiInterfaces `users` to `16.1`. Display User Profile Picture on patron scan. Refs UICHKOUT-884.
 * Update upload-artifact actions from v1 and v2 to v4. Refs UICHKOUT-917.
@@ -27,6 +32,7 @@
 
 ## [10.1.0](https://github.com/folio-org/ui-checkout/tree/v10.1.0) (2024-03-22)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.1...v10.1.0)
+
 * UI tests replacement with RTL/Jest for src/CheckOut.js. Refs UICHKOUT-820.
 * UI tests replacement with RTL/Jest for src/ModalManager.js. Refs UICHKOUT-821.
 * UI tests replacement with RTL/Jest for src/ScanItems.js. Refs UICHKOUT-822.
@@ -39,6 +45,7 @@
 
 ## [10.0.1](https://github.com/folio-org/ui-checkout/tree/v10.0.1) (2023-10-23)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v10.0.0...v10.0.1)
+
 * Fix circulation timeout issue. Refs UICHKOUT-869.
 
 ## [10.0.0](https://github.com/folio-org/ui-checkout/tree/v10.0.0) (2023-10-12)
