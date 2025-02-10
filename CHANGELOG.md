@@ -7,6 +7,7 @@
 * *BREAKING* Display user pronouns at check out. Refs UICHKOUT-932.
 * Omit trailing whitespace when formatting names. Refs UICHKOUT-941.
 * *BREAKING* Update `react-intl` to `^7`. Refs UICHKOUT-944.
+* Migrate to shared GA workflows. Refs UICHKOUT-942.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
