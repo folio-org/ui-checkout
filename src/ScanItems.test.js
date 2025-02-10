@@ -10,7 +10,7 @@ import ScanItems, {
   playSound,
 } from './ScanItems';
 import ItemForm from './components/ItemForm';
-import { MAX_ITEMS_RECORDS } from './constants';
+import { PAGE_AMOUNT } from './constants';
 
 const basicProps = {
   stripes: {
@@ -425,7 +425,7 @@ describe('ScanItems', () => {
         const expectedArg = {
           params: {
             query: `barcode=="${dataWithItem.item.barcode}"`,
-            limit: MAX_ITEMS_RECORDS,
+            limit: PAGE_AMOUNT,
             offset: 0,
           },
         };

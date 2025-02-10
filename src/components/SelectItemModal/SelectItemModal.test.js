@@ -17,7 +17,7 @@ import SelectItemModal, {
   COLUMN_MAP,
   MAX_HEIGHT,
 } from './SelectItemModal';
-import { MAX_ITEMS_RECORDS } from '../../constants';
+import { PAGE_AMOUNT } from '../../constants';
 
 const testIds = {
   selectItemModal: 'selectItemModal',
@@ -97,7 +97,7 @@ describe('SelectItemModal', () => {
         totalCount: props.totalRecords,
         pagingOffset: props.pagingOffset,
         onNeedMoreData: expect.any(Function),
-        pageAmount: MAX_ITEMS_RECORDS,
+        pageAmount: PAGE_AMOUNT,
         pagingType: MCLPagingTypes.PREV_NEXT,
         pagingCanGoPrevious: false,
         pagingCanGoNext: true,
