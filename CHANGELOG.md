@@ -9,6 +9,7 @@
 * *BREAKING* Update `react-intl` to `^7`. Refs UICHKOUT-944.
 * Migrate to shared GA workflows. Refs UICHKOUT-942.
 * Add pagination to the Select item dialog in Check-out. Refs UICHKOUT-914.
+* *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKOUT-943.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
