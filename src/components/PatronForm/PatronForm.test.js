@@ -22,6 +22,9 @@ const testIds = {
   clickableFindPatronButton: 'clickableFindPatronButton',
   clickableFindPatronPluggable: 'clickableFindPatronPluggable',
 };
+const labelIds = {
+  patronLookup: 'ui-checkout.patronLookup',
+};
 
 describe('PatronForm', () => {
   const mockedHandleSubmit = jest.fn();
@@ -68,6 +71,12 @@ describe('PatronForm', () => {
 
     it('should render clickable find patron pluggable', () => {
       expect(screen.getByTestId(testIds.clickableFindPatronPluggable)).toBeInTheDocument();
+    });
+
+    it('should render patron lookup button', () => {
+      const patronLookupButton = screen.getByText(labelIds.patronLookup);
+
+      expect(patronLookupButton).toBeInTheDocument();
     });
 
     it('should call "handleSubmit" on form submit', () => {
