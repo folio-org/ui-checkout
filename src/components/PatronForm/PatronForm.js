@@ -128,6 +128,24 @@ class PatronForm extends React.Component {
     const disableRecordCreation = true;
     const identifier = getIdentifier(userIdentifiers);
     const formState = form.getState();
+    const renderTrigger = ({
+      buttonRef,
+      onClick,
+    }) => (
+      <FormattedMessage id="ui-checkout.patronLookup">
+        {label => (
+          <Button
+            id="patronLookup"
+            buttonStyle="link"
+            aria-label={label}
+            onClick={onClick}
+            buttonRef={buttonRef}
+          >
+            {label}
+          </Button>
+        )}
+      </FormattedMessage>
+    );
 
     return (
       <form
@@ -186,7 +204,6 @@ class PatronForm extends React.Component {
               type="find-user"
               id="clickable-find-user"
               {...this.props}
-              searchLabel={<FormattedMessage id="ui-checkout.patronLookup" />}
               marginTop0
               searchButtonStyle="link"
               dataKey="patrons"
@@ -195,6 +212,7 @@ class PatronForm extends React.Component {
               columnMapping={this.columnMapping}
               disableRecordCreation={disableRecordCreation}
               restoreFocus={false}
+              renderTrigger={renderTrigger}
             />
           </Col>
         </Row>

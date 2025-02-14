@@ -22,6 +22,13 @@ jest.mock('@folio/stripes/core', () => ({
       onClick={typeof props.selectUser === 'function' && props.user ? props.selectUser(props.user) : () => {}}
     >
       {props.children}
+      {props.renderTrigger ?
+        props.renderTrigger({
+          buttonRef: null,
+          onClick: () => {},
+        }) :
+        null
+      }
     </div>
   )),
   IfPermission: jest.fn(({ children }) => <div>{children}</div>),
