@@ -8,6 +8,7 @@ import {
   Modal,
   MultiColumnList,
   MCLPagingTypes,
+  NoValue,
 } from '@folio/stripes/components';
 
 import SelectItemModal, {
@@ -117,6 +118,7 @@ describe('SelectItemModal', () => {
 
   describe('formatter', () => {
     const basicItem = {
+      callNumber: 'callNumber',
       status: {
         name: 'statusName',
       },
@@ -134,6 +136,19 @@ describe('SelectItemModal', () => {
       },
     };
 
+    it('should return callNumber', () => {
+      expect(formatter.callNumber(basicItem)).toBe(basicItem.callNumber);
+    });
+
+    it('should return empty string for callNumber', () => {
+      const item = {
+        ...basicItem,
+        callNumber: '',
+      };
+
+      expect(formatter.callNumber(item)).toEqual(<NoValue />);
+    });
+
     it('should return status name', () => {
       expect(formatter.itemStatus(basicItem)).toBe(basicItem.status.name);
     });
@@ -148,7 +163,7 @@ describe('SelectItemModal', () => {
         effectiveLocation: {},
       };
 
-      expect(formatter.location(item)).toBe('');
+      expect(formatter.location(item)).toEqual(<NoValue />);
     });
 
     it('should return material type name', () => {
@@ -175,7 +190,7 @@ describe('SelectItemModal', () => {
         permanentLoanType: {},
       };
 
-      expect(formatter.loanType(item)).toBe('');
+      expect(formatter.loanType(item)).toEqual(<NoValue />);
     });
   });
 });
