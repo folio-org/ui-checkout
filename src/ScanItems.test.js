@@ -31,6 +31,9 @@ const basicProps = {
     checkout: {
       POST: jest.fn().mockResolvedValue({}),
     },
+    checkoutBFF: {
+      POST: jest.fn().mockResolvedValue({}),
+    },
     addInfo: {
       POST: jest.fn().mockResolvedValue({}),
     },
@@ -542,83 +545,156 @@ describe('ScanItems', () => {
       };
       const itemTitle = 'itemTitle';
       const itemBarcode = 'itemBarcode';
-      const props = {
-        ...basicProps,
-        patronBlockOverriddenInfo: {
-          patronId: 'patronId',
-        },
-        proxy: {
-          barcode: 'proxyBarcode',
-        },
-        patron: {
-          barcode: 'patronBarcode',
-        },
-      };
 
       beforeEach(() => {
-        props.mutator.items.GET.mockResolvedValueOnce({
-          totalRecords: 1,
-          items: [
-            {
-              id: 1,
-              title: itemTitle,
-              barcode: itemBarcode,
-            }
-          ],
-        });
-        props.mutator.checkout.POST.mockResolvedValueOnce(loan);
         jest.doMock('../sound/checkout_success.m4a', () => jest.fn(() => 'sound'));
-
-        renderScanItems(props, dataWithItem);
       });
 
-      it('should render item title', async () => {
-        const itemForm = screen.getByTestId(testIds.itemForm);
-
-        fireEvent.submit(itemForm);
-
-        await waitFor(() => {
-          const title = screen.getByText(itemTitle);
-
-          expect(title).toBeVisible();
-        });
-      });
-
-      it('should checkout item after clicking on confirmation button', async () => {
-        const itemForm = screen.getByTestId(testIds.itemForm);
-
-        fireEvent.submit(itemForm);
-
-        await waitFor(() => {
-          const doneButton = screen.getByTestId(testIds.doneButton);
-          const expectedArg = {
-            itemBarcode,
-            userBarcode: props.patron.barcode,
-            servicePointId: props.stripes.user.user.curServicePoint.id,
-            proxyUserBarcode: props.proxy.barcode,
-            overrideBlocks: {
-              ...props.patronBlockOverriddenInfo,
+      describe('When enableEcsRequests is false', () => {
+        const props = {
+          ...basicProps,
+          patronBlockOverriddenInfo: {
+            patronId: 'patronId',
+          },
+          proxy: {
+            barcode: 'proxyBarcode',
+          },
+          patron: {
+            barcode: 'patronBarcode',
+          },
+          stripes: {
+            ...basicProps.stripes,
+            config: {
+              enableEcsRequests: false,
             },
-            loanDate: expect.any(String),
-          };
+          },
+        };
 
-          fireEvent.click(doneButton);
+        beforeEach(() => {
+          props.mutator.items.GET.mockResolvedValueOnce({
+            totalRecords: 1,
+            items: [
+              {
+                id: 1,
+                title: itemTitle,
+                barcode: itemBarcode,
+              }
+            ],
+          });
+          props.mutator.checkout.POST.mockResolvedValueOnce(loan);
 
-          expect(props.mutator.checkout.POST).toHaveBeenCalledWith(expectedArg);
+          renderScanItems(props, dataWithItem);
+        });
+
+        it('should render item title', async () => {
+          const itemForm = screen.getByTestId(testIds.itemForm);
+
+          fireEvent.submit(itemForm);
+
+          await waitFor(() => {
+            const title = screen.getByText(itemTitle);
+
+            expect(title).toBeVisible();
+          });
+        });
+
+        it('should checkout item after clicking on confirmation button', async () => {
+          const itemForm = screen.getByTestId(testIds.itemForm);
+
+          fireEvent.submit(itemForm);
+
+          await waitFor(() => {
+            const doneButton = screen.getByTestId(testIds.doneButton);
+            const expectedArg = {
+              itemBarcode,
+              userBarcode: props.patron.barcode,
+              servicePointId: props.stripes.user.user.curServicePoint.id,
+              proxyUserBarcode: props.proxy.barcode,
+              overrideBlocks: {
+                ...props.patronBlockOverriddenInfo,
+              },
+              loanDate: expect.any(String),
+            };
+
+            fireEvent.click(doneButton);
+
+            expect(props.mutator.checkout.POST).toHaveBeenCalledWith(expectedArg);
+          });
+        });
+
+        it('should clear item barcode field after clicking on cancel button', async () => {
+          const itemForm = screen.getByTestId(testIds.itemForm);
+
+          fireEvent.submit(itemForm);
+
+          await waitFor(() => {
+            const cancelButton = screen.getByTestId(testIds.cancelButton);
+
+            fireEvent.click(cancelButton);
+
+            expect(props.formRef.current.change).toHaveBeenCalled();
+          });
         });
       });
 
-      it('should clear item barcode field after clicking on cancel button', async () => {
-        const itemForm = screen.getByTestId(testIds.itemForm);
+      describe('When enableEcsRequests is true', () => {
+        const props = {
+          ...basicProps,
+          patronBlockOverriddenInfo: {
+            patronId: 'patronId',
+          },
+          proxy: {
+            barcode: 'proxyBarcode',
+          },
+          patron: {
+            barcode: 'patronBarcode',
+          },
+          stripes: {
+            ...basicProps.stripes,
+            config: {
+              enableEcsRequests: true,
+            },
+          },
+        };
 
-        fireEvent.submit(itemForm);
+        beforeEach(() => {
+          props.mutator.items.GET.mockResolvedValueOnce({
+            totalRecords: 1,
+            items: [
+              {
+                id: 1,
+                title: itemTitle,
+                barcode: itemBarcode,
+              }
+            ],
+          });
+          props.mutator.checkoutBFF.POST.mockResolvedValueOnce(loan);
 
-        await waitFor(() => {
-          const cancelButton = screen.getByTestId(testIds.cancelButton);
+          renderScanItems(props, dataWithItem);
+        });
 
-          fireEvent.click(cancelButton);
+        it('should checkout item after clicking on confirmation button', async () => {
+          const itemForm = screen.getByTestId(testIds.itemForm);
 
-          expect(props.formRef.current.change).toHaveBeenCalled();
+          fireEvent.submit(itemForm);
+
+          await waitFor(() => {
+            const expectedArg = {
+              itemBarcode,
+              userBarcode: props.patron.barcode,
+              servicePointId: props.stripes.user.user.curServicePoint.id,
+              proxyUserBarcode: props.proxy.barcode,
+              overrideBlocks: {
+                ...props.patronBlockOverriddenInfo,
+              },
+              loanDate: expect.any(String),
+            };
+            const doneButton = screen.getByTestId(testIds.doneButton);
+
+            fireEvent.click(doneButton);
+
+            expect(props.mutator.checkoutBFF.POST).toHaveBeenCalledWith(expectedArg);
+          });
         });
       });
     });

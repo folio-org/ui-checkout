@@ -32,6 +32,9 @@
       "automated-patron-blocks": "0.1",
       "notes": "4.0"
     },
+    "optionalOkapiInterfaces": {
+      "circulation-bff-loans": "1.0"
+    },
     "permissionSets": [
       {
         "permissionName": "module.checkout.enabled",
@@ -53,6 +56,7 @@
           "module.checkout.enabled",
           "inventory.items.collection.get",
           "circulation.check-out-by-barcode.post",
+          "circulation-bff.loans.check-out-by-barcode.execute",
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",
           "circulation-storage.loan-policies.collection.get",

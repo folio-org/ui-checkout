@@ -65,6 +65,12 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
+    checkoutBFF: {
+      type: 'okapi',
+      path: 'circulation-bff/loans/check-out-by-barcode',
+      fetch: false,
+      throwErrors: false,
+    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
@@ -94,6 +100,9 @@ class ScanItems extends React.Component {
         reset: PropTypes.func,
       }),
       checkout: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      checkoutBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
@@ -308,26 +317,38 @@ class ScanItems extends React.Component {
     return data;
   }
 
+  getCheckoutMutator = () => {
+    const {
+      stripes,
+      mutator: {
+        checkout,
+        checkoutBFF,
+      },
+    } = this.props;
+    const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
+
+    return isEnabledEcsRequests ? checkoutBFF : checkout;
+  }
+
   checkout = (barcode) => {
     const {
-      mutator: { checkout },
       patronBlockOverriddenInfo,
     } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
       loanDate: moment().utc().toISOString(),
     };
+    const checkoutMutator = this.getCheckoutMutator();
 
     if (!isEmpty(patronBlockOverriddenInfo)) {
       checkoutData.overrideBlocks = { ...patronBlockOverriddenInfo };
     }
 
-    return this.performAction(checkout, checkoutData);
+    return this.performAction(checkoutMutator, checkoutData);
   }
 
   override = (data) => {
     const {
-      mutator: { checkout },
       patronBlockOverriddenInfo,
     } = this.props;
     const {
@@ -336,6 +357,7 @@ class ScanItems extends React.Component {
       dueDate,
     } = data;
     const overrideData = { ...this.getRequestData(barcode) };
+    const checkoutMutator = this.getCheckoutMutator();
 
     if (!dueDate) {
       overrideData.overrideBlocks = {
@@ -360,7 +382,7 @@ class ScanItems extends React.Component {
       overrideData.overrideBlocks.patronBlock = {};
     }
 
-    return this.performAction(checkout, overrideData);
+    return this.performAction(checkoutMutator, overrideData);
   }
 
   updateAutomatedPatronBlocks = () => {
