@@ -33,7 +33,7 @@
       "notes": "4.0"
     },
     "optionalOkapiInterfaces": {
-      "circulation-bff-loans": "1.0"
+      "circulation-bff-loans": "1.2"
     },
     "permissionSets": [
       {
