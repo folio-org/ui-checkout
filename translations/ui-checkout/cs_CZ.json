@@ -139,9 +139,9 @@
     "permission.viewLoans.view": "Výpůjčky: zobrazit výpůjčky",
     "permission.viewFeeFines.view": "Výpůjčky: Zobrazit poplatky/pokuty",
     "permission.viewRequests.view": "Výpůjčky: Zobrazit žádanky",
-    "borrower.ariaLabel": "View borrower record",
-    "proxy.ariaLabel": "View borrower's proxy record",
-    "loanDetails.ariaLabel": "View open loan details",
-    "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "View patron blocks"
+    "borrower.ariaLabel": "Zobrazit záznam vypůjčitele",
+    "proxy.ariaLabel": "Zobrazit proxy záznam vypůjčitele",
+    "loanDetails.ariaLabel": "Zobrazit podrobnosti o otevřené výpůjčce",
+    "openRequests.ariaLabel": "Zobrazit otevřené žádanky",
+    "patronBlocks.ariaLabel": "Zobrazit bloky čtenářů"
 }
