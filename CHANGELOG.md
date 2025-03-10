@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## [11.0.3] (https://github.com/folio-org/ui-checkout/tree/v11.0.3) (2025-03-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.2...v11.0.3)
+* Check out items using new endpoint from mod-circulation-bff. Refs UICHKOUT-946.
+
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
 * Update permission after mod-patron-blocks permission changes. Refs UICHKOUT-930.
