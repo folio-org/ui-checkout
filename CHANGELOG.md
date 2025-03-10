@@ -12,6 +12,9 @@
 * *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKOUT-943.
 * Add correct aria-label attribute to "Patron look-up" button. Refs UICHKOUT-934.
 * Implement support for fields without information. Refs UICHKOUT-945.
+
+## [11.0.3] (https://github.com/folio-org/ui-checkout/tree/v11.0.3) (2025-03-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.2...v11.0.3)
 * Check out items using new endpoint from mod-circulation-bff. Refs UICHKOUT-946.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
