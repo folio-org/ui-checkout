@@ -58,9 +58,6 @@ const basicProps = {
     id: 'patronId',
   },
   parentMutator: {
-    query: {
-      update: jest.fn(),
-    },
     scannedItems: {
       replace: jest.fn(),
     },
@@ -78,6 +75,9 @@ const basicProps = {
     overriddenItemsList: ['itemBarcode'],
   },
   intl: {},
+  history: {
+    push: jest.fn(),
+  },
 };
 const basicPropsWithDCBItem = {
   ...basicProps,
@@ -239,15 +239,13 @@ describe('ViewItem', () => {
         expect(itemDetailsLabel).toBeVisible();
       });
 
-      it('should trigger "query.update" for item with correct arguments', () => {
+      it('should trigger "history.push" for item with correct arguments', () => {
         const itemDetailsButton = screen.getByText(labelIds.itemDetailsButton);
-        const expectedArg = {
-          _path: `/inventory/view/${basicProps.scannedItems[0].item.instanceId}/${basicProps.scannedItems[0].item.holdingsRecordId}/${basicProps.scannedItems[0].itemId}`,
-        };
+        const expectedArg = `/inventory/view/${basicProps.scannedItems[0].item.instanceId}/${basicProps.scannedItems[0].item.holdingsRecordId}/${basicProps.scannedItems[0].itemId}`;
 
         fireEvent.click(itemDetailsButton);
 
-        expect(basicProps.parentMutator.query.update).toHaveBeenCalledWith(expectedArg);
+        expect(basicProps.history.push).toHaveBeenCalledWith(expectedArg);
       });
 
       it('should render loan details button label', () => {
@@ -256,15 +254,13 @@ describe('ViewItem', () => {
         expect(loanDetailsLabel).toBeVisible();
       });
 
-      it('should trigger "query.update" for loan details with correct arguments', () => {
+      it('should trigger "history.push" for loan details with correct arguments', () => {
         const loanDetailsButton = screen.getByText(labelIds.loanDetailsButton);
-        const expectedArg = {
-          _path: `/users/view/${basicProps.scannedItems[0].userId}?layer=loan&loan=${basicProps.scannedItems[0].id}`,
-        };
+        const expectedArg = `/users/view/${basicProps.scannedItems[0].userId}?layer=loan&loan=${basicProps.scannedItems[0].id}`;
 
         fireEvent.click(loanDetailsButton);
 
-        expect(basicProps.parentMutator.query.update).toHaveBeenCalledWith(expectedArg);
+        expect(basicProps.history.push).toHaveBeenCalledWith(expectedArg);
       });
 
       it('should render loan policy button label', () => {
@@ -273,15 +269,13 @@ describe('ViewItem', () => {
         expect(loanPolicyLabel).toBeVisible();
       });
 
-      it('should trigger "query.update" for loan policy with correct arguments', () => {
+      it('should trigger "history.push" for loan policy with correct arguments', () => {
         const loanPolicyButton = screen.getByText(labelIds.loanPolicyButton);
-        const expectedArg = {
-          _path: `/settings/circulation/loan-policies/${basicProps.scannedItems[0].loanPolicyId}`,
-        };
+        const expectedArg = `/settings/circulation/loan-policies/${basicProps.scannedItems[0].loanPolicyId}`;
 
         fireEvent.click(loanPolicyButton);
 
-        expect(basicProps.parentMutator.query.update).toHaveBeenCalledWith(expectedArg);
+        expect(basicProps.history.push).toHaveBeenCalledWith(expectedArg);
       });
 
       it('should render change due date button label', () => {

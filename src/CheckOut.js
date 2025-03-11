@@ -54,7 +54,6 @@ class CheckOut extends React.Component {
     // checking out as the sponsor (selPatron and patron are different) or
     // checkout out as self (selPatron and patron are the same)
     selPatron: { initialValue: {} },
-    query: { initialValue: {} },
     scannedItems: { initialValue: [] },
     patronBlockOverriddenInfo: { initialValue: {} },
     checkoutSettings: {
