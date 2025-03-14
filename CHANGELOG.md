@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## [12.0.0] In progress
+## [12.0.0] (https://github.com/folio-org/ui-checkout/tree/v12.0.0) (2025-03-14)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.3...v12.0.0)
 
 * React v19: refactor away from default props for functional components. Refs UICHKOUT-909.
 * Fix accessibility issues. Refs UICHKOUT-933.
