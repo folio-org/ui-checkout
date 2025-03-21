@@ -135,13 +135,13 @@
     "checkout.addInfo.staffInfo.body": "Titelinformatie toevoegen voor <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Titelinformatie toegevoegd voor <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
     "action": "Actie",
-    "permission.circulation.execute": "Check out: Check out circulating items",
-    "permission.viewLoans.view": "Check out: View loans",
-    "permission.viewFeeFines.view": "Check out: View fees/fines",
-    "permission.viewRequests.view": "Check out: View requests",
-    "borrower.ariaLabel": "View borrower record",
-    "proxy.ariaLabel": "View borrower's proxy record",
-    "loanDetails.ariaLabel": "View open loan details",
-    "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "View patron blocks"
+    "permission.circulation.execute": "Uitchecken: Uitchecken van circulerende items.",
+    "permission.viewLoans.view": "Uitchecken: Uitleningen bekijken",
+    "permission.viewFeeFines.view": "Uitchecken: Vergoedingen/boetes bekijken",
+    "permission.viewRequests.view": "Uitchecken: Aanvragen bekijken",
+    "borrower.ariaLabel": "Record lener bekijken",
+    "proxy.ariaLabel": "Bekijk lener's proxy record",
+    "loanDetails.ariaLabel": "Details van openstaande leningen bekijken",
+    "openRequests.ariaLabel": "Openstaande aanvragen bekijken",
+    "patronBlocks.ariaLabel": "Gebruikersblokkering bekijken"
 }
