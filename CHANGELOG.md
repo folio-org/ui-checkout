@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## [12.0.0] In progress
+## [12.0.0] (https://github.com/folio-org/ui-checkout/tree/v12.0.0) (2025-03-14)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.3...v12.0.0)
 
 * React v19: refactor away from default props for functional components. Refs UICHKOUT-909.
 * Fix accessibility issues. Refs UICHKOUT-933.
@@ -12,6 +13,9 @@
 * *BREAKING* Update stripes-* dependencies to latest version. Refs UICHKOUT-943.
 * Add correct aria-label attribute to "Patron look-up" button. Refs UICHKOUT-934.
 * Implement support for fields without information. Refs UICHKOUT-945.
+
+## [11.0.3] (https://github.com/folio-org/ui-checkout/tree/v11.0.3) (2025-03-10)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.2...v11.0.3)
 * Check out items using new endpoint from mod-circulation-bff. Refs UICHKOUT-946.
 * Use `history.push` instead of `mutator.query` updating. Refs UICHKOUT-948.
 

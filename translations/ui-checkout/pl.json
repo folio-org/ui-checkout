@@ -141,7 +141,7 @@
     "permission.viewRequests.view": "Check out: View requests",
     "borrower.ariaLabel": "View borrower record",
     "proxy.ariaLabel": "View borrower's proxy record",
-    "loanDetails.ariaLabel": "View open loan details",
-    "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "View patron blocks"
+    "loanDetails.ariaLabel": "Wyświetl szczegóły bieżącego wypożyczenia",
+    "openRequests.ariaLabel": "Wyświetl otwarte rezerwacje",
+    "patronBlocks.ariaLabel": "Wyświetl blokady czytelnika"
 }
