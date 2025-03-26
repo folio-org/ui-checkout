@@ -83,6 +83,9 @@ class ViewItem extends React.Component {
     }).isRequired,
     addPatronOrStaffInfo: PropTypes.func.isRequired,
     intl: PropTypes.object,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {
@@ -260,9 +263,7 @@ class ViewItem extends React.Component {
       e.preventDefault();
     }
 
-    this.props.parentMutator.query.update({
-      _path: `/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`,
-    });
+    this.props.history.push(`/inventory/view/${loan.item.instanceId}/${loan.item.holdingsRecordId}/${loan.itemId}`);
   }
 
   showLoanDetails(loan, e) {
@@ -270,9 +271,7 @@ class ViewItem extends React.Component {
       e.preventDefault();
     }
 
-    this.props.parentMutator.query.update({
-      _path: `/users/view/${loan.userId}?layer=loan&loan=${loan.id}`,
-    });
+    this.props.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
   }
 
   showLoanPolicy(loan, e) {
@@ -280,9 +279,7 @@ class ViewItem extends React.Component {
       e.preventDefault();
     }
 
-    this.props.parentMutator.query.update({
-      _path: `/settings/circulation/loan-policies/${loan.loanPolicyId}`,
-    });
+    this.props.history.push(`/settings/circulation/loan-policies/${loan.loanPolicyId}`);
   }
 
   showCheckoutNotes(loan) {

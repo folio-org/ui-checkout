@@ -21,6 +21,7 @@
 ## [11.0.3] (https://github.com/folio-org/ui-checkout/tree/v11.0.3) (2025-03-10)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.2...v11.0.3)
 * Check out items using new endpoint from mod-circulation-bff. Refs UICHKOUT-946.
+* Use `history.push` instead of `mutator.query` updating. Refs UICHKOUT-948.
 
 ## [11.0.2] (https://github.com/folio-org/ui-checkout/tree/v11.0.2) (2024-11-30)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.1...v11.0.2)
