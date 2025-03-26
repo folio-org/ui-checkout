@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import {
   take,
   orderBy,
@@ -8,6 +7,7 @@ import {
 import {
   Col,
   Row,
+  dayjs,
 } from '@folio/stripes/components';
 
 import {
@@ -73,7 +73,7 @@ export function buildRequestQuery(requesterId, servicePointId) {
 
 export function getPatronBlocks(manualBlocks = [], automatedBlocks = []) {
   let manualPatronBlocks = manualBlocks.filter(p => p.borrowing === true);
-  manualPatronBlocks = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format()));
+  manualPatronBlocks = manualPatronBlocks.filter(p => dayjs(dayjs(p.expirationDate).format()).isSameOrAfter(dayjs().format()));
   const automatedPatronBlocks = automatedBlocks.filter(p => p.blockBorrowing === true);
 
   return [...automatedPatronBlocks, ...manualPatronBlocks];

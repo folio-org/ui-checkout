@@ -37,6 +37,11 @@ jest.mock('@folio/stripes/components', () => ({
       <button type="button" onClick={onConfirm}>{confirmLabel || 'Confirm'}</button>
     </div>
   )),
+  dayjs: jest.fn(() => ({
+    format: () => '02/02/2023',
+    isSameOrAfter: () => true,
+    isSameOrBefore: () => true,
+  })),
   Dropdown: jest.fn(({
     renderTrigger,
     renderMenu,

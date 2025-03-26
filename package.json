@@ -120,7 +120,6 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "identity-obj-proxy": "^3.0.0",
     "inflected": "^2.0.4",
-    "moment": "^2.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",
@@ -132,14 +131,12 @@
     "final-form": "^4.19.1",
     "inactivity-timer": "^1.0.0",
     "lodash": "^4.17.4",
-    "moment-timezone": "^0.5.34",
     "prop-types": "^15.6.0",
     "react-audio-player": "^0.9.0",
     "react-final-form": "^6.4.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^10.0.0",
-    "moment": "^2.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",

@@ -5,7 +5,6 @@ import {
   injectIntl,
 } from 'react-intl';
 import _ from 'lodash';
-import moment from 'moment';
 
 import { ChangeDueDateDialog } from '@folio/stripes/smart-components';
 import {
@@ -17,6 +16,7 @@ import {
   Tooltip,
   FormattedDate,
   FormattedTime,
+  dayjs,
 } from '@folio/stripes/components';
 
 import {
@@ -44,7 +44,7 @@ export const sortMap = {
   [COLUMNS_NAME.LOAN_POLICY]: () => '-',
   [COLUMNS_NAME.BARCODE]: loan => _.get(loan, ['item', 'barcode']),
   [COLUMNS_NAME.DUE_DATE]: loan => loan.dueDate.substr(0, 10),
-  [COLUMNS_NAME.TIME]: loan => moment(loan.dueDate).format('hh:mm a'),
+  [COLUMNS_NAME.TIME]: loan => dayjs(loan.dueDate).format('hh:mm a'),
 };
 
 export const visibleColumns = [

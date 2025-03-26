@@ -118,12 +118,6 @@ const testIds = {
 };
 const testDate = '02/02/2023';
 
-jest.mock('moment', () => jest.fn(() => ({
-  format: () => {
-    return testDate;
-  },
-})));
-
 describe('ViewItem', () => {
   describe('component', () => {
     afterEach(() => {
