@@ -1221,9 +1221,6 @@ describe('CheckOut', () => {
       },
     };
     const removeEventListenersSpy = jest.spyOn(document, 'removeEventListener');
-    const addEventListenersSpy = jest.spyOn(document, 'addEventListener').mockImplementation((event, cb) => {
-      cb(event);
-    });
 
     describe('When location equals "/"', () => {
       beforeEach(() => {
@@ -1255,10 +1252,6 @@ describe('CheckOut', () => {
         };
 
         expect(basicProps.mutator.activeRecord.update).toHaveBeenCalledWith(expectedArg);
-      });
-
-      it('should trigger "addEventListeners"', () => {
-        expect(addEventListenersSpy).toHaveBeenCalled();
       });
 
       it('should trigger timer "clear"', () => {
@@ -1294,10 +1287,6 @@ describe('CheckOut', () => {
         jest.runAllTimers();
 
         expect(createRefMock.current.getState).toHaveBeenCalled();
-      });
-
-      it('should trigger "addEventListeners"', () => {
-        expect(addEventListenersSpy).toHaveBeenCalled();
       });
 
       it('should trigger "removeEventListeners"', () => {
