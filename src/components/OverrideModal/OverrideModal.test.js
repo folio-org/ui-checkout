@@ -9,6 +9,7 @@ import { DueDatePicker } from '@folio/stripes/smart-components';
 import {
   Modal,
   TextArea,
+  dayjs,
 } from '@folio/stripes/components';
 
 import { BACKEND_ERROR_CODES } from '../../constants';
@@ -28,13 +29,6 @@ const mockSet = jest.fn(function set() {
 jest.mock('../../util', () => ({
   renderOrderedPatronBlocks: jest.fn(() => <div />),
 }));
-jest.mock('moment-timezone', () => jest.fn(() => ({
-  tz: mockTz,
-  set: mockSet,
-  format() {
-    return testDate;
-  },
-})));
 
 const basicProps = {
   stripes: {},
@@ -78,6 +72,14 @@ const testIds = {
 };
 
 describe('OverrideModal', () => {
+  dayjs.mockReturnValue({
+    tz: mockTz,
+    set: mockSet,
+    format() {
+      return testDate;
+    },
+  });
+
   describe('component', () => {
     const mockEvent = {
       preventDefault: () => {},

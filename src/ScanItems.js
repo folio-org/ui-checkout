@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import ReactAudioPlayer from 'react-audio-player';
 import { FormattedMessage } from 'react-intl';
@@ -8,7 +7,10 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { Icon } from '@folio/stripes/components';
+import {
+  Icon,
+  dayjs,
+} from '@folio/stripes/components';
 import { escapeCqlValue } from '@folio/stripes/util';
 
 import ItemForm from './components/ItemForm';
@@ -336,7 +338,7 @@ class ScanItems extends React.Component {
     } = this.props;
     const checkoutData = {
       ...this.getRequestData(barcode),
-      loanDate: moment().utc().toISOString(),
+      loanDate: dayjs().utc().toISOString(),
     };
     const checkoutMutator = this.getCheckoutMutator();
 

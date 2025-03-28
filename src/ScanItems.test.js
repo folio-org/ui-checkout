@@ -5,6 +5,7 @@ import {
   screen,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { dayjs } from '@folio/stripes/components';
 
 import ScanItems, {
   playSound,
@@ -250,6 +251,11 @@ describe('ScanItems', () => {
     };
 
     jest.spyOn(document, 'querySelector').mockImplementation(querySelector);
+    dayjs.mockImplementation(() => ({
+      utc: () => ({
+        toISOString: () => '05 October 2011 14:48 UTC',
+      }),
+    }));
 
     afterEach(() => {
       jest.clearAllMocks();

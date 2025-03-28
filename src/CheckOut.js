@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import createInactivityTimer from 'inactivity-timer';
 import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
 import {
   isEmpty,
   get,
@@ -15,6 +14,7 @@ import {
   Pane,
   Paneset,
   Button,
+  dayjs,
 } from '@folio/stripes/components';
 import { NotePopupModal } from '@folio/stripes/smart-components';
 import { Pluggable, IfPermission } from '@folio/stripes/core';
@@ -275,8 +275,8 @@ class CheckOut extends React.Component {
       automatedPatronBlocks,
     } = this.extractPatronBlocks();
     const prevManualBlocks = get(prevResources, ['manualPatronBlocks', 'records'], []);
-    const prevExpired = prevManualBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
-    const expired = manualPatronBlocks.filter(p => moment(moment(p.expirationDate).format()).isSameOrBefore(moment().format()) && p.expirationDate) || [];
+    const prevExpired = prevManualBlocks.filter(p => dayjs(dayjs(p.expirationDate).format()).isSameOrBefore(dayjs().format()) && p.expirationDate) || [];
+    const expired = manualPatronBlocks.filter(p => dayjs(dayjs(p.expirationDate).format()).isSameOrBefore(dayjs().format()) && p.expirationDate) || [];
 
     if ((prevExpired.length > 0 && expired.length === 0) || !isEmpty(automatedPatronBlocks)) {
       if (submitting) {
@@ -364,7 +364,7 @@ class CheckOut extends React.Component {
 
     const selManualPatronBlocks = get(resources, ['manualPatronBlocks', 'records'], []);
     const manualPatronBlocks = selManualPatronBlocks.filter(
-      p => p.borrowing === true && moment(moment(p.expirationDate).format()).isSameOrAfter(moment().format())
+      p => p.borrowing === true && dayjs(dayjs(p.expirationDate).format()).isSameOrAfter(dayjs().format())
     );
 
     const selAutomatedPatronBlocks = get(resources, ['automatedPatronBlocks', 'records'], []);

@@ -7,7 +7,6 @@ import {
 } from 'react-intl';
 import PropTypes from 'prop-types';
 import { omit } from 'lodash';
-import moment from 'moment-timezone';
 
 import {
   Button,
@@ -16,6 +15,7 @@ import {
   ModalFooter,
   Row,
   TextArea,
+  dayjs,
 } from '@folio/stripes/components';
 import {
   stripesShape,
@@ -39,7 +39,7 @@ export const getInitialValues = (timeZone) => {
     second: 0,
     millisecond: 0,
   };
-  const date = moment()
+  const date = dayjs()
     .tz(timeZone)
     .set(startOfTheDay)
     .tz('UTC', true)

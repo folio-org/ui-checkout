@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## IN_PROGRESS
+
+* Replace moment with day.js. Refs UICHKOUT-949.
+
 ## [12.0.0] (https://github.com/folio-org/ui-checkout/tree/v12.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.3...v12.0.0)
 
