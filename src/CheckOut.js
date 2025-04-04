@@ -129,7 +129,16 @@ class CheckOut extends React.Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object.isRequired,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      user: PropTypes.shape({
+        user: PropTypes.shape({
+          curServicePoint: PropTypes.shape({
+            id: PropTypes.string,
+          }),
+        }),
+      }),
+    }).isRequired,
     resources: PropTypes.shape({
       activeRecord: PropTypes.object,
       scannedItems: PropTypes.arrayOf(
@@ -145,7 +154,9 @@ class CheckOut extends React.Component {
         records: PropTypes.arrayOf(PropTypes.object),
       }),
       settings: PropTypes.shape({
-        records: PropTypes.arrayOf(PropTypes.object),
+        records: PropTypes.arrayOf(PropTypes.shape({
+          enabled: PropTypes.bool,
+        })),
       }),
       checkoutSettings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.object),

@@ -53,10 +53,16 @@ class UserDetail extends React.Component {
   });
 
   static propTypes = {
-    user: PropTypes.object,
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+      expirationDate: PropTypes.string,
+    }),
     id: PropTypes.string.isRequired,
     label: PropTypes.node,
-    settings: PropTypes.arrayOf(PropTypes.object).isRequired,
+    settings: PropTypes.arrayOf(PropTypes.shape({
+      enabled: PropTypes.bool,
+    })).isRequired,
     ariaLabel: PropTypes.node,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({

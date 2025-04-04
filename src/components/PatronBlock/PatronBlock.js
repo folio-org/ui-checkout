@@ -16,7 +16,10 @@ class PatronBlock extends React.Component {
   static propTypes = {
     formatMessage: PropTypes.func.isRequired,
     patronBlocksCount: PropTypes.number,
-    user: PropTypes.object,
+    user: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }),
   };
 
   render() {

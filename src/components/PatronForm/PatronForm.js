@@ -28,10 +28,27 @@ class PatronForm extends React.Component {
     userIdentifiers: PropTypes.arrayOf(PropTypes.string),
     submitting: PropTypes.bool,
     submitFailed: PropTypes.bool,
-    patron: PropTypes.object,
-    forwardedRef: PropTypes.object,
-    formRef: PropTypes.object,
-    form: PropTypes.object.isRequired,
+    patron: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }),
+    forwardedRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      })
+    ]),
+    formRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      })
+    ]),
+    form: PropTypes.shape({
+      change: PropTypes.func.isRequired,
+      reset: PropTypes.func.isRequired,
+      getState: PropTypes.func.isRequired,
+    }).isRequired,
   };
 
   constructor(props) {

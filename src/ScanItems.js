@@ -89,7 +89,11 @@ class ScanItems extends React.Component {
   });
 
   static propTypes = {
-    stripes: PropTypes.object.isRequired,
+    stripes: PropTypes.shape({
+      config: PropTypes.shape({
+        enableEcsRequests: PropTypes.bool,
+      }),
+    }).isRequired,
     shouldSubmitAutomatically: PropTypes.bool.isRequired,
     resources: PropTypes.shape({
       items: PropTypes.shape({
@@ -134,13 +138,28 @@ class ScanItems extends React.Component {
         reset: PropTypes.func.isRequired,
       }).isRequired,
     }),
-    patron: PropTypes.object,
-    proxy: PropTypes.object,
+    patron: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }),
+    proxy: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }),
     onSessionEnd: PropTypes.func.isRequired,
-    settings: PropTypes.object,
+    settings: PropTypes.shape({
+      wildcardLookupEnabled: PropTypes.bool,
+      audioAlertsEnabled: PropTypes.bool,
+      audioTheme: PropTypes.string,
+    }),
     openBlockedModal: PropTypes.func,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
-    formRef: PropTypes.object.isRequired,
+    formRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      })
+    ]).isRequired,
     initialValues: PropTypes.object,
     patronBlockOverriddenInfo: PropTypes.object.isRequired,
   };

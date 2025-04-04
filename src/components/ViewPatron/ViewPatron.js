@@ -20,16 +20,26 @@ import css from './ViewPatron.css';
 
 class ViewPatron extends React.Component {
   static propTypes = {
-    stripes: PropTypes.object.isRequired,
-    patron: PropTypes.object.isRequired,
-    proxy: PropTypes.object.isRequired,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+    }).isRequired,
+    patron: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }).isRequired,
+    proxy: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }).isRequired,
     onSelectPatron: PropTypes.func.isRequired,
     onClearPatron: PropTypes.func.isRequired,
     intl: PropTypes.shape({
       formatMessage: PropTypes.func.isRequired,
     }).isRequired,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
-    settings: PropTypes.arrayOf(PropTypes.object),
+    settings: PropTypes.arrayOf(PropTypes.shape({
+      enabled: PropTypes.bool,
+    })),
   };
 
   constructor(props) {

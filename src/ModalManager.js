@@ -49,7 +49,9 @@ export const columnWidths = {
 
 class ModalManager extends React.Component {
   static propTypes = {
-    intl: PropTypes.object,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+    }).isRequired,
     checkedoutItem: PropTypes.object.isRequired,
     checkoutNotesMode: PropTypes.bool,
     onDone: PropTypes.func.isRequired,
