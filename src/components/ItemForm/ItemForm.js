@@ -31,11 +31,21 @@ class ItemForm extends React.Component {
     items: PropTypes.arrayOf(
       PropTypes.object
     ),
-    patron: PropTypes.object,
+    patron: PropTypes.shape({
+      id: PropTypes.string,
+      barcode: PropTypes.string,
+    }),
     handleSubmit: PropTypes.func.isRequired,
     onOverride: PropTypes.func.isRequired,
-    form: PropTypes.object.isRequired,
-    formRef: PropTypes.object.isRequired,
+    form: PropTypes.shape({
+      reset: PropTypes.func.isRequired,
+    }).isRequired,
+    formRef: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      })
+    ]).isRequired,
     checkoutError: PropTypes.arrayOf(
       PropTypes.object
     ).isRequired,

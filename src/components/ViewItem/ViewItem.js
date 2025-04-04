@@ -70,11 +70,24 @@ export const columnWidths = {
 class ViewItem extends React.Component {
   static propTypes = {
     scannedItems: PropTypes.arrayOf(PropTypes.object),
-    stripes: PropTypes.object,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      hasPerm: PropTypes.func.isRequired,
+      hasAnyPerm: PropTypes.func.isRequired,
+    }).isRequired,
     patron: PropTypes.shape({
       id: PropTypes.string,
+      barcode: PropTypes.string,
     }),
-    parentMutator: PropTypes.object.isRequired,
+    parentMutator:  PropTypes.shape({
+      scannedItems: PropTypes.shape({
+        replace: PropTypes.func,
+      }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func.isRequired,
+        reset: PropTypes.func.isRequired,
+      }),
+    }),
     loading: PropTypes.bool.isRequired,
     showCheckoutNotes: PropTypes.func,
     overriddenItemLimitData: PropTypes.shape({
@@ -82,7 +95,10 @@ class ViewItem extends React.Component {
       overriddenItemsList: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
     addPatronOrStaffInfo: PropTypes.func.isRequired,
-    intl: PropTypes.object,
+    intl: PropTypes.shape({
+      formatMessage: PropTypes.func.isRequired,
+      formatNumber: PropTypes.func.isRequired,
+    }).isRequired,
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
