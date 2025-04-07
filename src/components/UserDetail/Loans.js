@@ -166,7 +166,10 @@ Loans.propTypes = {
     }),
   }),
   stripes: stripesShape.isRequired,
-  user: PropTypes.object,
+  user: PropTypes.shape({
+    id: PropTypes.string,
+    barcode: PropTypes.string,
+  }),
 };
 
 export default Loans;

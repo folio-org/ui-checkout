@@ -10,8 +10,12 @@ class CheckOutRouting extends React.Component {
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
-    location: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }).isRequired,
+    match: PropTypes.shape({
+      path: PropTypes.string,
+    }).isRequired,
   }
 
   constructor(props) {
