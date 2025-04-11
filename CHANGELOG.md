@@ -1,5 +1,11 @@
 # Change history for ui-checkout
 
+## [12.0.1] (https://github.com/folio-org/ui-checkout/tree/v12.0.1) (2025-04-11)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.1)
+
+* Remove failed tests after packages updating. Refs UICHKOUT-955.
+* Add missed "users.configurations.item.get" permission. Refs UICHKOUT-956.
+
 ## [12.0.0] (https://github.com/folio-org/ui-checkout/tree/v12.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v11.0.3...v12.0.0)
 
