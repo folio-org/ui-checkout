@@ -113,7 +113,7 @@
     "selectItemModal.location": "Emplacement",
     "selectItemModal.materialType": "Type de matériel",
     "selectItemModal.loanType": "Type de prêt",
-    "selectItemModal.itemListHeader": "List of items: choose one",
+    "selectItemModal.itemListHeader": "Listes d'exemplaires : choisissez-en un",
     "selectItemModal.title": "Titre",
     "selectItemModal.callNumber": "Cote",
     "messages.userHasNoBarcode": "L'utilisateur n'a pas de code-barres.<br></br>Un code-barres utilisateur est requis pour emprunter un document.",
