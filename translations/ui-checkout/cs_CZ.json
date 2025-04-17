@@ -5,7 +5,7 @@
     "checkoutDateRangeError": "Jednotku nelze vypůjčit, protože datum výpůjčky spadá mimo datumový interval ve výpůjčkovém pravidlu. Před opětovným pokusem vypůjčení prosím zkontrolujte {name}.",
     "itemNotFoundError": "Jednotka s tímto čárovým kódem neexistuje",
     "itemNotAvailableError": "Jednotka není k dispozici pro vypůjčení",
-    "itemNotCheckedOut": "Jednotka není vypůjčena",
+    "itemNotCheckedOut": "Jednotka nebyla vypůjčena",
     "userNotFoundError": "Uživatel s tímto {identifier} neexistuje",
     "missingIdentifierError": "Uživatel {username} nemá {identifier}",
     "scanPatronCard": "Naskenovat průkaz čtenáře",
