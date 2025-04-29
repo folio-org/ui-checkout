@@ -139,9 +139,9 @@
     "permission.viewLoans.view": "Ausleihe: Ausleihen anzeigen",
     "permission.viewFeeFines.view": "Ausleihe: Forderungen anzeigen",
     "permission.viewRequests.view": "Ausleihe: Bestandsanfragen anzeigen",
-    "borrower.ariaLabel": "View borrower record",
-    "proxy.ariaLabel": "View borrower's proxy record",
-    "loanDetails.ariaLabel": "View open loan details",
-    "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "View patron blocks"
+    "borrower.ariaLabel": "Datensatz Entleiher/-in anzeigen",
+    "proxy.ariaLabel": "Datensatz Vollmachtnehmer/-in anzeigen",
+    "loanDetails.ariaLabel": "Aktuelle Ausleihen: Ausleihdetails anzeigen",
+    "openRequests.ariaLabel": "Offene Bestandsanfragen anzeigen",
+    "patronBlocks.ariaLabel": "Kontosperren anzeigen"
 }
