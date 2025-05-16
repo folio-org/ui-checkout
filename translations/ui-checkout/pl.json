@@ -50,7 +50,7 @@
     "error.oops": "O o!",
     "error.routing": "Jak udało ci się dotrzeć do {pathname}?",
     "patronBlocksCount": " {count, plural, one {blokadę w miejscu} other {blokady w miejscu}}",
-    "patronBlocks": "Blokady czytelnika",
+    "patronBlocks": "Blokady czytelników",
     "blockModal": "Czytelnik ma zablokowane wypożyczenia",
     "detailsButton": "Wyświetl szczegóły blokady",
     "blockedLabel": "Przyczyna blokady",
@@ -143,5 +143,5 @@
     "proxy.ariaLabel": "View borrower's proxy record",
     "loanDetails.ariaLabel": "Wyświetl szczegóły bieżącego wypożyczenia",
     "openRequests.ariaLabel": "Wyświetl otwarte rezerwacje",
-    "patronBlocks.ariaLabel": "Wyświetl blokady czytelnika"
+    "patronBlocks.ariaLabel": "Wyświetl blokady czytelników"
 }
