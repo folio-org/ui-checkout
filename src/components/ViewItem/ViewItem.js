@@ -287,7 +287,7 @@ class ViewItem extends React.Component {
       e.preventDefault();
     }
 
-    this.props.history.push(`/users/view/${loan.userId}?layer=loan&loan=${loan.id}`);
+    this.props.history.push(`/users/${loan.userId}/loans/view/${loan.id}`);
   }
 
   showLoanPolicy(loan, e) {
@@ -353,7 +353,7 @@ class ViewItem extends React.Component {
           <Button
             data-test-show-loan-details
             buttonStyle="dropdownItem"
-            href={`/users/view/${loan.userId}?layer=loan&loan=${loan.id}&query=`}
+            href={`/users/${loan.userId}/loans/view/${loan.id}`}
             onClick={(e) => this.handleOptionsChange({ loan, action: 'showLoanDetails' }, e)}
           >
             <FormattedMessage id="ui-checkout.loanDetails" />
