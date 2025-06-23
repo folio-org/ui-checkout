@@ -250,7 +250,7 @@ describe('ViewItem', () => {
 
       it('should trigger "history.push" for loan details with correct arguments', () => {
         const loanDetailsButton = screen.getByText(labelIds.loanDetailsButton);
-        const expectedArg = `/users/view/${basicProps.scannedItems[0].userId}?layer=loan&loan=${basicProps.scannedItems[0].id}`;
+        const expectedArg = `/users/${basicProps.scannedItems[0].userId}/loans/view/${basicProps.scannedItems[0].id}`;
 
         fireEvent.click(loanDetailsButton);
 
