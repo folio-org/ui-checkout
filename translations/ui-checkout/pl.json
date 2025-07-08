@@ -107,7 +107,7 @@
     "overridePatronBlock": "Zastąp blokadę czytelnika",
     "suspendedAccounts": "({suspendedAccountsCount} suspended)",
     "selectItemModal.heading": "Wybierz egzemplarz",
-    "selectItemModal.resultCount": "{count} Records found",
+    "selectItemModal.resultCount": "Znaleziono {count} rekordów",
     "selectItemModal.barcode": "Kod kreskowy",
     "selectItemModal.itemStatus": "Status egzemplarza",
     "selectItemModal.location": "Lokalizacja",
