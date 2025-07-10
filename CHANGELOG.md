@@ -5,6 +5,7 @@
 * Replace moment with day.js. Refs UICHKOUT-949.
 * Reduce count of eslint errors after update eslint-config-stripes. Refs UICHKOUT-953.
 * Fix Loan details link in Check out app. Refs UICHKOUT-960.
+* Guard against multiple invocations of `componentDidMount`. Refs UICHKOUT-474.
 
 ## [12.0.1] (https://github.com/folio-org/ui-checkout/tree/v12.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.1)
