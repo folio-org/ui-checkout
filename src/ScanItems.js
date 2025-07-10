@@ -73,9 +73,29 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
+    pickup: {
+      type: 'okapi',
+      path: 'circulation/pickup-by-barcode-for-use-at-location',
+      fetch: false,
+      throwErrors: false,
+    },
+    pickupBFF: {
+      // NOTE: does not exist at the time of writing, but presumably will
+      type: 'okapi',
+      path: 'circulation-bff/pickup-by-barcode-for-use-at-location',
+      fetch: false,
+      throwErrors: false,
+    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+      abortOnUnmount: true,
+    },
+    loans: {
+      type: 'okapi',
+      path: 'loan-storage/loans',
       accumulate: 'true',
       fetch: false,
       abortOnUnmount: true,
@@ -109,6 +129,12 @@ class ScanItems extends React.Component {
         POST: PropTypes.func,
       }),
       checkoutBFF: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      pickup: PropTypes.shape({
+        POST: PropTypes.func,
+      }),
+      pickupBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
@@ -226,6 +252,33 @@ class ScanItems extends React.Component {
     return items;
   }
 
+  analyzeExistingLoan = async (itemId) => {
+    this.props.mutator.loans.reset();
+    this.setState({ itemIsHeldForUseAtLocation: false });
+    if (itemId === undefined) {
+      // This happens if an invalid barcode is entered
+      return;
+    }
+
+    const { loans, totalRecords } = await this.props.mutator.loans.GET({
+      params: { query: `itemId==${itemId} and status.name<>Closed`, limit: 1 },
+    });
+
+    // If there is no existing loan, there is nothing to do
+    if (totalRecords === 0) return;
+
+    if (totalRecords > 1) {
+      // eslint-disable-next-line no-console
+      console.warn(`Found ${totalRecords} loans (>1) for item ${itemId}: using first`);
+    }
+
+    console.log(`existingLoan(${loans[0]?.forUseAtLocation.status}) =`, loans[0]);
+    if (loans[0]?.forUseAtLocation.status === 'Held') {
+      console.log(' itemIsHeldForUseAtLocation = true');
+      this.setState({ itemIsHeldForUseAtLocation: true });
+    }
+  }
+
   // https://github.com/final-form/react-final-form/blob/master/docs/faq.md#how-can-i-trigger-a-submit-from-outside-my-form
   triggerPatronFormSubmit = () => {
     const submitEvent = new Event('submit', { cancelable: true, bubbles: true });
@@ -297,6 +350,9 @@ class ScanItems extends React.Component {
     const checkoutItems = await this.fetchItems(barcode);
     const checkoutItem = checkoutItems[0];
 
+    // This sets the `itemIsHeldForUseAtLocation` state used in this.checkout() to choose a mutator
+    await this.analyzeExistingLoan(checkoutItem?.id);
+
     if (checkoutItems.length > 1) {
       this.setState({ items: checkoutItems });
     } else if (isEmpty(checkoutItems)) {
@@ -344,11 +400,16 @@ class ScanItems extends React.Component {
       mutator: {
         checkout,
         checkoutBFF,
+        pickup,
+        pickupBFF,
       },
     } = this.props;
     const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
+    const ual = this.state.itemIsHeldForUseAtLocation;
 
-    return isEnabledEcsRequests ? checkoutBFF : checkout;
+    return (ual ?
+      (isEnabledEcsRequests ? pickupBFF : pickup) :
+      (isEnabledEcsRequests ? checkoutBFF : checkout));
   }
 
   checkout = (barcode) => {
