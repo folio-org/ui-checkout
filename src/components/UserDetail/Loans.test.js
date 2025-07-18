@@ -21,9 +21,9 @@ describe('Loans', () => {
     openLoansLink: 'openLoansLink',
   };
   const permissions = {
-    viewRequests: 'ui-checkout.viewRequests.view,ui-requests.view',
-    viewFeeFines: 'ui-checkout.viewFeeFines.view,ui-users.feesfines.view',
-    viewLoans: 'ui-checkout.viewLoans.view,ui-users.loans.view',
+    viewRequests: 'ui-checkout.viewRequests.view',
+    viewFeeFines: 'ui-checkout.viewFeeFines.view',
+    viewLoans: 'ui-checkout.viewLoans.view',
   };
   const accountEntry = {
     id: 1,
