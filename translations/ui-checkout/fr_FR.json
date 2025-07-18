@@ -6,7 +6,7 @@
     "itemNotFoundError": "L'exemplaire avec ce code-barres n'existe pas",
     "itemNotAvailableError": "L'exemplaire n'est pas disponible à l'emprunt",
     "itemNotCheckedOut": "L'exemplaire n'a pas pu être emprunté",
-    "userNotFoundError": "L'utilisateur avec l'identifiant {identifier} n'existe pas",
+    "userNotFoundError": "L'utilisateur avec ce {identifier} n'existe pas",
     "missingIdentifierError": "L'utilisateur {username} n'a pas de {identifier}",
     "scanPatronCard": "Scanner la carte de l'usager",
     "scanItems": "Scanner les exemplaires",
@@ -143,5 +143,5 @@
     "proxy.ariaLabel": "View borrower's proxy record",
     "loanDetails.ariaLabel": "View open loan details",
     "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "View patron blocks"
+    "patronBlocks.ariaLabel": "Voir les blocages usager"
 }
