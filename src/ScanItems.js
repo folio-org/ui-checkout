@@ -478,11 +478,23 @@ class ScanItems extends React.Component {
   performAction(action, data) {
     this.setState({ loading: true, errors: [] });
     return action.POST(data)
+      .then(checkoutResp => this.processResponse(checkoutResp))
       .then(this.addScannedItem)
       .then(this.successfulCheckout)
       .then(this.updateAutomatedPatronBlocks)
       .catch(this.catchErrors)
       .finally(() => this.setState({ loading: false }));
+  }
+
+  processResponse(checkoutResp) {
+    console.log('processing checkout response', checkoutResp);
+    if (!checkoutResp.item) {
+      // This must be the differently-shaped response from hold-by-barcode-for-use-at-location
+      // In this case, we use the item that we previously search for by barcode
+      checkoutResp.item = this.props.resources.items.records[0].items[0];
+      console.log(' set checkoutResp.item to', checkoutResp.item);
+    }
+    return checkoutResp;
   }
 
   catchErrors = (resp) => {
