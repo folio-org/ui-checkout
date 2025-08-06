@@ -42,6 +42,17 @@ const basicProps = {
       replace: jest.fn(),
       POST: jest.fn().mockResolvedValue({}),
     },
+    loans: {
+      reset: jest.fn(),
+      GET: jest.fn().mockResolvedValue({
+        totalRecords: 2,
+        loans: [{
+          forUseAtLocation: {
+            status: 'In use',
+          }
+        }],
+      }),
+    },
   },
   settings: {
     wildcardLookupEnabled: false,
