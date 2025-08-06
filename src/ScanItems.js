@@ -262,9 +262,7 @@ class ScanItems extends React.Component {
       console.warn(`Found ${totalRecords} loans (>1) for item ${itemId}: using first`);
     }
 
-    console.log(`existingLoan(${loans[0]?.forUseAtLocation.status}) =`, loans[0]);
     if (loans[0]?.forUseAtLocation.status === 'Held') {
-      console.log(' itemIsHeldForUseAtLocation = true');
       this.setState({ itemIsHeldForUseAtLocation: true });
     }
   }
@@ -475,12 +473,10 @@ class ScanItems extends React.Component {
   }
 
   processResponse(checkoutResp) {
-    console.log('processing checkout response', checkoutResp);
     if (!checkoutResp.item) {
       // This must be the differently-shaped response from hold-by-barcode-for-use-at-location
-      // In this case, we use the item that we previously search for by barcode
+      // In this case, we use the item that we previously searched for by barcode
       checkoutResp.item = this.props.resources.items.records[0].items[0];
-      console.log(' set checkoutResp.item to', checkoutResp.item);
     }
     return checkoutResp;
   }
