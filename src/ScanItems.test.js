@@ -1,3 +1,4 @@
+import { act } from 'react';
 import { get } from 'lodash';
 import {
   fireEvent,
@@ -934,6 +935,58 @@ describe('ScanItems', () => {
 
         expect(reactAudioPlayer).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('Detect item with use-at-location loan', () => {
+    it('should recognise use-at-location loans', async () => {
+      const props = {
+        stripes: {},
+        parentResources: {},
+        shouldSubmitAutomatically: true,
+        mutator: {
+          loans: {
+            reset: jest.fn(),
+            GET: (arg) => {
+              const re = /^itemId==(\d+) and status.name<>Closed$/;
+              const match = arg.params.query.match(re);
+              expect(match).not.toBeNull();
+              const id = match[1];
+
+              if (id === '123') {
+                return {
+                  totalRecords: 0,
+                  loans: [],
+                };
+              } else if (id === '456') {
+                return {
+                  totalRecords: 1,
+                  loans: [{ forUseAtLocation: { status: 'In use' } }],
+                };
+              } else /* id === '789' */ {
+                return {
+                  totalRecords: 1,
+                  loans: [{ forUseAtLocation: { status: 'Held' } }],
+                };
+              }
+            }
+          }
+        }
+      };
+
+      let instance = null;
+      function Wrapper() {
+        return <ScanItems ref={(ref) => { instance = ref; }} {...props} />;
+      }
+      render(<Wrapper />);
+
+      expect(instance.state.itemIsHeldForUseAtLocation).toBe(undefined);
+      await act(async () => instance.analyzeExistingLoan('123'));
+      expect(instance.state.itemIsHeldForUseAtLocation).toBe(false);
+      await act(async () => instance.analyzeExistingLoan('789'));
+      expect(instance.state.itemIsHeldForUseAtLocation).toBe(true);
+      await act(async () => instance.analyzeExistingLoan('456'));
+      expect(instance.state.itemIsHeldForUseAtLocation).toBe(false);
     });
   });
 });
