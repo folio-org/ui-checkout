@@ -392,9 +392,7 @@ class ScanItems extends React.Component {
       },
     } = this.props;
     const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
-    const ual = this.state.itemIsHeldForUseAtLocation;
-
-    return (ual ? pickup :
+    return (this.state.itemIsHeldForUseAtLocation ? pickup :
       (isEnabledEcsRequests ? checkoutBFF : checkout));
   }
 
