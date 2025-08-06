@@ -112,7 +112,6 @@
     "test:jest": "jest --ci --coverage --colors",
     "test": "yarn run test:jest",
     "lint": "eslint .",
-    "qlint": "eslint -f unix  --rule '{\"react/forbid-prop-types\":\"off\"}' .",
     "build-mod-descriptor": "stripes mod descriptor --full --strict | jq '.[]' > module-descriptor.json ",
     "formatjs-compile": "stripes translate compile"
   },
