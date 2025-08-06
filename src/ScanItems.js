@@ -79,13 +79,6 @@ class ScanItems extends React.Component {
       fetch: false,
       throwErrors: false,
     },
-    pickupBFF: {
-      // NOTE: does not exist at the time of writing, but presumably will
-      type: 'okapi',
-      path: 'circulation-bff/pickup-by-barcode-for-use-at-location',
-      fetch: false,
-      throwErrors: false,
-    },
     items: {
       type: 'okapi',
       path: 'inventory/items',
@@ -132,9 +125,6 @@ class ScanItems extends React.Component {
         POST: PropTypes.func,
       }),
       pickup: PropTypes.shape({
-        POST: PropTypes.func,
-      }),
-      pickupBFF: PropTypes.shape({
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
@@ -401,14 +391,12 @@ class ScanItems extends React.Component {
         checkout,
         checkoutBFF,
         pickup,
-        pickupBFF,
       },
     } = this.props;
     const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
     const ual = this.state.itemIsHeldForUseAtLocation;
 
-    return (ual ?
-      (isEnabledEcsRequests ? pickupBFF : pickup) :
+    return (ual ? pickup :
       (isEnabledEcsRequests ? checkoutBFF : checkout));
   }
 
