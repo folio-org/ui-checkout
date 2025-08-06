@@ -105,7 +105,7 @@
     "overrideItemBlock": "越权单件冻结",
     "item.block.overrided": "单件限制被越权",
     "overridePatronBlock": "越权读者冻结",
-    "suspendedAccounts": " :  {suspendedAccountsCount}暂停 ) ",
+    "suspendedAccounts": "（ {suspendedAccountsCount}已暂停）",
     "selectItemModal.heading": "选择单件",
     "selectItemModal.resultCount": "找到{count}条记录",
     "selectItemModal.barcode": "条码",
