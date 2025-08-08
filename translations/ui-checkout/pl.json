@@ -135,7 +135,7 @@
     "checkout.addInfo.staffInfo.body": "Add staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}).",
     "checkout.addInfo.staffInfo.completed": "Added staff information for <strong>{title} ({materialType})</strong> (Barcode: {barcode}): {text}",
     "action": "Akcja",
-    "permission.circulation.execute": "Check out: Check out circulating items",
+    "permission.circulation.execute": "Wypożyczenia: wypożycz udostępniane egzemplarze",
     "permission.viewLoans.view": "Wypożyczenia: pokaż wypożyczenia",
     "permission.viewFeeFines.view": "Wypożyczenia: wyświetlanie opłat/kar",
     "permission.viewRequests.view": "Wypożyczenia: wyświetl rezerwacje",
