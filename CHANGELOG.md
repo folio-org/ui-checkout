@@ -7,6 +7,7 @@
 * Fix Loan details link in Check out app. Refs UICHKOUT-960.
 * Guard against multiple invocations of `componentDidMount`. Refs UICHKOUT-474.
 * Add sub-permissions for checkout permissions that do not have appropriate sub-permissions from other apps. Refs UICHKOUT-964.
+* Check out items held on the use-at-location hold shelf. Fixes UICHKOUT-965.
 
 ## [12.0.1] (https://github.com/folio-org/ui-checkout/tree/v12.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.1)
