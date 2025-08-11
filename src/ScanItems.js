@@ -118,6 +118,10 @@ class ScanItems extends React.Component {
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
+      loans: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
       checkout: PropTypes.shape({
         POST: PropTypes.func,
       }),
@@ -392,8 +396,8 @@ class ScanItems extends React.Component {
       },
     } = this.props;
     const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
-    return (this.state.itemIsHeldForUseAtLocation ? pickupAtLocation :
-      (isEnabledEcsRequests ? checkoutBFF : checkout));
+    if (this.state.itemIsHeldForUseAtLocation) return pickupAtLocation;
+    return isEnabledEcsRequests ? checkoutBFF : checkout;
   }
 
   checkout = (barcode) => {
