@@ -8,6 +8,8 @@
 * Guard against multiple invocations of `componentDidMount`. Refs UICHKOUT-474.
 * Add sub-permissions for checkout permissions that do not have appropriate sub-permissions from other apps. Refs UICHKOUT-964.
 * *BREAKING* Check out items held on the use-at-location hold shelf. This requires a new interface `loan-storage`, and so is a breaking change. Fixes UICHKOUT-965.
+* Fix potential null indirection in `analyzeExistingLoan`. Refs UICHKOUT-974.
+
 ## [12.0.1] (https://github.com/folio-org/ui-checkout/tree/v12.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.1)
 
