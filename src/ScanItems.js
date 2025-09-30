@@ -266,7 +266,7 @@ class ScanItems extends React.Component {
       console.warn(`Found ${totalRecords} loans (>1) for item ${itemId}: using first`);
     }
 
-    if (loans[0]?.forUseAtLocation.status === 'Held') {
+    if (loans[0]?.forUseAtLocation?.status === 'Held') {
       this.setState({ itemIsHeldForUseAtLocation: true });
     }
   }
