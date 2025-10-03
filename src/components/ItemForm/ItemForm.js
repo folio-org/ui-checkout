@@ -60,7 +60,7 @@ class ItemForm extends React.Component {
     onNeedMoreData: PropTypes.func.isRequired,
     barcode: PropTypes.oneOfType([
       PropTypes.oneOf([null, PropTypes.string])
-    ]).isRequired,
+    ]),
     pagingOffset: PropTypes.number.isRequired,
   };
 
