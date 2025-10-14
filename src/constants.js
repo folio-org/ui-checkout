@@ -27,7 +27,7 @@ export const OVERRIDABLE_BACKEND_ERROR_CODES = [
 ];
 
 export const BACKEND_ERRORS_CODES_TO_HIDE = [
-  BACKEND_ERROR_CODES.itemHasOpenLoan,
+  // None at present
 ];
 
 export const ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE = {
