@@ -15,7 +15,6 @@ import {
 import {
   DCB_INSTANCE_ID,
   DCB_HOLDINGS_RECORD_ID,
-  DCB_USER_LASTNAME,
 } from '../../constants';
 
 import ViewItem, {
@@ -93,9 +92,7 @@ const basicPropsWithDCBUser = {
   ...basicProps,
   scannedItems: [{
     ...receivedLoans[0],
-    borrower: {
-      lastName: DCB_USER_LASTNAME,
-    },
+    isDcb: true,
   }],
 };
 const labelIds = {
