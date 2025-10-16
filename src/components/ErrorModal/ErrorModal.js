@@ -52,7 +52,7 @@ function ErrorModal({
         containsOverrideErrorMessage = true;
       }
 
-      if (!BACKEND_ERRORS_CODES_TO_HIDE.includes(code)) {
+      if (!BACKEND_ERRORS_CODES_TO_HIDE.includes(code) || errors.length === 1) {
         const translationId = ERROR_MESSAGE_TRANSLATION_ID_BY_BACKEND_ERROR_CODE[code];
 
         if (translationId) {
