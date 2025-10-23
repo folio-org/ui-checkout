@@ -36,6 +36,7 @@ import {
   getPatronIdentifiers,
   buildIdentifierQuery,
   buildRequestQuery,
+  buildHoldsOnShelfQuery,
   getCheckoutSettings,
   getPatronBlocks,
 } from './util';
@@ -464,9 +465,10 @@ class CheckOut extends React.Component {
     mutator.activeRecord.update({ patronId: patron.id });
 
     mutator.requests.reset();
-    // only find requests if patron acts as self
+    // only find requests and holds-on-shelf if patron acts as self
     if (patrons[0].id === patron.id) {
       this.findRequests(patron);
+      this.findHoldsOnShelf(patron);
     }
 
     mutator.manualPatronBlocks.reset();
@@ -505,6 +507,7 @@ class CheckOut extends React.Component {
     }
 
     this.findRequests(patron);
+    this.findHoldsOnShelf(patron);
 
     return {};
   }
@@ -581,6 +584,19 @@ class CheckOut extends React.Component {
     this.setState({ requestsCount: totalRecords });
   }
 
+  async findHoldsOnShelf(patron) {
+    const {
+      stripes,
+      mutator,
+    } = this.props;
+
+    const servicePointId = get(stripes, ['user', 'user', 'curServicePoint', 'id'], '');
+    const query = buildHoldsOnShelfQuery(patron.id, servicePointId);
+    mutator.loans.reset();
+    const { totalRecords } = await mutator.loans.GET({ params: { query } });
+    this.setState({ heldCount: totalRecords });
+  }
+
   onCloseBlockedModal = () => this.setState({ blocked: false });
 
   openBlockedModal = () => this.setState({ blocked: true });
@@ -588,6 +604,7 @@ class CheckOut extends React.Component {
   onCloseAwaitingPickupModal = () => {
     this.setState({
       requestsCount: 0,
+      heldCount: 0,
     });
   }
 
@@ -649,6 +666,7 @@ class CheckOut extends React.Component {
       loading,
       blocked,
       requestsCount,
+      heldCount,
       overrideModalOpen,
       showNewFastAddModal,
     } = this.state;
@@ -770,13 +788,27 @@ class CheckOut extends React.Component {
         }
         <NotificationModal
           id="awaiting-pickup-modal"
-          open={!!requestsCount}
+          open={!!requestsCount || !!heldCount}
           onClose={this.onCloseAwaitingPickupModal}
           message={
-            <FormattedMessage
-              id="ui-checkout.awaitingPickupMessage"
-              values={{ count: requestsCount }}
-            />
+            <>
+              {!!requestsCount &&
+                <p>
+                  <FormattedMessage
+                    id="ui-checkout.awaitingPickupMessage"
+                    values={{ count: requestsCount }}
+                  />
+                </p>
+              }
+              {!!heldCount &&
+                <p>
+                  <FormattedMessage
+                    id="ui-checkout.awaitingPickupMessageHeld"
+                    values={{ count: heldCount }}
+                  />
+                </p>
+              }
+            </>
           }
           label={<FormattedMessage id="ui-checkout.awaitingPickupLabel" />}
         />

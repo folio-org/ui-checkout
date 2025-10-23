@@ -70,6 +70,11 @@ export function buildRequestQuery(requesterId, servicePointId) {
   return `(requesterId==${requesterId} and ${servicePointClause}status=="${OPEN_REQUEST_STATUSES.OPEN_AWAITING_PICKUP}")`;
 }
 
+export function buildHoldsOnShelfQuery(requesterId, servicePointId) {
+  const servicePointClause = servicePointId ? `checkoutServicePointId==${servicePointId} and ` : '';
+  return `(userId==${requesterId} and ${servicePointClause}forUseAtLocation.status="Held")`;
+}
+
 export function getPatronBlocks(manualBlocks = [], automatedBlocks = []) {
   let manualPatronBlocks = manualBlocks.filter(p => p.borrowing === true);
   manualPatronBlocks = manualPatronBlocks.filter(p => dayjs(dayjs(p.expirationDate).format()).isSameOrAfter(dayjs().format()));
