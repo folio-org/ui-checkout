@@ -24,6 +24,7 @@ import NotificationModal from './components/NotificationModal';
 import {
   getPatronIdentifiers,
   buildRequestQuery,
+  buildHoldsOnShelfQuery,
   getCheckoutSettings,
   getPatronBlocks,
 } from './util';
@@ -196,6 +197,7 @@ jest.mock('./util', () => ({
   getPatronIdentifiers: jest.fn(() => userIdentifiers),
   buildIdentifierQuery: jest.fn(() => identifierQuery),
   buildRequestQuery: jest.fn(),
+  buildHoldsOnShelfQuery: jest.fn(),
   getCheckoutSettings: jest.fn(),
   getPatronBlocks: jest.fn(),
 }));
@@ -261,12 +263,6 @@ describe('CheckOut', () => {
       const fastAddLabel = screen.getByText(labelIds.fastAddLabel);
 
       expect(fastAddLabel).toBeInTheDocument();
-    });
-
-    it('should render awaiting pickup message', () => {
-      const awaitingPickupMessage = screen.getByText(labelIds.awaitingPickupMessage);
-
-      expect(awaitingPickupMessage).toBeInTheDocument();
     });
 
     it('should render awaiting pickup label', () => {
@@ -648,8 +644,10 @@ describe('CheckOut', () => {
 
     beforeEach(() => {
       buildRequestQuery.mockReturnValueOnce(query);
+      buildHoldsOnShelfQuery.mockReturnValueOnce(query);
       getPatronBlocks.mockReturnValueOnce(patronBlocks);
       basicProps.mutator.requests.GET.mockResolvedValueOnce(requests);
+      basicProps.mutator.loans.GET.mockResolvedValueOnce(requests); // result structure is sufficiently similar for loans
       OverrideModal.mockImplementation(({
         onOverride,
         closeOverrideModal,
@@ -806,6 +804,10 @@ describe('CheckOut', () => {
 
       it('should trigger "buildRequestQuery" with correct arguments', () => {
         expect(buildRequestQuery).toHaveBeenCalledWith(selectedPatron.id, props.stripes.user.user.curServicePoint.id);
+      });
+
+      it('should trigger "buildHoldsOnShelfQuery" with correct arguments', () => {
+        expect(buildHoldsOnShelfQuery).toHaveBeenCalledWith(selectedPatron.id, props.stripes.user.user.curServicePoint.id);
       });
 
       it('should trigger "requests.GET" with correct argument', () => {

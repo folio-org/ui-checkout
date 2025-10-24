@@ -9,6 +9,7 @@ import {
   getPatronIdentifiers,
   buildIdentifierQuery,
   buildRequestQuery,
+  buildHoldsOnShelfQuery,
   getPatronBlocks,
   shouldStatusModalBeShown,
   renderOrderedPatronBlocks,
@@ -143,6 +144,18 @@ describe('util', () => {
     it('should convert requesterId and servicePointId to a CQL query', () => {
       expect(buildRequestQuery(mockId, mockId))
         .toEqual(`(requesterId==${mockId} and pickupServicePointId==${mockId} and status=="${OPEN_AWAITING_PICKUP}")`);
+    });
+  });
+
+  describe('buildHoldsOnShelfQuery', () => {
+    it('should convert requesterId to a CQL query', () => {
+      expect(buildHoldsOnShelfQuery(mockId))
+        .toEqual(`(userId==${mockId} and forUseAtLocation.status="Held")`);
+    });
+
+    it('should convert requesterId and servicePointId to a CQL query', () => {
+      expect(buildHoldsOnShelfQuery(mockId, mockId))
+        .toEqual(`(userId==${mockId} and checkoutServicePointId==${mockId} and forUseAtLocation.status="Held")`);
     });
   });
 
