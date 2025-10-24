@@ -155,7 +155,7 @@ describe('util', () => {
 
     it('should convert requesterId and servicePointId to a CQL query', () => {
       expect(buildHoldsOnShelfQuery(mockId, mockId))
-        .toEqual(`(userId==${mockId} and checkoutServicePointId==${mockId} and forUseAtLocation.status=\"Held\")`);
+        .toEqual(`(userId==${mockId} and checkoutServicePointId==${mockId} and forUseAtLocation.status="Held")`);
     });
   });
 
