@@ -1,5 +1,10 @@
 # Change history for ui-checkout
 
+## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)
+
+* Use `loan.isDcb` instead of `loan.borrower.lastName` to determine whether the to hide "Add patron info" and "Add staff info" buttons. Refs UICHKOUT-977.
+
 ## [12.0.1] (https://github.com/folio-org/ui-checkout/tree/v12.0.1) (2025-04-11)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.1)
 
