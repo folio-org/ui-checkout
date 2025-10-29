@@ -24,7 +24,7 @@
     "continue": "Continuar",
     "orActingAsProxy": "Ou atuando como procurador de",
     "scanOrEnterPatronId": "Escaneie ou insira o {identifier} do usuário",
-    "patronLookup": "Procurar usuário",
+    "patronLookup": "Consultar usuário",
     "scanOrEnterItemBarcode": "Escaneie ou insira o código de barras do item",
     "user.name": "Nome",
     "user.username": "Nome de usuário",
@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "Ver registro de procuração do usuário",
     "loanDetails.ariaLabel": "Ver detalhes do empréstimo em aberto",
     "openRequests.ariaLabel": "Ver requisições abertas",
-    "patronBlocks.ariaLabel": "Ver suspensão do usuário"
+    "patronBlocks.ariaLabel": "Ver suspensão do usuário",
+    "awaitingPickupMessageHeld": "O usuário tem <strong>{count, number}</strong> {count, plural, one {item} other {itens}} reservados para uso no local neste ponto de serviço."
 }
