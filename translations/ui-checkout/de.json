@@ -1,7 +1,7 @@
 {
     "externalSystemId": "Externe System-ID",
     "folioRecordNumber": "FOLIO-Datensatznummer",
-    "missingDataError": "Bitte dieses ausfüllen, um fortzufahren",
+    "missingDataError": "Bitte ausfüllen um fortzufahren",
     "checkoutDateRangeError": "Exemplar kann nicht ausgeliehen werden, da das Ausleihdatum außerhalb der Datumsbereiche in der Ausleihrichtlinie liegt. Bitte {name} überprüfen, bevor Ausleihvorgang erneut versucht wird.",
     "itemNotFoundError": "Exemplar mit diesem Barcode existiert nicht",
     "itemNotAvailableError": "Exemplar ist nicht verfügbar für Ausleihe",
@@ -13,7 +13,7 @@
     "openLoans": "aktuelle Ausleihen",
     "borrowerProxy": "Vollmachtnehmer/-in",
     "borrower": "Entleiher/-in",
-    "noItemsEntered": "Keine Exemplare wurden eingegeben",
+    "noItemsEntered": "Es wurde noch kein Exemplarbarcode eingegeben",
     "numberAbbreviation": "Nr.",
     "loanPolicy": "Ausleihrichtlinie",
     "active": "Aktiv",
@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "Datensatz Vollmachtnehmer/-in anzeigen",
     "loanDetails.ariaLabel": "Aktuelle Ausleihen: Ausleihdetails anzeigen",
     "openRequests.ariaLabel": "Offene Bestandsanfragen anzeigen",
-    "patronBlocks.ariaLabel": "Kontosperren anzeigen"
+    "patronBlocks.ariaLabel": "Kontosperren anzeigen",
+    "awaitingPickupMessageHeld": "Entleiher/-in hat <strong>{count, number}</strong> {count, plural, one {item} other {items}} zur Nutzung am Standort an dieser Servicestelle bereitliegen."
 }

@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "查看借阅者的代理记录",
     "loanDetails.ariaLabel": "查看未结借阅详情",
     "openRequests.ariaLabel": "查看未结请求",
-    "patronBlocks.ariaLabel": "查看读者块"
+    "patronBlocks.ariaLabel": "查看读者块",
+    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }

@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "View borrower's proxy record",
     "loanDetails.ariaLabel": "Wyświetl szczegóły bieżącego wypożyczenia",
     "openRequests.ariaLabel": "Wyświetl otwarte rezerwacje",
-    "patronBlocks.ariaLabel": "Wyświetl blokady czytelników"
+    "patronBlocks.ariaLabel": "Wyświetl blokady czytelników",
+    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }

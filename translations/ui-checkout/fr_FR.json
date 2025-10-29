@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "View borrower's proxy record",
     "loanDetails.ariaLabel": "View open loan details",
     "openRequests.ariaLabel": "View open requests",
-    "patronBlocks.ariaLabel": "Voir les blocages usager"
+    "patronBlocks.ariaLabel": "Voir les blocages usager",
+    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }

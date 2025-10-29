@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "Переглянути довірену особу користувача",
     "loanDetails.ariaLabel": "Переглянути інформацію про відкриті видачі",
     "openRequests.ariaLabel": "Переглянути відкриті замовлення",
-    "patronBlocks.ariaLabel": "Переглянути блокування користувачів"
+    "patronBlocks.ariaLabel": "Переглянути блокування користувачів",
+    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }

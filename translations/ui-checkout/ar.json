@@ -143,5 +143,6 @@
     "proxy.ariaLabel": "عرض تسجيلة المستعير البديلة",
     "loanDetails.ariaLabel": "عرض تفاصيل الإعارة المفتوحة",
     "openRequests.ariaLabel": "عرض الطلبات المفتوحة",
-    "patronBlocks.ariaLabel": "عرض حظر المستفيدين"
+    "patronBlocks.ariaLabel": "عرض حظر المستفيدين",
+    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }
