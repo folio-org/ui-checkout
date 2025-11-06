@@ -11,6 +11,7 @@
 * Fix potential null indirection in `analyzeExistingLoan`. Refs UICHKOUT-974.
 * Reinstate display of error message for ITEM_HAS_OPEN_LOAN condition when it's the only error reported by mod-circulation. Fixes UICHKOUT-980.
 * The modal that display a count of requested items awaiting pick up now also shows a count of items held on shelf for Use At Location. Refs UICHKOUT-962.
+* Express servicepoints dependency through `package.json::stripes.actsAs`. Refs UICHKOUT-882.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)
