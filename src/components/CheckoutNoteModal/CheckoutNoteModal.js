@@ -62,6 +62,7 @@ const CheckoutNoteModal = ({
       {
         !hideConfirm &&
         <Button
+          autoFocus
           data-test-checkoutnotemodal-confirm-button
           data-testid="confirmButton"
           buttonStyle="primary"
