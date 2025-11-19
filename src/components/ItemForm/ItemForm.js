@@ -22,6 +22,8 @@ import ErrorModal from '../ErrorModal';
 import OverrideModal from '../OverrideModal';
 import SelectItemModal from '../SelectItemModal';
 
+export const shouldSkipFocus = (barcodeEl, patron) => document.activeElement === barcodeEl?.current || !patron?.id;
+
 class ItemForm extends React.Component {
   static propTypes = {
     barcodeEl: PropTypes.oneOfType([
@@ -107,7 +109,7 @@ class ItemForm extends React.Component {
 
     const { submitSucceeded } = getState();
 
-    if (document.activeElement === barcodeEl?.current || !patron || !patron.id) {
+    if (shouldSkipFocus(barcodeEl, patron)) {
       return;
     }
 
