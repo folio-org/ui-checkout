@@ -144,5 +144,5 @@
     "loanDetails.ariaLabel": "Zobrazit podrobnosti o otevřené výpůjčce",
     "openRequests.ariaLabel": "Zobrazit otevřené žádanky",
     "patronBlocks.ariaLabel": "Zobrazit bloky čtenářů",
-    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
+    "awaitingPickupMessageHeld": "Vypůjčitel má na tomto pultu služeb <strong>{count, number}</strong> {count, plural, one {drženou položku} other {držené položky}}."
 }
