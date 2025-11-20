@@ -192,6 +192,7 @@ class ScanItems extends React.Component {
   constructor(props) {
     super(props);
     this.store = props.stripes.store;
+    this.barcodeEl = React.createRef();
     this.state = {
       loading: false,
       checkoutStatus: null,
@@ -600,6 +601,7 @@ class ScanItems extends React.Component {
         { /* manages pre checkout modals */}
         {item &&
           <ModalManager
+            barcodeEl={this.barcodeEl}
             checkedoutItem={item}
             checkoutNotesMode={checkoutNotesMode}
             onDone={this.onDone}
@@ -607,6 +609,7 @@ class ScanItems extends React.Component {
           />}
         <ItemForm
           formRef={formRef}
+          barcodeEl={this.barcodeEl}
           onSubmit={this.tryCheckout}
           onOverride={this.override}
           patron={patron}

@@ -8,7 +8,9 @@ import {
 
 import buildStripes from '@folio/circulation/test/jest/__mock__/stripes.mock';
 
-import ItemForm from './ItemForm';
+import ItemForm, {
+  shouldSkipFocus,
+} from './ItemForm';
 
 const testIds = {
   itemForm: 'itemForm',
@@ -251,6 +253,67 @@ describe('ItemForm', () => {
       fireEvent.click(screen.getByTestId(testIds.closeSelectItemModalButton));
 
       expect(onCloseSelectItemModal).toHaveBeenCalled();
+    });
+  });
+
+  describe('shouldSkipFocus', () => {
+    let originalActiveElement;
+    let mockElement;
+
+    beforeEach(() => {
+      mockElement = {};
+      originalActiveElement = document.activeElement;
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => mockElement,
+      });
+    });
+
+    afterEach(() => {
+      Object.defineProperty(document, 'activeElement', {
+        configurable: true,
+        get: () => originalActiveElement,
+      });
+    });
+
+    it('should returns true if document.activeElement === barcodeEl.current', () => {
+      const barcodeEl = {
+        current: mockElement,
+      };
+      const patron = {
+        id: '123',
+      };
+
+      expect(shouldSkipFocus(barcodeEl, patron)).toBe(true);
+    });
+
+    it('should returns true if patron is falsy', () => {
+      const barcodeEl = {
+        current: {},
+      };
+
+      expect(shouldSkipFocus(barcodeEl, null)).toBe(true);
+      expect(shouldSkipFocus(barcodeEl, undefined)).toBe(true);
+    });
+
+    it('should returns true if patron.id is falsy', () => {
+      const barcodeEl = {
+        current: {},
+      };
+
+      expect(shouldSkipFocus(barcodeEl, {})).toBe(true);
+      expect(shouldSkipFocus(barcodeEl, { id: '' })).toBe(true);
+    });
+
+    it('should returns false if activeElement !== barcodeEl.current and patron.id is truthy', () => {
+      const barcodeEl = {
+        current: {},
+      };
+      const patron = {
+        id: '123',
+      };
+
+      expect(shouldSkipFocus(barcodeEl, patron)).toBe(false);
     });
   });
 });
