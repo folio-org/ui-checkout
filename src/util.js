@@ -43,11 +43,7 @@ export function getFormattedPronouns(user, withPrefixSpace = false) {
 export function getCheckoutSettings(checkoutSettings) {
   if (!checkoutSettings.length) return undefined;
 
-  try {
-    return JSON.parse(checkoutSettings[0].value);
-  } catch (e) {
-    return {};
-  }
+  return checkoutSettings[0].value;
 }
 
 export function getPatronIdentifiers(checkoutSettings) {
