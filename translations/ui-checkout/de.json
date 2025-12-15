@@ -144,5 +144,5 @@
     "loanDetails.ariaLabel": "Aktuelle Ausleihen: Ausleihdetails anzeigen",
     "openRequests.ariaLabel": "Offene Bestandsanfragen anzeigen",
     "patronBlocks.ariaLabel": "Kontosperren anzeigen",
-    "awaitingPickupMessageHeld": "Entleiher/-in hat <strong>{count, number}</strong> {count, plural, one {item} other {items}} zur Nutzung am Standort an dieser Servicestelle bereitliegen."
+    "awaitingPickupMessageHeld": "Für Entleiher/-in liegen<strong>{count, number}</strong> {count, plural, one {item} other {items}} an dieser Servicestelle zur Nutzung am Standort bereit."
 }
