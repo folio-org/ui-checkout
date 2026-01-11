@@ -59,8 +59,8 @@ class CheckOut extends React.Component {
     patronBlockOverriddenInfo: { initialValue: {} },
     checkoutSettings: {
       type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module==CHECKOUT and configName==other_settings)',
+      records: 'circulationSettings',
+      path: 'circulation/settings?query=(name==other_settings)',
     },
     patrons: {
       type: 'okapi',
