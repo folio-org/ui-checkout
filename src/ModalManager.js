@@ -56,6 +56,12 @@ class ModalManager extends React.Component {
     checkoutNotesMode: PropTypes.bool,
     onDone: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    barcodeEl: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      }),
+    ]).isRequired,
   };
 
   constructor(props) {
@@ -127,7 +133,7 @@ class ModalManager extends React.Component {
       }
     }
 
-    return this.props.onDone();
+    return this.onDone();
   }
 
   shouldCheckoutNoteModalBeShown = () => {
@@ -162,7 +168,19 @@ class ModalManager extends React.Component {
   }
 
   confirmMultipieceModal = () => {
-    this.setState({ showMultipieceModal: false }, () => this.props.onDone());
+    this.setState({ showMultipieceModal: false }, () => this.onDone());
+  }
+
+  focusInput() {
+    const {
+      barcodeEl,
+    } = this.props;
+
+    if (barcodeEl?.current) {
+      requestAnimationFrame(() => {
+        barcodeEl.current.focus();
+      });
+    }
   }
 
   onCancel = () => {
@@ -174,6 +192,14 @@ class ModalManager extends React.Component {
     });
 
     this.props.onCancel();
+
+    this.focusInput();
+  }
+
+  onDone = () => {
+    this.props.onDone();
+
+    this.focusInput();
   }
 
   renderMultipieceModal() {

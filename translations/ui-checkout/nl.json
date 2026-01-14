@@ -144,5 +144,5 @@
     "loanDetails.ariaLabel": "Details van openstaande leningen bekijken",
     "openRequests.ariaLabel": "Openstaande aanvragen bekijken",
     "patronBlocks.ariaLabel": "Gebruikersblokkering bekijken",
-    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
+    "awaitingPickupMessageHeld": "Kredietnemer heeft <strong>{count, number}</strong> {count, plural, one {item} other {items}} gereserveerd voor gebruik op de Locatie op dit Servicepunt."
 }

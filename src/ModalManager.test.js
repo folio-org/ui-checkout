@@ -536,4 +536,65 @@ describe('ModalManager', () => {
       expect(source).toBeVisible();
     });
   });
+
+  describe('focus', () => {
+    let originalRAF;
+
+    beforeAll(() => {
+      originalRAF = global.requestAnimationFrame;
+      global.requestAnimationFrame = (cb) => cb();
+    });
+
+    afterAll(() => {
+      global.requestAnimationFrame = originalRAF;
+    });
+
+    it('should focus barcodeEl.current when onDone is called', () => {
+      const focusMock = jest.fn();
+      const barcodeEl = {
+        current: {
+          focus: focusMock,
+        },
+      };
+      const props = {
+        ...basicProps,
+        barcodeEl,
+        checkedoutItem: {
+          ...basicProps.checkedoutItem,
+          numberOfPieces: 2,
+        },
+      };
+
+      render(<ModalManager {...props} />);
+
+      fireEvent.click(screen.getByTestId(testIds.confirmNoteModalButton));
+      fireEvent.click(screen.getByTestId(testIds.multipieceConfirmButton));
+
+      expect(focusMock).toHaveBeenCalled();
+    });
+
+    it('should focus barcodeEl.current when onCancel is called', () => {
+      const focusMock = jest.fn();
+      const barcodeEl = {
+        current: {
+          focus: focusMock,
+        },
+      };
+      const props = {
+        ...basicProps,
+        barcodeEl,
+        checkedoutItem: {
+          ...basicProps.checkedoutItem,
+          numberOfPieces: 2,
+        },
+      };
+
+      render(<ModalManager {...props} />);
+
+      fireEvent.click(screen.getByTestId(testIds.confirmNoteModalButton));
+      fireEvent.click(screen.getByTestId(testIds.multipieceCloseButton));
+
+      expect(focusMock).toHaveBeenCalled();
+    });
+  });
 });

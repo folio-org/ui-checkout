@@ -22,8 +22,16 @@ import ErrorModal from '../ErrorModal';
 import OverrideModal from '../OverrideModal';
 import SelectItemModal from '../SelectItemModal';
 
+export const shouldSkipFocus = (barcodeEl, patron) => document.activeElement === barcodeEl?.current || !patron?.id;
+
 class ItemForm extends React.Component {
   static propTypes = {
+    barcodeEl: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.shape({
+        current: PropTypes.instanceOf(Element),
+      }),
+    ]).isRequired,
     stripes: stripesShape.isRequired,
     shouldSubmitAutomatically: PropTypes.bool.isRequired,
     submitting: PropTypes.bool.isRequired,
@@ -77,7 +85,6 @@ class ItemForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.barcodeEl = React.createRef();
     this.readyPrefix = props.modules?.app?.find(el => el.module === '@folio/checkout')?.readyPrefix;
     this.state = {
       overrideModalOpen: false,
@@ -94,6 +101,7 @@ class ItemForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
+      barcodeEl,
       shouldSubmitAutomatically,
       patron,
       form: { getState }
@@ -101,7 +109,7 @@ class ItemForm extends React.Component {
 
     const { submitSucceeded } = getState();
 
-    if (document.activeElement === this.barcodeEl.current || !patron || !patron.id) {
+    if (shouldSkipFocus(barcodeEl, patron)) {
       return;
     }
 
@@ -130,7 +138,13 @@ class ItemForm extends React.Component {
   };
 
   focusInput() {
-    this.barcodeEl.current.focus();
+    const {
+      barcodeEl,
+    } = this.props;
+
+    if (barcodeEl?.current) {
+      barcodeEl.current.focus();
+    }
   }
 
   clearForm = () => {
@@ -168,6 +182,7 @@ class ItemForm extends React.Component {
 
   render() {
     const {
+      barcodeEl,
       submitting,
       stripes,
       item,
@@ -209,7 +224,7 @@ class ItemForm extends React.Component {
                           aria-label={ariaLabel}
                           id="input-item-barcode"
                           placeholder={placeholder}
-                          inputRef={this.barcodeEl}
+                          inputRef={barcodeEl}
                           validationEnabled={validationEnabled}
                           onFocus={this.readyPrefix ? () => this.setState({ readyToScan: true }) : undefined}
                           onBlur={this.readyPrefix ? () => this.setState({ readyToScan: false }) : undefined}

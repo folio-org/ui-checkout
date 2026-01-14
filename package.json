@@ -40,7 +40,11 @@
     "permissionSets": [
       {
         "permissionName": "module.checkout.enabled",
-        "displayName": "UI: Check out module is enabled"
+        "displayName": "UI: Check out module is enabled",
+        "subPermissions": [
+          "mod-settings.global.read.stripes-core.prefs.manage",
+          "mod-settings.entries.collection.get"
+        ]
       },
       {
         "permissionName": "ui-checkout.circulation.execute",
