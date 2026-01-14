@@ -13,6 +13,7 @@
 * The modal that display a count of requested items awaiting pick up now also shows a count of items held on shelf for Use At Location. Refs UICHKOUT-962.
 * Added global permissions for get read-access to values such as tenant’s locale, timezone, and currency. Refs UICHKOUT-983.
 * Added focus improvement for modal. Refs UICHKOUT-982.
+* Add 'subscribesTo' field for servicepoints in package.json. Refs UICHKOUT-882.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)
