@@ -32,8 +32,10 @@ const basicProps = {
   id: 'id',
   label: 'label',
   settings: [{
-    value: 'true',
-    enabled: true,
+    value: {
+      enabled: true,
+    },
+    key: 'PROFILE_PICTURE_CONFIG',
   }],
   resources: {
     patronGroups: {

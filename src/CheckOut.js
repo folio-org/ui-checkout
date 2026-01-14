@@ -72,7 +72,7 @@ class CheckOut extends React.Component {
     },
     settings: {
       type: 'okapi',
-      path: 'users/configurations/entry',
+      path: 'users/settings/entries',
     },
     loans: {
       type: 'okapi',
@@ -156,7 +156,7 @@ class CheckOut extends React.Component {
       }),
       settings: PropTypes.shape({
         records: PropTypes.arrayOf(PropTypes.shape({
-          enabled: PropTypes.bool,
+          settings: PropTypes.arrayOf(PropTypes.object),
         })),
       }),
       checkoutSettings: PropTypes.shape({
@@ -653,7 +653,7 @@ class CheckOut extends React.Component {
     const itemInitialValue = this.shouldSubmitAutomatically ? { item: { barcode: location.state.itemBarcode } } : {};
     const checkoutSettings = get(resources, ['checkoutSettings', 'records'], []);
     const patrons = get(resources, ['patrons', 'records'], []);
-    const settings = get(resources, ['settings', 'records'], []);
+    const settings = resources.settings?.records?.[0]?.settings || [];
     const {
       manualPatronBlocks,
       automatedPatronBlocks,
