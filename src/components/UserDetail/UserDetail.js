@@ -25,6 +25,7 @@ import Loans from './Loans';
 
 import {
   MAX_RECORDS,
+  PROFILE_PICTURE_CONFIG_KEY,
 } from '../../constants';
 
 import css from './UserDetail.css';
@@ -60,9 +61,7 @@ class UserDetail extends React.Component {
     }),
     id: PropTypes.string.isRequired,
     label: PropTypes.node,
-    settings: PropTypes.arrayOf(PropTypes.shape({
-      enabled: PropTypes.bool,
-    })).isRequired,
+    settings: PropTypes.arrayOf(PropTypes.object).isRequired,
     ariaLabel: PropTypes.node,
     resources: PropTypes.shape({
       patronGroups: PropTypes.shape({
@@ -139,7 +138,7 @@ class UserDetail extends React.Component {
     const patronGroup = patronGroups[0] || {};
     const statusVal = (get(user, ['active'], '') ? 'ui-checkout.active' : 'ui-checkout.inactive');
     const profilePictureLink = user?.personal?.profilePictureLink;
-    const profilePicturesEnabled = Boolean(settings.length) && settings[0].enabled;
+    const profilePicturesEnabled = settings.find(setting => setting.key === PROFILE_PICTURE_CONFIG_KEY)?.value?.enabled;
     const hasViewProfilePicturePerm = stripes.hasPerm('ui-users.profile-pictures.view');
     const displayProfilePicture = profilePicturesEnabled && hasViewProfilePicturePerm;
 

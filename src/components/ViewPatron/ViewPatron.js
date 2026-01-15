@@ -37,9 +37,7 @@ class ViewPatron extends React.Component {
       formatMessage: PropTypes.func.isRequired,
     }).isRequired,
     patronBlocks: PropTypes.arrayOf(PropTypes.object),
-    settings: PropTypes.arrayOf(PropTypes.shape({
-      enabled: PropTypes.bool,
-    })),
+    settings: PropTypes.arrayOf(PropTypes.object),
   };
 
   constructor(props) {
