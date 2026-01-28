@@ -59,6 +59,16 @@ export function playSound(checkoutStatus, audioTheme, onFinishedPlaying) {
   );
 }
 
+export const getMutatorFunction = (stripes, mutator) => {
+  const isEnabledEcsRequests = stripes?.config?.enableEcsRequests;
+
+  if (isEnabledEcsRequests) {
+    return mutator.itemsBFF;
+  } else {
+    return mutator.items;
+  }
+};
+
 class ScanItems extends React.Component {
   static manifest = Object.freeze({
     checkout: {
@@ -82,6 +92,13 @@ class ScanItems extends React.Component {
     items: {
       type: 'okapi',
       path: 'inventory/items',
+      accumulate: 'true',
+      fetch: false,
+      abortOnUnmount: true,
+    },
+    itemsBFF: {
+      type: 'okapi',
+      path: 'circulation-bff/inventory/items',
       accumulate: 'true',
       fetch: false,
       abortOnUnmount: true,
@@ -132,6 +149,10 @@ class ScanItems extends React.Component {
         POST: PropTypes.func,
       }),
       items: PropTypes.shape({
+        GET: PropTypes.func,
+        reset: PropTypes.func,
+      }),
+      itemsBFF: PropTypes.shape({
         GET: PropTypes.func,
         reset: PropTypes.func,
       }),
@@ -209,6 +230,7 @@ class ScanItems extends React.Component {
 
   fetchItems = async (barcode, offset = 0) => {
     const {
+      stripes,
       mutator,
       settings: {
         wildcardLookupEnabled,
@@ -219,16 +241,17 @@ class ScanItems extends React.Component {
     const itemBarcode = barcode || selectedBarcode;
     const bcode = `"${escapeCqlValue(itemBarcode)}${asterisk}"`;
     const query = `barcode==${bcode}`;
+    const mutatorFunction = getMutatorFunction(stripes, mutator);
     this.setState({
       item: null,
     });
 
-    mutator.items.reset();
+    mutatorFunction.reset();
 
     const {
       items,
       totalRecords,
-    } = await mutator.items.GET({
+    } = await mutatorFunction.GET({
       params: {
         limit: PAGE_AMOUNT,
         query,
