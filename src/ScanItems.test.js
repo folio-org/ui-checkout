@@ -10,6 +10,7 @@ import { dayjs } from '@folio/stripes/components';
 
 import ScanItems, {
   playSound,
+  getMutatorFunction,
 } from './ScanItems';
 import ItemForm from './components/ItemForm';
 import { PAGE_AMOUNT } from './constants';
@@ -27,6 +28,10 @@ const basicProps = {
   },
   mutator: {
     items: {
+      reset: jest.fn(),
+      GET: jest.fn(),
+    },
+    itemsBFF: {
       reset: jest.fn(),
       GET: jest.fn(),
     },
@@ -676,7 +681,7 @@ describe('ScanItems', () => {
         };
 
         beforeEach(() => {
-          props.mutator.items.GET.mockResolvedValueOnce({
+          props.mutator.itemsBFF.GET.mockResolvedValueOnce({
             totalRecords: 1,
             items: [
               {
@@ -935,6 +940,39 @@ describe('ScanItems', () => {
 
         expect(reactAudioPlayer).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('getMutatorFunction', () => {
+    const mutator = {
+      items: {},
+      itemsBFF: {},
+    };
+
+    it('should return itemsBFF mutator when enableEcsRequests is true', () => {
+      const stripes = {
+        config: {
+          enableEcsRequests: true,
+        },
+      };
+
+      expect(getMutatorFunction(stripes, mutator)).toBe(mutator.itemsBFF);
+    });
+
+    it('should return items mutator when enableEcsRequests is false', () => {
+      const stripes = {
+        config: {
+          enableEcsRequests: false,
+        },
+      };
+
+      expect(getMutatorFunction(stripes, mutator)).toBe(mutator.items);
+    });
+
+    it('should return items mutator when config is missing', () => {
+      const stripes = {};
+
+      expect(getMutatorFunction(stripes, mutator)).toBe(mutator.items);
     });
   });
 
