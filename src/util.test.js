@@ -41,7 +41,11 @@ describe('util', () => {
     personal,
   };
   const mockId = '12345678';
-  const settings = [{ value: '{"prefPatronIdentifier": "barcode,id"}' }];
+  const settings = [{
+    value: {
+      prefPatronIdentifier: 'barcode,id',
+    },
+  }];
   const emptySettings = [{ value: '' }];
   const { OPEN_AWAITING_PICKUP } = OPEN_REQUEST_STATUSES;
 
@@ -103,16 +107,16 @@ describe('util', () => {
   });
 
   describe('getCheckoutSettings', () => {
-    it('should return undefined if input length is 0', () => {
-      expect(getCheckoutSettings([])).toEqual(undefined);
+    it('should returns undefined for empty array', () => {
+      expect(getCheckoutSettings([])).toBeUndefined();
     });
 
-    it('should return parsed JSON for a valid input', () => {
-      expect(getCheckoutSettings(settings)).toEqual({ prefPatronIdentifier: 'barcode,id' });
-    });
+    it('should returns value of first element (object)', () => {
+      const obj = {
+        key: 'value',
+      };
 
-    it('should return an empty object if there\'s an error', () => {
-      expect(getCheckoutSettings(emptySettings)).toEqual({});
+      expect(getCheckoutSettings([{ value: obj }])).toBe(obj);
     });
   });
 
