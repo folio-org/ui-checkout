@@ -16,6 +16,7 @@
 * Add 'subscribesTo' field for servicepoints in package.json. Refs UICHKOUT-882.
 * *BREAKING* Replace `users/configurations/entry` endpoint with `users/settings/entries` for user settings. Refs UICHKOUT-987.
 * *BREAKING* Migrate config values to mod-configuration. Refs UICHKOUT-963.
+* Add support for use circulation-bff for circulation-bff/inventory/items. Refs UICHKOUT-985.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)

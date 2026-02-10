@@ -36,7 +36,8 @@
       "notes": "4.0"
     },
     "optionalOkapiInterfaces": {
-      "circulation-bff-loans": "1.2"
+      "circulation-bff-loans": "1.2",
+      "circulation-bff-inventory": "1.0"
     },
     "permissionSets": [
       {
