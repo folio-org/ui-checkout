@@ -108,16 +108,14 @@ function Loans({
       data-testid="loans"
       className={css.section}
     >
-      <Row>
-        <Col xs={4}>
+      <Row className={css.tableRowPrintOnly}>
+        <Col xs={4} className={css.tableCellPrintOnly}>
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openLoans" />}
             value={openLoansLink}
           />
         </Col>
-        <Col
-          xs={4}
-        >
+        <Col xs={4} className={css.tableCellPrintOnly}>
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openAccounts" />}
             value={
@@ -133,7 +131,7 @@ function Loans({
             }
           />
         </Col>
-        <Col xs={4}>
+        <Col xs={4} className={css.tableCellPrintOnly}>
           <KeyValue
             label={<FormattedMessage id="ui-checkout.openRequests" />}
             value={renderOpenRequests}

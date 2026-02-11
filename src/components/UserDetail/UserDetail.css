@@ -7,11 +7,40 @@
     background-color: #f8f8f8;
     border-radius: 6px;
     height: 100px;
+
+    @media print {
+      height: auto;
+      background-color: var(--bg);
+    }
+  }
+
+  @media print {
+    padding: 0;
+    margin: 0;
+    border: none;
+
+    .tableRowPrintOnly {
+      margin: 0;
+    }
+    .tableCellPrintOnly {
+      border-top: 1px solid var(--color-text);
+      border-left: 1px solid var(--color-text);
+      border-bottom: 1px solid var(--color-text);
+      margin: 0 0 -1px;
+
+      &:last-child {
+          border-right: 1px solid var(--color-text);
+      }
+    }
   }
 }
 
-.marginRight {
+.userFullName {
   margin-right: 10px;
+
+  @media print {
+    display: block;
+  }
 }
 
 .userPlaceholder {

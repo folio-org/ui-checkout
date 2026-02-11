@@ -1,9 +1,19 @@
 .detail {
   padding-top: 15px;
+
+  @media print {
+    [class*="margin-medium"] {
+      margin: 0;
+    }
+  }
 }
 
 .section {
   padding: 10px 10px 2px 10px;
   border-bottom: 1px solid #f8f8f8;
   margin-bottom: 5px;
+
+  @media print {
+    display: none;
+  }
 }

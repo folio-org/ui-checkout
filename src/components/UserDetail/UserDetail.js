@@ -88,7 +88,7 @@ class UserDetail extends React.Component {
 
     return (
       <span>
-        <span className={css.marginRight}>
+        <span className={css.userFullName}>
           <Link
             aria-label={ariaLabel}
             to={path}
@@ -145,7 +145,7 @@ class UserDetail extends React.Component {
     return (
       <div id={id}>
         <div>
-          <Row>
+          <Row className={css.tableRowPrintOnly}>
             <Col xs={displayProfilePicture ? 9 : 12}>
               <div className={`${css.section} ${css.active}`}>
                 <KeyValue
@@ -162,22 +162,22 @@ class UserDetail extends React.Component {
         </div>
 
         <div className={css.section}>
-          <Row>
-            <Col xs={4}>
+          <Row className={css.tableRowPrintOnly}>
+            <Col xs={4} className={css.tableCellPrintOnly}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.user.patronGroup" />}
               >
                 {patronGroup.group}
               </KeyValue>
             </Col>
-            <Col xs={4}>
+            <Col xs={4} className={css.tableCellPrintOnly}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.status" />}
               >
                 <FormattedMessage id={statusVal} />
               </KeyValue>
             </Col>
-            <Col xs={4}>
+            <Col xs={4} className={css.tableCellPrintOnly}>
               <KeyValue
                 label={<FormattedMessage id="ui-checkout.user.expiration" />}
                 value={user.expirationDate ? <FormattedDate value={user.expirationDate} /> : ''}

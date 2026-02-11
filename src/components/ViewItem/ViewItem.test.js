@@ -255,13 +255,13 @@ describe('ViewItem', () => {
       });
 
       it('should render loan policy button label', () => {
-        const loanPolicyLabel = screen.getByText(labelIds.loanPolicyButton);
+        const loanPolicyLabel = screen.getByRole('button', { name: labelIds.loanPolicyButton });
 
         expect(loanPolicyLabel).toBeVisible();
       });
 
       it('should trigger "history.push" for loan policy with correct arguments', () => {
-        const loanPolicyButton = screen.getByText(labelIds.loanPolicyButton);
+        const loanPolicyButton = screen.getByRole('button', { name: labelIds.loanPolicyButton });
         const expectedArg = `/settings/circulation/loan-policies/${basicProps.scannedItems[0].loanPolicyId}`;
 
         fireEvent.click(loanPolicyButton);
