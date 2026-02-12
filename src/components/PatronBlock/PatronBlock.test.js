@@ -7,7 +7,6 @@ import PatronBlock from './PatronBlock';
 
 describe('PatronBlock', () => {
   const testIds = {
-    patronBlock: 'patronBlock',
     patronBlockLink: 'patronBlockLink',
     patronBlockLabel: 'patronBlockLabel',
     warnIcon: 'warnIcon',
@@ -31,10 +30,6 @@ describe('PatronBlock', () => {
 
   describe('when patronBlocks > 0', () => {
     beforeEach(() => renderComponent());
-
-    it('should render patronBlock container', () => {
-      expect(screen.getByTestId(testIds.patronBlock)).toBeInTheDocument();
-    });
 
     it('should render label container', () => {
       expect(screen.getByTestId(testIds.patronBlockLabel)).toBeInTheDocument();

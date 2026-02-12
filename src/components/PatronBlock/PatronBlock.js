@@ -63,19 +63,10 @@ class PatronBlock extends React.Component {
     );
 
     return (
-      <div
-        data-testid="patronBlock"
-        className={css.section}
-      >
-        <Row>
-          <Col xs>
-            <KeyValue
-              label={label}
-              value={patronBlocksCount > 0 ? viewUserLink : ''}
-            />
-          </Col>
-        </Row>
-      </div>
+      <KeyValue
+        label={label}
+        value={patronBlocksCount > 0 ? viewUserLink : ''}
+      />
     );
   }
 }

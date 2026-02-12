@@ -3,16 +3,24 @@ import {
   render,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { ProxyManager } from '@folio/stripes/smart-components';
+import {
+  ProxyManager,
+  ViewCustomFieldsRecord,
+} from '@folio/stripes/smart-components';
 
 import ViewPatron from './ViewPatron';
 import UserDetail from '../UserDetail';
 import PatronBlock from '../PatronBlock';
+import { getCheckoutSettings } from '../../util';
 
 jest.mock('../UserDetail', () => jest.fn(({ label }) => (
   <div>{label}</div>
 )));
 jest.mock('../PatronBlock', () => jest.fn(() => <div />));
+
+jest.mock('../../util', () => ({
+  getCheckoutSettings: jest.fn(),
+}));
 
 const basicProps = {
   stripes: {
@@ -28,6 +36,7 @@ const basicProps = {
   onClearPatron: jest.fn(),
   patronBlocks: [{}],
   settings: [],
+  checkoutSettings: [],
 };
 const labelIds = {
   borrower: 'ui-checkout.borrower',
@@ -39,6 +48,8 @@ describe('ViewPatron', () => {
   afterEach(() => {
     UserDetail.mockClear();
     PatronBlock.mockClear();
+    ViewCustomFieldsRecord.mockClear();
+    getCheckoutSettings.mockClear();
   });
 
   describe('when "proxy.id" is not equal "patron.id"', () => {
@@ -171,6 +182,248 @@ describe('ViewPatron', () => {
       };
 
       expect(PatronBlock).toHaveBeenCalledWith(expectedProps, {});
+    });
+  });
+
+  describe('Custom Fields', () => {
+    describe('when patron has custom fields', () => {
+      const customFields = {
+        field1: 'value1',
+        field2: 'value2',
+      };
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should render "ViewCustomFieldsRecord" for patron', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            backendModuleName: 'users',
+            entityType: 'user',
+            customFieldsValues: customFields,
+            showAccordion: false,
+            columnCount: 3,
+            isSectionTitleEnabled: false,
+          }),
+          {}
+        );
+      });
+
+      it('should call "getCheckoutSettings" with checkoutSettings', () => {
+        expect(getCheckoutSettings).toHaveBeenCalledWith(basicProps.checkoutSettings);
+      });
+    });
+
+    describe('when proxy has custom fields', () => {
+      const customFields = {
+        field1: 'value1',
+        field2: 'value2',
+      };
+      const props = {
+        ...basicProps,
+        proxy: {
+          ...basicProps.proxy,
+          customFields,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should render "ViewCustomFieldsRecord" for proxy', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            backendModuleName: 'users',
+            entityType: 'user',
+            customFieldsValues: customFields,
+            showAccordion: false,
+            columnCount: 3,
+            isSectionTitleEnabled: false,
+          }),
+          {}
+        );
+      });
+    });
+
+    describe('when both patron and proxy have custom fields', () => {
+      const patronCustomFields = {
+        patronField: 'patronValue',
+      };
+      const proxyCustomFields = {
+        proxyField: 'proxyValue',
+      };
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields: patronCustomFields,
+        },
+        proxy: {
+          ...basicProps.proxy,
+          customFields: proxyCustomFields,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should render "ViewCustomFieldsRecord" twice', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledTimes(2);
+      });
+
+      it('should render "ViewCustomFieldsRecord" for patron with patron custom fields', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            customFieldsValues: patronCustomFields,
+          }),
+          {}
+        );
+      });
+
+      it('should render "ViewCustomFieldsRecord" for proxy with proxy custom fields', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            customFieldsValues: proxyCustomFields,
+          }),
+          {}
+        );
+      });
+    });
+
+    describe('when patron has no custom fields', () => {
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields: null,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should not render "ViewCustomFieldsRecord" for patron', () => {
+        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('when proxy has no custom fields', () => {
+      const props = {
+        ...basicProps,
+        proxy: {
+          ...basicProps.proxy,
+          customFields: undefined,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should not render "ViewCustomFieldsRecord" for proxy', () => {
+        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
+      });
+    });
+
+    describe('when checkoutSettings has allowedCustomFieldRefIds', () => {
+      const allowedRefIds = ['refId1', 'refId2'];
+      const customFields = {
+        field1: 'value1',
+      };
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({
+          allowedCustomFieldRefIds: allowedRefIds,
+        });
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should pass allowedRefIds to "ViewCustomFieldsRecord"', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            allowedRefIds,
+          }),
+          {}
+        );
+      });
+    });
+
+    describe('when getCheckoutSettings returns undefined', () => {
+      const customFields = {
+        field1: 'value1',
+      };
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields,
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue(undefined);
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should render "ViewCustomFieldsRecord" with undefined allowedRefIds', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
+          expect.objectContaining({
+            allowedRefIds: undefined,
+          }),
+          {}
+        );
+      });
     });
   });
 });

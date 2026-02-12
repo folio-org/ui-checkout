@@ -11,10 +11,18 @@ import {
   KeyValue,
   Row,
 } from '@folio/stripes/components';
-import { ProxyManager } from '@folio/stripes/smart-components';
+import {
+  ProxyManager,
+  ViewCustomFieldsRecord,
+} from '@folio/stripes/smart-components';
 
 import UserDetail from '../UserDetail';
 import PatronBlock from '../PatronBlock';
+import {
+  MODULE_NAME,
+  CUSTOM_FIELDS_ENTITY_TYPE,
+} from '../../constants';
+import { getCheckoutSettings } from '../../util';
 
 import css from './ViewPatron.css';
 
@@ -46,6 +54,25 @@ class ViewPatron extends React.Component {
     this.connectedProxyDetail = props.stripes.connect(UserDetail, { dataKey: 'proxy' });
     this.connectedPatronDetail = props.stripes.connect(UserDetail, { dataKey: 'patron' });
     this.connectedProxyManager = props.stripes.connect(ProxyManager);
+  }
+
+  renderCustomFields = (customFieldsValues) => {
+    const { checkoutSettings } = this.props;
+    const allowedCustomFieldRefIds = getCheckoutSettings(checkoutSettings)?.allowedCustomFieldRefIds;
+
+    if (!customFieldsValues) return null;
+
+    return (
+      <ViewCustomFieldsRecord
+        backendModuleName={MODULE_NAME}
+        entityType={CUSTOM_FIELDS_ENTITY_TYPE}
+        customFieldsValues={customFieldsValues}
+        showAccordion={false}
+        columnCount={3}
+        allowedRefIds={allowedCustomFieldRefIds}
+        isSectionTitleEnabled={false}
+      />
+    );
   }
 
   render() {
@@ -96,6 +123,7 @@ class ViewPatron extends React.Component {
                 value="-"
               />
             </Col>
+            {this.renderCustomFields(proxy?.customFields)}
           </Row>
         </div>
       </div>
@@ -104,11 +132,16 @@ class ViewPatron extends React.Component {
     return (
       <div>
         {patronDetail}
-        <PatronBlock
-          patronBlocksCount={patronBlocks.length || 0}
-          user={patron}
-          formatMessage={formatMessage}
-        />
+        <Row className={css.section}>
+          <Col xs={4}>
+            <PatronBlock
+              patronBlocksCount={patronBlocks.length || 0}
+              user={patron}
+              formatMessage={formatMessage}
+            />
+          </Col>
+          {this.renderCustomFields(patron?.customFields)}
+        </Row>
         {proxy.id && proxy.id !== patron.id && proxyDetail}
         <this.connectedProxyManager
           patron={patron}
