@@ -28,16 +28,19 @@ import css from './ViewPatron.css';
 
 class ViewPatron extends React.Component {
   static propTypes = {
+    checkoutSettings: PropTypes.arrayOf(PropTypes.object).isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
     patron: PropTypes.shape({
       id: PropTypes.string,
       barcode: PropTypes.string,
+      customFields: PropTypes.object,
     }).isRequired,
     proxy: PropTypes.shape({
       id: PropTypes.string,
       barcode: PropTypes.string,
+      customFields: PropTypes.object,
     }).isRequired,
     onSelectPatron: PropTypes.func.isRequired,
     onClearPatron: PropTypes.func.isRequired,
