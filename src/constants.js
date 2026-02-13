@@ -96,3 +96,6 @@ export const DCB_HOLDINGS_RECORD_ID = '10cd3a5a-d36f-4c7a-bc4f-e1ae3cf820c9';
 export const PROFILE_PICTURE_CONFIG_KEY = 'PROFILE_PICTURE_CONFIG';
 
 export default '';
+
+export const MODULE_NAME = 'users';
+export const CUSTOM_FIELDS_ENTITY_TYPE = 'user';

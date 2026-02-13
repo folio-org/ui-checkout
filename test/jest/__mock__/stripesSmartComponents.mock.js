@@ -37,4 +37,5 @@ jest.mock('@folio/stripes/smart-components', () => ({
   )),
   ProxyManager: jest.fn(() => <div />),
   ProfilePicture: () => <div>ProfilePicture</div>,
+  ViewCustomFieldsRecord: jest.fn(() => <div>Custom Fields</div>),
 }));

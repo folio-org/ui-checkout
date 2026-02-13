@@ -723,6 +723,7 @@ class CheckOut extends React.Component {
                 patronBlocks={patronBlocks}
                 proxy={proxy}
                 settings={settings}
+                checkoutSettings={checkoutSettings}
                 {...this.props}
               /> }
           </Pane>
