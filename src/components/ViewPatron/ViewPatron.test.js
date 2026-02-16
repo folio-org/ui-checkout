@@ -25,6 +25,7 @@ jest.mock('../../util', () => ({
 const basicProps = {
   stripes: {
     connect: jest.fn((Component) => Component),
+    hasInterface: jest.fn(() => true),
   },
   patron: {
     id: 'patronId',
@@ -50,6 +51,7 @@ describe('ViewPatron', () => {
     PatronBlock.mockClear();
     ViewCustomFieldsRecord.mockClear();
     getCheckoutSettings.mockClear();
+    basicProps.stripes.hasInterface.mockClear();
   });
 
   describe('when "proxy.id" is not equal "patron.id"', () => {
@@ -423,6 +425,36 @@ describe('ViewPatron', () => {
           }),
           {}
         );
+      });
+    });
+
+    describe('when custom-fields interface is not available', () => {
+      const customFields = {
+        field1: 'value1',
+      };
+      const props = {
+        ...basicProps,
+        patron: {
+          ...basicProps.patron,
+          customFields,
+        },
+        stripes: {
+          ...basicProps.stripes,
+          hasInterface: jest.fn(() => false),
+        },
+      };
+
+      beforeEach(() => {
+        getCheckoutSettings.mockReturnValue({});
+        render(
+          <ViewPatron
+            {...props}
+          />
+        );
+      });
+
+      it('should not render "ViewCustomFieldsRecord"', () => {
+        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
       });
     });
   });

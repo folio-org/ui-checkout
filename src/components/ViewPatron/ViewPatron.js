@@ -31,6 +31,7 @@ class ViewPatron extends React.Component {
     checkoutSettings: PropTypes.arrayOf(PropTypes.object).isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
+      hasInterface: PropTypes.func.isRequired,
     }).isRequired,
     patron: PropTypes.shape({
       id: PropTypes.string,
@@ -60,10 +61,15 @@ class ViewPatron extends React.Component {
   }
 
   renderCustomFields = (customFieldsValues) => {
-    const { checkoutSettings } = this.props;
+    const {
+      checkoutSettings,
+      stripes,
+    } = this.props;
     const allowedCustomFieldRefIds = getCheckoutSettings(checkoutSettings)?.allowedCustomFieldRefIds;
 
-    if (!customFieldsValues) return null;
+    if (!customFieldsValues || !stripes.hasInterface('custom-fields')) {
+      return null;
+    }
 
     return (
       <ViewCustomFieldsRecord
