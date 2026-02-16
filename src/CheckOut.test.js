@@ -1332,4 +1332,133 @@ describe('CheckOut', () => {
       });
     });
   });
+
+  describe('Patron lookup via modal', () => {
+    const selectedPatron = {
+      id: 'selectedPatronId123',
+      barcode: '12345678910',
+      externalSystemId: '12345678910',
+    };
+    const anotherPatron = {
+      id: 'anotherPatronId456',
+      barcode: '99999999999',
+      externalSystemId: '12345678910', // Same identifier as selectedPatron
+    };
+
+    describe('When patron is selected via lookup modal', () => {
+      beforeEach(() => {
+        basicProps.mutator.patrons.GET.mockResolvedValue([selectedPatron]);
+        basicProps.mutator.manualPatronBlocks.GET.mockResolvedValue([]);
+        basicProps.mutator.automatedPatronBlocks.GET.mockResolvedValue([]);
+        basicProps.mutator.proxy.GET.mockResolvedValue([]);
+        basicProps.mutator.requests.GET.mockResolvedValue({ totalRecords: 0 });
+        basicProps.mutator.loans.GET.mockResolvedValue({ totalRecords: 0 });
+
+        PatronForm.mockImplementationOnce(({ onSubmit, onSelectPatronViaLookUp }) => {
+          const handleSelectUser = () => {
+            // Simulate user selection from lookup modal
+            onSelectPatronViaLookUp(selectedPatron);
+            // Then submit the form with the identifier
+            onSubmit({
+              patron: {
+                identifier: selectedPatron.externalSystemId,
+              },
+            });
+          };
+
+          return (
+            <div>
+              <button
+                type="button"
+                data-testid="selectPatronFromModal"
+                onClick={handleSelectUser}
+              >
+                Select Patron
+              </button>
+            </div>
+          );
+        });
+
+        getPatronIdentifiers.mockReturnValue(userIdentifiers);
+        getPatronBlocks.mockReturnValue(patronBlocks);
+        getCheckoutSettings.mockReturnValue({});
+
+        render(<CheckOut {...basicProps} />);
+      });
+
+      it('should query by ID when patron is selected from lookup modal', async () => {
+        const selectButton = screen.getByTestId('selectPatronFromModal');
+
+        fireEvent.click(selectButton);
+
+        await waitFor(() => {
+          // Verify the query was built using ID instead of identifier
+          const expectedArg = {
+            params: {
+              query: `id==${selectedPatron.id}`,
+            },
+          };
+
+          expect(basicProps.mutator.patrons.GET).toHaveBeenCalledWith(expectedArg);
+        });
+      });
+    });
+
+    describe('When patron identifier is manually entered (not from modal)', () => {
+      beforeEach(() => {
+        basicProps.mutator.patrons.GET.mockResolvedValue([anotherPatron]);
+        basicProps.mutator.manualPatronBlocks.GET.mockResolvedValue([]);
+        basicProps.mutator.automatedPatronBlocks.GET.mockResolvedValue([]);
+        basicProps.mutator.proxy.GET.mockResolvedValue([]);
+        basicProps.mutator.requests.GET.mockResolvedValue({ totalRecords: 0 });
+        basicProps.mutator.loans.GET.mockResolvedValue({ totalRecords: 0 });
+
+        PatronForm.mockImplementationOnce(({ onSubmit }) => {
+          const handleManualEntry = () => {
+            // Simulate manual entry without calling onSelectPatronViaLookUp
+            onSubmit({
+              patron: {
+                identifier: '12345678910',
+              }
+            });
+          };
+
+          return (
+            <div>
+              <button
+                type="button"
+                data-testid="manualPatronEntry"
+                onClick={handleManualEntry}
+              >
+                Enter Patron
+              </button>
+            </div>
+          );
+        });
+
+        getPatronIdentifiers.mockReturnValue(userIdentifiers);
+        getPatronBlocks.mockReturnValue(patronBlocks);
+        getCheckoutSettings.mockReturnValue({});
+
+        render(<CheckOut {...basicProps} />);
+      });
+
+      it('should use identifier-based query when patron is not from modal', async () => {
+        const enterButton = screen.getByTestId('manualPatronEntry');
+
+        fireEvent.click(enterButton);
+
+        await waitFor(() => {
+          // Verify the query was built using identifier (mocked to return identifierQuery)
+          const expectedArg = {
+            params: {
+              query: identifierQuery,
+            },
+          };
+
+          expect(basicProps.mutator.patrons.GET).toHaveBeenCalledWith(expectedArg);
+        });
+      });
+    });
+  });
 });
