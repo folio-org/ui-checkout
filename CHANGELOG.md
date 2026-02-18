@@ -16,7 +16,7 @@
 * Add 'subscribesTo' field for servicepoints in package.json. Refs UICHKOUT-882.
 * *BREAKING* Replace `users/configurations/entry` endpoint with `users/settings/entries` for user settings. Refs UICHKOUT-987.
 * *BREAKING* Migrate config values to mod-configuration. Refs UICHKOUT-963.
-* *BREAKING* Add custom fields in `ViewPatron` for user and proxy user details. Refs UICHKOUT-989.
+* Add custom fields in `ViewPatron` for user and proxy user details. Refs UICHKOUT-989.
 * Add support for use circulation-bff for circulation-bff/inventory/items. Refs UICHKOUT-985.
 * Search for a user by ID after selecting them in the find-user plugin modal. Fixes UICHKOUT-991.
 
