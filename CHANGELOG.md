@@ -18,6 +18,7 @@
 * *BREAKING* Migrate config values to mod-configuration. Refs UICHKOUT-963.
 * Add custom fields in `ViewPatron` for user and proxy user details. Refs UICHKOUT-989.
 * Add support for use circulation-bff for circulation-bff/inventory/items. Refs UICHKOUT-985.
+* Search for a user by ID after selecting them in the find-user plugin modal. Fixes UICHKOUT-991.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)

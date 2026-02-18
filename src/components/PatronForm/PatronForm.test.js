@@ -43,6 +43,7 @@ describe('PatronForm', () => {
     forwardedRef: {},
     formRef: {},
     form: mockedForm,
+    onSelectPatronViaLookUp: jest.fn(),
   };
   describe('without error', () => {
     beforeEach(() => {
@@ -200,6 +201,37 @@ describe('PatronForm', () => {
           error: expect.any(Object),
         }
       );
+    });
+
+    describe('onSelectPatronViaLookUp callback', () => {
+      it('should call onSelectPatronViaLookUp with user when user is selected', () => {
+        const mockedOnSelectPatronViaLookUp = jest.fn();
+        const customProps = {
+          ...props,
+          userIdentifiers: ['barcode'],
+          onSelectPatronViaLookUp: mockedOnSelectPatronViaLookUp,
+          user: {
+            id: 'userId123',
+            barcode: '12345678910',
+          },
+        };
+
+        jest.useFakeTimers();
+
+        render(
+          <PatronForm
+            {...customProps}
+          />
+        );
+
+        fireEvent.click(screen.getByTestId(testIds.clickableFindPatronPluggable));
+
+        jest.runAllTimers();
+
+        expect(mockedOnSelectPatronViaLookUp).toHaveBeenCalledWith(customProps.user);
+
+        jest.useRealTimers();
+      });
     });
   });
 

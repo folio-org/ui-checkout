@@ -250,6 +250,7 @@ class CheckOut extends React.Component {
     this.patronFormRef = React.createRef();
     this.itemFormRef = React.createRef();
     this.shouldSubmitAutomatically = hasIn(location, 'state.patronBarcode') && hasIn(location, 'state.itemBarcode');
+    this.selectedPatronViaLookUp = null;
 
     this.state = {
       submitting: false,
@@ -523,7 +524,15 @@ class CheckOut extends React.Component {
 
     this.clearResources();
     const idents = this.getPatronIdentifiers();
-    const query = buildIdentifierQuery(patron, idents);
+
+    // When a patron is selected via the lookup modal (not scanned/typed),
+    // use their specific ID to ensure we get the exact user selected,
+    // not just the first user matching the identifier.
+    const query = this.selectedPatronViaLookUp?.id
+      ? `id==${this.selectedPatronViaLookUp.id}`
+      : buildIdentifierQuery(patron, idents);
+
+    this.selectedPatronViaLookUp = null;
     this.setState({ loading: true });
 
     try {
@@ -641,6 +650,10 @@ class CheckOut extends React.Component {
     this.props.mutator.patronBlockOverriddenInfo.replace({});
   }
 
+  selectPatronViaLookUp = (patron) => {
+    this.selectedPatronViaLookUp = patron;
+  }
+
   render() {
     const {
       resources,
@@ -708,6 +721,7 @@ class CheckOut extends React.Component {
               forwardedRef={this.patronFormInputRef}
               formRef={this.patronFormRef}
               initialValues={patronInitialValue}
+              onSelectPatronViaLookUp={this.selectPatronViaLookUp}
               {...this.props}
             />
             {loading &&

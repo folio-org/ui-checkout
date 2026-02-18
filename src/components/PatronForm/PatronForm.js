@@ -49,6 +49,7 @@ class PatronForm extends React.Component {
       reset: PropTypes.func.isRequired,
       getState: PropTypes.func.isRequired,
     }).isRequired,
+    onSelectPatronViaLookUp: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -99,11 +100,13 @@ class PatronForm extends React.Component {
       userIdentifiers,
       handleSubmit,
       form,
+      onSelectPatronViaLookUp,
     } = this.props;
 
     const ident = find(userIdentifiers, i => user[i]);
 
     if (ident) {
+      onSelectPatronViaLookUp(user);
       form.change('patron.identifier', user[ident]);
       setTimeout(() => handleSubmit());
     } else {
