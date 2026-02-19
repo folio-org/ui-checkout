@@ -20,6 +20,7 @@
 * Add support for use circulation-bff for circulation-bff/inventory/items. Refs UICHKOUT-985.
 * Search for a user by ID after selecting them in the find-user plugin modal. Fixes UICHKOUT-991.
 * Add missing sub permission for circulation-bff. Refs UICHKOUT-993.
+* Add print friendly layout for Checkout screen list. Refs UICHKOUT-981.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)

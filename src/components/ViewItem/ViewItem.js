@@ -66,6 +66,12 @@ export const columnWidths = {
   [COLUMNS_NAME.ACTION]: { max: 80 },
 };
 
+export const getPrintTitle = (title) => (
+  <span className={css.titlePrintOnly}>
+    {title}
+  </span>
+);
+
 class ViewItem extends React.Component {
   static propTypes = {
     scannedItems: PropTypes.arrayOf(PropTypes.object),
@@ -180,16 +186,17 @@ class ViewItem extends React.Component {
 
         return (
           <div data-test-item-loan-policy>
+            {getPrintTitle(this.columnMapping[COLUMNS_NAME.LOAN_POLICY])}
             {_.get(loan, ['loanPolicy', 'name'])}
             {this.renderOverriddenLabel(barcode)}
           </div>
         );
       },
-      [COLUMNS_NAME.BARCODE]: loan => (<div data-test-item-barcode>{_.get(loan, ['item', 'barcode'])}</div>),
+      [COLUMNS_NAME.BARCODE]: loan => (<div data-test-item-barcode>{getPrintTitle(this.columnMapping[COLUMNS_NAME.BARCODE])}{_.get(loan, ['item', 'barcode'])}</div>),
       [COLUMNS_NAME.DUE_DATE]: loan => {
         return (
           <div data-test-item-due-date className={css.loanDueDate}>
-            <div><FormattedDate value={loan.dueDate} /></div>
+            <div>{getPrintTitle(this.columnMapping[COLUMNS_NAME.DUE_DATE])}<FormattedDate value={loan.dueDate} /></div>
             {
               (loan.dueDateChangedByRecall || loan.dueDateChangedByHold || loan.dueDateChangedByNearExpireUser) && (
                 <Tooltip
@@ -215,7 +222,7 @@ class ViewItem extends React.Component {
           </div>
         );
       },
-      [COLUMNS_NAME.TIME]: loan => (<div data-test-item-time><FormattedTime value={loan.dueDate} /></div>),
+      [COLUMNS_NAME.TIME]: loan => (<div data-test-item-time>{getPrintTitle(this.columnMapping[COLUMNS_NAME.TIME])}<FormattedTime value={loan.dueDate} /></div>),
       [COLUMNS_NAME.ACTION]: loan => (<div data-test-item-actions>{this.renderActions(loan)}</div>),
     };
   }

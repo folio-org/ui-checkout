@@ -8,3 +8,51 @@
 .tooltipIcon:hover {
   cursor: pointer;
 }
+
+.titlePrintOnly {
+  display: none;
+
+  @media print {
+    display: inline-block;
+
+    &::after {
+      padding-right: 5px;
+      content: ":";
+    }
+  }
+}
+
+@media print {
+  [id^="item-details-content"] {
+    [class^="mclHeaderContainer"] {
+      display: none;
+    }
+
+    [class^="mclRowContainer"] [class^="mclRow"] {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg);
+
+      [role="gridcell"] {
+        width: 100% !important;
+        padding: 0;
+        flex-grow: 1;
+        border-color: var(--bg);
+
+        &:first-child {
+          display: none;
+        }
+
+        &:nth-child(3) {
+          order: -1;
+          font-weight: bold;
+        }
+
+        &:last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}

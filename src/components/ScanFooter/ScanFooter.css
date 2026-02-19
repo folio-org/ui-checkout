@@ -2,3 +2,9 @@
   padding: 16px;
   border-top: 1px solid #ccc;
 }
+
+@media print {
+  .root {
+    display: none;
+  }
+}
