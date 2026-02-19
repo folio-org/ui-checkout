@@ -63,6 +63,7 @@
           "patron-blocks.automated-patron-blocks.collection.get",
           "module.checkout.enabled",
           "inventory.items.collection.get",
+          "circulation-bff.inventory.items.collection.get",
           "circulation.check-out-by-barcode.post",
           "circulation.pickup-by-barcode-for-use-at-location.post",
           "circulation-bff.loans.check-out-by-barcode.execute",
