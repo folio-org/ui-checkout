@@ -79,7 +79,7 @@
     "overrideLoanPolicy": "Політика книговидачі щодо \"не зважати\"",
     "confirm": "Підтвердити",
     "messages.itemWillBeCheckedOut": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) буде <strong>виданий</strong>.",
-    "openRequests": "Відкриті замовлення",
+    "openRequests": "Відкриті замовлення (від користувача)",
     "date": "Дата",
     "source": "Джерело",
     "confirmStatusModal.notSuppressedMessage": "<strong>{title} ({materialType})</strong> (Штрихкод: {barcode}) має статус примірника <strong>{status}</strong>.",
@@ -138,11 +138,11 @@
     "permission.circulation.execute": "Видача: Видача примірників, для яких видача дозволена",
     "permission.viewLoans.view": "Видача: Перегляд видач",
     "permission.viewFeeFines.view": "Видача: Перегляд пені/штрафів",
-    "permission.viewRequests.view": "Видача: Перегляд замовлень",
+    "permission.viewRequests.view": "Видача: Перегляд замовлень (від користувача)",
     "borrower.ariaLabel": "Переглянути запис користувача",
     "proxy.ariaLabel": "Переглянути довірену особу користувача",
     "loanDetails.ariaLabel": "Переглянути інформацію про відкриті видачі",
-    "openRequests.ariaLabel": "Переглянути відкриті замовлення",
+    "openRequests.ariaLabel": "Переглянути відкриті замовлення (від користувача)",
     "patronBlocks.ariaLabel": "Переглянути блокування користувачів",
     "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
 }
