@@ -39,6 +39,7 @@
   margin-right: 10px;
 
   @media print {
+    height: 18px;
     display: block;
   }
 }

@@ -8,6 +8,21 @@
 }
 
 @media print {
+  a {
+    color: var(--color-text);
+
+    &:visited {
+      color: var(--color-text);
+    }
+  }
+
+  [class^="kvRoot"] {
+    [class^="kvLabel"],
+    [class^="kvValue"] {
+      margin: 0;
+    }
+  }
+
   [id^="root"] {
     header {
       display: none;
