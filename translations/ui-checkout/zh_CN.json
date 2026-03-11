@@ -19,7 +19,7 @@
     "active": "激活",
     "inactive": "未激活",
     "totalItemsScanned": "已扫描总单件{total, number}",
-    "sponsorExpired": "供应商用户记录已过期",
+    "sponsorExpired": "赞助者用户记录已过期",
     "proxyExpired": "代理关系已过期",
     "continue": "继续",
     "orActingAsProxy": "或作为代理",
