@@ -86,7 +86,7 @@
     "confirmStatusModal.suppressedMessage": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) hat den Exemplarstatus <strong>{status}</strong> und Nachweis ist unterdrückt.",
     "permission.all": "Ausleihe: Alle Berechtigungen",
     "proxy.expiration": "Ablauf der Vollmacht",
-    "due.date": "Fälligkeitsdatum",
+    "due.date": "Fällig",
     "user.expiration": "Ablauf Nutzungsberechtigung",
     "end.session": "Session beenden",
     "patron.identifier": "Personen Identifier",
