@@ -335,8 +335,8 @@ describe('ViewPatron', () => {
         );
       });
 
-      it('should not render "ViewCustomFieldsRecord" for patron', () => {
-        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
+      it('should render "ViewCustomFieldsRecord" for patron', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalled();
       });
     });
 
@@ -358,8 +358,8 @@ describe('ViewPatron', () => {
         );
       });
 
-      it('should not render "ViewCustomFieldsRecord" for proxy', () => {
-        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
+      it('should render "ViewCustomFieldsRecord" for proxy', () => {
+        expect(ViewCustomFieldsRecord).toHaveBeenCalled();
       });
     });
 

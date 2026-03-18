@@ -67,7 +67,7 @@ class ViewPatron extends React.Component {
     } = this.props;
     const allowedCustomFieldRefIds = getCheckoutSettings(checkoutSettings)?.allowedCustomFieldRefIds;
 
-    if (!customFieldsValues || !stripes.hasInterface('custom-fields')) {
+    if (!stripes.hasInterface('custom-fields')) {
       return null;
     }
 
