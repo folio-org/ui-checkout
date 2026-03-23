@@ -72,7 +72,7 @@ class CheckOut extends React.Component {
     },
     settings: {
       type: 'okapi',
-      path: 'users/settings',
+      path: 'user/settings',
     },
     loans: {
       type: 'okapi',
