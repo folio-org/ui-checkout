@@ -144,5 +144,5 @@
     "loanDetails.ariaLabel": "Переглянути інформацію про відкриті видачі",
     "openRequests.ariaLabel": "Переглянути відкриті замовлення (від користувача)",
     "patronBlocks.ariaLabel": "Переглянути блокування користувачів",
-    "awaitingPickupMessageHeld": "Borrower has <strong>{count, number}</strong> {count, plural, one {item} other {items}} held for use at location at this service point."
+    "awaitingPickupMessageHeld": "Користувач має <strong>{count, number}</strong> {count, plural, one {примірник} other {примірники}} які утримуються для використання у місці розміщення цього пункту обслуговування."
 }
