@@ -22,6 +22,7 @@
 * Add missing sub permission for circulation-bff. Refs UICHKOUT-993.
 * Add print friendly layout for Checkout screen list. Refs UICHKOUT-981.
 * Render `ViewCustomFieldsRecord` even when custom fields are not present - the component now displays `NoValue` for all fields if `customFieldsValues` is undefined. Fixes UICHKOUT-996.
+* *BREAKING* Change `users/settings/entries` to `user/settings`. Update `users.settings` interface version to 2.0. Refs UICHKOUT-994.
 
 ## [12.0.2] (https://github.com/folio-org/ui-checkout/tree/v12.0.2) (2025-10-29)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.1...v12.0.2)
