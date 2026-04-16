@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## IN_PROGRESS
+## [13.0.0] (https://github.com/folio-org/ui-checkout/tree/v13.0.0) (2025-04-16)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.2...v13.0.0)
 
 * Replace moment with day.js. Refs UICHKOUT-949.
 * Reduce count of eslint errors after update eslint-config-stripes. Refs UICHKOUT-953.
