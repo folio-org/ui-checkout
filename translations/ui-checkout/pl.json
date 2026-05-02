@@ -98,7 +98,7 @@
     "statuses.withdrawn": "Wycofany",
     "statuses.lostAndPaid": "Zagubiony i opłacony",
     "statuses.restricted": "Ograniczone",
-    "statuses.inProcessNonRequestable": "W toku (niewymagane)",
+    "statuses.inProcessNonRequestable": "W opracowaniu (nie można zamówić)",
     "statuses.longMissing": "Długotrwały brak",
     "statuses.unavailable": "Niedostępny",
     "statuses.unknown": "Nieznany",
