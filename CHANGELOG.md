@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## [14.0.0] (IN PROGRESS)
+
+* Bump major version of optionalDependencies (`@folio/circulation`, `@folio/plugin-create-inventory-records`). Fixes UICHKOUT-1001.
+
 ## [13.0.0] (https://github.com/folio-org/ui-checkout/tree/v13.0.0) (2025-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.2...v13.0.0)
 
