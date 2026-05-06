@@ -1,10 +1,11 @@
 # Change history for ui-checkout
 
-## [13.0.1] (IN PROGRESS)
+## [13.0.1] (https://github.com/folio-org/ui-checkout/tree/v13.0.1) (2026-05-06)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v13.0.0...v13.0.1)
 
 * Bump major version of optionalDependencies (`@folio/circulation`, `@folio/plugin-create-inventory-records`). Fixes UICHKOUT-1001.
 
-## [13.0.0] (https://github.com/folio-org/ui-checkout/tree/v13.0.0) (2025-04-16)
+## [13.0.0] (https://github.com/folio-org/ui-checkout/tree/v13.0.0) (2026-04-16)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v12.0.2...v13.0.0)
 
 * Replace moment with day.js. Refs UICHKOUT-949.
