@@ -1,5 +1,9 @@
 # Change history for ui-checkout
 
+## [13.1.0] IN_PROGRESS
+
+* Fix `@folio/circulation` optional dependency version to `>=12.0.0` and correct import path for `stripes.mock` in tests. Refs UICHKOUT-1004.
+
 ## [13.0.1] (https://github.com/folio-org/ui-checkout/tree/v13.0.1) (2026-05-06)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v13.0.0...v13.0.1)
 

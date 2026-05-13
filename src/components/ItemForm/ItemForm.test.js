@@ -6,7 +6,7 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import buildStripes from '@folio/circulation/test/jest/__mock__/stripes.mock';
+import buildStripes from '../../../test/jest/__mock__/stripes.mock';
 
 import ItemForm, {
   shouldSkipFocus,
