@@ -40,6 +40,7 @@ class UserDetail extends React.Component {
     openLoansCount: {
       type: 'okapi',
       path: 'circulation/loans?query=(userId==!{user.id} and status.name<>Closed)&limit=1',
+      shouldRefresh: (resource, action, refresh) => refresh || action.meta.path === 'circulation-bff',
     },
     openAccounts: {
       type: 'okapi',
