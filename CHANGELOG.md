@@ -1,6 +1,7 @@
 # Change history for ui-checkout
 
-## [13.1.0] IN_PROGRESS
+## [13.0.2] (https://github.com/folio-org/ui-checkout/tree/v13.0.2) (2026-05-26)
+[Full Changelog](https://github.com/folio-org/ui-checkout/compare/v13.0.1...v13.0.2)
 
 * Fix Open loans counter not updating after checkout via circulation-bff. Refs UICHKOUT-959.
 
