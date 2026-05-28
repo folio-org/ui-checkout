@@ -51,6 +51,7 @@ class UserDetail extends React.Component {
       type: 'okapi',
       throwErrors: false,
       path: `circulation/requests?query=(requesterId==!{user.id} and status=="Open*")&limit=${MAX_RECORDS}`,
+      shouldRefresh: (resource, action, refresh) => refresh || action.meta.path === 'circulation-bff',
     },
   });
 

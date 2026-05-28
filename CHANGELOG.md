@@ -3,6 +3,7 @@
 ## [13.1.0] IN_PROGRESS
 
 * Fix `@folio/circulation` optional dependency version to `>=12.0.0` and correct import path for `stripes.mock` in tests. Refs UICHKOUT-1004.
+* Fix Open request counter not updating after checkout via `circulation-bff`. Refs UICHKOUT-1006.
 
 ## [13.0.2] (https://github.com/folio-org/ui-checkout/tree/v13.0.2) (2026-05-26)
 [Full Changelog](https://github.com/folio-org/ui-checkout/compare/v13.0.1...v13.0.2)
