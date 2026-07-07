@@ -418,13 +418,8 @@ describe('ViewPatron', () => {
         );
       });
 
-      it('should render "ViewCustomFieldsRecord" with undefined allowedRefIds', () => {
-        expect(ViewCustomFieldsRecord).toHaveBeenCalledWith(
-          expect.objectContaining({
-            allowedRefIds: undefined,
-          }),
-          {}
-        );
+      it('should not render "ViewCustomFieldsRecord"', () => {
+        expect(ViewCustomFieldsRecord).not.toHaveBeenCalled();
       });
     });
 
